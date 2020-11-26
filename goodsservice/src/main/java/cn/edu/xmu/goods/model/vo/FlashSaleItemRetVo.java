@@ -1,13 +1,14 @@
-package cn.edu.xmu.goods.model.bo;
+package cn.edu.xmu.goods.model.vo;
 
 import java.time.LocalDateTime;
 
-public class FlashSaleItem {
+public class FlashSaleItemRetVo {
+
     private Long id;
 
     private Long saleId;
 
-    private Long goodsSkuId;
+    private SkuRetVo goodsSku;
 
     private Long price;
 
@@ -16,8 +17,4 @@ public class FlashSaleItem {
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
-
-
-
-
 }
