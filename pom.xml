@@ -188,7 +188,7 @@
                         ${project.reporting.outputEncoding}
                     </encoding>
                     <excludePackageNames>
-                        cn.edu.xmu.privilege.model.po:cn.edu.xmu.privilege.mapper
+                        cn.edu.xmu.goods.model.po:cn.edu.xmu.goods.mapper
                     </excludePackageNames>
                 </configuration>
                 <reportSets>
