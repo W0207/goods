@@ -16,8 +16,4 @@ public class FlashSaleItem {
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
-
-
-
-
 }
