@@ -54,16 +54,16 @@ spring:
     # 连接超时时间（毫秒）
     timeout: 5000
 
-#mybatis:
-#  #po对象的包
-#  type-aliases-package: cn.edu.xmu.goods.model
-#  #mapper.xml所在的位置
-#  mapper-locations: classpath*:cn.edu.xmu.goods.mapper/*.xml
-#  #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
-#  configuration:
-#    #输出产生的SQL
-#    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#    map-underscore-to-camel-case: true
+mybatis:
+  #po对象的包
+  type-aliases-package: cn.edu.xmu.goods.model
+  #mapper.xml所在的位置
+  mapper-locations: classpath*:cn.edu.xmu.goods.mapper/*.xml
+  #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
+  configuration:
+    #输出产生的SQL
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
 
 goodsservice:
   #是否对数据库中的未初始化的数据初始化
