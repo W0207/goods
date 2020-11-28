@@ -30,7 +30,19 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未发布\", \"code\": 0 }, { \"name\": \"发布\", \"code\": 1 }, { \"name\": \"废弃\", \"code\": 2 }], \"errmsg\": \"成功\" }";
+        System.out.println(responseString);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
 
+    /**
+     * 获得商品sku的详细信息
+     */
+    @Test
+    public void findGoodsSkuById() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/skus/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 }

@@ -2,17 +2,12 @@ package cn.edu.xmu.goods.dao;
 
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
-import cn.edu.xmu.goods.model.bo.GoodsSpu;
-import cn.edu.xmu.goods.model.po.GoodsSpuPo;
-import cn.edu.xmu.goods.model.vo.GoodsSpuStateVo;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import cn.edu.xmu.goods.model.po.GoodsSkuPo;
+import cn.edu.xmu.goods.model.po.GoodsSkuPoExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Repository
 public class GoodsDao {
@@ -25,5 +20,17 @@ public class GoodsDao {
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
-
+    /**
+     * @param id
+     * @return goodsSkuPo
+     * @author shibin zhan
+     */
+    public GoodsSkuPo findGoodsSkuById(Long id) {
+        GoodsSkuPoExample goodsSkuPoExample = new GoodsSkuPoExample();
+        GoodsSkuPoExample.Criteria criteria = goodsSkuPoExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        logger.debug("findGoodsSkuById: id=" + id);
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
+        return goodsSkuPo;
+    }
 }

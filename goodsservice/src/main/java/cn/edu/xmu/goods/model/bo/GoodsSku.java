@@ -61,4 +61,25 @@ public class GoodsSku implements VoObject, Serializable {
     public Object createSimpleVo() {
         return null;
     }
+
+    /**
+     * 构造函数
+     *
+     * @param po Po对象
+     */
+    public GoodsSku(GoodsSkuPo po) {
+        this.id = po.getId();
+        this.goodsSpuId = po.getGoodsSpuId();
+        this.skuSn = po.getSkuSn();
+        this.name = po.getName();
+        this.originalPrice = po.getOriginalPrice();
+        this.configuration = po.getConfiguration();
+        this.weight = po.getWeight();
+        this.imageUrl = po.getImageUrl();
+        this.inventory = po.getInventory();
+        this.detail = po.getDetail();
+        this.disabled = po.getDisabled() == 1;
+        this.gmtCreate = po.getGmtCreated();
+        this.gmtModified = po.getGmtModified();
+    }
 }
