@@ -14,8 +14,8 @@ public class CouponSpuVo {
 
     private Long activityId;
 
-    @ApiModelProperty("参与活动的商品sku")
-    private List<SimpleSkuVo> simpleSkuVo;
+    @ApiModelProperty("参与活动的商品spu")
+    private List<SimpleSpuVo> simpleSpuVoList;
 
     private LocalDateTime gmtCreate;
 

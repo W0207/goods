@@ -11,6 +11,8 @@ public class SimpleSpuVo {
 
     private String name;
 
+    private String goodsSn;
+
     private String imageUrl;
 
     private Integer state;

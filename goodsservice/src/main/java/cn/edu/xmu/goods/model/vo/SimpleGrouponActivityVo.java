@@ -5,16 +5,13 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ShopVo {
+public class SimpleGrouponActivityVo {
 
     private Long id;
 
     private String name;
 
-    private Integer state;
+    private LocalDateTime beginTime;
 
-    private LocalDateTime gmtCreate;
-
-    private LocalDateTime gmtModified;
-
+    private LocalDateTime endTime;
 }
