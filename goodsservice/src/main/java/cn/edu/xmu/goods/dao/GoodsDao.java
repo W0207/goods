@@ -22,7 +22,7 @@ public class GoodsDao {
 
     /**
      * @param id
-     * @return goodsSkuPo
+     * @return GoodsSkuPo
      * @author shibin zhan
      */
     public GoodsSkuPo findGoodsSkuById(Long id) {
