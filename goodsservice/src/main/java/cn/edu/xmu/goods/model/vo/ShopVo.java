@@ -1,20 +1,18 @@
 package cn.edu.xmu.goods.model.vo;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
-public class FlashSaleItemRetVo {
+@Data
+public class ShopVo {
 
     private Long id;
 
-    private Long saleId;
-
-    private SkuRetVo goodsSku;
-
-    private Long price;
-
-    private Integer quantity;
+    private String name;
 
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
+
 }
