@@ -13,8 +13,6 @@ public class CategoryVo {
 
     private String name;
 
-    private Long parentId;
-
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
