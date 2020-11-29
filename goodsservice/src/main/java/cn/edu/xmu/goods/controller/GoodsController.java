@@ -45,4 +45,6 @@ public class GoodsController {
         }
         return ResponseUtil.ok(new ReturnObject<List>(spuStateVos).getData());
     }
+
+
 }
