@@ -122,7 +122,6 @@ public class GoodsControllerTest {
      */
     @Test
     public void putGoodsSpuOnSales() throws Exception {
-
         String responseString = this.mvc.perform(put("/goods/shops/0/spus/273/offshelves"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -141,7 +140,7 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 删除sku
+     * 店家或管理员删除sku
      *
      * @throws Exception
      */

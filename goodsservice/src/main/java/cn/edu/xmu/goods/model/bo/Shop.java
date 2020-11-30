@@ -2,7 +2,6 @@ package cn.edu.xmu.goods.model.bo;
 
 
 import cn.edu.xmu.goods.model.po.ShopPo;
-import cn.edu.xmu.goods.model.vo.newShopRetVo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -73,7 +72,7 @@ public class Shop {
     {
         this.id=po.getId();
         this.name=po.getName();
-        this.gmtCreate=po.getGmtCreated();
+        this.gmtCreate=po.getGmtCreate();
         this.gmtModified=po.getGmtModified();
     }
 
@@ -90,7 +89,7 @@ public class Shop {
         ShopPo shopPo= new ShopPo();
         shopPo.setId(this.id);
         shopPo.setName(this.name);
-        shopPo.setGmtCreated(this.gmtCreate);
+        shopPo.setGmtCreate(this.gmtCreate);
         shopPo.setGmtModified(this.gmtModified);
         Byte state = (byte) this.state.code;
         shopPo.setState(state);

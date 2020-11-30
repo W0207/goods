@@ -114,6 +114,11 @@ public class GoodsDao {
         return returnObject;
     }
 
+    /**
+     * @param skuId
+     * @return ReturnObject
+     * @author shibin zhan
+     */
     public ReturnObject<Object> deleteGoodsSkuState(Long skuId) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
