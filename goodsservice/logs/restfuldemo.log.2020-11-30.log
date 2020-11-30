@@ -316,3 +316,11 @@ Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not a
 2020-11-30 17:30:42.324 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
 2020-11-30 17:31:12.304 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 272
 2020-11-30 17:31:12.412 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
+2020-11-30 21:03:42.807 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-11-30 21:03:42.807 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =10
+2020-11-30 21:03:43.462 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 21:03:43.512 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 21:03:43.602 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 272
+2020-11-30 21:03:43.612 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
+2020-11-30 21:03:43.682 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-11-30 21:03:43.732 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
