@@ -1,8 +1,8 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
-import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,9 @@ public class GoodsControllerTest {
     @Autowired
     GoodsSpuPoMapper goodsSpuPoMapper;
 
+    @Autowired
+    GoodsSkuPoMapper goodsSkuPoMapper;
+
     /**
      * 获得商品spu所有状态
      */
@@ -32,7 +35,7 @@ public class GoodsControllerTest {
     public void getAllSpuState() throws Exception {
         String responseString = this.mvc.perform(get("/goods/spus/states"))
                 .andReturn().getResponse().getContentAsString();
-        String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未发布\", \"code\": 0 }, { \"name\": \"发布\", \"code\": 1 }, { \"name\": \"废弃\", \"code\": 2 }], \"errmsg\": \"成功\" }";
+        String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未上架\", \"code\": 0 }, { \"name\": \"上架\", \"code\": 4 }, { \"name\": \"已删除\", \"code\": 6 }], \"errmsg\": \"成功\" }";
         System.out.println(responseString);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
@@ -49,6 +52,23 @@ public class GoodsControllerTest {
         System.out.println(responseString);
     }
 
+    /**
+     * 获得一条商品spu的详细信息
+     */
+    @Test
+    public void findGoodsSpuById() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/spus/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 修改商品spu信息
+     *
+     * @throws Exception
+     */
     @Test
     public void changeSpuInfoById() throws Exception {
         String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
@@ -61,15 +81,79 @@ public class GoodsControllerTest {
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
+    /**
+     * 删除商品
+     *
+     * @throws Exception
+     */
     @Test
     public void deleteGoodsSpu() throws Exception {
-        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/272"))
+        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/273"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(272L).getDisabled());
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 下架商品
+     *
+     * @throws Exception
+     */
+    @Test
+    public void putOffGoodsSpuOnSales() throws Exception {
+        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273/offshelves"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 上架商品之后重新上架
+     *
+     * @throws Exception
+     */
+    @Test
+    public void putGoodsSpuOnSales() throws Exception {
+
+        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273/offshelves"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+
+        responseString = this.mvc.perform(put("/goods/shops/0/spus/273/onshelves"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 删除sku
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteGoodsSku() throws Exception {
+        String responseString = this.mvc.perform(delete("/goods/shops/0/skus/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getDisabled());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

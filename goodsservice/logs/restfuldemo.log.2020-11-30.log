@@ -316,3 +316,26 @@ Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not a
 2020-11-30 17:30:42.324 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
 2020-11-30 17:31:12.304 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 272
 2020-11-30 17:31:12.412 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
+2020-11-30 19:33:07.647 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-11-30 20:04:44.993 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 20:04:45.134 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 20:05:05.948 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSpuById: GoodsSpu(id=273, name=金和汇景•戴荣华•古彩洛神赋瓷瓶, brandId=71, categoryId=123, freightId=null, shopId=0, goodsSn=drh-d0001, detail=null, imagUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, state=PUBLISHED, spec=default, disabled=false, gmtCreated=2020-11-28T17:42:20, gmtModified=2020-11-28T17:42:20)code = OK
+2020-11-30 20:42:13.941 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:42:14.128 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 20:43:51.569 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:43:51.732 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 20:46:27.442 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:46:27.618 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 20:46:27.695 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:46:27.699 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 20:50:05.838 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:50:06.142 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-11-30 20:50:06.146 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已上架
+2020-11-30 21:03:50.039 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 21:03:50.201 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-11-30 21:04:38.592 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 21:04:38.750 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-11-30 21:05:25.727 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 21:05:25.937 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-11-30 21:50:40.761 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 273
+2020-11-30 21:50:40.909 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273已删除
