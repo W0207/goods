@@ -3,13 +3,16 @@ package cn.edu.xmu.goods.controller;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuStateVo;
+import cn.edu.xmu.goods.service.BrandService;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
+import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +36,10 @@ public class GoodsController {
     private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
-    GoodsService goodsService;
+    private BrandService brandService;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -179,6 +185,7 @@ public class GoodsController {
     }
 
     /**
+<<<<<<< HEAD
      * 店家商品上架
      *
      * @param id
@@ -269,5 +276,25 @@ public class GoodsController {
         } else {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
+=======
+     * 查看所有品牌
+     *
+     * @return Object
+     */
+    @ApiOperation(value = "查看所有品牌")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/brands")
+    public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize)
+    {
+        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
+        page = (page == null)?1:page;
+        pageSize = (pageSize == null)?10:pageSize;
+
+        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
+        ReturnObject<PageInfo<VoObject>> returnObject = brandService.findAllBrand(page, pageSize);
+        return Common.getPageRetObject(returnObject);
+>>>>>>> c71fc3537388fca7a54dd918d6aad4b564f6c2f9
     }
 }
