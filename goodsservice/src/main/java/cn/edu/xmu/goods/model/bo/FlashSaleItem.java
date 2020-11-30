@@ -28,7 +28,7 @@ public class FlashSaleItem implements VoObject {
         this.goodsSkuId = goodsSkuPo.getId();
         this.price = flashSaleItemPo.getPrice();
         this.quantity = flashSaleItemPo.getQuantity();
-        this.gmtCreate = flashSaleItemPo.getGmtCreated();
+        this.gmtCreate = flashSaleItemPo.getGmtCreate();
         this.gmtModified = flashSaleItemPo.getGmtModified();
     }
 

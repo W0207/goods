@@ -1,6 +1,9 @@
 package cn.edu.xmu.goods.model.bo;
 
+import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.util.encript.AES;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -74,6 +77,50 @@ public class GoodsSpu implements VoObject {
     private LocalDateTime gmtCreated;
 
     private LocalDateTime gmtModified;
+
+    /**
+     * 构造函数
+     *
+     * @param goodsSpuPo Po对象
+     */
+    public GoodsSpu(GoodsSpuPo goodsSpuPo) {
+        this.id = goodsSpuPo.getId();
+        this.name = goodsSpuPo.getName();
+        this.brandId = goodsSpuPo.getBrandId();
+        this.categoryId = goodsSpuPo.getCategoryId();
+        this.freightId = goodsSpuPo.getFreightId();
+        this.shopId = goodsSpuPo.getShopId();
+        this.goodsSn = goodsSpuPo.getGoodsSn();
+        this.detail = goodsSpuPo.getDetail();
+        this.imagUrl = goodsSpuPo.getImageUrl();
+        this.state = State.getTypeByCode(goodsSpuPo.getState().intValue());
+        this.spec = goodsSpuPo.getSpec();
+        this.disabled = goodsSpuPo.getDisabled() == 1;
+        this.gmtCreated = goodsSpuPo.getGmtCreate();
+        this.gmtModified = goodsSpuPo.getGmtModified();
+    }
+
+    /**
+     * 用 Vo 对象创建 用来更新 GoodsSpu 的 Po 对象
+     *
+     * @param spuInputVo vo 对象
+     * @return po 对象
+     */
+    public GoodsSpuPo createUpdatePo(SpuInputVo spuInputVo) {
+        String nameEnc = spuInputVo.getName() == null ? null : spuInputVo.getName();
+        String descriptionEnc = spuInputVo.getDescription() == null ? null : spuInputVo.getDescription();
+        String specsEnc = spuInputVo.getSpecs() == null ? null : spuInputVo.getSpecs();
+
+        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+
+        goodsSpuPo.setId(id);
+        goodsSpuPo.setName(nameEnc);
+        goodsSpuPo.setDetail(descriptionEnc);
+        goodsSpuPo.setSpec(specsEnc);
+        goodsSpuPo.setGmtModified(LocalDateTime.now());
+        return goodsSpuPo;
+    }
+
 
     @Override
     public Object createVo() {
