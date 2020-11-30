@@ -47,7 +47,7 @@ public class GoodsService {
      * @return ReturnObject
      */
     @Transactional
-    public ReturnObject<Object> modifySpuInfo(Long shopId, Long spuId, SpuInputVo spuInputVo) {
-        return goodsDao.modifySpuById(shopId, spuId, spuInputVo);
+    public ReturnObject<Object> modifySpuInfo( Long spuId, SpuInputVo spuInputVo) {
+        return goodsDao.modifySpuById(spuId, spuInputVo);
     }
 }

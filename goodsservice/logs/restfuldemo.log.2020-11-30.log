@@ -288,3 +288,10 @@ Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not a
 2020-11-30 12:14:24.115 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
 2020-11-30 12:14:24.227 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
 2020-11-30 12:14:24.291 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: GoodsSku(id=273, goodsSpuId=273, skuSn=null, name=+, originalPrice=980000, configuration=null, weight=10, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=1, detail=null, disabled=false, gmtCreate=2020-11-28T17:42:17, gmtModified=2020-11-28T17:42:17) code = OK
+2020-11-30 14:47:30.137 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.changeSpuInfoById(Long,Long,SpuInputVo,BindingResult))
+2020-11-30 14:48:22.695 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 14:48:22.849 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 15:15:21.745 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shop : id = 273 spu : id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 15:15:21.745 [main] ERROR cn.edu.xmu.goods.controller.GoodsController - 无权限修改本商品的信息
+2020-11-30 15:17:03.342 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 15:17:03.496 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新

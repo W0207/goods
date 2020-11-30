@@ -34,28 +34,22 @@ public class GoodsDao {
         GoodsSkuPoExample goodsSkuPoExample = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = goodsSkuPoExample.createCriteria();
         criteria.andIdEqualTo(id);
-        logger.debug("findGoodsSkuById: id=" + id);
+        logger.debug("findGoodsSkuById : id=" + id);
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
         return goodsSkuPo;
     }
 
     /**
-     * @param shopId
      * @param spuId
      * @param spuInputVo
      * @author shibin zhan
      */
-    public ReturnObject<Object> modifySpuById(Long shopId, Long spuId, SpuInputVo spuInputVo) {
+    public ReturnObject<Object> modifySpuById(Long spuId, SpuInputVo spuInputVo) {
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
         if (goodsSpuPo == null || (goodsSpuPo.getState() != null && GoodsSpu.State.getTypeByCode(goodsSpuPo.getState().intValue()) == GoodsSpu.State.DELETED)) {
             logger.info("商品不存在或已被删除：id = " + spuId);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (goodsSpuPo.getShopId() != shopId && goodsSpuPo.getShopId() != 0) {//shopId=0表示平台管理员
-            logger.info("无权限修改该商品");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-
         GoodsSpu goodsSpu = new GoodsSpu(goodsSpuPo);
         GoodsSpuPo po = goodsSpu.createUpdatePo(spuInputVo);
 

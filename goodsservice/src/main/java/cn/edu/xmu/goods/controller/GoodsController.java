@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuStateVo;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
+import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -47,7 +48,8 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/spus/states")
-    public Object getAllSpuStatus() {
+    public Object getGoodsSpuState() {
+        logger.debug("getGoodsSpuState");
         GoodsSpu.State[] states = GoodsSpu.State.class.getEnumConstants();
         List<SpuStateVo> spuStateVos = new ArrayList<>();
         for (int i = 0; i < states.length; i++) {
@@ -63,15 +65,15 @@ public class GoodsController {
      * @return Object
      */
     @ApiOperation(value = "获得sku的详细信息")
-    @ApiImplicitParam(paramType = "path", dataType = "Integer", name = "id", value = "skuId", required = true)
+    @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/skus/{id}")
-    public Object getGoodsSkuBySkuId(@PathVariable Long id) {
+    public Object getSku(@PathVariable Long id) {
         Object returnObject;
         ReturnObject sku = goodsService.findGoodsSkuById(id);
-        logger.debug("findGoodsSkuById: " + sku.getData() + " code = " + sku.getCode());
+        logger.debug("getSku : skuId = " + id);
         if (!sku.getCode().equals(ResponseCode.RESOURCE_ID_NOTEXIST)) {
             returnObject = ResponseUtil.ok(sku.getData());
         } else {
@@ -98,19 +100,25 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    //@Audit //需要认证
     @PutMapping("shops/{shopId}/spus/{id}")
-    public Object changeSpuInfoById(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
+    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
-            logger.debug("changeSpuInfoById: id = " + id + " vo = " + spuInputVo);
+            logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while changeSpuInfoById id = " + id);
+            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
-        return Common.decorateReturnObject(returnObj);
+        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
+        if (shopId == shopid || shopId == 0) {
+            ReturnObject returnObj = goodsService.modifySpuInfo(id, spuInputVo);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            logger.error("无权限修改本商品的信息");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
     }
 }

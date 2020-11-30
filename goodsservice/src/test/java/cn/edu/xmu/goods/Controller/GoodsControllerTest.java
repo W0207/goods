@@ -52,13 +52,12 @@ public class GoodsControllerTest {
     @Test
     public void changeSpuInfoById() throws Exception {
         String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
-        String responseString = this.mvc.perform(put("/goods/shops/1/spus/273")
+        String responseString = this.mvc.perform(put("/goods/shops/0/spus/272")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
-        GoodsSpuPo goodsSpuPo=goodsSpuPoMapper.selectByPrimaryKey(273L);
-        System.out.println(goodsSpuPo.getGmtModified());
     }
 }
