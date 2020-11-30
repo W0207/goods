@@ -69,4 +69,12 @@ public class ReturnObject<T> {
         }
     }
 
+    @Override
+    public String toString() {
+        return "ReturnObject{" +
+                "code=" + code +
+                ", errmsg='" + errmsg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

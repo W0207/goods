@@ -51,7 +51,6 @@ public class ShopController {
     public Object addAShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
         Object retObject = Common.processFieldErrors(bindingResult,httpServletResponse);
         if (null != retObject) {
-            logger.debug("validate fail");
             return retObject;
         }
         Shop shop = vo.createShop();
@@ -60,7 +59,8 @@ public class ShopController {
         if(returnObject.getData() != null){
             httpServletResponse.setStatus(HttpStatus.CREATED.value());
             System.out.println(returnObject.getData());
-            return Common.getRetObject(returnObject);
+            System.out.println(returnObject.toString());
+            return Common.decorateReturnObject(returnObject);
         } else {
             return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
         }
