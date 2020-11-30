@@ -48,7 +48,7 @@ public class GoodsSku implements VoObject, Serializable {
         this.inventory = goodsSkuPo.getInventory();
         this.detail = goodsSkuPo.getDetail();
         this.disabled = goodsSkuPo.getDisabled() == 1;
-        this.gmtCreate = goodsSkuPo.getGmtCreated();
+        this.gmtCreate = goodsSkuPo.getGmtCreate();
         this.gmtModified = goodsSkuPo.getGmtModified();
     }
 
@@ -79,7 +79,7 @@ public class GoodsSku implements VoObject, Serializable {
         this.inventory = po.getInventory();
         this.detail = po.getDetail();
         this.disabled = po.getDisabled() == 1;
-        this.gmtCreate = po.getGmtCreated();
+        this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
     }
 }

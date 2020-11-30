@@ -1,7 +1,6 @@
 package cn.edu.xmu.goods.model.vo;
 
 import io.swagger.annotations.ApiModelProperty;
-import jdk.vm.ci.meta.Local;
 import lombok.Data;
 
 import java.time.LocalDateTime;
