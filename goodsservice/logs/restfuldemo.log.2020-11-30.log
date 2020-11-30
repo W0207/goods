@@ -1,0 +1,318 @@
+2020-11-30 10:37:01.644 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 10:37:01.717 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 10:38:27.180 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 10:38:27.259 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 10:38:27.329 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 10:43:20.606 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 10:44:23.665 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 10:45:06.215 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 10:48:28.998 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 10:49:14.723 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 10:49:14.812 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 10:49:14.885 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: 273 null code = RESOURCE_ID_NOTEXIST
+2020-11-30 10:59:04.118 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 11:00:01.815 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 11:00:53.165 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 11:00:53.251 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 11:00:53.330 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 11:02:27.017 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 11:02:27.119 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 11:02:27.140 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 11:02:27.221 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 11:02:27.280 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 11:02:27.409 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: nullcode = RESOURCE_ID_NOTEXIST
+2020-11-30 11:07:58.113 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 11:10:55.668 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 11:16:08.306 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 11:17:45.446 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 11:18:12.615 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 11:18:33.388 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 11:18:33.470 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 273
+2020-11-30 11:27:27.602 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 12:03:16.798 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: null code = RESOURCE_ID_NOTEXIST
+2020-11-30 12:07:38.212 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+java.lang.IllegalStateException: Failed to load property source from 'file:/F:/goods/goodsservice/target/classes/application.yaml' (classpath:/application.yaml)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:553)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadForFileExtension(ConfigFileApplicationListener.java:498)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:468)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$null$7(ConfigFileApplicationListener.java:447)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$8(ConfigFileApplicationListener.java:447)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:444)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$0(ConfigFileApplicationListener.java:347)
+	at org.springframework.boot.context.config.FilteredPropertySource.apply(FilteredPropertySource.java:54)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:335)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.addPropertySources(ConfigFileApplicationListener.java:226)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.postProcessEnvironment(ConfigFileApplicationListener.java:210)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEnvironmentPreparedEvent(ConfigFileApplicationListener.java:200)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEvent(ConfigFileApplicationListener.java:188)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:80)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:53)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:345)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:120)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:123)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:98)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$5(ClassBasedTestDescriptor.java:341)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:346)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:341)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1654)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:340)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:263)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:256)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:255)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:29)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:107)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:71)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:107)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:107)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:75)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:248)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$5(DefaultLauncher.java:211)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:226)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:199)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:132)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:220)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:53)
+Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not allowed here
+ in 'reader', line 23, column 11:
+          data: classpath:testdata.sql
+              ^
+
+	at org.yaml.snakeyaml.scanner.ScannerImpl.fetchValue(ScannerImpl.java:870)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:358)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:227)
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:558)
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:158)
+	at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:148)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:235)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:257)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:248)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:236)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:257)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:248)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:236)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:95)
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:134)
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:494)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:200)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:164)
+	at org.springframework.boot.env.OriginTrackedYamlLoader.load(OriginTrackedYamlLoader.java:82)
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:50)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadDocuments(ConfigFileApplicationListener.java:607)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:523)
+	... 88 common frames omitted
+2020-11-30 12:07:38.230 [main] ERROR o.springframework.test.context.TestContextManager - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@33a2499c] to prepare test instance [cn.edu.xmu.goods.Controller.GoodsControllerTest@e72dba7]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:123)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:98)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$5(ClassBasedTestDescriptor.java:341)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:346)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:341)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1654)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:340)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:263)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:256)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:255)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:29)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:107)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:71)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:107)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:107)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:75)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:125)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:135)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:122)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:80)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:248)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$5(DefaultLauncher.java:211)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:226)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:199)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:132)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:220)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:53)
+Caused by: java.lang.IllegalStateException: Failed to load property source from 'file:/F:/goods/goodsservice/target/classes/application.yaml' (classpath:/application.yaml)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:553)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadForFileExtension(ConfigFileApplicationListener.java:498)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:468)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$null$7(ConfigFileApplicationListener.java:447)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$8(ConfigFileApplicationListener.java:447)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:444)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$0(ConfigFileApplicationListener.java:347)
+	at org.springframework.boot.context.config.FilteredPropertySource.apply(FilteredPropertySource.java:54)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:335)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.addPropertySources(ConfigFileApplicationListener.java:226)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.postProcessEnvironment(ConfigFileApplicationListener.java:210)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEnvironmentPreparedEvent(ConfigFileApplicationListener.java:200)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEvent(ConfigFileApplicationListener.java:188)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:80)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:53)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:345)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:120)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	... 63 common frames omitted
+Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not allowed here
+ in 'reader', line 23, column 11:
+          data: classpath:testdata.sql
+              ^
+
+	at org.yaml.snakeyaml.scanner.ScannerImpl.fetchValue(ScannerImpl.java:870)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.fetchMoreTokens(ScannerImpl.java:358)
+	at org.yaml.snakeyaml.scanner.ScannerImpl.checkToken(ScannerImpl.java:227)
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:558)
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:158)
+	at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:148)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:235)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:257)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:248)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:236)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:257)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:248)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:236)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:95)
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:134)
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:494)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:200)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:164)
+	at org.springframework.boot.env.OriginTrackedYamlLoader.load(OriginTrackedYamlLoader.java:82)
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:50)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadDocuments(ConfigFileApplicationListener.java:607)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:523)
+	... 88 common frames omitted
+2020-11-30 12:10:51.456 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: GoodsSku(id=273, goodsSpuId=273, skuSn=null, name=+, originalPrice=980000, configuration=null, weight=10, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=1, detail=null, disabled=false, gmtCreate=2020-11-28T17:42:17, gmtModified=2020-11-28T17:42:17) code = OK
+2020-11-30 12:11:49.093 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 12:11:49.178 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 无权限修改该商品
+2020-11-30 12:12:50.227 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 12:12:50.339 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 12:13:50.982 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 12:13:51.079 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 12:13:51.134 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: GoodsSku(id=273, goodsSpuId=273, skuSn=null, name=+, originalPrice=980000, configuration=null, weight=10, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=1, detail=null, disabled=false, gmtCreate=2020-11-28T17:42:17, gmtModified=2020-11-28T17:42:17) code = OK
+2020-11-30 12:14:24.115 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 12:14:24.227 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 12:14:24.291 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSkuById: GoodsSku(id=273, goodsSpuId=273, skuSn=null, name=+, originalPrice=980000, configuration=null, weight=10, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=1, detail=null, disabled=false, gmtCreate=2020-11-28T17:42:17, gmtModified=2020-11-28T17:42:17) code = OK
+2020-11-30 14:47:30.137 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.changeSpuInfoById(Long,Long,SpuInputVo,BindingResult))
+2020-11-30 14:48:22.695 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - changeSpuInfoById: id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 14:48:22.849 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 15:15:21.745 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shop : id = 273 spu : id = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 15:15:21.745 [main] ERROR cn.edu.xmu.goods.controller.GoodsController - 无权限修改本商品的信息
+2020-11-30 15:17:03.342 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 15:17:03.496 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:14:09.222 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 272 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:14:09.387 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
+2020-11-30 17:14:33.968 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:14:34.093 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:14:34.193 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-11-30 17:14:34.227 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-11-30 17:26:54.341 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:26:54.576 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:27:51.901 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:27:52.007 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:29:12.849 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:16.709 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:16.854 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:30:42.044 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:30:42.178 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:30:42.253 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:42.259 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:30:42.296 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-11-30 17:30:42.324 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-11-30 17:31:12.304 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 272
+2020-11-30 17:31:12.412 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
