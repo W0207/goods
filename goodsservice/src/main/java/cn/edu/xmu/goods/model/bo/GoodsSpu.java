@@ -121,6 +121,16 @@ public class GoodsSpu implements VoObject {
         return goodsSpuPo;
     }
 
+    /**
+     * @return po 对象
+     */
+    public GoodsSpuPo createDeletePo() {
+        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+        goodsSpuPo.setId(id);
+        goodsSpuPo.setDisabled((byte) 5);
+        goodsSpuPo.setGmtModified(LocalDateTime.now());
+        return goodsSpuPo;
+    }
 
     @Override
     public Object createVo() {

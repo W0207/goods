@@ -65,4 +65,30 @@ public class GoodsDao {
         }
         return returnObject;
     }
+
+    /**
+     * @param spuId
+     * @return ReturnObject
+     * @author shibin zhan
+     */
+    public ReturnObject<Object> deleteSpuById(Long spuId) {
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 1) {
+            logger.info("商品不存在或已被删除：id = " + spuId);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSpu goodsSpu = new GoodsSpu(goodsSpuPo);
+        GoodsSpuPo po = goodsSpu.createDeletePo();
+        ReturnObject<Object> returnObject;
+        int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("商品不存在或已被删除：spuId = " + spuId);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("spu id = " + spuId + "已删除");
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
 }

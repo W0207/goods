@@ -121,4 +121,35 @@ public class GoodsController {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
+
+    /**
+     * 店家逻辑删除商品spu
+     *
+     * @param shopId        店铺id
+     * @param id            spuId
+     * @return Object
+     */
+    @ApiOperation(value = "店家删除商品spu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    //@Audit //需要认证
+    @DeleteMapping("shops/{shopId}/spus/{id}")
+    public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
+        }
+        //商家只能逻辑删除自家商品spu，shopId=0可以逻辑删除任意商品spu
+        if (shopId == shopid || shopId == 0) {
+            ReturnObject returnObj = goodsService.deleteSpuById(id);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
 }

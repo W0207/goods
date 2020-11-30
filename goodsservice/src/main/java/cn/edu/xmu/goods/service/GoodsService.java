@@ -41,7 +41,6 @@ public class GoodsService {
     }
 
     /**
-     * @param shopId
      * @param spuId
      * @param spuInputVo
      * @return ReturnObject
@@ -49,5 +48,13 @@ public class GoodsService {
     @Transactional
     public ReturnObject<Object> modifySpuInfo( Long spuId, SpuInputVo spuInputVo) {
         return goodsDao.modifySpuById(spuId, spuInputVo);
+    }
+
+    /**
+     * @param spuId
+     * @return ReturnObject
+     */
+    public ReturnObject<Object> deleteSpuById(Long spuId) {
+        return goodsDao.deleteSpuById(spuId);
     }
 }

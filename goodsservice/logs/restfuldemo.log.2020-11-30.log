@@ -295,3 +295,24 @@ Caused by: org.yaml.snakeyaml.scanner.ScannerException: mapping values are not a
 2020-11-30 15:15:21.745 [main] ERROR cn.edu.xmu.goods.controller.GoodsController - 无权限修改本商品的信息
 2020-11-30 15:17:03.342 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
 2020-11-30 15:17:03.496 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:14:09.222 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 272 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:14:09.387 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272
+2020-11-30 17:14:33.968 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:14:34.093 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:14:34.193 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-11-30 17:14:34.227 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-11-30 17:26:54.341 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:26:54.576 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:27:51.901 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:27:52.007 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:29:12.849 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:16.709 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:16.854 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:30:42.044 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-11-30 17:30:42.178 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273 的信息已更新
+2020-11-30 17:30:42.253 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-11-30 17:30:42.259 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spu id = 273已删除
+2020-11-30 17:30:42.296 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-11-30 17:30:42.324 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-11-30 17:31:12.304 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 272
+2020-11-30 17:31:12.412 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品不存在或已被删除：id = 272

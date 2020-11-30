@@ -52,12 +52,24 @@ public class GoodsControllerTest {
     @Test
     public void changeSpuInfoById() throws Exception {
         String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
-        String responseString = this.mvc.perform(put("/goods/shops/0/spus/272")
+        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void deleteGoodsSpu() throws Exception {
+        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/272"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(272L).getDisabled());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }
