@@ -82,4 +82,12 @@ public class GoodsSku implements VoObject, Serializable {
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
     }
+
+    public GoodsSkuPo createDeleteStatePo() {
+        GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
+        goodsSkuPo.setId(id);
+        goodsSkuPo.setDisabled((byte) 3);
+        goodsSkuPo.setGmtModified(LocalDateTime.now());
+        return goodsSkuPo;
+    }
 }

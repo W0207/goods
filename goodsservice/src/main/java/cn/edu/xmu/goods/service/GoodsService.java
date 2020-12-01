@@ -2,7 +2,9 @@ package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.GoodsDao;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
+import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
+import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GoodsService {
+
     @Autowired
     GoodsDao goodsDao;
 
@@ -41,12 +44,32 @@ public class GoodsService {
     }
 
     /**
+     * 获得一条商品spu的详细信息
+     *
+     * @param `id`
+     * @return ReturnObject
+     */
+
+    public ReturnObject findGoodsSpuById(Long id) {
+        ReturnObject returnObject;
+        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
+        if (goodsSpuPo != null) {
+            returnObject = new ReturnObject(new GoodsSpu(goodsSpuPo));
+            logger.debug("findGoodsSpuById : " + returnObject);
+        } else {
+            logger.debug("findGoodsSpuById : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+    }
+
+    /**
      * @param spuId
      * @param spuInputVo
      * @return ReturnObject
      */
     @Transactional
-    public ReturnObject<Object> modifySpuInfo( Long spuId, SpuInputVo spuInputVo) {
+    public ReturnObject<Object> modifySpuInfo(Long spuId, SpuInputVo spuInputVo) {
         return goodsDao.modifySpuById(spuId, spuInputVo);
     }
 
@@ -55,6 +78,30 @@ public class GoodsService {
      * @return ReturnObject
      */
     public ReturnObject<Object> deleteSpuById(Long spuId) {
-        return goodsDao.deleteSpuById(spuId);
+        return goodsDao.updateGoodsSpuState(spuId, 6L);
+    }
+
+    /**
+     * @param spuId
+     * @return ReturnObject
+     */
+    public ReturnObject putGoodsOnSaleById(Long spuId) {
+        return goodsDao.updateGoodsSpuState(spuId, 4L);
+    }
+
+    /**
+     * @param spuId
+     * @return ReturnObject
+     */
+    public ReturnObject putOffGoodsOnSaleById(Long spuId) {
+        return goodsDao.updateGoodsSpuState(spuId, 0L);
+    }
+
+    /**
+     * @param skuId
+     * @return ReturnObject
+     */
+    public ReturnObject deleteSkuById(Long skuId) {
+        return goodsDao.deleteGoodsSkuState(skuId);
     }
 }
