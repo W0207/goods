@@ -2,7 +2,6 @@ package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.bo.Shop;
-import cn.edu.xmu.goods.model.vo.GoodsSpuStateVo;
 import cn.edu.xmu.goods.model.vo.ShopStateVo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.goods.service.ShopService;
@@ -113,6 +112,93 @@ public class ShopController {
         if(returnObject.getCode()== ResponseCode.OK)
         {
             return Common.getRetObject(returnObject);
+        }
+        else {
+            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
+        }
+    }
+
+    /**
+     * by 宇
+     * @return
+     */
+    @ApiOperation(value = "上架店家")
+    @ApiImplicitParams({
+            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0,message = "成功")
+    })
+    @PutMapping("/shops/{id}/onshelves")
+    public Object shopOnShelves(@PathVariable Long id)
+    {
+        Shop shop = new Shop();
+        shop.setId(id);
+        shop.setState(Shop.State.UP);
+        shop.setGmtModified(LocalDateTime.now());
+        ReturnObject returnObject = shopService.shopOnShelves(shop);
+        if(returnObject.getCode()== ResponseCode.OK)
+        {
+            return Common.decorateReturnObject(returnObject);
+        }
+        else {
+            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
+        }
+    }
+
+    /**
+     * by 宇
+     * @return
+     */
+    @ApiOperation(value = "上架店家")
+    @ApiImplicitParams({
+            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0,message = "成功")
+    })
+    @PutMapping("/shops/{id}/offshelves")
+    public Object shopOffShelves(@PathVariable Long id)
+    {
+        Shop shop = new Shop();
+        shop.setId(id);
+        shop.setState(Shop.State.DOWN);
+        shop.setGmtModified(LocalDateTime.now());
+        ReturnObject returnObject = shopService.shopOffShelves(shop);
+        if(returnObject.getCode()== ResponseCode.OK)
+        {
+            return Common.decorateReturnObject(returnObject);
+        }
+        else {
+            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
+        }
+    }
+
+    /**
+     * 店家下架或删除
+     * @return
+     */
+    @ApiOperation(value = "下线店家")
+    @ApiImplicitParams({
+            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0,message = "成功")
+    })
+    @DeleteMapping("/shops/{id}")
+    public Object deleteShop(@PathVariable Long id)
+    {
+        Shop shop = new Shop();
+        shop.setId(id);
+        shop.setState(Shop.State.CLOSE);
+        shop.setGmtModified(LocalDateTime.now());
+        ReturnObject returnObject = shopService.deleteShop(shop);
+        if(returnObject.getCode()== ResponseCode.OK)
+        {
+            return Common.decorateReturnObject(returnObject);
         }
         else {
             return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);

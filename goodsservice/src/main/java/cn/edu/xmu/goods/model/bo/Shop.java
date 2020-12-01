@@ -2,7 +2,6 @@ package cn.edu.xmu.goods.model.bo;
 
 
 import cn.edu.xmu.goods.model.po.ShopPo;
-import cn.edu.xmu.goods.model.vo.newShopRetVo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -30,10 +29,12 @@ public class Shop {
      * 店铺状态
      */
     public enum State {
+        //商-店铺：0：未审核，1：未上线，2：上线，3：关闭，4：审核未通过
         NEW(0, "未审核"),
-        UP(1, "上线"),
-        DOWN(2, "未上线"),
-        CLOSE(3, "关闭");
+        UP(2, "上线"),
+        DOWN(1, "未上线"),
+        CLOSE(3, "关闭"),
+        UNPASS(4,"审核未通过");
 
         private static final Map<Integer, Shop.State> stateMap;
 
@@ -65,6 +66,10 @@ public class Shop {
         }
     }
 
+    public State getState() {
+        return state;
+    }
+
     /**
      * 构造函数
      * 用po构造
@@ -73,7 +78,7 @@ public class Shop {
     {
         this.id=po.getId();
         this.name=po.getName();
-        this.gmtCreate=po.getGmtCreated();
+        this.gmtCreate=po.getGmtCreate();
         this.gmtModified=po.getGmtModified();
     }
 
@@ -81,6 +86,8 @@ public class Shop {
     {
         this.name=name;
     }
+
+
     public Shop()
     {
 
@@ -90,7 +97,7 @@ public class Shop {
         ShopPo shopPo= new ShopPo();
         shopPo.setId(this.id);
         shopPo.setName(this.name);
-        shopPo.setGmtCreated(this.gmtCreate);
+        shopPo.setGmtCreate(this.gmtCreate);
         shopPo.setGmtModified(this.gmtModified);
         Byte state = (byte) this.state.code;
         shopPo.setState(state);
