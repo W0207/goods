@@ -104,6 +104,7 @@ public class ShopDao {
         } catch (DataAccessException e) {
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
         } catch (Exception e) {
+
             // 其他Exception错误
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
         }
@@ -144,6 +145,7 @@ public class ShopDao {
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
         }
         return returnObject;
+
     }
 
 }

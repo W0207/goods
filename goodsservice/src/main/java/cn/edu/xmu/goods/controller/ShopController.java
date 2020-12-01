@@ -1,6 +1,5 @@
 package cn.edu.xmu.goods.controller;
 
-import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.vo.ShopStateVo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
@@ -34,6 +33,7 @@ public class ShopController {
 
     @Autowired
     private ShopService shopService;
+
     /**
      * 添加商店
      *
@@ -50,14 +50,14 @@ public class ShopController {
     })
     @PostMapping("/shops")
     public Object addAShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
-        Object retObject = Common.processFieldErrors(bindingResult,httpServletResponse);
+        Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
             return retObject;
         }
         Shop shop = vo.createShop();
         shop.setGmtCreate(LocalDateTime.now());
         ReturnObject returnObject = shopService.insertShop(shop);
-        if(returnObject.getData() != null){
+        if (returnObject.getData() != null) {
             httpServletResponse.setStatus(HttpStatus.CREATED.value());
             System.out.println(returnObject.getData());
             System.out.println(returnObject.toString());
@@ -70,15 +70,15 @@ public class ShopController {
     /**
      * 查询所有状态
      */
-    @ApiOperation(value="获得店铺的所有状态")
+    @ApiOperation(value = "获得店铺的所有状态")
     @ApiResponses({
-            @ApiResponse(code = 0,message = "成功")
+            @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/states")
-    public Object getshopState(){
-        Shop.State[] states=Shop.State.class.getEnumConstants();
-        List<ShopStateVo> stateVos=new ArrayList<>();
-        for(int i=0;i<states.length;i++){
+    public Object getshopState() {
+        Shop.State[] states = Shop.State.class.getEnumConstants();
+        List<ShopStateVo> stateVos = new ArrayList<>();
+        for (int i = 0; i < states.length; i++) {
             stateVos.add(new ShopStateVo(states[i]));
         }
         return ResponseUtil.ok(new ReturnObject<List>(stateVos).getData());
@@ -90,18 +90,17 @@ public class ShopController {
      */
     @ApiOperation(value = "修改店家信息")
     @ApiImplicitParams({
-            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "ShopVo", name = "vo", value = "可修改的用户信息", required = true)
 
     })
     @ApiResponses({
-            @ApiResponse(code = 0,message = "成功")
+            @ApiResponse(code = 0, message = "成功")
     })
     @PutMapping("/shops/{id}")
-    public Object modifyShop(@PathVariable("id")Long id,@Validated @RequestBody ShopVo shopVo,BindingResult bindingResult)
-    {
-        Object retObject = Common.processFieldErrors(bindingResult,httpServletResponse);
+    public Object modifyShop(@PathVariable("id") Long id, @Validated @RequestBody ShopVo shopVo, BindingResult bindingResult) {
+        Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
             return retObject;
         }
@@ -109,11 +108,9 @@ public class ShopController {
         shop.setId(id);
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.updateShop(shop);
-        if(returnObject.getCode()== ResponseCode.OK)
-        {
+        if (returnObject.getCode() == ResponseCode.OK) {
             return Common.getRetObject(returnObject);
-        }
-        else {
+        } else {
             return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
         }
     }

@@ -17,9 +17,7 @@ public class BrandService {
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
-    public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize){
+    public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize) {
         return brandDao.findAllBrand(page, pageSize);
     }
-
-
 }
