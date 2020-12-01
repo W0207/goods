@@ -73,4 +73,34 @@ public class ShopTest {
         ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
+
+    @Test
+    public void shopOnShelves() throws Exception {
+
+        String responseString = this.mvc.perform(
+                put("/shop/shops/1/onshelves")
+                        .contentType("application/json;charset=UTF-8")
+        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void shopOffShelves() throws Exception {
+
+        String responseString = this.mvc.perform(
+                put("/shop/shops/2/offshelves")
+                        .contentType("application/json;charset=UTF-8")
+        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void deleteShop() throws Exception {
+
+        String responseString = this.mvc.perform(
+                delete("/shop/shops/9")
+                        .contentType("application/json;charset=UTF-8")
+        ).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 }
