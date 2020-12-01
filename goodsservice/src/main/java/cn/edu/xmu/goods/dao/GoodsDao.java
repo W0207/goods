@@ -8,6 +8,7 @@ import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPoExample;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPoExample;
+import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -126,7 +127,7 @@ public class GoodsDao {
      * @return ReturnObject
      * @author shibin zhan
      */
-    public ReturnObject<Object> deleteGoodsSkuState(Long skuId) {
+    public ReturnObject<Object> deleteGoodsSku(Long skuId) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
             logger.info("spuId = " + skuId + "不存在或已被删除");
@@ -146,6 +147,16 @@ public class GoodsDao {
         return returnObject;
     }
 
+    /**
+     * @param shopId
+     * @param skuSn
+     * @param page
+     * @param pageSize
+     * @param spuId
+     * @param skuSn1
+     * @param spuSn
+     * @return
+     */
     public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
         GoodsSkuPoExample example = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = example.createCriteria();
@@ -166,9 +177,38 @@ public class GoodsDao {
             goodsSkuPage.setPageSize(goodsSkuPoPage.getPageSize());
             goodsSkuPage.setTotal(goodsSkuPoPage.getTotal());
             return new ReturnObject<>(rolePage);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             logger.error("findSkuSimple: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
+    }
+
+    /**
+     * 修改商品sku
+     *
+     * @param skuId
+     * @param skuInputVo
+     * @return
+     */
+    public ReturnObject modifySkuById(Long skuId, SkuInputVo skuInputVo) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
+            logger.info("商品不存在或已被删除：spuId = " + skuId);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
+        GoodsSkuPo po = goodsSku.createUpdatePo(skuInputVo);
+
+        ReturnObject<Object> returnObject;
+        int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("skuId = " + skuId + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("spuId = " + skuId + " 的信息已更新");
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
     }
 }

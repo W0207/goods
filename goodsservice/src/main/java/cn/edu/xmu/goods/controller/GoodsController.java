@@ -276,8 +276,6 @@ public class GoodsController {
         } else {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
-
-
     }
 
     /**
@@ -335,4 +333,44 @@ public class GoodsController {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
+
+    /**
+     * 查看所有sku
+     *
+     * @return Object
+     */
+    @ApiOperation(value = "查询sku")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "skuSn", value = "skuSn", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "spuId", value = "spuId", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "spuSn", value = "spuSn", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/sku")
+    public Object getSkuList(
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) Integer shopId,
+            @RequestParam(required = false) String skuSn,
+            @RequestParam(required = false) String spuId,
+            @RequestParam(required = false) String spuSn
+    ) {
+        Object object = null;
+        if (page <= 0 || pageSize <= 0) {
+            object = Common.getNullRetObj(new ReturnObject<>(ResponseCode.FIELD_NOTVALID), httpServletResponse);
+        } else {
+            ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn, spuSn);
+            logger.debug("getSkuSimple = " + returnObject);
+            object = Common.getPageRetObject(returnObject);
+        }
+
+        return object;
+    }
+
+
 }

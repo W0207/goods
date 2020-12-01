@@ -10,3 +10,5 @@
 2020-12-01 15:17:59.683 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273 的信息已更新
 2020-12-01 15:19:31.649 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 0 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
 2020-12-01 15:19:31.794 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273 的信息已更新
+2020-12-01 15:56:36.566 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 0 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
+2020-12-01 15:56:36.755 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 的信息已更新

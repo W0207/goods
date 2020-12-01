@@ -90,7 +90,7 @@ public class ShopController {
      */
     @ApiOperation(value = "修改店家信息")
     @ApiImplicitParams({
-            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "ShopVo", name = "vo", value = "可修改的用户信息", required = true)
 

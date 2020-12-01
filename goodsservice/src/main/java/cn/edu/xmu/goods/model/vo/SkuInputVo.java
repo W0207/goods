@@ -21,7 +21,7 @@ public class SkuInputVo {
     private Long weight;
 
     @ApiModelProperty("库存")
-    private Integer inventory;
+    private Long inventory;
 
     @ApiModelProperty("该型号描述")
     private String detail;
