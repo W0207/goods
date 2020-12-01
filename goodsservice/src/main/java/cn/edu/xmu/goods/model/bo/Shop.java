@@ -34,7 +34,7 @@ public class Shop {
         UP(2, "上线"),
         DOWN(1, "未上线"),
         CLOSE(3, "关闭"),
-        UNPASS(4,"审核未通过");
+        UNPASS(4, "审核未通过");
 
         private static final Map<Integer, Shop.State> stateMap;
 
@@ -86,10 +86,7 @@ public class Shop {
         this.name = name;
     }
 
-
-
     public Shop() {
-
     }
 
     public ShopPo getShopPo() {
@@ -102,7 +99,4 @@ public class Shop {
         shopPo.setState(state);
         return shopPo;
     }
-
-
-
 }

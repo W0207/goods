@@ -85,6 +85,11 @@ public class GoodsSku implements VoObject, Serializable {
         this.gmtModified = po.getGmtModified();
     }
 
+    /**
+     * 创建删除sku的po
+     *
+     * @return
+     */
     public GoodsSkuPo createDeleteStatePo() {
         GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
         goodsSkuPo.setId(id);
@@ -145,6 +150,12 @@ public class GoodsSku implements VoObject, Serializable {
         return skuSn;
     }
 
+    /**
+     * 由vo创建po
+     *
+     * @param skuInputVo
+     * @return
+     */
     public GoodsSkuPo createUpdatePo(SkuInputVo skuInputVo) {
         GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
         goodsSkuPo.setId(id);

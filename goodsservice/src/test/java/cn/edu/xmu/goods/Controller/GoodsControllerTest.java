@@ -1,8 +1,10 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.model.bo.FloatPrice;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,6 +30,9 @@ public class GoodsControllerTest {
 
     @Autowired
     GoodsSkuPoMapper goodsSkuPoMapper;
+
+    @Autowired
+    FloatPricePoMapper floatPricePoMapper;
 
     /**
      * 获得商品spu所有状态
@@ -207,5 +212,23 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
+    }
+
+    /**
+     * 管理员失效商品价格浮动
+     *
+     * @throws Exception
+     */
+    @Test
+    public void invalidFloatPrice() throws Exception {
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

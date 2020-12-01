@@ -120,4 +120,12 @@ public class GoodsService {
         ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
         return returnObject;
     }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
+        return goodsDao.invalidFloatPriceById(id, loginUserId);
+    }
 }
