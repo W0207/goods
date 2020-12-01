@@ -104,14 +104,6 @@ public class Shop {
         return  shopPo;
     }
 
-    /*public newShopRetVo getShopRetPo(){
-        newShopRetVo vo= new newShopRetVo();
-        vo.setId(this.id);
-        vo.setName(this.name);
-        vo.setGmtCreated(this.gmtCreate);
-        vo.setGmtModified(this.gmtModified);
-        return  vo;
-    }*/
 
 
 }

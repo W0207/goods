@@ -22,7 +22,7 @@ public class ShopDao {
 
     /**
      * 增加一个店铺
-     * <p>
+     *
      * by 宇
      */
     public ReturnObject<Shop> insertShop(Shop shop) {
@@ -48,7 +48,7 @@ public class ShopDao {
 
     /**
      * 修改店铺信息
-     * <p>
+     * 
      * by 宇
      */
     public ReturnObject<Shop> updateShop(Shop shop) {
