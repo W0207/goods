@@ -42,22 +42,27 @@ public class BrandDao implements InitializingBean {
         List<BrandPo> brandPos = null;
         try {
             brandPos = poMapper.selectByExample(example);
+            List<VoObject> ret = new ArrayList<>(brandPos.size());
+            for (BrandPo po : brandPos) {
+                Brand bran = new Brand(po);
+                ret.add(bran);
+            }
+            PageInfo<VoObject> rolePage = PageInfo.of(ret);
+            /*PageInfo<BrandPo> brandPoPage = PageInfo.of(brandPos);
+            PageInfo<VoObject> brandPage = new PageInfo<>(ret);
+            brandPage.setPages(brandPoPage.getPages());
+            brandPage.setPageNum(brandPoPage.getPageNum());
+            brandPage.setPageSize(brandPoPage.getPageSize());
+            brandPage.setTotal(brandPoPage.getTotal());*/
+            return new ReturnObject<>(rolePage);
         }catch (DataAccessException e){
             logger.error("findAllBrand: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
 
-        List<VoObject> ret = new ArrayList<>(brandPos.size());
-        for (BrandPo po : brandPos) {
-            Brand bran = new Brand(po);
-        }
-        PageInfo<BrandPo> brandPoPage = PageInfo.of(brandPos);
-        PageInfo<VoObject> brandPage = new PageInfo<>(ret);
-        brandPage.setPages(brandPoPage.getPages());
-        brandPage.setPageNum(brandPoPage.getPageNum());
-        brandPage.setPageSize(brandPoPage.getPageSize());
-        brandPage.setTotal(brandPoPage.getTotal());
-        return new ReturnObject<>(brandPage);
+
+
+
     }
 
     @Override
