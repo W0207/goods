@@ -101,7 +101,7 @@ public class ShopTest {
         String responseString = this.mvc.perform(
                 delete("/shop/shops/9")
                         .contentType("application/json;charset=UTF-8")
-        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        ).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
 }

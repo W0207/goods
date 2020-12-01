@@ -86,11 +86,12 @@ public class ShopDao {
         ReturnObject returnObject = null;
         try {
             ShopPo shopPoSelect = shopPoMapper.selectByPrimaryKey(shopPo.getId());
-            Shop shopSelect = new Shop(shopPoSelect);
-            if (shopPoSelect.getId() == null) {
+
+            if (shopPoSelect == null) {
                 //店铺id不存在
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
+                Shop shopSelect = new Shop(shopPoSelect);
                 if (shopPo.getState().equals(Shop.State.CLOSE) || shopPo.getState().equals(Shop.State.UNPASS) || shopPo.getState().equals(Shop.State.NEW)) {
                     logger.info(shopSelect.getState().getDescription() + "当前状态无法进行变迁");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不允许转换" + shopPo.getId()));
@@ -119,12 +120,12 @@ public class ShopDao {
         ReturnObject returnObject = null;
         try {
             ShopPo shopPoSelect = shopPoMapper.selectByPrimaryKey(shopPo.getId());
-            Shop shopSelect = new Shop(shopPoSelect);
-            System.out.println(shopPoSelect.toString());
-            if (shopPoSelect.getId().equals(null)) {
+            if (shopPoSelect==null) {
                 //店铺id不存在
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
+                System.out.println(shopPoSelect.toString());
+                Shop shopSelect = new Shop(shopPoSelect);
                 if(shopPo.getState().equals(Shop.State.NEW)||shopPo.getState().equals(Shop.State.UNPASS))
                 {
                     logger.info(shopSelect.getState().getDescription() + "对店家id进行了物理删除");
@@ -137,7 +138,7 @@ public class ShopDao {
                 }
             }
         } catch (DataAccessException e) {
-            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
+           returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
         } catch (Exception e) {
             // 其他Exception错误
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
