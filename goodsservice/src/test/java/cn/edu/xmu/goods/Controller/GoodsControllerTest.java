@@ -170,4 +170,16 @@ public class GoodsControllerTest {
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+    /**
+     * 获得所有sku
+     */
+    @Test
+    public void getSkuSimple() throws Exception{
+        String responseString = this.mvc.perform(get("/goods/sku"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 }

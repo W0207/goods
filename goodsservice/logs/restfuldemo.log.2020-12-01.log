@@ -4,3 +4,4 @@
 2020-12-01 09:23:10.866 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =10
 2020-12-01 10:14:09.623 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
 2020-12-01 10:14:09.626 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-01 14:46:58.760 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@2c5e2a44

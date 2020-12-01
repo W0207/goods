@@ -2,6 +2,7 @@ package cn.edu.xmu.goods.model.bo;
 
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.SkuRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
@@ -54,7 +55,7 @@ public class GoodsSku implements VoObject, Serializable {
 
     @Override
     public Object createVo() {
-        return null;
+        return new SkuRetVo(this);
     }
 
     @Override
@@ -89,5 +90,57 @@ public class GoodsSku implements VoObject, Serializable {
         goodsSkuPo.setDisabled((byte) 3);
         goodsSkuPo.setGmtModified(LocalDateTime.now());
         return goodsSkuPo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getGoodsSpuId() {
+        return goodsSpuId;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public Long getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public Long getWeight() {
+        return weight;
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public String getSkuSn() {
+        return skuSn;
     }
 }
