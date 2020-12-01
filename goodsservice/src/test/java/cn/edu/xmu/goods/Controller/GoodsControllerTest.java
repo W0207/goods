@@ -3,6 +3,7 @@ package cn.edu.xmu.goods.Controller;
 import cn.edu.xmu.goods.GoodsServiceApplication;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,5 +170,32 @@ public class GoodsControllerTest {
         String expectedResponse = "{\"errno\":0,\"errormessage\":成功,\"data\":{\"total\":18,\"pages\":2,\"pageSize\":10,\"page\":1,\"list\":[{\"id\":2,\"name\":\"查看任意用户信息\",\"imageUrl\":\"123\",\"detail\":0,\"gmtCreate\":\"2020-11-01T09:52:20\",\"gmtModified\":\"2020-11-02T21:51:45\"}";
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 修改商品sku信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void changeSkuInfoById() throws Exception {
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"originalPrice\":\"123\",\n" +
+                "  \"configuration\": \"123\",\n" +
+                "  \"weight\":\"123\",\n" +
+                "  \"inventory\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(put("/goods/shops/0/skus/273")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        GoodsSkuPo goodsSkuPo=goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getConfiguration());
+        System.out.println(goodsSkuPo.getDetail());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

@@ -8,6 +8,7 @@ import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPoExample;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPoExample;
+import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -115,11 +116,13 @@ public class GoodsDao {
     }
 
     /**
+     * 删除商品sku
+     *
      * @param skuId
      * @return ReturnObject
      * @author shibin zhan
      */
-    public ReturnObject<Object> deleteGoodsSkuState(Long skuId) {
+    public ReturnObject<Object> deleteGoodsSku(Long skuId) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
             logger.info("spuId = " + skuId + "不存在或已被删除");
@@ -134,6 +137,35 @@ public class GoodsDao {
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             logger.info("skuId = " + skuId + "已删除");
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    /**
+     * 修改商品sku
+     *
+     * @param skuId
+     * @param skuInputVo
+     * @return ReturnObject
+     */
+    public ReturnObject<Object> modifySkuById(Long skuId, SkuInputVo skuInputVo) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
+            logger.info("sku不存在或已被删除：skuId = " + skuId);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
+        GoodsSkuPo po = goodsSku.createUpdatePo(skuInputVo);
+
+        ReturnObject<Object> returnObject;
+        int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("skuId = " + skuId + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("skuId = " + skuId + " 的信息已更新");
             returnObject = new ReturnObject<>();
         }
         return returnObject;

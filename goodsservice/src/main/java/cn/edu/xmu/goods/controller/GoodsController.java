@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuStateVo;
 import cn.edu.xmu.goods.service.BrandService;
@@ -58,8 +59,8 @@ public class GoodsController {
         logger.debug("getGoodsSpuState");
         GoodsSpu.State[] states = GoodsSpu.State.class.getEnumConstants();
         List<SpuStateVo> spuStateVos = new ArrayList<>();
-        for (int i = 0; i < states.length; i++) {
-            spuStateVos.add(new SpuStateVo(states[i]));
+        for (GoodsSpu.State state : states) {
+            spuStateVos.add(new SpuStateVo(state));
         }
         return ResponseUtil.ok(new ReturnObject<List>(spuStateVos).getData());
     }
@@ -125,7 +126,7 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "spuInputVo", value = "可修改的用户信息", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SpuInputVo", name = "spuInputVo", value = "可修改的用户信息", required = true),
 
     })
     @ApiResponses({
@@ -238,7 +239,7 @@ public class GoodsController {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
         }
         //商家只能上架自家商品spu，shopId=0可以上架任意商品spu
-        if (shopId == shopid || shopId == 0) {
+        if (shopId.equals(shopid) || shopId == 0) {
             ReturnObject returnObj = goodsService.putOffGoodsOnSaleById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
@@ -269,7 +270,7 @@ public class GoodsController {
             logger.debug("deleteGoodsSku : shopId = " + shopId + " skuId = " + id);
         }
         //商家只能逻辑删除自家商品sku，shopId=0可以逻辑删除任意商品sku
-        if (shopId == shopid || shopId == 0) {
+        if (shopId.equals(shopid) || shopId == 0) {
             ReturnObject returnObj = goodsService.deleteSkuById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
@@ -277,8 +278,8 @@ public class GoodsController {
         }
 
 
-
     }
+
     /**
      * 查看所有品牌
      *
@@ -289,14 +290,53 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/brands")
-    public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize)
-    {
-        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
-        page = (page == null)?1:page;
-        pageSize = (pageSize == null)?49:pageSize;
+    public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 49 : pageSize;
 
-        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
-        ReturnObject<PageInfo<VoObject>>  returnObject = brandService.findAllBrand(page, pageSize);
+        logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
+        ReturnObject<PageInfo<VoObject>> returnObject = brandService.findAllBrand(page, pageSize);
         return Common.getPageRetObject(returnObject);
+    }
+
+    /**
+     * 管理员或店家修改商品sku
+     *
+     * @param bindingResult 校验信息
+     * @param skuInputVo    修改信息的SkuInputVo
+     * @return Object
+     */
+    @ApiOperation(value = "店家修改商品spu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "skuInputVo", value = "可修改的sku信息", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    //@Audit //需要认证
+    @PutMapping("shops/{shopId}/skus/{id}")
+    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("modifyGoodsSku : shopId = " + shopId + " skuId = " + id + " vo = " + skuInputVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyGoodsSku shopId = " + shopId + " skuId = " + id);
+            return returnObject;
+        }
+        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
+        if (shopId == shopid || shopId == 0) {
+            ReturnObject returnObj = goodsService.modifySkuInfo(id, skuInputVo);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            logger.error("无权限修改本商品的信息");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
     }
 }

@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -102,6 +103,15 @@ public class GoodsService {
      * @return ReturnObject
      */
     public ReturnObject deleteSkuById(Long skuId) {
-        return goodsDao.deleteGoodsSkuState(skuId);
+        return goodsDao.deleteGoodsSku(skuId);
+    }
+
+    /**
+     * @param id
+     * @param skuInputVo
+     * @return
+     */
+    public ReturnObject modifySkuInfo(Long id, SkuInputVo skuInputVo) {
+        return goodsDao.modifySkuById(id, skuInputVo);
     }
 }

@@ -27,23 +27,18 @@ public class Brand implements VoObject {
     private LocalDateTime gmtModified;
 
     public Brand(BrandPo po) {
-        this.id=po.getId();
-        this.name=po.getName();
-        this.imageUrl=po.getImageUrl();
-        this.detail=po.getDetail();
-        this.gmtCreate=po.getGmtCreate();
-        this.gmtModified=po.getGmtModified();
-
-
+        this.id = po.getId();
+        this.name = po.getName();
+        this.imageUrl = po.getImageUrl();
+        this.detail = po.getDetail();
+        this.gmtCreate = po.getGmtCreate();
+        this.gmtModified = po.getGmtModified();
     }
-
-
 
     @Override
     public Object createVo() {
         return new BrandRetVo(this);
     }
-
 
     @Override
     public Object createSimpleVo() {
@@ -73,7 +68,6 @@ public class Brand implements VoObject {
     public LocalDateTime getGmtModified() {
         return gmtModified;
     }
-
 
 
 }
