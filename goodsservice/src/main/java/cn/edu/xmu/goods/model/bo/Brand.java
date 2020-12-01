@@ -1,6 +1,8 @@
 package cn.edu.xmu.goods.model.bo;
 
 import cn.edu.xmu.goods.model.po.BrandPo;
+import cn.edu.xmu.goods.model.vo.BrandRetVo;
+import cn.edu.xmu.goods.model.vo.BrandVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.encript.SHA256;
@@ -36,13 +38,42 @@ public class Brand implements VoObject {
     }
 
 
+
     @Override
     public Object createVo() {
-        return null;
+        return new BrandRetVo(this);
     }
+
 
     @Override
     public Object createSimpleVo() {
         return null;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+
+
 }
