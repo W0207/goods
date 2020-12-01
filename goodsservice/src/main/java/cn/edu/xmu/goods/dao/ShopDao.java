@@ -48,7 +48,7 @@ public class ShopDao {
 
     /**
      * 修改店铺信息
-     * 
+     *
      * by 宇
      */
     public ReturnObject<Shop> updateShop(Shop shop) {
