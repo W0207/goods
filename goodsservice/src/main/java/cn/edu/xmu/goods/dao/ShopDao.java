@@ -22,7 +22,7 @@ public class ShopDao {
 
     /**
      * 增加一个店铺
-     *
+     * <p>
      * by 宇
      */
     public ReturnObject<Shop> insertShop(Shop shop) {
@@ -48,7 +48,7 @@ public class ShopDao {
 
     /**
      * 修改店铺信息
-     *
+     * <p>
      * by 宇
      */
     public ReturnObject<Shop> updateShop(Shop shop) {
@@ -121,25 +121,23 @@ public class ShopDao {
         ReturnObject returnObject = null;
         try {
             ShopPo shopPoSelect = shopPoMapper.selectByPrimaryKey(shopPo.getId());
-            if (shopPoSelect==null) {
+            if (shopPoSelect == null) {
                 //店铺id不存在
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
                 System.out.println(shopPoSelect.toString());
                 Shop shopSelect = new Shop(shopPoSelect);
-                if(shopPo.getState().equals(Shop.State.NEW)||shopPo.getState().equals(Shop.State.UNPASS))
-                {
+                if (shopPo.getState().equals(Shop.State.NEW) || shopPo.getState().equals(Shop.State.UNPASS)) {
                     logger.info(shopSelect.getState().getDescription() + "对店家id进行了物理删除");
                     int ret = shopPoMapper.deleteByPrimaryKey(shopPo.getId());
-                }
-                else {
+                } else {
                     logger.info(shopSelect.getState().getDescription() + "对店家id进行了逻辑删除");
                     shopPoMapper.updateByPrimaryKeySelective(shopPo);
                     returnObject = new ReturnObject<>();
                 }
             }
         } catch (DataAccessException e) {
-           returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
         } catch (Exception e) {
             // 其他Exception错误
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
