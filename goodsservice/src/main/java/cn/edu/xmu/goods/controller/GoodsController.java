@@ -277,5 +277,26 @@ public class GoodsController {
         }
 
 
+
+    }
+    /**
+     * 查看所有品牌
+     *
+     * @return Object
+     */
+    @ApiOperation(value = "查看所有品牌")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/brands")
+    public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize)
+    {
+        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
+        page = (page == null)?1:page;
+        pageSize = (pageSize == null)?49:pageSize;
+
+        logger.debug("getAllBrand: page = "+ page +"  pageSize ="+pageSize);
+        ReturnObject<PageInfo<VoObject>>  returnObject = brandService.findAllBrand(page, pageSize);
+        return Common.getPageRetObject(returnObject);
     }
 }
