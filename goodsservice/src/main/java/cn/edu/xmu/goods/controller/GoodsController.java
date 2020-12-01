@@ -312,12 +312,7 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "skuInputVo", value = "可修改的sku信息", required = true),
-
-    })
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
-    })
+            @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "skuInputVo", value = "可修改的sku信息", required = true)
     //@Audit //需要认证
     @PutMapping("shops/{shopId}/skus/{id}")
     public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult, @Depart Long shopid) {

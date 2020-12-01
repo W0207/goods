@@ -11,6 +11,7 @@ import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,5 +114,11 @@ public class GoodsService {
      */
     public ReturnObject modifySkuInfo(Long id, SkuInputVo skuInputVo) {
         return goodsDao.modifySkuById(id, skuInputVo);
+    }
+
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn)
+    {
+        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId,skuSn,page,pageSize,spuId,skuSn1,spuSn);
+        return returnObject;
     }
 }

@@ -173,6 +173,7 @@ public class GoodsControllerTest {
     }
 
     /**
+     * <<<<<<< HEAD
      * 修改商品sku信息
      *
      * @throws Exception
@@ -193,9 +194,18 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        GoodsSkuPo goodsSkuPo=goodsSkuPoMapper.selectByPrimaryKey(273L);
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
         System.out.println(goodsSkuPo.getConfiguration());
         System.out.println(goodsSkuPo.getDetail());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void getSkuSimple() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/sku"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 }
