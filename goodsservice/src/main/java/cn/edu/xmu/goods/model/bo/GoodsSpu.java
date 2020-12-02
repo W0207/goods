@@ -16,9 +16,9 @@ public class GoodsSpu implements VoObject {
      * 商品状态
      */
     public enum State {
-        UNPUBLISHED(0, "未发布"),
-        PUBLISHED(1, "发布"),
-        DELETED(2, "废弃");
+        UNPUBLISHED(0, "未上架"),
+        PUBLISHED(4, "上架"),
+        DELETED(6, "已删除");
 
         private static final Map<Integer, State> stateMap;
 
@@ -101,7 +101,7 @@ public class GoodsSpu implements VoObject {
     }
 
     /**
-     * 用 Vo 对象创建 用来更新 GoodsSpu 的 Po 对象
+     * 用 vo 对象创建用来更新 spu 的 po 对象
      *
      * @param spuInputVo vo 对象
      * @return po 对象
@@ -122,13 +122,16 @@ public class GoodsSpu implements VoObject {
     }
 
     /**
-     * @return po 对象
+     * 修改商品的上下架状态
+     *
+     * @param code
+     * @return po对象
      */
-    public GoodsSpuPo createDeletePo() {
+    public GoodsSpuPo createUpdateStatePo(Long code) {
         GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
         goodsSpuPo.setId(id);
-        goodsSpuPo.setDisabled((byte) 5);
-        goodsSpuPo.setGmtModified(LocalDateTime.now());
+        goodsSpuPo.setState(Byte.valueOf(String.valueOf(code)));//修改spu状态
+        goodsSpuPo.setGmtModified(LocalDateTime.now());//记录修改的时间
         return goodsSpuPo;
     }
 

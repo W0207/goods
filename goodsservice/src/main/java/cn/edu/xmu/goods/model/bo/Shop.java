@@ -22,7 +22,7 @@ public class Shop {
     private State state = State.NEW;
 
     public void setId(Long id) {
-        this.id=id;
+        this.id = id;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Shop {
         UP(2, "上线"),
         DOWN(1, "未上线"),
         CLOSE(3, "关闭"),
-        UNPASS(4,"审核未通过");
+        UNPASS(4, "审核未通过");
 
         private static final Map<Integer, Shop.State> stateMap;
 
@@ -74,36 +74,29 @@ public class Shop {
      * 构造函数
      * 用po构造
      */
-    public Shop(ShopPo po)
-    {
-        this.id=po.getId();
-        this.name=po.getName();
-        this.gmtCreate=po.getGmtCreate();
-        this.gmtModified=po.getGmtModified();
+
+    public Shop(ShopPo po) {
+        this.id = po.getId();
+        this.name = po.getName();
+        this.gmtCreate = po.getGmtCreate();
+        this.gmtModified = po.getGmtModified();
     }
 
-    public Shop(String name)
-    {
-        this.name=name;
+    public Shop(String name) {
+        this.name = name;
     }
 
-
-    public Shop()
-    {
-
+    public Shop() {
     }
 
-    public ShopPo getShopPo(){
-        ShopPo shopPo= new ShopPo();
+    public ShopPo getShopPo() {
+        ShopPo shopPo = new ShopPo();
         shopPo.setId(this.id);
         shopPo.setName(this.name);
         shopPo.setGmtCreate(this.gmtCreate);
         shopPo.setGmtModified(this.gmtModified);
         Byte state = (byte) this.state.code;
         shopPo.setState(state);
-        return  shopPo;
+        return shopPo;
     }
-
-
-
 }

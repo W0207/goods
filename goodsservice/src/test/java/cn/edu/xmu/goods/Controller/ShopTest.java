@@ -25,9 +25,8 @@ public class ShopTest {
     private MockMvc mvc;
 
     @Test
-    public void inserShopTest()
-    {
-        ShopVo vo =new ShopVo();
+    public void inserShopTest() {
+        ShopVo vo = new ShopVo();
         vo.setName("test");
         String shopJson = JacksonUtil.toJson(vo);
         String expectedResponse = "";
@@ -64,7 +63,7 @@ public class ShopTest {
 
     @Test
     public void updateShop() throws Exception {
-        ShopVo vo =new ShopVo();
+        ShopVo vo = new ShopVo();
         vo.setName("test");
         String shopJson = JacksonUtil.toJson(vo);
 
