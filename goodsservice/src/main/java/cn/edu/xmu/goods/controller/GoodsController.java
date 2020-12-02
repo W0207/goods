@@ -449,7 +449,7 @@ public class GoodsController {
     }
 
     /**
-     * 管理员删除品牌(目前是逻辑删除，情况表中各项数据)
+     * 管理员删除品牌
      *
      * @param id
      * @param shopId
@@ -475,7 +475,7 @@ public class GoodsController {
             ReturnObject returnObj = brandService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限删除本品牌");
+            logger.error("无权限删除品牌");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }

@@ -67,8 +67,7 @@ public class BrandDao implements InitializingBean {
             logger.info("品牌不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        Brand brand = new Brand(brandPo);
-        BrandPo po = brand.deleteUpdateStatePo();
+        BrandPo po = brandPoMapper.selectByPrimaryKey(id);
         ReturnObject<Object> returnObject;
         int ret = brandPoMapper.updateByPrimaryKeySelective(po);
         // 检查更新有否成功
@@ -78,6 +77,7 @@ public class BrandDao implements InitializingBean {
         } else {
             returnObject = new ReturnObject<>();
         }
+        brandPoMapper.deleteByPrimaryKey(id);
         return returnObject;
     }
 
