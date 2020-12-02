@@ -136,16 +136,27 @@ public class GoodsService {
      */
     public ReturnObject spuAddBrand(Long shopId,Long spuId,Long id) {
         ReturnObject returnObject = null;
-        ReturnObject tempSpu = findGoodsSpuById(spuId);
-        if (tempSpu.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
+        if (tempSpu == null) {
             logger.debug("findGoodsSkuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            if (tempSpu.getData().getShopId() == shopId) {
+            if (tempSpu.getShopId() == shopId) {
                 BrandPo brandPo = brandDao.findBrandById(id);
                 if (brandPo != null) {
-                    GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+                    GoodsSpuPo goodsSpuPo=new GoodsSpuPo();
+                    goodsSpuPo.setBrandId(id);
+                    goodsSpuPo.setId(spuId);
+                    returnObject = goodsDao.modifySpuBySpuPo(goodsSpuPo);
                 }
+                else {
+                    logger.debug("findBrandById : Not Found!");
+                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                }
+            }
+            else {
+                logger.debug("spuAddBrand shopId和这个spu的里的shopId不一致");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
         }
         return returnObject;

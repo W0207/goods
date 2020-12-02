@@ -273,4 +273,16 @@ public class GoodsControllerTest {
         getAllBrand();
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+    /**
+     * spu添加品牌
+     * @throws Exception
+     */
+    @Test
+    public void spuAddBrand() throws Exception {
+        String responseString = this.mvc.perform(post("/goods/shops/0/spus/273/brands/75"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 }

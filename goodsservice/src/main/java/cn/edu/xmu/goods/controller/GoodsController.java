@@ -463,34 +463,10 @@ public class GoodsController {
             @PathVariable Long id
     ) {
         ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
-
+        return Common.decorateReturnObject(returnObject);
     }
 
-    /**
-     * 管理员删除品牌(目前是逻辑删除，情况表中各项数据)
-     *
-     * @param id
-     * @param shopId
-     * @return
-     */
-    @ApiOperation(value = "管理员删除品牌")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "brandId", value = "品牌id", required = true)
-    })
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
-    })
 
-    @PostMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
-    public Object spuAddBrand(
-            @PathVariable Long shopId,
-            @PathVariable Long spuId,
-            @PathVariable Long id
-    ) {
-        ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
-    }
 
 
     //@Audit //需要认证
