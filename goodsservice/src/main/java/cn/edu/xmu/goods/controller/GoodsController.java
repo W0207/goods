@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuStateVo;
+import cn.edu.xmu.goods.model.vo.CategoryInputVo;
 import cn.edu.xmu.goods.service.BrandService;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -43,6 +44,7 @@ public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
+
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -477,4 +479,94 @@ public class GoodsController {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
+
+    /**
+     * 管理员新增商品类目
+     * @param id: 种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return Object
+     */
+    @ApiOperation(value = "管理员新增商品类目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "种类 id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "CategoryInputVo", name = "CategoryInputVo", value = "类目详细信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit // 需要认证
+    @PostMapping ("/categories/{id}/subcategories")
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addCategory: CategoryId = "+ id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while addCategory Categoryid = " ,id);
+            return returnObject;
+        }
+        Object returnObj;
+        ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+        returnObject = ResponseUtil.ok(goodsCategory.getData());
+        return returnObject;
+
+    }
+
+    /**
+     * 管理员修改商品类目信息
+     * @param id: 种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return Object
+     */
+    @ApiOperation(value = "管理员修改商品类目信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "种类 id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "CategoryInputVo", name = "CategoryInputVo", value = "类目详细信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit // 需要认证
+    @PutMapping("/categories/{id}")
+    public Object modifyGoods_type(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("modifyGoods_type: CategoryId = "+ id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyGoods_type id = " ,id);
+            return returnObject;
+        }
+        ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
+        return Common.decorateReturnObject(returnObj);
+
+    }
+
+    /**
+     * 管理员删除商品类目信息
+     * @param id: 种类 id
+     * @return Object
+     */
+    @ApiOperation(value = "管理员删除商品类目信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="authorization", value="Token", required = true, dataType="String", paramType="header"),
+            @ApiImplicitParam(name="id", required = true, dataType="Integer", paramType="path")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit // 需要认证
+    @DeleteMapping("/categories/{id}")
+    public Object delCategory(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("deleteCategory: CategoryId = "+ id);
+        }
+        ReturnObject returnObject = goodsService.deleteCategoryById(id);
+        return Common.decorateReturnObject(returnObject);
+    }
+
+
 }
