@@ -60,14 +60,14 @@ public class BrandDao implements InitializingBean {
         }
     }
 
-    public ReturnObject<Object> deleteBrandById(Long id, Long loginUserId) {
+    public ReturnObject<Object> deleteBrandById(Long id) {
         BrandPo brandPo = poMapper.selectByPrimaryKey(id);
         if (brandPo == null) {
             logger.info("品牌不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         Brand brand = new Brand(brandPo);
-        BrandPo po = brand.deleteUpdateStatePo(loginUserId);
+        BrandPo po = brand.deleteUpdateStatePo();
         ReturnObject<Object> returnObject;
         int ret = poMapper.updateByPrimaryKeySelective(po);
         // 检查更新有否成功

@@ -447,7 +447,7 @@ public class GoodsController {
     }
 
     /**
-     * 管理员删除品牌
+     * 管理员删除品牌(目前是逻辑删除，情况表中各项数据)
      *
      * @param id
      * @param shopId
@@ -464,16 +464,16 @@ public class GoodsController {
     })
     //@Audit //需要认证
     @DeleteMapping("/shops/{shopId}/brands/{id}")
-    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid, @LoginUser Long loginUserId) {
+    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteBrand : shopId = " + shopId + " brandId = " + id);
         }
         //商家只能修改自家品牌，shopId=0可以修改任意品牌
         if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = brandService.deleteBrandById(id, loginUserId);
+            ReturnObject returnObj = brandService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限修改本商品价格浮动的信息");
+            logger.error("无权限删除本品牌");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
