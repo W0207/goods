@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuStateVo;
@@ -402,6 +403,45 @@ public class GoodsController {
             return Common.decorateReturnObject(returnObj);
         } else {
             logger.error("无权限修改本商品价格浮动的信息");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
+
+    /**
+     * 管理员修改品牌
+     *
+     * @param shopId
+     * @param id
+     * @return Object
+     */
+    @ApiOperation(value = "管理员修改品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "BrandInputVo", name = "brandInputVo", value = "可修改的品牌信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    //@Audit
+    @PutMapping("/shops/{shopId}/brands/{id}")
+    public Object modifyBrand(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("modifyBrand : shopId = " + shopId + " brandId = " + id + " vo = " + brandInputVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyBrand shopId = " + shopId + " skuId = " + id);
+            return returnObject;
+        }
+        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
+        if (shopId.equals(shopid) || shopId == 0) {
+            ReturnObject returnObj = goodsService.modifyBrandInfo(id, brandInputVo);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            logger.error("无权限修改本品牌的信息");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }

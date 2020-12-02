@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
@@ -127,5 +128,9 @@ public class GoodsService {
      */
     public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
         return goodsDao.invalidFloatPriceById(id, loginUserId);
+    }
+
+    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
+        return goodsDao.modifyBrandById(id,brandInputVo);
     }
 }

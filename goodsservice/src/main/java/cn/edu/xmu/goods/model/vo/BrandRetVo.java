@@ -22,7 +22,6 @@ public class BrandRetVo {
 
     private LocalDateTime gmtModified;
 
-
     public BrandRetVo(Brand brand) {
         this.id = brand.getId();
         this.name = brand.getName();
