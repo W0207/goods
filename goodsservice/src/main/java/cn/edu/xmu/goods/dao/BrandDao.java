@@ -60,6 +60,26 @@ public class BrandDao implements InitializingBean {
         }
     }
 
+    public ReturnObject<Object> deleteBrandById(Long id, Long loginUserId) {
+        BrandPo brandPo = poMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            logger.info("品牌不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Brand brand = new Brand(brandPo);
+        BrandPo po = brand.deleteUpdateStatePo(loginUserId);
+        ReturnObject<Object> returnObject;
+        int ret = poMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("品牌不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
 

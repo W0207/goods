@@ -445,4 +445,36 @@ public class GoodsController {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
+
+    /**
+     * 管理员删除品牌
+     *
+     * @param id
+     * @param shopId
+     * @return
+     */
+    @ApiOperation(value = "管理员删除品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "brandId", value = "品牌id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    //@Audit //需要认证
+    @DeleteMapping("/shops/{shopId}/brands/{id}")
+    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid, @LoginUser Long loginUserId) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("deleteBrand : shopId = " + shopId + " brandId = " + id);
+        }
+        //商家只能修改自家品牌，shopId=0可以修改任意品牌
+        if (shopId.equals(shopid) || shopId == 0) {
+            ReturnObject returnObj = brandService.deleteBrandById(id, loginUserId);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            logger.error("无权限修改本商品价格浮动的信息");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
 }

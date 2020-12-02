@@ -255,4 +255,22 @@ public class GoodsControllerTest {
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
     }
+
+    /**
+     * 管理员删除品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteBrand() throws Exception {
+        getAllBrand();
+        String responseString = this.mvc.perform(delete("/goods/shops/0/brands/72"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        getAllBrand();
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
 }
