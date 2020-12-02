@@ -22,20 +22,19 @@ import java.util.List;
 @Repository
 public class BrandDao implements InitializingBean {
 
-
-
-    private  static  final Logger logger = LoggerFactory.getLogger(BrandDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(BrandDao.class);
 
     @Autowired
     private BrandPoMapper poMapper;
 
     /**
      * 查询所有品牌
-     * @param page: 页码
+     *
+     * @param page:    页码
      * @param pageSize : 每页数量
      * @return 品牌列表
      */
-    public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize){
+    public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize) {
         BrandPoExample example = new BrandPoExample();
         BrandPoExample.Criteria criteria = example.createCriteria();
         PageHelper.startPage(page, pageSize);
@@ -55,14 +54,10 @@ public class BrandDao implements InitializingBean {
             brandPage.setPageSize(brandPoPage.getPageSize());
             brandPage.setTotal(brandPoPage.getTotal());
             return new ReturnObject<>(rolePage);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             logger.error("findAllBrand: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
-
-
-
-
     }
 
     @Override

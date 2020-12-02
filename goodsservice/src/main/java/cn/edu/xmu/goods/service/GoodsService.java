@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -103,12 +104,28 @@ public class GoodsService {
      * @return ReturnObject
      */
     public ReturnObject deleteSkuById(Long skuId) {
-        return goodsDao.deleteGoodsSkuState(skuId);
+        return goodsDao.deleteGoodsSku(skuId);
     }
 
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn)
-    {
-        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId,skuSn,page,pageSize,spuId,skuSn1,spuSn);
+    /**
+     * @param id
+     * @param skuInputVo
+     * @return
+     */
+    public ReturnObject modifySkuInfo(Long id, SkuInputVo skuInputVo) {
+        return goodsDao.modifySkuById(id, skuInputVo);
+    }
+
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
+        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
         return returnObject;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
+        return goodsDao.invalidFloatPriceById(id, loginUserId);
     }
 }

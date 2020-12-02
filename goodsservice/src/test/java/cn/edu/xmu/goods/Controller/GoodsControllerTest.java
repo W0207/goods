@@ -1,8 +1,11 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.model.bo.FloatPrice;
+import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ public class GoodsControllerTest {
 
     @Autowired
     GoodsSkuPoMapper goodsSkuPoMapper;
+
+    @Autowired
+    FloatPricePoMapper floatPricePoMapper;
 
     /**
      * 获得商品spu所有状态
@@ -172,14 +178,57 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 获得所有sku
+     * <<<<<<< HEAD
+     * 修改商品sku信息
+     *
+     * @throws Exception
      */
     @Test
-    public void getSkuSimple() throws Exception{
+    public void changeSkuInfoById() throws Exception {
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"originalPrice\":\"123\",\n" +
+                "  \"configuration\": \"123\",\n" +
+                "  \"weight\":\"123\",\n" +
+                "  \"inventory\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(put("/goods/shops/0/skus/273")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getConfiguration());
+        System.out.println(goodsSkuPo.getDetail());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void getSkuList() throws Exception {
         String responseString = this.mvc.perform(get("/goods/sku"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
+    }
+
+    /**
+     * 管理员失效商品价格浮动
+     *
+     * @throws Exception
+     */
+    @Test
+    public void invalidFloatPrice() throws Exception {
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }
