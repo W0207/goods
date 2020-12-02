@@ -20,4 +20,13 @@ public class BrandService {
     public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize) {
         return brandDao.findAllBrand(page, pageSize);
     }
+
+    /**
+     * 管理员删除品牌
+     * @param id
+     * @return
+     */
+    public ReturnObject deleteBrandById(Long id, Long loginUserId) {
+        return brandDao.deleteBrandById(id, loginUserId);
+    }
 }
