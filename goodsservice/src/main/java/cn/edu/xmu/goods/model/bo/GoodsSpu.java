@@ -101,7 +101,7 @@ public class GoodsSpu implements VoObject {
     }
 
     /**
-     * 用 Vo 对象创建 用来更新 GoodsSpu 的 Po 对象
+     * 用 vo 对象创建用来更新 spu 的 po 对象
      *
      * @param spuInputVo vo 对象
      * @return po 对象
@@ -122,29 +122,16 @@ public class GoodsSpu implements VoObject {
     }
 
     /**
-     * 创建一个删除的po对象
-     *
-     * @return po 对象
-     */
-    public GoodsSpuPo createDeletePo() {
-        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
-        goodsSpuPo.setId(id);
-        goodsSpuPo.setState((byte) 6);
-        goodsSpuPo.setDisabled((byte) 5);//状态码为4可以被访问
-        goodsSpuPo.setGmtModified(LocalDateTime.now());
-        return goodsSpuPo;
-    }
-
-    /**
      * 修改商品的上下架状态
+     *
      * @param code
      * @return po对象
      */
     public GoodsSpuPo createUpdateStatePo(Long code) {
         GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
         goodsSpuPo.setId(id);
-        goodsSpuPo.setState(Byte.valueOf(String.valueOf(code)));
-        goodsSpuPo.setGmtModified(LocalDateTime.now());
+        goodsSpuPo.setState(Byte.valueOf(String.valueOf(code)));//修改spu状态
+        goodsSpuPo.setGmtModified(LocalDateTime.now());//记录修改的时间
         return goodsSpuPo;
     }
 

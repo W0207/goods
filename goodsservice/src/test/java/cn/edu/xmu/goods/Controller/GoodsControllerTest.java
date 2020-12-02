@@ -1,8 +1,11 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.mapper.BrandPoMapper;
+import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.model.bo.FloatPrice;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -28,6 +31,12 @@ public class GoodsControllerTest {
 
     @Autowired
     GoodsSkuPoMapper goodsSkuPoMapper;
+
+    @Autowired
+    FloatPricePoMapper floatPricePoMapper;
+
+    @Autowired
+    BrandPoMapper brandPoMapper;
 
     /**
      * 获得商品spu所有状态
@@ -207,5 +216,61 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
+    }
+
+    /**
+     * 管理员失效商品价格浮动
+     *
+     * @throws Exception
+     */
+    @Test
+    public void invalidFloatPrice() throws Exception {
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/273"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 修改品牌信息
+     */
+    @Test
+    public void modifyBrand() throws Exception {
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(put("/goods/shops/0/brands/71")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
+    }
+
+    /**
+     * 管理员删除品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteBrand() throws Exception {
+        getAllBrand();
+        String responseString = this.mvc.perform(delete("/goods/shops/0/brands/72"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        getAllBrand();
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

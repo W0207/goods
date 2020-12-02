@@ -13,32 +13,31 @@ public class ShopService {
     ShopDao shopDao;
 
     //新建商家
-    public ReturnObject insertShop(Shop shop){
+    public ReturnObject insertShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.insertShop(shop);
         return returnObject;
     }
 
     //更新商家信息
-    public ReturnObject updateShop(Shop shop){
+    public ReturnObject updateShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.updateShop(shop);
-        return  returnObject;
+        return returnObject;
     }
 
     //上线商家
-    public ReturnObject shopOnShelves(Shop shop){
+    public ReturnObject shopOnShelves(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.shopShelves(shop);
         return returnObject;
     }
 
     //下线商家
-    public ReturnObject shopOffShelves(Shop shop){
+    public ReturnObject shopOffShelves(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.shopShelves(shop);
         return returnObject;
     }
 
     //删除商家
-    public ReturnObject deleteShop(Shop shop)
-    {
+    public ReturnObject deleteShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.deleteShop(shop);
         return returnObject;
     }

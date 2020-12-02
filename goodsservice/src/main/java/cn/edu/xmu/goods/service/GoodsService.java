@@ -7,6 +7,7 @@ import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
@@ -121,9 +122,8 @@ public class GoodsService {
         return goodsDao.modifySkuById(id, skuInputVo);
     }
 
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn)
-    {
-        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId,skuSn,page,pageSize,spuId,skuSn1,spuSn);
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
+        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
         return returnObject;
     }
 
@@ -134,24 +134,31 @@ public class GoodsService {
      * @param id
      * @return
      */
-    public ReturnObject spuAddBrand(Long shopId,Long spuId,Long id)
-    {
+    public ReturnObject spuAddBrand(Long shopId,Long spuId,Long id) {
         ReturnObject returnObject = null;
         ReturnObject tempSpu = findGoodsSpuById(spuId);
-        if(tempSpu.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST)
-        {
+        if (tempSpu.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
             logger.debug("findGoodsSkuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        else{
-            if(tempSpu.getData().getShopId()==shopId){
+        } else {
+            if (tempSpu.getData().getShopId() == shopId) {
                 BrandPo brandPo = brandDao.findBrandById(id);
-                if(brandPo!=null)
-                {
+                if (brandPo != null) {
                     GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
                 }
             }
         }
         return returnObject;
+    }
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
+        return goodsDao.invalidFloatPriceById(id, loginUserId);
+    }
+
+    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
+        return goodsDao.modifyBrandById(id,brandInputVo);
     }
 }

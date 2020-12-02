@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
-@ApiOperation(value = "可修改的sku信息")
 @Data
+@ApiOperation(value = "可修改的sku信息")
 public class SkuInputVo {
 
     @ApiModelProperty(value = "商品型号名称")
