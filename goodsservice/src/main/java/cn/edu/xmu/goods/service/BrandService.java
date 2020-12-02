@@ -26,7 +26,7 @@ public class BrandService {
      * @param id
      * @return
      */
-    public ReturnObject deleteBrandById(Long id, Long loginUserId) {
-        return brandDao.deleteBrandById(id, loginUserId);
+    public ReturnObject deleteBrandById(Long id) {
+        return brandDao.deleteBrandById(id);
     }
 }

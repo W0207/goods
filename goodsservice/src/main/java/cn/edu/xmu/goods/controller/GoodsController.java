@@ -468,12 +468,12 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteBrand : shopId = " + shopId + " brandId = " + id);
         }
-        //商家只能修改自家品牌，shopId=0可以修改任意品牌
+        //商家只能删除自家品牌，shopId=0可以删除任意品牌
         if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = brandService.deleteBrandById(id, loginUserId);
+            ReturnObject returnObj = brandService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限修改本商品价格浮动的信息");
+            logger.error("无权限删除品牌");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }

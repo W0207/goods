@@ -83,13 +83,4 @@ public class Brand implements VoObject {
         return brandPo;
     }
 
-    public BrandPo deleteUpdateStatePo(Long loginUserId) {
-        BrandPo brandPo=new BrandPo();
-        brandPo.setImageUrl("null");
-        brandPo.setName("null");
-        brandPo.setDetail("null");
-        brandPo.setGmtModified(LocalDateTime.now());
-        brandPo.setId(getId());
-        return brandPo;
-    }
 }
