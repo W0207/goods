@@ -61,15 +61,20 @@ public class BrandDao implements InitializingBean {
         }
     }
 
+    /**
+     * 删除品牌(物理删除)
+     *
+     * @param id
+     * @return
+     */
     public ReturnObject<Object> deleteBrandById(Long id) {
         BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
         if (brandPo == null) {
             logger.info("品牌不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        BrandPo po = brandPoMapper.selectByPrimaryKey(id);
         ReturnObject<Object> returnObject;
-        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
+        int ret = brandPoMapper.deleteByPrimaryKey(id);
         // 检查更新有否成功
         if (ret == 0) {
             logger.info("品牌不存在");
@@ -77,7 +82,6 @@ public class BrandDao implements InitializingBean {
         } else {
             returnObject = new ReturnObject<>();
         }
-        brandPoMapper.deleteByPrimaryKey(id);
         return returnObject;
     }
 
@@ -108,6 +112,14 @@ public class BrandDao implements InitializingBean {
             returnObject = new ReturnObject<>();
         }
         return returnObject;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public BrandPo findBrandById(Long id) {
+        return brandPoMapper.selectByPrimaryKey(id);
     }
 
     @Override

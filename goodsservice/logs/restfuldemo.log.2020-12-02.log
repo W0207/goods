@@ -118,3 +118,19 @@
 2020-12-02 18:17:18.589 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
 2020-12-02 18:17:18.602 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
 2020-12-02 18:17:18.603 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 19:02:17.868 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 140
+2020-12-02 19:39:55.850 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 137
+2020-12-02 19:46:04.591 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 137
+2020-12-02 19:46:04.812 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 137 的信息已新增成功
+2020-12-02 20:04:34.488 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:04:34.491 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 20:04:35.067 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 20:04:35.083 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:04:35.084 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 20:05:34.017 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=123, detail=123)
+2020-12-02 20:05:34.081 [main] INFO  cn.edu.xmu.goods.dao.BrandDao - brandId = 71 的信息已更新
+2020-12-02 20:07:17.347 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-02 20:07:17.523 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-02 20:09:21.852 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-02 20:09:21.942 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-02 20:30:36.049 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已加入品牌

@@ -1,11 +1,9 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
-import cn.edu.xmu.goods.mapper.BrandPoMapper;
-import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
-import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
-import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.bo.FloatPrice;
+import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -37,6 +35,9 @@ public class GoodsControllerTest {
 
     @Autowired
     BrandPoMapper brandPoMapper;
+
+    @Autowired
+    GoodsCategoryPoMapper goodsCategoryPoMapper;
 
     /**
      * 获得商品spu所有状态
@@ -182,7 +183,6 @@ public class GoodsControllerTest {
     }
 
     /**
-     * <<<<<<< HEAD
      * 修改商品sku信息
      *
      * @throws Exception
@@ -282,7 +282,7 @@ public class GoodsControllerTest {
     @Test
     public void addCategory() throws Exception {
         String requireJson = "{\n  \"name\":\"家电\"}";
-        String responseString = this.mvc.perform(post("/goods/categories/140/subcategories")
+        String responseString = this.mvc.perform(post("/goods/shops/0/categories/137/subcategories")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
@@ -296,15 +296,17 @@ public class GoodsControllerTest {
      * @throws Exception
      */
     @Test
-    public void modifyGoods_type() throws Exception {
+    public void modifyGoodsType() throws Exception {
+        System.out.println(goodsCategoryPoMapper.selectByPrimaryKey(122L).getName());
         String requireJson = "{\n  \"name\":\"123\"}";
-        String responseString = this.mvc.perform(put("/goods/categories/122")
+        String responseString = this.mvc.perform(put("/goods/shops/0/categories/122")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        JSONAssert.assertEquals(expectedResponse, responseString, true);
+        System.out.println(goodsCategoryPoMapper.selectByPrimaryKey(122L).getName());
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
     /**
@@ -323,4 +325,16 @@ public class GoodsControllerTest {
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
+    /**
+     * spu添加品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void spuAddBrand() throws Exception {
+        String responseString = this.mvc.perform(post("/goods/shops/0/spus/273/brands/75"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 }

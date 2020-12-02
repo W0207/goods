@@ -3,10 +3,7 @@ package cn.edu.xmu.goods.dao;
 import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.bo.*;
 import cn.edu.xmu.goods.model.po.*;
-import cn.edu.xmu.goods.model.vo.BrandInputVo;
-import cn.edu.xmu.goods.model.vo.SkuInputVo;
-import cn.edu.xmu.goods.model.vo.SpuInputVo;
-import cn.edu.xmu.goods.model.vo.CategoryInputVo;
+import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -257,26 +254,25 @@ public class GoodsDao {
     }
 
     /**
-     * 新增商品类目
+     * 管理员新增商品类目
      *
-     * @param id    种类 id
-     * @param categoryInputVo 类目详细信息
-     * @return 返回对象 ReturnObj<Object>
-     * @author shangzhao翟
+     * @param id
+     * @param categoryInputVo
+     * @return
      */
     public GoodsCategoryPo addCategoryById(Long id, CategoryInputVo categoryInputVo) {
         GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
-        if(po!=null){
-            po=null;
-            return po;
+        if (po == null) {
+            logger.debug("categoryId = " + id + "不存在");
+            return null;
         }
-        GoodsCategory goodsCategory=new GoodsCategory();
-        GoodsCategoryPo goodsCategoryPo=goodsCategory.createAddPo(id,categoryInputVo);
-        int ret=goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
+        GoodsCategory goodsCategory = new GoodsCategory();
+        GoodsCategoryPo goodsCategoryPo = goodsCategory.createAddPo(id, categoryInputVo);
+        int ret = goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             //检查新增是否成功
-            goodsCategoryPo=null;
+            goodsCategoryPo = null;
         } else {
             logger.info("categoryId = " + id + " 的信息已新增成功");
         }
@@ -286,20 +282,20 @@ public class GoodsDao {
     /**
      * 修改商品类目
      *
-     * @param id    种类 id
+     * @param id              种类 id
      * @param categoryInputVo 类目详细信息
      * @return 返回对象 ReturnObj<Object>
      * @author shangzhao翟
      */
     public ReturnObject<Object> modifyCategoryById(Long id, CategoryInputVo categoryInputVo) {
         GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
-        if (po == null ) {
+        if (po == null) {
             logger.info("商品类目不存在或已被删除：categoryId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        GoodsCategory goodsCategory=new GoodsCategory(po);
-        GoodsCategoryPo goodsCategoryPo=goodsCategory.createUpdatePo(categoryInputVo);
-        int ret=goodsCategoryPoMapper.updateByPrimaryKeySelective(goodsCategoryPo);
+        GoodsCategory goodsCategory = new GoodsCategory(po);
+        GoodsCategoryPo goodsCategoryPo = goodsCategory.createUpdatePo(categoryInputVo);
+        int ret = goodsCategoryPoMapper.updateByPrimaryKeySelective(goodsCategoryPo);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             //检查更新是否成功
@@ -315,22 +311,35 @@ public class GoodsDao {
     /**
      * 删除商品类目
      *
-     * @param id    种类 id
+     * @param id 种类 id
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
      */
     public ReturnObject<Object> deleteCategoryById(Long id) {
         GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
-        if (po == null ) {
+        if (po == null) {
             logger.info("商品类目不存在或已被删除：categoryId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        int ret=goodsCategoryPoMapper.deleteByPrimaryKey(id);
+        int ret = goodsCategoryPoMapper.deleteByPrimaryKey(id);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
+        ReturnObject returnObject = null;
+        int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+        if (ret == 0) {
+            logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("spuId" + goodsSpuPo.getId() + "已加入品牌");
             returnObject = new ReturnObject<>();
         }
         return returnObject;

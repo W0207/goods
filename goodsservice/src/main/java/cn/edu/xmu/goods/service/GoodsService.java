@@ -1,17 +1,15 @@
 package cn.edu.xmu.goods.service;
 
+import cn.edu.xmu.goods.dao.BrandDao;
 import cn.edu.xmu.goods.dao.GoodsDao;
 import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
-import cn.edu.xmu.goods.model.vo.BrandInputVo;
-import cn.edu.xmu.goods.model.vo.SkuInputVo;
-import cn.edu.xmu.goods.model.vo.CategoryInputVo;
-import cn.edu.xmu.goods.model.vo.SkuVo;
-import cn.edu.xmu.goods.model.vo.SpuInputVo;
+import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -27,6 +25,10 @@ public class GoodsService {
 
     @Autowired
     GoodsDao goodsDao;
+
+    @Autowired
+    BrandDao brandDao;
+
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
@@ -136,14 +138,14 @@ public class GoodsService {
     /**
      * 管理员新增商品类目
      *
-     * @param id 种类 id
+     * @param id              种类 id
      * @param categoryInputVo 类目详细信息
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
         ReturnObject returnObject;
-        GoodsCategoryPo goodsCategoryPo=goodsDao.addCategoryById(id,categoryInputVo);
+        GoodsCategoryPo goodsCategoryPo = goodsDao.addCategoryById(id, categoryInputVo);
         if (goodsCategoryPo != null) {
             returnObject = new ReturnObject(new GoodsCategory(goodsCategoryPo));
             logger.debug("addCategory : " + returnObject);
@@ -152,19 +154,18 @@ public class GoodsService {
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         return returnObject;
-
     }
 
     /**
      * 管理员修改商品类目信息
      *
-     * @param id 种类 id
+     * @param id              种类 id
      * @param categoryInputVo 类目详细信息
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
      */
     public ReturnObject<Object> modifyCategory(Long id, CategoryInputVo categoryInputVo) {
-        return goodsDao.modifyCategoryById(id,categoryInputVo);
+        return goodsDao.modifyCategoryById(id, categoryInputVo);
     }
 
 
@@ -179,4 +180,35 @@ public class GoodsService {
         return goodsDao.deleteCategoryById(id);
     }
 
+    /**
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    public ReturnObject spuAddBrand(Long shopId, Long spuId, Long id) {
+        ReturnObject returnObject = null;
+        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
+        if (tempSpu == null) {
+            logger.debug("findGoodsSkuById : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            if (tempSpu.getShopId() == shopId) {
+                BrandPo brandPo = brandDao.findBrandById(id);
+                if (brandPo != null) {
+                    GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+                    goodsSpuPo.setBrandId(id);
+                    goodsSpuPo.setId(spuId);
+                    returnObject = goodsDao.modifySpuBySpuPo(goodsSpuPo);
+                } else {
+                    logger.debug("findBrandById : Not Found!");
+                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                }
+            } else {
+                logger.debug("spuAddBrand shopId和这个spu的里的shopId不一致");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+        }
+        return returnObject;
+    }
 }
