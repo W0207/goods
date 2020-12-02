@@ -3,6 +3,7 @@ package cn.edu.xmu.goods.model.bo;
 import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.CategoryInputVo;
+import cn.edu.xmu.goods.model.vo.NewCategoryVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class GoodsCategory implements VoObject{
+public class GoodsCategory implements VoObject {
 
     private Long id;
 
@@ -19,55 +20,55 @@ public class GoodsCategory implements VoObject{
 
     private String name;
 
-    private LocalDateTime gmtCreated;
+    private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
-    public GoodsCategory(){}
+
+    public GoodsCategory() {
+    }
+
     /**
      * 构造函数
      *
      * @param po Po对象
      */
-    public  GoodsCategory(GoodsCategoryPo po)
-    {
-        this.id=po.getId();
-        this.pid=po.getPid();
-        this.name=po.getName();
-        this.gmtCreated=po.getGmtCreated();
-        this.gmtModified=po.getGmtModified();
-
+    public GoodsCategory(GoodsCategoryPo po) {
+        this.id = po.getId();
+        this.pid = po.getPid();
+        this.name = po.getName();
+        this.gmtCreate = po.getGmtCreate();
+        this.gmtModified = po.getGmtModified();
     }
+
     /**
      * 创建updatePo函数
      *
      * @param categoryInputVo 商品类目信息
      */
-    public GoodsCategoryPo createUpdatePo(CategoryInputVo categoryInputVo){
-        GoodsCategoryPo goodsCategoryPo=new GoodsCategoryPo();
-        String nameModify=categoryInputVo.getName() == null ? null : categoryInputVo.getName();
-        goodsCategoryPo.setGmtModified(LocalDateTime.now());
+    public GoodsCategoryPo createUpdatePo(CategoryInputVo categoryInputVo) {
+        GoodsCategoryPo goodsCategoryPo = new GoodsCategoryPo();
+        String nameModify = categoryInputVo.getName() == null ? null : categoryInputVo.getName();
         goodsCategoryPo.setId(id);
-        goodsCategoryPo.setGmtCreated(gmtCreated);
+        goodsCategoryPo.setGmtModified(LocalDateTime.now());
         goodsCategoryPo.setName(nameModify);
-        goodsCategoryPo.setPid(pid);
         return goodsCategoryPo;
     }
 
     /**
-     * 创建addPo函数
+     * 新增categoryId=id的子类目
      *
-     * @param categoryInputVo 商品类目信息
+     * @param id
+     * @param categoryInputVo
+     * @return
      */
-    public GoodsCategoryPo createAddPo(Long id,CategoryInputVo categoryInputVo){
-        GoodsCategoryPo goodsCategoryPo=new GoodsCategoryPo();
-        String nameModify=categoryInputVo.getName() == null ? null : categoryInputVo.getName();
-        goodsCategoryPo.setGmtModified(LocalDateTime.now());
-        goodsCategoryPo.setId(id);
-        goodsCategoryPo.setGmtCreated(LocalDateTime.now());
-        goodsCategoryPo.setName(nameModify);
-        goodsCategoryPo.setPid(pid);
+    public GoodsCategoryPo createAddPo(Long id, CategoryInputVo categoryInputVo) {
+        GoodsCategoryPo goodsCategoryPo = new GoodsCategoryPo();
+        goodsCategoryPo.setGmtCreate(LocalDateTime.now());
+        goodsCategoryPo.setName(categoryInputVo.getName());
+        goodsCategoryPo.setPid(id);
         return goodsCategoryPo;
     }
+
     @Override
     public Object createVo() {
         return null;
