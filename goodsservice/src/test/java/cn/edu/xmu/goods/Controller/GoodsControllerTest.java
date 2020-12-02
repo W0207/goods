@@ -337,4 +337,25 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
+
+    /**
+     * 管理员新增品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addBrand() throws Exception {
+        getAllBrand();
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(post("/goods/shops/0/brands")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        getAllBrand();
+
+    }
 }

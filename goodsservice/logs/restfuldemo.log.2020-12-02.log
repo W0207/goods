@@ -134,3 +134,15 @@
 2020-12-02 20:09:21.852 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
 2020-12-02 20:09:21.942 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
 2020-12-02 20:30:36.049 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已加入品牌
+2020-12-02 20:41:32.690 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:41:32.693 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 20:41:33.061 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-02 20:41:33.078 [main] INFO  cn.edu.xmu.goods.dao.BrandDao - 品牌已新建成功
+2020-12-02 20:41:33.084 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:41:33.084 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 20:42:52.836 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:42:52.840 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-02 20:42:53.255 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-02 20:42:53.267 [main] INFO  cn.edu.xmu.goods.dao.BrandDao - 品牌已新建成功
+2020-12-02 20:42:53.273 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 20:42:53.273 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100

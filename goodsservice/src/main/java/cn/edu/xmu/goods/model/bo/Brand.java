@@ -37,6 +37,10 @@ public class Brand implements VoObject {
         this.gmtModified = po.getGmtModified();
     }
 
+    public Brand() {
+
+    }
+
     @Override
     public Object createVo() {
         return new BrandRetVo(this);
@@ -80,6 +84,21 @@ public class Brand implements VoObject {
         brandPo.setName(nameEnc);
         brandPo.setDetail(detailEnc);
         brandPo.setGmtModified(LocalDateTime.now());
+        return brandPo;
+    }
+
+    /**
+     * 创建addPo函数
+     *
+     * @param  brandVo 品牌信息
+     */
+    public BrandPo createAddPo(BrandInputVo brandVo){
+        BrandPo brandPo=new BrandPo();
+        brandPo.setGmtModified(LocalDateTime.now());
+        brandPo.setId(id);
+        brandPo.setGmtCreate(LocalDateTime.now());
+        brandPo.setName(brandVo.getName());
+        brandPo.setDetail(brandVo.getDetail());
         return brandPo;
     }
 
