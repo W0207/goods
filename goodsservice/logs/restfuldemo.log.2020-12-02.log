@@ -1,0 +1,13 @@
+2020-12-02 16:04:36.156 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult,Long))
+2020-12-02 16:05:10.749 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=123, detail=123)
+2020-12-02 16:05:10.827 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 71 的信息已更新
+2020-12-02 16:16:52.305 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 16:16:52.308 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 16:16:52.640 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 16:16:52.655 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 16:16:52.655 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 16:21:43.950 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 16:21:43.954 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 16:21:44.288 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 16:21:44.309 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 16:21:44.310 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49

@@ -5,6 +5,7 @@ import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
@@ -119,5 +120,17 @@ public class GoodsService {
     public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
         ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
         return returnObject;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
+        return goodsDao.invalidFloatPriceById(id, loginUserId);
+    }
+
+    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
+        return goodsDao.modifyBrandById(id,brandInputVo);
     }
 }
