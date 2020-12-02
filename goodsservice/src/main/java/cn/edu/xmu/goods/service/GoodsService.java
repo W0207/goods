@@ -130,7 +130,5 @@ public class GoodsService {
         return goodsDao.invalidFloatPriceById(id, loginUserId);
     }
 
-    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
-        return goodsDao.modifyBrandById(id,brandInputVo);
-    }
+
 }
