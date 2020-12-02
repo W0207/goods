@@ -273,4 +273,54 @@ public class GoodsControllerTest {
         getAllBrand();
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+    /**
+     * 管理员新增商品类目
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addCategory() throws Exception {
+        String requireJson = "{\n  \"name\":\"家电\"}";
+        String responseString = this.mvc.perform(post("/goods/categories/140/subcategories")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        // JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员修改商品类目信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void modifyGoods_type() throws Exception {
+        String requireJson = "{\n  \"name\":\"123\"}";
+        String responseString = this.mvc.perform(put("/goods/categories/122")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员删除商品类目信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void delCategory() throws Exception {
+        String responseString = this.mvc.perform(delete("/goods/categories/122"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //System.out.println(goodsCategoryPoMapper.selectByPrimaryKey(122L).getName());// 查询测试是否删除成功
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
 }

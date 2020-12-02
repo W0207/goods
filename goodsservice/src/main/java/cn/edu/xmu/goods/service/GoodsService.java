@@ -1,12 +1,15 @@
 package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.GoodsDao;
+import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
+import cn.edu.xmu.goods.model.vo.CategoryInputVo;
 import cn.edu.xmu.goods.model.vo.SkuVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -129,4 +132,51 @@ public class GoodsService {
     public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
         return goodsDao.invalidFloatPriceById(id, loginUserId);
     }
+
+    /**
+     * 管理员新增商品类目
+     *
+     * @param id 种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return 返回对象 ReturnObject<Object>
+     * @author shangzhao翟
+     */
+    public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
+        ReturnObject returnObject;
+        GoodsCategoryPo goodsCategoryPo=goodsDao.addCategoryById(id,categoryInputVo);
+        if (goodsCategoryPo != null) {
+            returnObject = new ReturnObject(new GoodsCategory(goodsCategoryPo));
+            logger.debug("addCategory : " + returnObject);
+        } else {
+            logger.debug("addCategory : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+
+    }
+
+    /**
+     * 管理员修改商品类目信息
+     *
+     * @param id 种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return 返回对象 ReturnObject<Object>
+     * @author shangzhao翟
+     */
+    public ReturnObject<Object> modifyCategory(Long id, CategoryInputVo categoryInputVo) {
+        return goodsDao.modifyCategoryById(id,categoryInputVo);
+    }
+
+
+    /**
+     * 管理员删除商品类目信息
+     *
+     * @param id 种类 id
+     * @return 返回对象 ReturnObject<Object>
+     * @author shangzhao翟
+     */
+    public ReturnObject<Object> deleteCategoryById(Long id) {
+        return goodsDao.deleteCategoryById(id);
+    }
+
 }

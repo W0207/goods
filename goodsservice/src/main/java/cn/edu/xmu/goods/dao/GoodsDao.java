@@ -1,17 +1,12 @@
 package cn.edu.xmu.goods.dao;
 
-import cn.edu.xmu.goods.mapper.BrandPoMapper;
-import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
-import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
-import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
-import cn.edu.xmu.goods.model.bo.Brand;
-import cn.edu.xmu.goods.model.bo.FloatPrice;
-import cn.edu.xmu.goods.model.bo.GoodsSku;
-import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.mapper.*;
+import cn.edu.xmu.goods.model.bo.*;
 import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
+import cn.edu.xmu.goods.model.vo.CategoryInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -40,6 +35,9 @@ public class GoodsDao {
 
     @Autowired
     BrandPoMapper brandPoMapper;
+
+    @Autowired
+    GoodsCategoryPoMapper goodsCategoryPoMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
@@ -251,6 +249,86 @@ public class GoodsDao {
         // 检查更新有否成功
         if (ret == 0) {
             logger.info("商品价格浮动不存在或已被失效：floatPriceId = " + id);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    /**
+     * 新增商品类目
+     *
+     * @param id    种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return 返回对象 ReturnObj<Object>
+     * @author shangzhao翟
+     */
+    public GoodsCategoryPo addCategoryById(Long id, CategoryInputVo categoryInputVo) {
+        GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
+        if(po!=null){
+            po=null;
+            return po;
+        }
+        GoodsCategory goodsCategory=new GoodsCategory();
+        GoodsCategoryPo goodsCategoryPo=goodsCategory.createAddPo(id,categoryInputVo);
+        int ret=goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            //检查新增是否成功
+            goodsCategoryPo=null;
+        } else {
+            logger.info("categoryId = " + id + " 的信息已新增成功");
+        }
+        return goodsCategoryPo;
+    }
+
+    /**
+     * 修改商品类目
+     *
+     * @param id    种类 id
+     * @param categoryInputVo 类目详细信息
+     * @return 返回对象 ReturnObj<Object>
+     * @author shangzhao翟
+     */
+    public ReturnObject<Object> modifyCategoryById(Long id, CategoryInputVo categoryInputVo) {
+        GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
+        if (po == null ) {
+            logger.info("商品类目不存在或已被删除：categoryId = " + id);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsCategory goodsCategory=new GoodsCategory(po);
+        GoodsCategoryPo goodsCategoryPo=goodsCategory.createUpdatePo(categoryInputVo);
+        int ret=goodsCategoryPoMapper.updateByPrimaryKeySelective(goodsCategoryPo);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            //检查更新是否成功
+            logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("categoryId = " + id + " 的信息已更新");
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    /**
+     * 删除商品类目
+     *
+     * @param id    种类 id
+     * @return 返回对象 ReturnObject<Object>
+     * @author shangzhao翟
+     */
+    public ReturnObject<Object> deleteCategoryById(Long id) {
+        GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
+        if (po == null ) {
+            logger.info("商品类目不存在或已被删除：categoryId = " + id);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        int ret=goodsCategoryPoMapper.deleteByPrimaryKey(id);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             returnObject = new ReturnObject<>();
