@@ -464,11 +464,11 @@ public class GoodsController {
     })
     //@Audit //需要认证
     @DeleteMapping("/shops/{shopId}/brands/{id}")
-    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid, @LoginUser Long loginUserId) {
+    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteBrand : shopId = " + shopId + " brandId = " + id);
         }
-        //商家只能删除自家品牌，shopId=0可以删除任意品牌
+        //商家只能修改自家品牌，shopId=0可以修改任意品牌
         if (shopId.equals(shopid) || shopId == 0) {
             ReturnObject returnObj = brandService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);

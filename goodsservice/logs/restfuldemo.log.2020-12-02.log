@@ -29,3 +29,69 @@
 2020-12-02 17:02:38.255 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 71
 2020-12-02 17:02:38.269 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
 2020-12-02 17:02:38.270 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:25:53.090 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:25:53.114 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:25:54.430 [main] ERROR cn.edu.xmu.goods.dao.BrandDao - findAllBrand: DataAccessException:
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Table 'oomall_goods.brand' doesn't exist
+### The error may exist in cn/edu/xmu/goods/mapper/BrandPoMapper.xml
+### The error may involve cn.edu.xmu.goods.mapper.BrandPoMapper.selectByExample-Inline
+### The error occurred while setting parameters
+### SQL: SELECT count(0) FROM brand
+### Cause: java.sql.SQLSyntaxErrorException: Table 'oomall_goods.brand' doesn't exist
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Table 'oomall_goods.brand' doesn't exist
+2020-12-02 17:25:54.585 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 17:25:54.633 [main] INFO  cn.edu.xmu.goods.dao.BrandDao - 品牌不存在
+2020-12-02 17:25:54.891 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@70487164
+2020-12-02 17:25:55.006 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:25:55.028 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-02 17:25:55.057 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:25:55.060 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已上架
+2020-12-02 17:25:55.137 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:25:55.138 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:25:55.352 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-12-02 17:25:55.386 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 的信息已更新
+2020-12-02 17:25:55.424 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 273
+2020-12-02 17:25:55.442 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273已删除
+2020-12-02 17:25:55.477 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-12-02 17:25:55.486 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-12-02 17:25:55.530 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:25:55.538 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-02 17:25:55.569 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-12-02 17:25:55.587 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSpuById: GoodsSpu(id=273, name=金和汇景•戴荣华•古彩洛神赋瓷瓶, brandId=71, categoryId=123, freightId=null, shopId=0, goodsSn=drh-d0001, detail=null, imagUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, state=PUBLISHED, spec=default, disabled=false, gmtCreated=2020-11-28T17:42:20, gmtModified=2020-11-28T17:42:20)code = OK
+2020-12-02 17:25:55.653 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 0 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
+2020-12-02 17:25:55.659 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273 的信息已更新
+2020-12-02 17:25:55.698 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 273
+2020-12-02 17:25:55.725 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-12-02 17:26:14.043 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:26:14.055 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:26:15.939 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 17:26:15.984 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:26:15.985 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:26:16.250 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=123, detail=123)
+2020-12-02 17:26:16.322 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 71 的信息已更新
+2020-12-02 17:26:16.467 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@39f9e28f
+2020-12-02 17:26:16.496 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:26:16.520 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-02 17:26:16.587 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:26:16.616 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已上架
+2020-12-02 17:26:16.654 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:26:16.654 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:26:16.777 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 273 vo = SpuInputVo(name=123, description=123, specs=123)
+2020-12-02 17:26:16.798 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 的信息已更新
+2020-12-02 17:26:16.832 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 273
+2020-12-02 17:26:16.853 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273已删除
+2020-12-02 17:26:16.887 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-12-02 17:26:16.898 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-12-02 17:26:16.939 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-02 17:26:16.946 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-02 17:26:17.011 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-12-02 17:26:17.039 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSpuById: GoodsSpu(id=273, name=金和汇景•戴荣华•古彩洛神赋瓷瓶, brandId=71, categoryId=123, freightId=null, shopId=0, goodsSn=drh-d0001, detail=null, imagUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, state=PUBLISHED, spec=default, disabled=false, gmtCreated=2020-11-28T17:42:20, gmtModified=2020-11-28T17:42:20)code = OK
+2020-12-02 17:26:17.169 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 0 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
+2020-12-02 17:26:17.178 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273 的信息已更新
+2020-12-02 17:26:17.211 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 273
+2020-12-02 17:26:17.269 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-12-02 17:27:58.108 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:27:58.111 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
+2020-12-02 17:27:58.413 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-02 17:27:58.426 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-02 17:27:58.427 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =49
