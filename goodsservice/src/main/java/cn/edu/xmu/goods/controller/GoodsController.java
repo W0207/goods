@@ -440,7 +440,7 @@ public class GoodsController {
         }
         //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
         if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.modifyBrandInfo(id, brandInputVo);
+            ReturnObject returnObj = brandService.modifyBrandInfo(id, brandInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
             logger.error("无权限修改本品牌的信息");

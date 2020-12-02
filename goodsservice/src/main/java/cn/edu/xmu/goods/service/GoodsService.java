@@ -133,10 +133,6 @@ public class GoodsService {
         return goodsDao.invalidFloatPriceById(id, loginUserId);
     }
 
-    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
-        return goodsDao.modifyBrandById(id,brandInputVo);
-    }
-
     /**
      * 管理员新增商品类目
      *

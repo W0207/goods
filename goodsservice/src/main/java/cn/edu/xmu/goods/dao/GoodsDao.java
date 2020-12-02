@@ -257,35 +257,6 @@ public class GoodsDao {
     }
 
     /**
-     * 修改品牌信息
-     *
-     * @param id
-     * @param brandInputVo
-     * @return
-     */
-    public ReturnObject modifyBrandById(Long id, BrandInputVo brandInputVo) {
-        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-        if (brandPo == null) {
-            logger.info("brandId = " + id + " 不存在");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        Brand brand = new Brand(brandPo);
-        BrandPo po = brand.createUpdatePo(brandInputVo);
-
-        ReturnObject<Object> returnObject;
-        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
-        // 检查更新有否成功
-        if (ret == 0) {
-            logger.info("brandId = " + id + " 不存在");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        } else {
-            logger.info("brandId = " + id + " 的信息已更新");
-            returnObject = new ReturnObject<>();
-        }
-        return returnObject;
-    }
-
-    /**
      * 新增商品类目
      *
      * @param id    种类 id
