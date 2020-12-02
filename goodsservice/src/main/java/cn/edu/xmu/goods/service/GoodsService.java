@@ -129,4 +129,6 @@ public class GoodsService {
     public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
         return goodsDao.invalidFloatPriceById(id, loginUserId);
     }
+
+
 }

@@ -67,6 +67,7 @@ public class GoodsController {
         return ResponseUtil.ok(new ReturnObject<List>(spuStateVos).getData());
     }
 
+
     /**
      * 获得sku的详细信息
      *

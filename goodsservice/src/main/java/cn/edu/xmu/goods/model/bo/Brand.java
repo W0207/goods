@@ -71,7 +71,6 @@ public class Brand implements VoObject {
         return gmtModified;
     }
 
-
     public BrandPo createUpdatePo(BrandInputVo brandInputVo) {
         String nameEnc = brandInputVo.getName() == null ? null : brandInputVo.getName();
         String detailEnc = brandInputVo.getDetail() == null ? null : brandInputVo.getDetail();
