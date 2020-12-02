@@ -373,4 +373,27 @@ public class GoodsController {
     }
 
 
+    /**
+     * 将SPU加入品牌
+     * @return
+     */
+    @ApiOperation(value = "将SPU加入品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @PostMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
+    public Object spuAddBrand(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    ){
+        ReturnObject returnObject = goodsService.spuAddBrand(shopId,spuId,id);
+
+
+    }
 }

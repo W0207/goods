@@ -1,8 +1,10 @@
 package cn.edu.xmu.goods.service;
 
+import cn.edu.xmu.goods.dao.BrandDao;
 import cn.edu.xmu.goods.dao.GoodsDao;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
@@ -23,6 +25,9 @@ public class GoodsService {
 
     @Autowired
     GoodsDao goodsDao;
+
+    @Autowired
+    BrandDao brandDao;
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
@@ -119,6 +124,34 @@ public class GoodsService {
     public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn)
     {
         ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId,skuSn,page,pageSize,spuId,skuSn1,spuSn);
+        return returnObject;
+    }
+
+    /**
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    public ReturnObject spuAddBrand(Long shopId,Long spuId,Long id)
+    {
+        ReturnObject returnObject = null;
+        ReturnObject tempSpu = findGoodsSpuById(spuId);
+        if(tempSpu.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST)
+        {
+            logger.debug("findGoodsSkuById : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        else{
+            if(tempSpu.getData().getShopId()==shopId){
+                BrandPo brandPo = brandDao.findBrandById(id);
+                if(brandPo!=null)
+                {
+                    GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+                }
+            }
+        }
         return returnObject;
     }
 }

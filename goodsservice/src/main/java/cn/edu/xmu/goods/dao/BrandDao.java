@@ -60,6 +60,15 @@ public class BrandDao implements InitializingBean {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public BrandPo findBrandById(Long id){
+        return poMapper.selectByPrimaryKey(id);
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
 
