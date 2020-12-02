@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.mapper.BrandPoMapper;
 import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
@@ -33,6 +34,9 @@ public class GoodsControllerTest {
 
     @Autowired
     FloatPricePoMapper floatPricePoMapper;
+
+    @Autowired
+    BrandPoMapper brandPoMapper;
 
     /**
      * 获得商品spu所有状态
@@ -230,5 +234,25 @@ public class GoodsControllerTest {
         System.out.println(responseString);
         System.out.println(floatPricePoMapper.selectByPrimaryKey(273L).getValid());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 修改品牌信息
+     */
+    @Test
+    public void modifyBrand() throws Exception {
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(put("/goods/shops/0/brands/71")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
     }
 }

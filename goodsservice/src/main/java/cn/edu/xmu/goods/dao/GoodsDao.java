@@ -1,12 +1,15 @@
 package cn.edu.xmu.goods.dao;
 
+import cn.edu.xmu.goods.mapper.BrandPoMapper;
 import cn.edu.xmu.goods.mapper.FloatPricePoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSkuPoMapper;
 import cn.edu.xmu.goods.mapper.GoodsSpuPoMapper;
+import cn.edu.xmu.goods.model.bo.Brand;
 import cn.edu.xmu.goods.model.bo.FloatPrice;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.po.*;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -34,6 +37,9 @@ public class GoodsDao {
 
     @Autowired
     FloatPricePoMapper floatPricePoMapper;
+
+    @Autowired
+    BrandPoMapper brandPoMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
@@ -247,6 +253,35 @@ public class GoodsDao {
             logger.info("商品价格浮动不存在或已被失效：floatPriceId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    /**
+     * 修改品牌信息
+     *
+     * @param id
+     * @param brandInputVo
+     * @return
+     */
+    public ReturnObject modifyBrandById(Long id, BrandInputVo brandInputVo) {
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            logger.info("brandId = " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Brand brand = new Brand(brandPo);
+        BrandPo po = brand.createUpdatePo(brandInputVo);
+
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("brandId = " + id + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("brandId = " + id + " 的信息已更新");
             returnObject = new ReturnObject<>();
         }
         return returnObject;

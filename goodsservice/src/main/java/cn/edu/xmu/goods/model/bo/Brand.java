@@ -1,14 +1,11 @@
 package cn.edu.xmu.goods.model.bo;
 
 import cn.edu.xmu.goods.model.po.BrandPo;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.BrandRetVo;
-import cn.edu.xmu.goods.model.vo.BrandVo;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.Common;
-import cn.edu.xmu.ooad.util.encript.SHA256;
 import lombok.Data;
 
-import javax.swing.plaf.nimbus.State;
 import java.time.LocalDateTime;
 
 @Data
@@ -26,6 +23,11 @@ public class Brand implements VoObject {
 
     private LocalDateTime gmtModified;
 
+    /**
+     * 由po创建vo
+     *
+     * @param po
+     */
     public Brand(BrandPo po) {
         this.id = po.getId();
         this.name = po.getName();
@@ -70,4 +72,14 @@ public class Brand implements VoObject {
     }
 
 
+    public BrandPo createUpdatePo(BrandInputVo brandInputVo) {
+        String nameEnc = brandInputVo.getName() == null ? null : brandInputVo.getName();
+        String detailEnc = brandInputVo.getDetail() == null ? null : brandInputVo.getDetail();
+        BrandPo brandPo = new BrandPo();
+        brandPo.setId(id);
+        brandPo.setName(nameEnc);
+        brandPo.setDetail(detailEnc);
+        brandPo.setGmtModified(LocalDateTime.now());
+        return brandPo;
+    }
 }
