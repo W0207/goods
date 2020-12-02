@@ -4,6 +4,7 @@ import cn.edu.xmu.goods.mapper.BrandPoMapper;
 import cn.edu.xmu.goods.model.bo.Brand;
 import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.po.BrandPoExample;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -25,7 +26,7 @@ public class BrandDao implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(BrandDao.class);
 
     @Autowired
-    private BrandPoMapper poMapper;
+    private BrandPoMapper brandPoMapper;
 
     /**
      * 查询所有品牌
@@ -40,7 +41,7 @@ public class BrandDao implements InitializingBean {
         PageHelper.startPage(page, pageSize);
         List<BrandPo> brandPos = null;
         try {
-            brandPos = poMapper.selectByExample(example);
+            brandPos = brandPoMapper.selectByExample(example);
             List<VoObject> ret = new ArrayList<>(brandPos.size());
             for (BrandPo po : brandPos) {
                 Brand bran = new Brand(po);
@@ -69,20 +70,49 @@ public class BrandDao implements InitializingBean {
         return poMapper.selectByPrimaryKey(id);
     }
     public ReturnObject<Object> deleteBrandById(Long id) {
-        BrandPo brandPo = poMapper.selectByPrimaryKey(id);
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
         if (brandPo == null) {
             logger.info("品牌不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        Brand brand = new Brand(brandPo);
-        BrandPo po = brand.deleteUpdateStatePo();
+        BrandPo po = brandPoMapper.selectByPrimaryKey(id);
         ReturnObject<Object> returnObject;
-        int ret = poMapper.updateByPrimaryKeySelective(po);
+        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
         // 检查更新有否成功
         if (ret == 0) {
             logger.info("品牌不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
+            returnObject = new ReturnObject<>();
+        }
+        brandPoMapper.deleteByPrimaryKey(id);
+        return returnObject;
+    }
+
+    /**
+     * 修改品牌信息
+     *
+     * @param id
+     * @param brandInputVo
+     * @return
+     */
+    public ReturnObject modifyBrandById(Long id, BrandInputVo brandInputVo) {
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            logger.info("brandId = " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Brand brand = new Brand(brandPo);
+        BrandPo po = brand.createUpdatePo(brandInputVo);
+
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("brandId = " + id + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("brandId = " + id + " 的信息已更新");
             returnObject = new ReturnObject<>();
         }
         return returnObject;

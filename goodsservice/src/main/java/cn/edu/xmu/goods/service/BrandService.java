@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.BrandDao;
+import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -28,5 +29,9 @@ public class BrandService {
      */
     public ReturnObject deleteBrandById(Long id) {
         return brandDao.deleteBrandById(id);
+    }
+
+    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
+        return brandDao.modifyBrandById(id,brandInputVo);
     }
 }
