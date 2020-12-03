@@ -1,7 +1,7 @@
-package cn.edu.xmu.goods.model.bo;
+package cn.edu.xmu.comment.model.bo;
 
-import cn.edu.xmu.goods.model.po.CommentPo;
-import cn.edu.xmu.goods.model.vo.CommentRetVo;
+import cn.edu.xmu.comment.model.po.CommentPo;
+import cn.edu.xmu.comment.model.vo.CommentRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
