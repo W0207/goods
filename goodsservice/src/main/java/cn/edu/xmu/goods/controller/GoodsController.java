@@ -701,7 +701,7 @@ public class GoodsController {
                                @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
         logger.debug("uploadSkuImg: shopId = " + shopId + " skuId = " + id + " img :" + multipartFile.getOriginalFilename());
         if (shopId.equals(shopid) || shopid == 0) {
-            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            ReturnObject returnObject = goodsService.uploadSkuImg(shopId, id, multipartFile);
             return Common.getNullRetObj(returnObject, httpServletResponse);
         } else {
             logger.error("无权限上传sku照片");
@@ -735,7 +735,7 @@ public class GoodsController {
                                @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
         logger.debug("uploadSpuImg: shopId = " + shopId + " spuId = " + id + " img :" + multipartFile.getOriginalFilename());
         if (shopId.equals(shopid) || shopid == 0) {
-            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            ReturnObject returnObject = goodsService.uploadSpuImg(shopId, id, multipartFile);
             return Common.getNullRetObj(returnObject, httpServletResponse);
         } else {
             logger.error("无权限上传spu照片");
@@ -769,7 +769,7 @@ public class GoodsController {
                                  @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
         logger.debug("uploadBrandImg: shopId = " + shopId + " brandId = " + id + " img :" + multipartFile.getOriginalFilename());
         if (shopId.equals(shopid) || shopid == 0) {
-            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            ReturnObject returnObject = goodsService.uploadBrandImg(shopId, id, multipartFile);
             return Common.getNullRetObj(returnObject, httpServletResponse);
         } else {
             logger.error("无权限上传品牌照片");

@@ -218,6 +218,8 @@ public class GoodsService {
     }
 
     /**
+     * spu增加品牌
+     *
      * @param shopId
      * @param spuId
      * @param id
@@ -257,12 +259,24 @@ public class GoodsService {
         return ret;
     }
 
+    @Transactional
+    public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
+        return null;
+    }
+
     /**
-     * @param userId
+     * @param shopId
+     * @param id
      * @param multipartFile
      * @return
      */
-    public ReturnObject uploadImg(Long userId, MultipartFile multipartFile) {
+    @Transactional
+    public ReturnObject uploadSpuImg(Long shopId, Long id, MultipartFile multipartFile) {
+        return null;
+    }
+
+    @Transactional
+    public ReturnObject uploadBrandImg(Long shopId, Long id, MultipartFile multipartFile) {
         return null;
     }
 }
