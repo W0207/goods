@@ -2,7 +2,6 @@ package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.vo.*;
-import cn.edu.xmu.goods.service.BrandService;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
@@ -38,11 +37,7 @@ public class GoodsController {
     private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
-    private BrandService brandService;
-
-    @Autowired
     private GoodsService goodsService;
-
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -200,7 +195,8 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
         }
-        ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
+        //ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
+        ReturnObject returnObj = null;
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -284,7 +280,7 @@ public class GoodsController {
         pageSize = (pageSize == null) ? 100 : pageSize;
 
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
-        ReturnObject<PageInfo<VoObject>> returnObject = brandService.findAllBrand(page, pageSize);
+        ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findAllBrand(page, pageSize);
         return Common.getPageRetObject(returnObject);
     }
 
@@ -425,7 +421,7 @@ public class GoodsController {
         }
         //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
         if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = brandService.modifyBrandInfo(id, brandInputVo);
+            ReturnObject returnObj = goodsService.modifyBrandInfo(id, brandInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
             logger.error("无权限修改本品牌的信息");
@@ -457,7 +453,7 @@ public class GoodsController {
         }
         //商家只能修改自家品牌，shopId=0可以修改任意品牌
         if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = brandService.deleteBrandById(id);
+            ReturnObject returnObj = goodsService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
             logger.error("无权限删除品牌");
@@ -613,7 +609,7 @@ public class GoodsController {
             return returnObject;
         }
         if (id.equals(shopid) || id == 0) {
-            ReturnObject brandCategory = brandService.addBrand(brandInputVo);
+            ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
             returnObject = ResponseUtil.ok(brandCategory.getData());
             return returnObject;
         } else {

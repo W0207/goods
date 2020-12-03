@@ -26,7 +26,7 @@ import java.util.List;
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/shop", produces = "application/json;charset=UTF-8")
 public class ShopController {
-    private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
 
     @Autowired
     private HttpServletResponse httpServletResponse;
