@@ -332,6 +332,8 @@ public class GoodsDao {
         return returnObject;
     }
 
+
+    //修改部分信息
     public ReturnObject modifySpuBySpuPoId(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
@@ -339,12 +341,13 @@ public class GoodsDao {
             logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            logger.info("spuId" + goodsSpuPo.getId() + "已加入品牌");
+            logger.info("spuId" + goodsSpuPo.getId() + "已修改");
             returnObject = new ReturnObject<>();
         }
         return returnObject;
     }
 
+    //修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
     public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKey(goodsSpuPo);
@@ -352,7 +355,7 @@ public class GoodsDao {
             logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            logger.info("spuId" + goodsSpuPo.getId() + "已加入品牌");
+            logger.info("spuId" + goodsSpuPo.getId() + "已修改");
             returnObject = new ReturnObject<>();
         }
         return returnObject;
@@ -383,5 +386,9 @@ public class GoodsDao {
             goodsCategories.add(new GoodsCategory(po));
         }
         return new ReturnObject<>(goodsCategories);
+    }
+
+    public GoodsCategoryPo getCategoryByid(Long id){
+        return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
 }
