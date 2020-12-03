@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 public class GoodsService {
 
@@ -199,7 +201,8 @@ public class GoodsService {
                     GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
                     goodsSpuPo.setBrandId(id);
                     goodsSpuPo.setId(spuId);
-                    returnObject = goodsDao.modifySpuBySpuPo(goodsSpuPo);
+                    goodsSpuPo.setGmtModified(LocalDateTime.now());
+                    returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
                 } else {
                     logger.debug("findBrandById : Not Found!");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -207,6 +210,35 @@ public class GoodsService {
             } else {
                 logger.debug("spuAddBrand shopId和这个spu的里的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+        }
+        return returnObject;
+    }
+
+    /**
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    public ReturnObject spuDeleteBrand(Long shopId, Long spuId, Long id){
+        ReturnObject returnObject = null;
+        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
+        System.out.println(tempSpu.toString());
+        if (tempSpu == null) {
+            logger.debug("findGoodsSPuById : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("SpuId不存在"));
+        } else {
+            if (tempSpu.getShopId() == shopId) {
+                    tempSpu.setGmtModified(LocalDateTime.now());
+                    tempSpu.setBrandId(null);
+                    returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
+                    tempSpu = goodsDao.findGoodsSpuById(spuId);
+                    System.out.println(tempSpu.toString());
+            } else {
+                logger.debug("spuDeleteBrand shopId和这个spu的里的shopId不一致");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuDeleteBrand shopId和这个spu的里的shopId不一致"));
             }
         }
         return returnObject;

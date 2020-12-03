@@ -578,7 +578,6 @@ public class GoodsController {
 
     /**
      * 将SPU加入品牌
-     * 管理员删除品牌
      *
      * @param id
      * @param shopId
@@ -600,5 +599,30 @@ public class GoodsController {
         return Common.decorateReturnObject(returnObject);
     }
 
+
+    /**
+     * 将SPU删除品牌
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "将SPU删除品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
+    })
+    @DeleteMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
+    public Object spuDeleteBrand(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    )
+    {
+        ReturnObject returnObject = goodsService.spuDeleteBrand(shopId, spuId, id);
+        return Common.decorateReturnObject(returnObject);
+    }
 
 }

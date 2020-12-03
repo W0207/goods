@@ -337,4 +337,17 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
+
+    /**
+     * spu删除品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void spuDeleteBrand() throws Exception {
+        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/273/brands/75"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 }
