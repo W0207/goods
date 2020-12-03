@@ -364,8 +364,8 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
-
     }
+
 
     @Test
     public void addBrand() throws Exception {
