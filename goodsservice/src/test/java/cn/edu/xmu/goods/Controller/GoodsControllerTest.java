@@ -356,6 +356,20 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
         getAllBrand();
+    }
 
+    /**
+     * 查询商品分类信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void queryType() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/categories/127/subcategories"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }
