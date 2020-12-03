@@ -344,4 +344,31 @@ public class GoodsDao {
         }
         return returnObject;
     }
+
+    /**
+     * 查询商品分类关系
+     *
+     * @param id 种类 id
+     * @return 返回对象 ReturnObject<List>
+     * @author shangzhao翟
+     */
+    public ReturnObject<List> getCategoryByPid(Long id) {
+        GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+        GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+        criteria.andPidEqualTo(id);
+        //查看是否有此分类
+        GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
+        if (categoryPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
+        List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
+        if (goodsCategoryPos == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
+        for (GoodsCategoryPo po : goodsCategoryPos) {
+            goodsCategories.add(new GoodsCategory(po));
+        }
+        return new ReturnObject<>(goodsCategories);
+    }
 }

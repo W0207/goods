@@ -115,6 +115,26 @@ public class BrandDao implements InitializingBean {
     }
 
     /**
+     * 管理员新增品牌
+     *
+     * @param brandInputVo 品牌详细信息
+     * @return 返回对象 ReturnObject<Object>
+     */
+    public BrandPo addBrandById(BrandInputVo brandInputVo) {
+        Brand brand=new Brand();
+        BrandPo brandPo=brand.createAddPo(brandInputVo);
+        int ret=brandPoMapper.insertSelective(brandPo);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            //检查新增是否成功
+            brandPo=null;
+        } else {
+            logger.info("品牌已新建成功");
+        }
+        return brandPo;
+    }
+
+    /**
      * @param id
      * @return
      */

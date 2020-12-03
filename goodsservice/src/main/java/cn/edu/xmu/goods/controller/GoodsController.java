@@ -292,7 +292,7 @@ public class GoodsController {
     public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 49 : pageSize;
+        pageSize = (pageSize == null) ? 100 : pageSize;
 
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = brandService.findAllBrand(page, pageSize);
@@ -600,5 +600,61 @@ public class GoodsController {
         return Common.decorateReturnObject(returnObject);
     }
 
+    /**
+     * 管理员新增品牌
+     *
+     * @param id:          店铺 id
+     * @param brandInputVo 品牌详细信息
+     * @return Object
+     */
+    @ApiOperation(value = "管理员新增品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "brandInputVo", name = "brandInputVo", value = "品牌详细信息", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit // 需要认证
+    @PostMapping("/shops/{id}/brands")
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addBrands: BrandId = " + id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while addBrand shopid = ", id);
+            return returnObject;
+        }
+        if (id.equals(shopid) || id == 0) {
+            ReturnObject brandCategory = brandService.addBrand(brandInputVo);
+            returnObject = ResponseUtil.ok(brandCategory.getData());
+            return returnObject;
+        } else {
+            logger.error("无权限新增品牌");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
 
+    /**
+     * 查询商品分类关系
+     *
+     * @param id 种类id
+     * @return ReturnObject<List>
+     */
+    @ApiOperation(value = "查询商品分类关系")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit //需要认证
+    @GetMapping("/categories/{id}/subcategories")
+    public Object queryType(@PathVariable Long id) {
+        ReturnObject<List> returnObject = goodsService.selectCategories(id);
+        return Common.decorateReturnObject(returnObject);
+    }
 }
