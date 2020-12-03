@@ -332,9 +332,22 @@ public class GoodsDao {
         return returnObject;
     }
 
-    public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
+    public ReturnObject modifySpuBySpuPoId(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+        if (ret == 0) {
+            logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("spuId" + goodsSpuPo.getId() + "已加入品牌");
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
+        ReturnObject returnObject = null;
+        int ret = goodsSpuPoMapper.updateByPrimaryKey(goodsSpuPo);
         if (ret == 0) {
             logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
