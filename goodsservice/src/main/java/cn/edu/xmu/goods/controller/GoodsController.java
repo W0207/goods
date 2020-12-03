@@ -1,5 +1,6 @@
 package cn.edu.xmu.goods.controller;
 
+import cn.edu.xmu.goods.model.bo.Comment;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
 import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.goods.service.BrandService;
@@ -637,7 +638,25 @@ public class GoodsController {
             logger.error("无权限新增品牌");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
+    }
 
-
+    /**
+     * 获得评论所有状态
+     *
+     * @return Object
+     */
+    @ApiOperation(value = "获得评论的所有状态")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/comments/states")
+    public Object getCommentState() {
+        logger.debug("getCommentState");
+        Comment.State[] states = Comment.State.class.getEnumConstants();
+        List<CommentStateVo> commentStateVos = new ArrayList<>();
+        for (int i = 0; i < states.length; i++) {
+            commentStateVos.add(new CommentStateVo(states[i]));
+        }
+        return ResponseUtil.ok(new ReturnObject<List>(commentStateVos).getData());
     }
 }

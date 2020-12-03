@@ -358,4 +358,16 @@ public class GoodsControllerTest {
         getAllBrand();
 
     }
+
+    /**
+     * 获得评论所有状态
+     */
+    @Test
+    public void getCommentState() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/comments/states"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未发布\", \"code\": 0 }, { \"name\": \"发布\", \"code\": 1 }, { \"name\": \"废弃\", \"code\": 2 }], \"errmsg\": \"成功\" }";
+        System.out.println(responseString);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
 }
