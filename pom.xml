@@ -18,6 +18,10 @@
         <module>goodsservice</module>
         <module>core</module>
         <module>commentservice</module>
+        <module>couponservice</module>
+        <module>flashsaleservice</module>
+        <module>presaleservice</module>
+        <module>grouponservice</module>
     </modules>
     <name>goods</name>
     <description>the role base goods management systems</description>
