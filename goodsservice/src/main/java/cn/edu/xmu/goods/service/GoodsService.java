@@ -223,26 +223,27 @@ public class GoodsService {
      * @param id
      * @return
      */
-    public ReturnObject spuDeleteBrand(Long shopId, Long spuId, Long id){
+    public ReturnObject spuDeleteBrand(Long shopId, Long spuId, Long id) {
         ReturnObject returnObject = null;
         GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
         System.out.println(tempSpu.toString());
         if (tempSpu == null) {
             logger.debug("findGoodsSPuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("SpuId不存在"));
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
         } else {
             if (tempSpu.getShopId() == shopId) {
-                    tempSpu.setGmtModified(LocalDateTime.now());
-                    tempSpu.setBrandId(null);
-                    returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
-                    tempSpu = goodsDao.findGoodsSpuById(spuId);
-                    System.out.println(tempSpu.toString());
+                tempSpu.setGmtModified(LocalDateTime.now());
+                tempSpu.setBrandId(null);
+                returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
+                tempSpu = goodsDao.findGoodsSpuById(spuId);
+                System.out.println(tempSpu.toString());
             } else {
                 logger.debug("spuDeleteBrand shopId和这个spu的里的shopId不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuDeleteBrand shopId和这个spu的里的shopId不一致"));
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuDeleteBrand shopId和这个spu的里的shopId不一致"));
             }
         }
         return returnObject;
+    }
     /**
      * 查询商品分类关系
      *
