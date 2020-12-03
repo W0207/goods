@@ -18,7 +18,7 @@ public class ShopDao {
     @Autowired
     ShopPoMapper shopPoMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(BrandDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
 
     /**
      * 增加一个店铺
