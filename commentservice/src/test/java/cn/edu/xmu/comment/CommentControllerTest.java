@@ -1,6 +1,6 @@
-package cn.edu.xmu.goods.Controller;
+package cn.edu.xmu.comment;
 
-import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.comment.CommentServiceApplication;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = GoodsServiceApplication.class)
+@SpringBootTest(classes = CommentServiceApplication.class)
 @AutoConfigureMockMvc
 @Transactional
 public class CommentControllerTest {

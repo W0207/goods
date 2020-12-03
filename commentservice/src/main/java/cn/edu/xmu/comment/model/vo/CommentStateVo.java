@@ -1,6 +1,6 @@
-package cn.edu.xmu.goods.model.vo;
+package cn.edu.xmu.comment.model.vo;
 
-import cn.edu.xmu.goods.model.bo.Comment;
+import cn.edu.xmu.comment.model.bo.Comment;
 import io.swagger.annotations.ApiModelProperty;
 
 public class CommentStateVo {
