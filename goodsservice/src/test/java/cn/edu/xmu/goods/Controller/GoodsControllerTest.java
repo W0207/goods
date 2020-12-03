@@ -1,12 +1,16 @@
 package cn.edu.xmu.goods.Controller;
 
 import cn.edu.xmu.goods.GoodsServiceApplication;
+import cn.edu.xmu.goods.controller.GoodsController;
 import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.bo.FloatPrice;
 import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
+import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +42,14 @@ public class GoodsControllerTest {
 
     @Autowired
     GoodsCategoryPoMapper goodsCategoryPoMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
+
+    private final String creatTestToken(Long userId, Long departId, int expireTime) {
+        String token = new JwtHelper().createToken(userId, departId, expireTime);
+        logger.debug("token: " + token);
+        return token;
+    }
 
     /**
      * 获得商品spu所有状态
@@ -82,8 +94,10 @@ public class GoodsControllerTest {
      */
     @Test
     public void changeSpuInfoById() throws Exception {
+        String token = creatTestToken(1L, 2L, 100);
         String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
-        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273")
+        String responseString = this.mvc.perform(put("/goods/shops/2/spus/273")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
@@ -351,6 +365,9 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
 
+    }
+
+    @Test
     public void addBrand() throws Exception {
         getAllBrand();
         String requireJson = "{\n" +
