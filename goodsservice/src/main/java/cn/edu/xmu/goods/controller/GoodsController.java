@@ -135,7 +135,7 @@ public class GoodsController {
     })
     @Audit //需要认证
     @PutMapping("/shops/{shopId}/spus/{id}")
-    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult, @Depart Long shopid) {
+    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
         }
@@ -145,14 +145,10 @@ public class GoodsController {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
             return returnObject;
         }
-        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.modifySpuInfo(id, spuInputVo);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            logger.error("无权限修改本商品的信息");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+
+        ReturnObject returnObj = goodsService.modifySpuInfo(shopId,id, spuInputVo);
+        return Common.decorateReturnObject(returnObj);
+
     }
 
     /**
@@ -177,15 +173,11 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
         }
-        //商家只能逻辑删除自家商品spu，shopId=0可以逻辑删除任意商品spu
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.deleteSpuById(id);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
-    }
+        ReturnObject returnObj = goodsService.deleteSpuById(shopId,id);
+        return Common.decorateReturnObject(returnObj);
 
+    }
+    
     /**
      * 店家商品上架
      *
@@ -208,13 +200,10 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
         }
-        //商家只能上架自家商品spu，shopId=0可以上架任意商品spu
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.putGoodsOnSaleById(id);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+
+        ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId,id);
+        return Common.decorateReturnObject(returnObj);
+
     }
 
     /**
@@ -775,5 +764,30 @@ public class GoodsController {
             logger.error("无权限上传品牌照片");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
+    }
+    /**
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     *
+     * by 宇
+     */
+    @ApiOperation(value = "将SPU加入种类")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
+    })
+    @PostMapping("/shops/{shopId}/spus/{spuId}/categories/{id}")
+    public Object spuAddCategories(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    )
+    {
+        ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
+        return Common.decorateReturnObject(returnObject);
     }
 }
