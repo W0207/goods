@@ -1,11 +1,7 @@
 package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
-import cn.edu.xmu.goods.model.vo.BrandInputVo;
-import cn.edu.xmu.goods.model.vo.SkuInputVo;
-import cn.edu.xmu.goods.model.vo.SpuInputVo;
-import cn.edu.xmu.goods.model.vo.SpuStateVo;
-import cn.edu.xmu.goods.model.vo.CategoryInputVo;
+import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.goods.service.BrandService;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -296,7 +292,7 @@ public class GoodsController {
     public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 49 : pageSize;
+        pageSize = (pageSize == null) ? 100 : pageSize;
 
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = brandService.findAllBrand(page, pageSize);
@@ -449,7 +445,7 @@ public class GoodsController {
     }
 
     /**
-     * 管理员删除品牌(目前是逻辑删除，情况表中各项数据)
+     * 管理员删除品牌
      *
      * @param id
      * @param shopId
@@ -475,47 +471,48 @@ public class GoodsController {
             ReturnObject returnObj = brandService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限删除本品牌");
+            logger.error("无权限删除品牌");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
 
-    /**
-     * 管理员新增商品类目
-     * @param id: 种类 id
-     * @param categoryInputVo 类目详细信息
-     * @return Object
-     */
     @ApiOperation(value = "管理员新增商品类目")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "种类 id", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "CategoryInputVo", name = "CategoryInputVo", value = "类目详细信息", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "CategoryInputVo", name = "categoryInputVo", value = "类目详细信息", required = true),
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
     //@Audit // 需要认证
-    @PostMapping ("/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult) {
+    @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
-            logger.debug("addCategory: CategoryId = "+ id);
+            logger.debug("addCategory: CategoryId = " + id);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while addCategory Categoryid = " ,id);
+            logger.info("incorrect data received while addCategory CategoryId = ", id);
             return returnObject;
         }
-        Object returnObj;
-        ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
-        returnObject = ResponseUtil.ok(goodsCategory.getData());
-        return returnObject;
 
+        if (shopId.equals(shopid) || shopId == 0) {
+            ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+            returnObject = ResponseUtil.ok(goodsCategory.getData());
+            return returnObject;
+        } else {
+            logger.error("无权限删除品牌");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
     }
 
     /**
      * 管理员修改商品类目信息
-     * @param id: 种类 id
+     *
+     * @param id:             种类 id
      * @param categoryInputVo 类目详细信息
      * @return Object
      */
@@ -523,50 +520,124 @@ public class GoodsController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "种类 id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "CategoryInputVo", name = "CategoryInputVo", value = "类目详细信息", required = true),
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
     //@Audit // 需要认证
-    @PutMapping("/categories/{id}")
-    public Object modifyGoods_type(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult) {
+    @PutMapping("/shops/{shopId}/categories/{id}")
+    public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
-            logger.debug("modifyGoods_type: CategoryId = "+ id);
+            logger.debug("modifyGoodsType: CategoryId = " + id);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoods_type id = " ,id);
+            logger.info("incorrect data received while modifyGoodsType id = ", id);
             return returnObject;
         }
-        ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
-        return Common.decorateReturnObject(returnObj);
-
+        if (shopId.equals(shopid) || shopId == 0) {
+            ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            logger.error("无权限修改品牌");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
     }
 
     /**
      * 管理员删除商品类目信息
+     *
      * @param id: 种类 id
      * @return Object
      */
     @ApiOperation(value = "管理员删除商品类目信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="authorization", value="Token", required = true, dataType="String", paramType="header"),
-            @ApiImplicitParam(name="id", required = true, dataType="Integer", paramType="path")
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path")
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
     //@Audit // 需要认证
-    @DeleteMapping("/categories/{id}")
-    public Object delCategory(@PathVariable Long id) {
+    @DeleteMapping("/shops/{shopId}/categories/{id}")
+    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, BindingResult bindingResult, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
-            logger.debug("deleteCategory: CategoryId = "+ id);
+            logger.debug("deleteCategory: CategoryId = " + id);
         }
-        ReturnObject returnObject = goodsService.deleteCategoryById(id);
+        if (shopId.equals(shopid) || shopId == 0) {
+            ReturnObject returnObject = goodsService.deleteCategoryById(id);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            logger.error("无权限修改品牌");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
+
+    /**
+     * 将SPU加入品牌
+     * 管理员删除品牌
+     *
+     * @param id
+     * @param shopId
+     * @return
+     */
+    @ApiOperation(value = "将SPU加入品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
+    })
+    @PostMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
+    public Object spuAddBrand(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    ) {
+        ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
 
+    /**
+     * 管理员新增品牌
+     * @param id: 店铺 id
+     * @param brandInputVo 品牌详细信息
+     * @return Object
+     */
+    @ApiOperation(value = "管理员新增品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "brandInputVo", name = "brandInputVo", value = "品牌详细信息", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    //@Audit // 需要认证
+    @PostMapping ("/shops/{id}/brands")
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult,@Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addBrands: BrandId = "+ id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while addBrand shopid = " ,id);
+            return returnObject;
+        }
+        if (id.equals(shopid) || id == 0) {
+            ReturnObject brandCategory = brandService.addBrand(brandInputVo);
+            returnObject = ResponseUtil.ok(brandCategory.getData());
+            return returnObject;
+        }
+        else
+        {
+            logger.error("无权限新增品牌");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
 
+
+    }
 }

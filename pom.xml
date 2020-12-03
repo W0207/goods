@@ -17,6 +17,7 @@
     <modules>
         <module>goodsservice</module>
         <module>core</module>
+        <module>commentservice</module>
     </modules>
     <name>goods</name>
     <description>the role base goods management systems</description>
