@@ -388,7 +388,7 @@ public class GoodsDao {
         return new ReturnObject<>(goodsCategories);
     }
 
-    public GoodsCategoryPo getCategoryByid(Long id){
+    public GoodsCategoryPo getCategoryByid(Long id) {
         return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
 }

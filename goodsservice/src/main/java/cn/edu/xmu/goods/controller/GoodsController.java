@@ -146,7 +146,7 @@ public class GoodsController {
             return returnObject;
         }
 
-        ReturnObject returnObj = goodsService.modifySpuInfo(shopId,id, spuInputVo);
+        ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
         return Common.decorateReturnObject(returnObj);
 
     }
@@ -173,11 +173,11 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
         }
-        ReturnObject returnObj = goodsService.deleteSpuById(shopId,id);
+        ReturnObject returnObj = goodsService.deleteSpuById(shopId, id);
         return Common.decorateReturnObject(returnObj);
 
     }
-    
+
     /**
      * 店家商品上架
      *
@@ -200,10 +200,8 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
         }
-
-        ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId,id);
+        ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**
@@ -765,14 +763,12 @@ public class GoodsController {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
     }
+
     /**
-     *
      * @param shopId
      * @param spuId
      * @param id
-     * @return
-     *
-     * by 宇
+     * @return by 宇
      */
     @ApiOperation(value = "将SPU加入种类")
     @ApiImplicitParams({
@@ -785,8 +781,7 @@ public class GoodsController {
             @PathVariable Long shopId,
             @PathVariable Long spuId,
             @PathVariable Long id
-    )
-    {
+    ) {
         ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }

@@ -464,14 +464,4 @@ public class GoodsSpuPo {
     public void setGmtModified(LocalDateTime gmtModified) {
         this.gmtModified = gmtModified;
     }
-
-    @Override
-    public String toString() {
-        return "GoodsSpuPo{" +
-                "id=" + id +
-                ", brandId=" + brandId +
-                ", categoryId=" + categoryId +
-                ", shopId=" + shopId +
-                '}';
-    }
 }
