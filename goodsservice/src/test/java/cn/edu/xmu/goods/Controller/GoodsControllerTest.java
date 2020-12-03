@@ -351,6 +351,9 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
 
+    }
+
+    @Test
     public void addBrand() throws Exception {
         getAllBrand();
         String requireJson = "{\n" +

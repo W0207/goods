@@ -652,17 +652,12 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
     })
     @DeleteMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
-    public Object spuDeleteBrand(
-            @PathVariable Long shopId,
-            @PathVariable Long spuId,
-            @PathVariable Long id
-    )
-    {
+    public Object spuDeleteBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id) {
         ReturnObject returnObject = goodsService.spuDeleteBrand(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
 
-     /**
+    /**
      * 查询商品分类关系
      *
      * @param id 种类id
