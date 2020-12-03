@@ -1,8 +1,11 @@
 package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.BrandDao;
+import cn.edu.xmu.goods.model.bo.Brand;
+import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -33,5 +36,25 @@ public class BrandService {
 
     public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
         return brandDao.modifyBrandById(id,brandInputVo);
+    }
+
+    /**
+     * 管理员新增品牌
+     *
+     * @param brandInputVo 品牌详细信息
+     * @return 返回对象 ReturnObject<Object>
+     */
+    public ReturnObject<Object> addBrand(BrandInputVo brandInputVo) {
+        ReturnObject returnObject;
+        BrandPo brandPo=brandDao.addBrandById(brandInputVo);
+        if (brandInputVo != null) {
+            returnObject = new ReturnObject(new Brand(brandPo));
+            logger.debug("addBrand : " + returnObject);
+        } else {
+            logger.debug("addBrand : fail!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+
     }
 }

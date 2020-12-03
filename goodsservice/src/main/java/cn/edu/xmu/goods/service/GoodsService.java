@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class GoodsService {
@@ -242,5 +243,15 @@ public class GoodsService {
             }
         }
         return returnObject;
+    /**
+     * 查询商品分类关系
+     *
+     * @param id 种类 id
+     * @return 返回对象 ReturnObject<List>
+     * @author shangzhao翟
+     */
+    public ReturnObject<List> selectCategories(Long id) {
+        ReturnObject<List> ret = goodsDao.getCategoryByPid(id);
+        return ret;
     }
 }
