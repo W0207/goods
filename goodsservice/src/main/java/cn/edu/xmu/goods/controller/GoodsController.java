@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -131,8 +133,8 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
-    @PutMapping("shops/{shopId}/spus/{id}")
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/spus/{id}")
     public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
@@ -590,11 +592,7 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
     })
     @PostMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
-    public Object spuAddBrand(
-            @PathVariable Long shopId,
-            @PathVariable Long spuId,
-            @PathVariable Long id
-    ) {
+    public Object spuAddBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id) {
         ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
@@ -675,5 +673,107 @@ public class GoodsController {
     public Object queryType(@PathVariable Long id) {
         ReturnObject<List> returnObject = goodsService.selectCategories(id);
         return Common.decorateReturnObject(returnObject);
+    }
+
+    /**
+     * sku上传图片
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "sku上传图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "skuId", value = "sku id", required = true),
+            @ApiImplicitParam(paramType = "formData", dataType = "file", name = "img", value = "文件", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 506, message = "该目录文件夹没有写入的权限"),
+            @ApiResponse(code = 508, message = "图片格式不正确"),
+            @ApiResponse(code = 509, message = "图片大小超限")
+    })
+    @Audit
+    @PostMapping("/shops/{shopId}/skus/{id}/uploadImg")
+    public Object uploadSkuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
+                               @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+        logger.debug("uploadSkuImg: shopId = " + shopId + " skuId = " + id + " img :" + multipartFile.getOriginalFilename());
+        if (shopId.equals(shopid) || shopid == 0) {
+            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            return Common.getNullRetObj(returnObject, httpServletResponse);
+        } else {
+            logger.error("无权限上传sku照片");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
+
+    /**
+     * spu上传图片
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "spu上传图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "spuId", value = "spu id", required = true),
+            @ApiImplicitParam(paramType = "formData", dataType = "file", name = "img", value = "文件", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 506, message = "该目录文件夹没有写入的权限"),
+            @ApiResponse(code = 508, message = "图片格式不正确"),
+            @ApiResponse(code = 509, message = "图片大小超限")
+    })
+    @Audit
+    @PostMapping("/shops/{shopId}/spus/{id}/uploadImg")
+    public Object uploadSpuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
+                               @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+        logger.debug("uploadSpuImg: shopId = " + shopId + " spuId = " + id + " img :" + multipartFile.getOriginalFilename());
+        if (shopId.equals(shopid) || shopid == 0) {
+            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            return Common.getNullRetObj(returnObject, httpServletResponse);
+        } else {
+            logger.error("无权限上传spu照片");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
+    }
+
+    /**
+     * 品牌上传图片
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "spu上传图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "brandId", value = "brand id", required = true),
+            @ApiImplicitParam(paramType = "formData", dataType = "file", name = "img", value = "文件", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 506, message = "该目录文件夹没有写入的权限"),
+            @ApiResponse(code = 508, message = "图片格式不正确"),
+            @ApiResponse(code = 509, message = "图片大小超限")
+    })
+    @Audit
+    @PostMapping("/shops/{shopId}/brand/{id}/uploadImg")
+    public Object uploadBrandImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
+                                 @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+        logger.debug("uploadBrandImg: shopId = " + shopId + " brandId = " + id + " img :" + multipartFile.getOriginalFilename());
+        if (shopId.equals(shopid) || shopid == 0) {
+            ReturnObject returnObject = goodsService.uploadImg(userId, multipartFile);
+            return Common.getNullRetObj(returnObject, httpServletResponse);
+        } else {
+            logger.error("无权限上传品牌照片");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
     }
 }

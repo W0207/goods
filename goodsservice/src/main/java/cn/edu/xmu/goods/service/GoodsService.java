@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,7 +33,6 @@ public class GoodsService {
 
     @Autowired
     BrandDao brandDao;
-
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
@@ -217,7 +218,6 @@ public class GoodsService {
     }
 
     /**
-     *
      * @param shopId
      * @param spuId
      * @param id
@@ -244,6 +244,7 @@ public class GoodsService {
         }
         return returnObject;
     }
+
     /**
      * 查询商品分类关系
      *
@@ -254,5 +255,14 @@ public class GoodsService {
     public ReturnObject<List> selectCategories(Long id) {
         ReturnObject<List> ret = goodsDao.getCategoryByPid(id);
         return ret;
+    }
+
+    /**
+     * @param userId
+     * @param multipartFile
+     * @return
+     */
+    public ReturnObject uploadImg(Long userId, MultipartFile multipartFile) {
+        return null;
     }
 }

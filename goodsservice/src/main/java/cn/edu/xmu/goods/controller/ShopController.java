@@ -75,7 +75,7 @@ public class ShopController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/states")
-    public Object getshopState() {
+    public Object getShopState() {
         Shop.State[] states = Shop.State.class.getEnumConstants();
         List<ShopStateVo> stateVos = new ArrayList<>();
         for (int i = 0; i < states.length; i++) {
