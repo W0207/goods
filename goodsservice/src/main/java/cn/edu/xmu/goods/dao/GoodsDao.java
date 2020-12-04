@@ -36,6 +36,7 @@ public class GoodsDao {
     @Autowired
     GoodsCategoryPoMapper goodsCategoryPoMapper;
 
+
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
     /**
@@ -322,6 +323,7 @@ public class GoodsDao {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         int ret = goodsCategoryPoMapper.deleteByPrimaryKey(id);
+        System.out.println(ret);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
@@ -331,6 +333,7 @@ public class GoodsDao {
         }
         return returnObject;
     }
+
 
     public ReturnObject modifySpuBySpuPoId(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
@@ -383,5 +386,36 @@ public class GoodsDao {
             goodsCategories.add(new GoodsCategory(po));
         }
         return new ReturnObject<>(goodsCategories);
+    }
+
+    /**
+     * 新建sku
+     *
+     * @param spuId
+     * @param shopId
+     * @param skuCreatVo
+     * @return GoodsSkuPo
+     * @author 翟尚召
+     */
+    public GoodsSkuPo creatSku(Long spuId, Long shopId ,SkuCreatVo skuCreatVo) {
+
+        GoodsSpuPo goodsSpuPo=goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
+
+        if(goodsSpuPo.getShopId().equals(shopId)||shopId==0){
+            GoodsSku goodsSku=new GoodsSku();
+            GoodsSkuPo po = goodsSku.createPo(skuCreatVo,spuId);
+            int ret = goodsSkuPoMapper.insertSelective(po);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("spuId :"+spuId+" 插入sku失败");
+            } else {
+                logger.info("spuId = " + spuId + " 插入sku成功");
+            }
+            return po;
+        }
+        //logger.error("无权限修改本商品的信息");
+        GoodsSkuPo goodsSkuPo =new GoodsSkuPo();
+        return goodsSkuPo;
     }
 }

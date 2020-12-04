@@ -2,6 +2,7 @@ package cn.edu.xmu.goods.model.bo;
 
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.vo.SkuCreatVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -80,7 +81,6 @@ public class GoodsSku implements VoObject, Serializable {
         this.imageUrl = po.getImageUrl();
         this.inventory = po.getInventory();
         this.detail = po.getDetail();
-        this.disabled = po.getDisabled() == 1;
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
     }
@@ -151,7 +151,7 @@ public class GoodsSku implements VoObject, Serializable {
     }
 
     /**
-     * 由vo创建po
+     * 由inputVo创建po
      *
      * @param skuInputVo
      * @return
@@ -173,4 +173,36 @@ public class GoodsSku implements VoObject, Serializable {
         goodsSkuPo.setConfiguration(configurationEnc);
         return goodsSkuPo;
     }
+
+    /**
+     * 由creatVo创建po
+     *
+     * @param skuCreatVo
+     * @return
+     */
+    public GoodsSkuPo createPo(SkuCreatVo skuCreatVo,Long spuId) {
+        GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
+        String nameEnc = skuCreatVo.getName() == null ? null : skuCreatVo.getName();
+        String skusnEnc = skuCreatVo.getSn() == null ? null : skuCreatVo.getName();
+        Long originalPriceEnc = skuCreatVo.getOriginalPrice() == null ? null : skuCreatVo.getOriginalPrice();
+        String configurationEnc = skuCreatVo.getConfiguration() == null ? null : skuCreatVo.getConfiguration();
+        Long inventoryEnc = skuCreatVo.getInventory() == null ? null : skuCreatVo.getInventory();
+        String imageUrlEnc = skuCreatVo.getImageUrl() == null ? null : skuCreatVo.getImageUrl();
+        Long weightEnc = skuCreatVo.getWeight() == null ? null : skuCreatVo.getWeight();
+        String detailEnc = skuCreatVo.getDetail() == null ? null : skuCreatVo.getDetail();
+        goodsSkuPo.setOriginalPrice(originalPriceEnc);
+        goodsSkuPo.setName(nameEnc);
+        goodsSkuPo.setDetail(detailEnc);
+        goodsSkuPo.setWeight(inventoryEnc);
+        goodsSkuPo.setImageUrl(imageUrlEnc);
+        goodsSkuPo.setWeight(weightEnc);
+        goodsSkuPo.setConfiguration(configurationEnc);
+        goodsSkuPo.setGmtCreate(LocalDateTime.now());
+        goodsSkuPo.setGmtModified(LocalDateTime.now());
+        goodsSkuPo.setGoodsSpuId(spuId);
+        goodsSkuPo.setSkuSn(skusnEnc);
+        return goodsSkuPo;
+    }
+
+    public GoodsSku(){}
 }

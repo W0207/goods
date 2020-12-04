@@ -255,4 +255,27 @@ public class GoodsService {
         ReturnObject<List> ret = goodsDao.getCategoryByPid(id);
         return ret;
     }
+
+    /**
+     * 新增Sku
+     *
+     * @param id
+     * @param shopId
+     * @param skuCreatVo
+     * @return  ReturnObject<Object>
+     * @author 翟尚召
+     */
+    public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
+        ReturnObject returnObject;
+        GoodsSkuPo goodsSkuPo= goodsDao.creatSku(id,shopId,skuCreatVo);
+        if (goodsSkuPo != null) {
+            returnObject = new ReturnObject(new GoodsSku(goodsSkuPo));
+            logger.debug("addSKU : " + returnObject);
+        } else {
+            logger.debug("addSKU : Failed!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+    }
+
 }
