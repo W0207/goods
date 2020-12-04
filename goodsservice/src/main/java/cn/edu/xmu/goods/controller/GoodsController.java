@@ -46,6 +46,7 @@ public class GoodsController {
      * 查看商品spu的所有状态
      *
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "获得商品spu的所有状态")
     @ApiResponses({
@@ -116,6 +117,7 @@ public class GoodsController {
      * @param bindingResult 校验信息
      * @param spuInputVo    修改信息的SpuInputVo
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "店家修改商品spu")
     @ApiImplicitParams({
@@ -140,10 +142,8 @@ public class GoodsController {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
             return returnObject;
         }
-
         ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**
@@ -152,6 +152,7 @@ public class GoodsController {
      * @param shopId 店铺id
      * @param id     spuId
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "店家删除商品spu")
     @ApiImplicitParams({
@@ -170,7 +171,6 @@ public class GoodsController {
         }
         ReturnObject returnObj = goodsService.deleteSpuById(shopId, id);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**
@@ -179,6 +179,7 @@ public class GoodsController {
      * @param id
      * @param shopId
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "店家商品上架")
     @ApiImplicitParams({
@@ -206,6 +207,7 @@ public class GoodsController {
      * @param id
      * @param shopId
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "店家商品下架")
     @ApiImplicitParams({
@@ -237,6 +239,7 @@ public class GoodsController {
      * @param shopId 店铺id
      * @param id     spuId
      * @return Object
+     * @Author shibin zhan
      */
     @ApiOperation(value = "管理员或店家逻辑删除sku")
     @ApiImplicitParams({
@@ -247,19 +250,14 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
-    @DeleteMapping("shops/{shopId}/skus/{id}")
-    public Object deleteGoodsSku(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    @Audit //需要认证
+    @DeleteMapping("/shops/{shopId}/skus/{id}")
+    public Object deleteGoodsSku(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSku : shopId = " + shopId + " skuId = " + id);
         }
-        //商家只能逻辑删除自家商品sku，shopId=0可以逻辑删除任意商品sku
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.deleteSkuById(id);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObj = goodsService.deleteSkuById(shopId, id);
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -290,17 +288,18 @@ public class GoodsController {
      * @param bindingResult 校验信息
      * @param skuInputVo    修改信息的SkuInputVo
      * @return Object
+     * @Author shibin zhan
      */
-    @ApiOperation(value = "店家修改商品spu")
+    @ApiOperation(value = "店家修改商品sku")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "skuInputVo", value = "可修改的sku信息", required = true)
     })
-    //@Audit //需要认证
-    @PutMapping("shops/{shopId}/skus/{id}")
-    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult, @Depart Long shopid) {
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/skus/{id}")
+    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSku : shopId = " + shopId + " skuId = " + id + " vo = " + skuInputVo);
         }
@@ -310,14 +309,8 @@ public class GoodsController {
             logger.info("incorrect data received while modifyGoodsSku shopId = " + shopId + " skuId = " + id);
             return returnObject;
         }
-        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.modifySkuInfo(id, skuInputVo);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            logger.error("无权限修改本商品的信息");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObj = goodsService.modifySkuInfo(shopId, id, skuInputVo);
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -364,6 +357,7 @@ public class GoodsController {
      * @param id
      * @param shopId
      * @return
+     * @author shibin zhan
      */
     @ApiOperation(value = "管理员失效商品价格浮动")
     @ApiImplicitParams({
@@ -374,20 +368,14 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
+    @Audit //需要认证
     @DeleteMapping("/shops/{shopId}/floatprice/{id}")
-    public Object invalidFloatPrice(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid, @LoginUser Long loginUserId) {
+    public Object invalidFloatPrice(@PathVariable Long id, @PathVariable Long shopId, @LoginUser Long loginUserId) {
         if (logger.isDebugEnabled()) {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
-        //商家只能修改自家商品价格浮动，shopId=0可以修改任意商品价格浮动
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.invalidFloatPriceById(id, loginUserId);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            logger.error("无权限修改本商品价格浮动的信息");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObj = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
+        return returnObj;
     }
 
     /**
@@ -409,7 +397,7 @@ public class GoodsController {
     })
     //@Audit
     @PutMapping("/shops/{shopId}/brands/{id}")
-    public Object modifyBrand(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult, @Depart Long shopid) {
+    public Object modifyBrand(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyBrand : shopId = " + shopId + " brandId = " + id + " vo = " + brandInputVo);
         }
@@ -419,14 +407,8 @@ public class GoodsController {
             logger.info("incorrect data received while modifyBrand shopId = " + shopId + " skuId = " + id);
             return returnObject;
         }
-        //商家只能修改自家商品spu，shopId=0可以修改任意商品信息
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.modifyBrandInfo(id, brandInputVo);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            logger.error("无权限修改本品牌的信息");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObj = goodsService.modifyBrandInfo(shopId, id, brandInputVo);
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**

@@ -46,8 +46,16 @@ public class GoodsService {
         return goodsDao.deleteBrandById(id);
     }
 
-    public ReturnObject modifyBrandInfo(Long id, BrandInputVo brandInputVo) {
-        return goodsDao.modifyBrandById(id, brandInputVo);
+    /**
+     * 管理员修改品牌
+     *
+     * @param shopId
+     * @param id
+     * @param brandInputVo
+     * @return
+     */
+    public ReturnObject modifyBrandInfo(Long shopId, Long id, BrandInputVo brandInputVo) {
+        return goodsDao.modifyBrandById(shopId, id, brandInputVo);
     }
 
     /**
@@ -122,12 +130,12 @@ public class GoodsService {
             logger.debug("修改spu信息中，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId()) {
+            if (shopId != goodsSpuPo.getShopId() && shopId != 0) {
                 logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spu里shopId和路径上的shopId不一致"));
             } else {
-                goodsSpuPo.setGmtModified(LocalDateTime.now());
                 goodsSpuPo.setId(spuId);
+                goodsSpuPo.setGmtModified(LocalDateTime.now());
                 goodsSpuPo.setSpec(spuInputVo.getSpecs());
                 goodsSpuPo.setName(spuInputVo.getName());
                 goodsSpuPo.setDetail(spuInputVo.getDescription());
@@ -149,7 +157,7 @@ public class GoodsService {
             logger.debug("删除spu信息中，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId()) {
+            if (shopId != goodsSpuPo.getShopId() && shopId != 0) {
                 //shopId不对
                 logger.debug("删除spu信息中，spu里shopId和路径上的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spu里shopId和路径上的shopId不一致"));
@@ -178,20 +186,22 @@ public class GoodsService {
     }
 
     /**
+     * @param shopId
      * @param skuId
      * @return ReturnObject
      */
-    public ReturnObject deleteSkuById(Long skuId) {
-        return goodsDao.deleteGoodsSku(skuId);
+    public ReturnObject deleteSkuById(Long shopId, Long skuId) {
+        return goodsDao.deleteGoodsSku(shopId, skuId);
     }
 
     /**
+     * @param shopId
      * @param id
      * @param skuInputVo
      * @return
      */
-    public ReturnObject modifySkuInfo(Long id, SkuInputVo skuInputVo) {
-        return goodsDao.modifySkuById(id, skuInputVo);
+    public ReturnObject modifySkuInfo(Long shopId, Long id, SkuInputVo skuInputVo) {
+        return goodsDao.modifySkuById(shopId, id, skuInputVo);
     }
 
     public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
@@ -203,8 +213,8 @@ public class GoodsService {
      * @param id
      * @return
      */
-    public ReturnObject invalidFloatPriceById(Long id, Long loginUserId) {
-        return goodsDao.invalidFloatPriceById(id, loginUserId);
+    public ReturnObject invalidFloatPriceById(Long shopId, Long id, Long loginUserId) {
+        return goodsDao.invalidFloatPriceById(shopId, id, loginUserId);
     }
 
     /**
