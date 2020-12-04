@@ -173,8 +173,27 @@ public class GoodsService {
      * @param spuId
      * @return ReturnObject
      */
-    public ReturnObject putGoodsOnSaleById(Long spuId) {
-        return goodsDao.updateGoodsSpuState(spuId, 4L);
+    public ReturnObject putGoodsOnSaleById(Long shopId,Long spuId) {
+        ReturnObject returnObject= null;
+        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
+        if (goodsSpuPo == null) {
+            //spuId不存在
+            logger.debug("上架spu，spuId不存在");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，spuId不存在"));
+        }else {
+            if(shopId!=0&&shopId!=goodsSpuPo.getShopId())
+            {
+                //shopId和spu里的shopId不一致，并且不是shopID为0的情况
+                logger.debug("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况"));
+            }
+            else{
+                return goodsDao.updateGoodsSpuState(spuId, 4L);
+            }
+        }
+
+        return returnObject;
+
     }
 
     /**
