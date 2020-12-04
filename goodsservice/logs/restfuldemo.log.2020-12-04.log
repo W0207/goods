@@ -156,3 +156,121 @@
 2020-12-04 16:08:46.080 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
 2020-12-04 16:08:46.105 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 1 skuId = 273
 2020-12-04 16:08:46.194 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - shopid=1skuId = 273已删除
+2020-12-04 19:37:32.395 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:37:32.402 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:37:32.610 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-04 19:37:32.624 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-04 19:37:32.630 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:37:32.631 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:37:32.671 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:37:32.671 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:37:32.693 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-04 19:37:32.703 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:37:32.703 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:37:32.760 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=123, detail=123)
+2020-12-04 19:37:32.765 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 71 的信息已更新
+2020-12-04 19:37:32.815 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@5b635bde
+2020-12-04 19:37:32.839 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 137
+2020-12-04 19:37:32.847 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 137 的信息已新增成功
+2020-12-04 19:37:32.863 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:37:32.872 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-04 19:37:32.880 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:37:32.912 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:37:32.912 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:37:32.950 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTkzNzMyOUtQIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoyLCJleHAiOjE2MDcwODE5NTIsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgxODUyfQ.5ZooabBmb55AKuRXl-bLxtOZAXoXhQA7boLxtaz28VY
+2020-12-04 19:37:32.969 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsSpu(Long,Long,SpuInputVo,BindingResult))
+2020-12-04 19:37:32.996 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/2/spus/273
+2020-12-04 19:37:32.996 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =2
+2020-12-04 19:37:32.996 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-04 19:37:33.001 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=2
+2020-12-04 19:37:33.001 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 2 spuId = 273 vo = SpuInputVo(ShopId=null, name=123, description=123, specs=123)
+2020-12-04 19:37:33.018 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTkzNzMzMDJMIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcwODE5NTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgxODUzfQ.LgkbWSXJs-mWTZPXgVLy-HMExUl0os4ZlEF6jSB4uic
+2020-12-04 19:37:33.023 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-04 19:37:33.024 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273
+2020-12-04 19:37:33.024 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-04 19:37:33.025 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 1 skuId = 273
+2020-12-04 19:37:33.027 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 非法访问
+2020-12-04 19:37:33.043 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-12-04 19:37:33.049 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-12-04 19:37:33.064 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:37:33.069 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-04 19:37:33.086 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-12-04 19:37:33.099 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSpuById: GoodsSpu(id=273, name=金和汇景•戴荣华•古彩洛神赋瓷瓶, brandId=71, categoryId=123, freightId=null, shopId=0, goodsSn=drh-d0001, detail=null, imagUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, state=PUBLISHED, spec=default, disabled=false, gmtCreated=2020-11-28T17:42:20, gmtModified=2020-11-28T17:42:20)code = OK
+2020-12-04 19:37:33.116 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-04 19:37:33.119 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-04 19:37:33.143 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTkzNzMzMUI4IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDcwODE5NTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgxODUzfQ.oK53q0R2JBmIPSYHoAKpncJJ3B01N4wpCc0ajEj4e20
+2020-12-04 19:37:33.150 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifySku(Long,Long,SkuInputVo,BindingResult))
+2020-12-04 19:37:33.151 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273
+2020-12-04 19:37:33.151 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-04 19:37:33.152 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-04 19:37:33.152 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=1
+2020-12-04 19:37:33.152 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 1 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
+2020-12-04 19:37:33.167 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTkzNzMzMVM1IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcwODE5NTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgxODUzfQ.EUlhv6jSdfaU59LjNFpKZ2X_3Zu4rMiT_wMFwPpSfJs
+2020-12-04 19:37:33.171 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-04 19:37:33.172 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/273
+2020-12-04 19:37:33.172 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-04 19:37:33.173 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 273
+2020-12-04 19:37:33.205 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-04 19:37:33.225 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-04 19:37:33.247 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-12-04 19:40:21.752 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-04 19:40:21.909 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-04 19:40:51.663 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:40:51.665 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:40:51.793 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-04 19:40:51.802 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-04 19:40:51.806 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:40:51.806 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:40:51.827 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:40:51.827 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:40:51.838 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 72
+2020-12-04 19:40:51.844 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:40:51.844 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:40:51.873 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=123, detail=123)
+2020-12-04 19:40:51.875 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 71 的信息已更新
+2020-12-04 19:40:51.895 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@27ae6f9e
+2020-12-04 19:40:51.911 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 137
+2020-12-04 19:40:51.918 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 137 的信息已新增成功
+2020-12-04 19:40:51.935 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:40:51.942 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-04 19:40:51.947 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:40:51.971 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-04 19:40:51.971 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-04 19:40:52.003 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTk0MDUxOTZHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoyLCJleHAiOjE2MDcwODIxNTEsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgyMDUxfQ.klMpvMv0pGvunXr_kVuxCEiXFLJsh6tGkie8SBOPS4I
+2020-12-04 19:40:52.019 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsSpu(Long,Long,SpuInputVo,BindingResult))
+2020-12-04 19:40:52.040 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/2/spus/273
+2020-12-04 19:40:52.041 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =2
+2020-12-04 19:40:52.041 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-04 19:40:52.047 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=2
+2020-12-04 19:40:52.048 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 2 spuId = 273 vo = SpuInputVo(ShopId=null, name=123, description=123, specs=123)
+2020-12-04 19:40:52.063 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTk0MDUyMEEzIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcwODIxNTIsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgyMDUyfQ.cMIaEfGJvJUDVdR8U0ci8Yt1L5oR9_I0isQeE7VrmZA
+2020-12-04 19:40:52.066 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-04 19:40:52.067 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273
+2020-12-04 19:40:52.067 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-04 19:40:52.067 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 1 skuId = 273
+2020-12-04 19:40:52.070 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 非法访问
+2020-12-04 19:40:52.079 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 273
+2020-12-04 19:40:52.084 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已删除
+2020-12-04 19:40:52.096 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 0 spuId = 273
+2020-12-04 19:40:52.099 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273已下架
+2020-12-04 19:40:52.113 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku : skuId = 273
+2020-12-04 19:40:52.124 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - findGoodsSpuById: GoodsSpu(id=273, name=金和汇景•戴荣华•古彩洛神赋瓷瓶, brandId=71, categoryId=123, freightId=null, shopId=0, goodsSn=drh-d0001, detail=null, imagUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, state=PUBLISHED, spec=default, disabled=false, gmtCreated=2020-11-28T17:42:20, gmtModified=2020-11-28T17:42:20)code = OK
+2020-12-04 19:40:52.139 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-04 19:40:52.142 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-04 19:40:52.169 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTk0MDUyMTI0IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDcwODIxNTIsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgyMDUyfQ.rKDid2rN7OaqDnivXxVmYh2sdUkZAR9LtOZWtg5srRk
+2020-12-04 19:40:52.176 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifySku(Long,Long,SkuInputVo,BindingResult))
+2020-12-04 19:40:52.178 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273
+2020-12-04 19:40:52.178 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-04 19:40:52.178 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-04 19:40:52.178 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=1
+2020-12-04 19:40:52.179 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSku : shopId = 1 skuId = 273 vo = SkuInputVo(name=123, originalPrice=123, configuration=123, weight=123, inventory=123, detail=123)
+2020-12-04 19:40:52.195 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA0MTk0MDUyMUNTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcwODIxNTIsInVzZXJJZCI6MSwiaWF0IjoxNjA3MDgyMDUyfQ.LejIaiPp2b8vOobOIyAoeTTHwLAYuu_iv8cJ5wik57E
+2020-12-04 19:40:52.198 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-04 19:40:52.199 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/273
+2020-12-04 19:40:52.199 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-04 19:40:52.200 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 273
+2020-12-04 19:40:52.232 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-04 19:40:52.252 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-04 19:40:52.273 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
+2020-12-04 20:00:40.131 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - createSKU : shopId = 0 skuId = 273 vo = SkuCreatVo(sn=123, name=123, originalPrice=123, configuration=123, weight=123, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=123, detail=123)
+2020-12-04 20:00:40.223 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 插入sku成功

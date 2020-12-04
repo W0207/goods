@@ -439,4 +439,26 @@ public class GoodsService {
         }
         return returnObject;
     }
+
+    /**
+     * 新增Sku
+     *
+     * @param id
+     * @param shopId
+     * @param skuCreatVo
+     * @return  ReturnObject<Object>
+     * @author 翟尚召
+     */
+    public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
+        ReturnObject returnObject;
+        SkuOutputVo skuOutputVo= goodsDao.creatSku(id,shopId,skuCreatVo);
+        if (skuOutputVo != null) {
+            returnObject = new ReturnObject(skuOutputVo);
+            logger.debug("addSKU : " + returnObject);
+        } else {
+            logger.debug("addSKU : Failed!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+    }
 }
