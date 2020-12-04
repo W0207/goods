@@ -274,3 +274,5 @@
 2020-12-04 19:40:52.273 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getGoodsSpuState
 2020-12-04 20:00:40.131 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - createSKU : shopId = 0 skuId = 273 vo = SkuCreatVo(sn=123, name=123, originalPrice=123, configuration=123, weight=123, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=123, detail=123)
 2020-12-04 20:00:40.223 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 插入sku成功
+2020-12-04 20:03:06.688 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - createSKU : shopId = 0 skuId = 273 vo = SkuCreatVo(sn=123, name=123, originalPrice=123, configuration=123, weight=123, imageUrl=http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg, inventory=123, detail=123)
+2020-12-04 20:03:06.809 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 273 插入sku成功

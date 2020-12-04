@@ -528,7 +528,7 @@ public class GoodsDao {
         GoodsSpuPo goodsSpuPo=goodsSpuPoMapper.selectByPrimaryKey(spuId);
         //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
 
-        //if(goodsSpuPo.getShopId().equals(shopId)||shopId==0){
+        if(goodsSpuPo.getShopId().equals(shopId)||shopId==0){
         GoodsSku goodsSku=new GoodsSku();
         GoodsSkuPo po = goodsSku.createPo(skuCreatVo,spuId);
         int ret = goodsSkuPoMapper.insertSelective(po);
@@ -540,9 +540,9 @@ public class GoodsDao {
         }
         SkuOutputVo skuOutputVo=new SkuOutputVo(po);
         return skuOutputVo;
-        //}
-        //logger.error("无权限修改本商品的信息");
-        //SkuOutputVo skuOutputVo=null;
-        //return skuOutputVo;
+        }
+        logger.error("无权限修改本商品的信息");
+        SkuOutputVo skuOutputVo=null;
+        return skuOutputVo;
     }
 }
