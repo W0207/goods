@@ -174,7 +174,7 @@ public class ShopController {
      *
      * @return
      */
-    @ApiOperation(value = "下线店家")
+    @ApiOperation(value = "关闭店家")
     @ApiImplicitParams({
             //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
