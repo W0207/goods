@@ -11,16 +11,19 @@ import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +32,15 @@ public class GoodsService {
 
     @Autowired
     GoodsDao goodsDao;
+
+    @Value("${goodsservice.dav.username}")
+    private String davUsername;
+
+    @Value("${goodsservice.dav.password}")
+    private String davPassword;
+
+    @Value("${goodsservice.dav.baseUrl}")
+    private String baseUrl;
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
@@ -173,7 +185,7 @@ public class GoodsService {
      * @param spuId
      * @return ReturnObject
      */
-    public ReturnObject putGoodsOnSaleById(Long spuId) {
+    public ReturnObject putGoodsOnSaleById(Long shopId, Long spuId) {
         return goodsDao.updateGoodsSpuState(spuId, 4L);
     }
 
@@ -337,25 +349,160 @@ public class GoodsService {
         return ret;
     }
 
-    @Transactional
-    public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
-        return null;
-    }
-
     /**
+     * 上传sku照片
+     *
      * @param shopId
      * @param id
      * @param multipartFile
-     * @return
+     * @return ReturnObject
+     * @author shibin zhan
+     */
+    @Transactional
+    public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
+        ReturnObject<GoodsSku> goodsSkuReturnObject = goodsDao.getGoodsSkuById(id);
+        Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
+        if (shopId == 0 || shopid.equals(shopId)) {
+            if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                return goodsSkuReturnObject;
+            }
+            GoodsSku goodsSku = goodsSkuReturnObject.getData();
+            ReturnObject returnObject = new ReturnObject();
+            try {
+                returnObject = ImgHelper.remoteSaveImg(multipartFile, 2, davUsername, davPassword, baseUrl);
+                //文件上传错误
+                if (returnObject.getCode() != ResponseCode.OK) {
+                    logger.debug(returnObject.getErrmsg());
+                    return returnObject;
+                }
+                String oldFilename = null;
+                if (goodsSku.getImageUrl() != null) {
+                    int baseUrlIndex = goodsSku.getImageUrl().lastIndexOf("/");
+                    oldFilename = goodsSku.getImageUrl().substring(baseUrlIndex + 1);
+                }
+                goodsSku.setImageUrl(baseUrl + returnObject.getData().toString());
+                ReturnObject updateReturnObject = goodsDao.updateGoodsSkuImgUrl(goodsSku);
+
+                //数据库更新失败，需删除新增的图片
+                if (updateReturnObject.getCode() == ResponseCode.FIELD_NOTVALID) {
+                    ImgHelper.deleteRemoteImg(returnObject.getData().toString(), davUsername, davPassword, baseUrl);
+                    return updateReturnObject;
+                }
+
+                //数据库更新成功需删除旧图片，未设置则不删除
+                if (oldFilename != null) {
+                    ImgHelper.deleteRemoteImg(oldFilename, davUsername, davPassword, baseUrl);
+                }
+            } catch (IOException e) {
+                logger.debug("uploadImg: I/O Error:" + baseUrl);
+                return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
+            }
+            return returnObject;
+        } else
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+    }
+
+    /**
+     * 上传spu照片
+     *
+     * @param shopId
+     * @param id
+     * @param multipartFile
+     * @return ReturnObject
+     * @author shibin zhan
      */
     @Transactional
     public ReturnObject uploadSpuImg(Long shopId, Long id, MultipartFile multipartFile) {
-        return null;
+        ReturnObject<GoodsSpu> goodsSpuReturnObject = goodsDao.getGoodsSpuById(id);
+        Long shopid = goodsDao.findGoodsSpuById(id).getShopId();
+        if (shopId == 0 || shopid.equals(shopId)) {
+            if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                return goodsSpuReturnObject;
+            }
+            GoodsSpu goodsSpu = goodsSpuReturnObject.getData();
+            ReturnObject returnObject = new ReturnObject();
+            try {
+                returnObject = ImgHelper.remoteSaveImg(multipartFile, 2, davUsername, davPassword, baseUrl);
+                //文件上传错误
+                if (returnObject.getCode() != ResponseCode.OK) {
+                    logger.debug(returnObject.getErrmsg());
+                    return returnObject;
+                }
+                String oldFilename = null;
+                if (goodsSpu.getImageUrl() != null) {
+                    int baseUrlIndex = goodsSpu.getImageUrl().lastIndexOf("/");
+                    oldFilename = goodsSpu.getImageUrl().substring(baseUrlIndex + 1);
+                }
+                goodsSpu.setImageUrl(baseUrl + returnObject.getData().toString());
+                ReturnObject updateReturnObject = goodsDao.updateGoodsSpuImgUrl(goodsSpu);
+
+                //数据库更新失败，需删除新增的图片
+                if (updateReturnObject.getCode() == ResponseCode.FIELD_NOTVALID) {
+                    ImgHelper.deleteRemoteImg(returnObject.getData().toString(), davUsername, davPassword, baseUrl);
+                    return updateReturnObject;
+                }
+
+                //数据库更新成功需删除旧图片，未设置则不删除
+                if (oldFilename != null) {
+                    ImgHelper.deleteRemoteImg(oldFilename, davUsername, davPassword, baseUrl);
+                }
+            } catch (IOException e) {
+                logger.debug("uploadImg: I/O Error:" + baseUrl);
+                return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
+            }
+            return returnObject;
+        } else
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
     }
 
+    /**
+     * 上传品牌照片
+     *
+     * @param shopId
+     * @param id
+     * @param multipartFile
+     * @return ReturnObject
+     */
     @Transactional
     public ReturnObject uploadBrandImg(Long shopId, Long id, MultipartFile multipartFile) {
-        return null;
+        ReturnObject<Brand> brandReturnObject = goodsDao.getBrandById(id);
+        if (shopId == 0) {
+            if (brandReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                return brandReturnObject;
+            }
+            Brand brand = brandReturnObject.getData();
+            ReturnObject returnObject = new ReturnObject();
+            try {
+                returnObject = ImgHelper.remoteSaveImg(multipartFile, 2, davUsername, davPassword, baseUrl);
+                //文件上传错误
+                if (returnObject.getCode() != ResponseCode.OK) {
+                    logger.debug(returnObject.getErrmsg());
+                    return returnObject;
+                }
+                String oldFilename = null;
+                if (brand.getImageUrl() != null) {
+                    int baseUrlIndex = brand.getImageUrl().lastIndexOf("/");
+                    oldFilename = brand.getImageUrl().substring(baseUrlIndex + 1);
+                }
+                brand.setImageUrl(baseUrl + returnObject.getData().toString());
+                ReturnObject updateReturnObject = goodsDao.updateBrandImgUrl(brand);
+
+                //数据库更新失败，需删除新增的图片
+                if (updateReturnObject.getCode() == ResponseCode.FIELD_NOTVALID) {
+                    ImgHelper.deleteRemoteImg(returnObject.getData().toString(), davUsername, davPassword, baseUrl);
+                    return updateReturnObject;
+                }
+                //数据库更新成功需删除旧图片，未设置则不删除
+                if (oldFilename != null) {
+                    ImgHelper.deleteRemoteImg(oldFilename, davUsername, davPassword, baseUrl);
+                }
+            } catch (IOException e) {
+                logger.debug("uploadImg: I/O Error:" + baseUrl);
+                return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
+            }
+            return returnObject;
+        } else
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
     }
 
     /**

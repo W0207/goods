@@ -66,9 +66,9 @@ public class GoodsSpu implements VoObject {
 
     private String detail;
 
-    private String imagUrl;
+    private String imageUrl;
 
-    private State state = State.UNPUBLISHED;
+    private State state = GoodsSpu.State.UNPUBLISHED;
 
     private String spec;
 
@@ -92,7 +92,7 @@ public class GoodsSpu implements VoObject {
         this.shopId = goodsSpuPo.getShopId();
         this.goodsSn = goodsSpuPo.getGoodsSn();
         this.detail = goodsSpuPo.getDetail();
-        this.imagUrl = goodsSpuPo.getImageUrl();
+        this.imageUrl = goodsSpuPo.getImageUrl();
         this.state = State.getTypeByCode(goodsSpuPo.getState().intValue());
         this.spec = goodsSpuPo.getSpec();
         this.disabled = goodsSpuPo.getDisabled() == 1;

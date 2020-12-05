@@ -200,7 +200,8 @@ LOCK TABLES `goods_sku` WRITE;
 /*!40000 ALTER TABLE `goods_sku`
     DISABLE KEYS */;
 INSERT INTO `goods_sku`
-VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg', 1, NULL,
+VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://192.168.1.108/webdav/40818360-99db-46d5-a3de-1fc66aaad643.png',
+        1, NULL,
         4, '2020-11-28 17:42:17', '2020-11-28 17:42:17'),
        (274, 274, NULL, '+', 850, NULL, 4, 'http://47.52.88.176/file/images/201612/file_5861cd259e57a.jpg', 99, NULL, 4,
         '2020-11-28 17:42:17', '2020-11-28 17:42:17'),
