@@ -751,4 +751,28 @@ public class GoodsController {
         ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
+
+    /**
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return by 宇
+     */
+    @ApiOperation(value = "将SPU删除种类")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
+    })
+    @DeleteMapping("/shops/{shopId}/spus/{spuId}/categories/{id}")
+    public Object spuDeleteCategories(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    ) {
+        ReturnObject returnObject = goodsService.spuDeleteCategories(shopId, spuId, id);
+        return Common.decorateReturnObject(returnObject);
+    }
+
+
 }
