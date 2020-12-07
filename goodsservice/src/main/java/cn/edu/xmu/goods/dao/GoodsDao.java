@@ -78,7 +78,7 @@ public class GoodsDao {
      */
     public ReturnObject<Object> modifySpuById(Long spuId, SpuInputVo spuInputVo) {
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
-        if (goodsSpuPo == null || (goodsSpuPo.getState() != null && GoodsSpu.State.getTypeByCode(goodsSpuPo.getState().intValue()) == GoodsSpu.State.DELETED)) {
+        if (goodsSpuPo == null) {
             logger.info("商品不存在或已被删除：spuId = " + spuId);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -223,8 +223,9 @@ public class GoodsDao {
             goodsSkuPoMapper.updateByPrimaryKeySelective(po);
             logger.info("skuId = " + skuId + " 的信息已更新");
             return new ReturnObject<>();
-        } else
+        } else {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
     }
 
 

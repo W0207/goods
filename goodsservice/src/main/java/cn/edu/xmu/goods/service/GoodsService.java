@@ -142,7 +142,7 @@ public class GoodsService {
             logger.debug("修改spu信息中，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId() && shopId != 0) {
+            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
                 logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spu里shopId和路径上的shopId不一致"));
             } else {
@@ -169,7 +169,7 @@ public class GoodsService {
             logger.debug("删除spu信息中，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId() && shopId != 0) {
+            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
                 //shopId不对
                 logger.debug("删除spu信息中，spu里shopId和路径上的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spu里shopId和路径上的shopId不一致"));
@@ -194,7 +194,7 @@ public class GoodsService {
             logger.debug("上架spu，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，spuId不存在"));
         } else {
-            if (shopId != 0 && shopId != goodsSpuPo.getShopId()) {
+            if (shopId != 0 && !shopId.equals(goodsSpuPo.getShopId())) {
                 //shopId和spu里的shopId不一致，并且不是shopID为0的情况
                 logger.debug("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况"));
@@ -303,7 +303,7 @@ public class GoodsService {
             logger.debug("findGoodsSkuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            if (tempSpu.getShopId() == shopId) {
+            if (tempSpu.getShopId().equals(shopId)) {
                 BrandPo brandPo = goodsDao.findBrandById(id);
                 if (brandPo != null) {
                     GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
@@ -339,7 +339,7 @@ public class GoodsService {
             logger.debug("findGoodsSPuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
         } else {
-            if (tempSpu.getShopId() == shopId) {
+            if (tempSpu.getShopId().equals(shopId)) {
                 tempSpu.setGmtModified(LocalDateTime.now());
                 tempSpu.setBrandId(null);
                 returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
@@ -414,8 +414,9 @@ public class GoodsService {
                 return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
             }
             return returnObject;
-        } else
+        } else {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
     }
 
     /**
@@ -467,8 +468,9 @@ public class GoodsService {
                 return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
             }
             return returnObject;
-        } else
+        } else {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
     }
 
     /**
@@ -517,8 +519,9 @@ public class GoodsService {
                 return new ReturnObject(ResponseCode.FILE_NO_WRITE_PERMISSION);
             }
             return returnObject;
-        } else
+        } else {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
     }
 
     /**
@@ -536,7 +539,7 @@ public class GoodsService {
             logger.debug("findGoodsSPuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId()) {
+            if (!shopId.equals(goodsSpuPo.getShopId())) {
                 logger.debug("spu增加种类的时候，shopid不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，shopid不一致"));
             } else {
@@ -585,11 +588,11 @@ public class GoodsService {
             logger.debug("findGoodsSPuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
         } else {
-            if (shopId != goodsSpuPo.getShopId()) {
+            if (!shopId.equals(goodsSpuPo.getShopId())) {
                 logger.debug("spu删除种类的时候，shopid不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，shopid不一致"));
             } else {
-                if (id != goodsSpuPo.getCategoryId()) {
+                if (!id.equals(goodsSpuPo.getCategoryId())) {
                     logger.debug("spu删除种类的时候，CategoriesId不一致");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，CategoriesId不一致"));
                 } else {

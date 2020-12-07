@@ -35,7 +35,7 @@ public class PresaleController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/presales/states")
-    public Object getPresaleState(){
+    public Object getPresaleState() {
         logger.debug("getGoodsSpuState");
         PresaleActivity.State[] states = PresaleActivity.State.class.getEnumConstants();
         List<PresaleActivityStateVo> presaleActivityStateVos = new ArrayList<>();
@@ -48,6 +48,7 @@ public class PresaleController {
 
     /**
      * 管理员新增SPU预售活动
+     *
      * @param shopId
      * @param id
      * @param presaleActivityVo
@@ -59,13 +60,10 @@ public class PresaleController {
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
     @PostMapping("/shops/{shopId}/spus/{id}/presales")
-    public Object AddPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo)
-    {
+    public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
         PresaleActivity presaleActivity = new PresaleActivity(presaleActivityVo);
-        presaleActivity.setCreate(LocalDateTime.now());
-        return Common.decorateReturnObject(presaleService.AddPresaleActivity(shopId,id,presaleActivity));
+        presaleActivity.setGmtCreate(LocalDateTime.now());
+        return Common.decorateReturnObject(presaleService.addPresaleActivity(shopId, id, presaleActivity));
     }
-
-
 
 }

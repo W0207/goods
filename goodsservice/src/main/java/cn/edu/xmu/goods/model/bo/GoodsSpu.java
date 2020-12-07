@@ -3,52 +3,16 @@ package cn.edu.xmu.goods.model.bo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.SpuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.encript.AES;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
+
+/**
+ * @author shibin zhan
+ */
 @Data
 public class GoodsSpu implements VoObject {
-    /**
-     * 商品状态
-     */
-    public enum State {
-        UNPUBLISHED(0, "未上架"),
-        PUBLISHED(4, "上架"),
-        DELETED(6, "已删除");
-
-        private static final Map<Integer, State> stateMap;
-
-        static { //由类加载机制，静态块初始加载对应的枚举属性到map中，而不用每次取属性时，遍历一次所有枚举值
-            stateMap = new HashMap();
-            for (State enum1 : values()) {
-                stateMap.put(enum1.code, enum1);
-            }
-        }
-
-        private int code;
-        private String description;
-
-        State(int code, String description) {
-            this.code = code;
-            this.description = description;
-        }
-
-        public static GoodsSpu.State getTypeByCode(Integer code) {
-            return stateMap.get(code);
-        }
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-    }
 
     private Long id;
 
@@ -67,8 +31,6 @@ public class GoodsSpu implements VoObject {
     private String detail;
 
     private String imageUrl;
-
-    private State state = GoodsSpu.State.UNPUBLISHED;
 
     private String spec;
 
@@ -93,7 +55,6 @@ public class GoodsSpu implements VoObject {
         this.goodsSn = goodsSpuPo.getGoodsSn();
         this.detail = goodsSpuPo.getDetail();
         this.imageUrl = goodsSpuPo.getImageUrl();
-        this.state = State.getTypeByCode(goodsSpuPo.getState().intValue());
         this.spec = goodsSpuPo.getSpec();
         this.disabled = goodsSpuPo.getDisabled() == 1;
         this.gmtCreated = goodsSpuPo.getGmtCreate();
@@ -130,8 +91,7 @@ public class GoodsSpu implements VoObject {
     public GoodsSpuPo createUpdateStatePo(Long code) {
         GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
         goodsSpuPo.setId(id);
-        goodsSpuPo.setState(Byte.valueOf(String.valueOf(code)));//修改spu状态
-        goodsSpuPo.setGmtModified(LocalDateTime.now());//记录修改的时间
+        goodsSpuPo.setGmtModified(LocalDateTime.now());
         return goodsSpuPo;
     }
 

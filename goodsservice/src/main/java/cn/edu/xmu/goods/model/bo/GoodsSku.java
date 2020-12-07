@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author shibin zhan
+ */
 @Data
 public class GoodsSku implements VoObject, Serializable {
 
@@ -52,7 +55,6 @@ public class GoodsSku implements VoObject, Serializable {
             return description;
         }
     }
-
 
     private Long id;
 

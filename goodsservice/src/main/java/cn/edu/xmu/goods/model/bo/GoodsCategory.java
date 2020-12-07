@@ -1,16 +1,15 @@
 package cn.edu.xmu.goods.model.bo;
 
 import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
-import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.CategoryInputVo;
-import cn.edu.xmu.goods.model.vo.NewCategoryVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * @author shibin zhan
+ */
 @Data
 public class GoodsCategory implements VoObject {
 

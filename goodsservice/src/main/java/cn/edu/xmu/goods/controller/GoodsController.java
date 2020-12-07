@@ -28,7 +28,9 @@ import java.util.List;
 
 /**
  * 权限控制器
- **/
+ *
+ * @author shibin zhan
+ */
 @Api(value = "商品服务", tags = "goods")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/goods", produces = "application/json;charset=UTF-8")

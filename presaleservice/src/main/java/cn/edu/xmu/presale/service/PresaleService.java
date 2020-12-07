@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PresaleService {
 
-    public ReturnObject AddPresaleActivity(Long shopId, Long spuId, PresaleActivity presaleActivity)
-    {
+    public ReturnObject addPresaleActivity(Long shopId, Long spuId, PresaleActivity presaleActivity) {
 
     }
 }
