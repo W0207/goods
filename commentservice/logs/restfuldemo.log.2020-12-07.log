@@ -17,3 +17,5 @@
 2020-12-07 20:29:14.985 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = 1  pageSize =null userid=1
 2020-12-07 20:30:07.268 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MjAzMDA3MjJWIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczNDQzMDcsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzQ0MjA3fQ.26WvY-6UC7t6PGIGs1NlChEYbj_p6STHaOVGA0KcLGQ
 2020-12-07 20:30:07.395 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = 1  pageSize =2 userid=1
+2020-12-07 21:02:52.939 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MjEwMjUyOUI4IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczNDYyNzIsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzQ2MTcyfQ._c-1Kh-rrXF-2d36dDofwIBAVYZVjfjXKaFh0EDTdiI
+2020-12-07 21:02:53.067 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0

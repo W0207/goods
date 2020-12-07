@@ -115,4 +115,21 @@ public class CommentControllerTest {
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+    /**
+     * 买家查看自己的评价记录
+     */
+
+    @Test
+    public void showUnAuditCommentsByCommentid() throws Exception {
+
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/comments/shops/0/comments/all").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
 }

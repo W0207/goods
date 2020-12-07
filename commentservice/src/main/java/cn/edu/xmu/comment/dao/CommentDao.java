@@ -105,4 +105,31 @@ public class CommentDao implements InitializingBean {
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
     }
+
+    public ReturnObject<PageInfo<VoObject>> showUnAuditCommentsByCommentid(Integer page, Integer pageSize, Integer state) {
+        CommentPoExample example = new CommentPoExample();
+        CommentPoExample.Criteria criteria = example.createCriteria();
+        criteria.andStateEqualTo(Byte.valueOf(state.toString()));
+        PageHelper.startPage(page, pageSize);
+        List<CommentPo> commentPos = null;
+        try {
+            commentPos = commentPoMapper.selectByExample(example);
+            List<VoObject> ret = new ArrayList<>(commentPos.size());
+            for (CommentPo po : commentPos) {
+                Comment com = new Comment(po);
+                ret.add(com);
+            }
+            PageInfo<VoObject> rolePage = PageInfo.of(ret);
+            PageInfo<CommentPo> commentPoPage = PageInfo.of(commentPos);
+            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
+            commentPage.setPages(commentPoPage.getPages());
+            commentPage.setPageNum(commentPoPage.getPageNum());
+            commentPage.setPageSize(commentPoPage.getPageSize());
+            commentPage.setTotal(commentPoPage.getTotal());
+            return new ReturnObject<>(rolePage);
+        } catch (DataAccessException e) {
+            logger.error("showUnAuditCommentsByCommentid: DataAccessException:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+    }
 }
