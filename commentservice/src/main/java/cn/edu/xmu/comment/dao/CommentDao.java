@@ -5,6 +5,7 @@ import cn.edu.xmu.comment.mapper.CommentPoMapper;
 import cn.edu.xmu.comment.model.bo.Comment;
 import cn.edu.xmu.comment.model.po.CommentPo;
 import cn.edu.xmu.comment.model.po.CommentPoExample;
+import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -55,6 +56,19 @@ public class CommentDao implements InitializingBean {
             logger.error("showCommentBySkuid: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
+    }
+
+    public ReturnObject<Object> auditCommentByID(Long id, CommentAuditVo commentAuditVo) {
+        CommentPo commentPo = commentPoMapper.selectByPrimaryKey(id);
+        if (commentPo == null) {
+            logger.info("评论id= " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Comment comment = new Comment(commentPo);
+        CommentPo po = comment.createAuditPo(commentAuditVo);
+        commentPoMapper.updateByPrimaryKeySelective(po);
+        logger.info("commentid = " + id + " 的信息已更新");
+        return new ReturnObject<>();
     }
 
     @Override

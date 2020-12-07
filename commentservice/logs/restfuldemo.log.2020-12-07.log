@@ -1,0 +1,7 @@
+2020-12-07 19:38:56.658 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 1 vo = CommentAuditVo(state=0)
+2020-12-07 19:38:56.748 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - 评论id= 1 不存在
+2020-12-07 19:41:40.744 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 1 vo = CommentAuditVo(state=0)
+2020-12-07 19:41:40.884 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - commentid = 1 的信息已更新
+2020-12-07 19:48:34.063 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MTk0ODM0MDZNIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczNDE4MTQsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzQxNzE0fQ.RbtSkohLDMCdsKSC3cTlJLnGfGOgitC8unhbczUhlpM
+2020-12-07 19:48:34.287 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 1 vo = CommentAuditVo(state=0)
+2020-12-07 19:48:34.390 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - commentid = 1 的信息已更新
