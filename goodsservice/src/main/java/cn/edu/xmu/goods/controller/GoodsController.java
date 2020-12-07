@@ -20,7 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -171,8 +170,7 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
         }
-        ReturnObject returnObj = goodsService.deleteSpuById(shopId, id);
-        return Common.decorateReturnObject(returnObj);
+        return null;
     }
 
     /**
@@ -187,16 +185,16 @@ public class GoodsController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true)
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
     @Audit //需要认证
-    @PutMapping("/shops/{shopId}/spus/{id}/onshelves")
-    public Object putGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    @PutMapping("/shops/{shopId}/skus/{id}/onshelves")
+    public Object putGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
-            logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
+            logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
         return Common.decorateReturnObject(returnObj);
@@ -219,19 +217,14 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
-    @PutMapping("/shops/{shopId}/spus/{id}/offshelves")
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/skus/{id}/offshelves")
     public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
-            logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
+            logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
-        //商家只能上架自家商品spu，shopId=0可以上架任意商品spu
-        if (shopId.equals(shopid) || shopId == 0) {
-            ReturnObject returnObj = goodsService.putOffGoodsOnSaleById(id);
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObj = goodsService.putOffGoodsOnSaleById(shopId, id);
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -385,6 +378,7 @@ public class GoodsController {
      * @param shopId
      * @param id
      * @return Object
+     * @author shibin zhan
      */
     @ApiOperation(value = "管理员修改品牌")
     @ApiImplicitParams({
@@ -396,7 +390,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit
+    @Audit
     @PutMapping("/shops/{shopId}/brands/{id}")
     public Object modifyBrand(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
@@ -494,7 +488,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/categories/{id}")
     public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
@@ -775,6 +769,5 @@ public class GoodsController {
         ReturnObject returnObject = goodsService.spuDeleteCategories(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
-
 
 }
