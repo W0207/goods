@@ -125,20 +125,15 @@ public class GoodsSku implements VoObject, Serializable {
         this.imageUrl = po.getImageUrl();
         this.inventory = po.getInventory();
         this.detail = po.getDetail();
-        this.disabled = po.getDisabled() == 1;
+        this.disabled = po.getDisabled() == 0 ? true : false;
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
     }
 
-    /**
-     * 创建删除sku的po
-     *
-     * @return
-     */
-    public GoodsSkuPo createDeleteStatePo() {
+    public GoodsSkuPo createUpdateStatePo(Long code) {
         GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
         goodsSkuPo.setId(id);
-        goodsSkuPo.setDisabled((byte) 3);
+        goodsSkuPo.setState(code.byteValue());
         goodsSkuPo.setGmtModified(LocalDateTime.now());
         return goodsSkuPo;
     }

@@ -126,7 +126,7 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -143,7 +143,7 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -159,7 +159,7 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
 
         responseString = this.mvc.perform(put("/goods/shops/0/spus/273/onshelves"))
                 .andExpect(status().isOk())
@@ -167,7 +167,7 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getState());
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -179,15 +179,15 @@ public class GoodsControllerTest {
     @Test
     public void deleteGoodsSku() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getDisabled());
-        String responseString = this.mvc.perform(delete("/goods/shops/1/skus/273")
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
+        String responseString = this.mvc.perform(delete("/goods/shops/0/skus/273")
                 .header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getDisabled());
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 

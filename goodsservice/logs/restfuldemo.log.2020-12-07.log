@@ -1,0 +1,16 @@
+2020-12-07 15:29:34.909 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MTUyOTM0N01WIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczMjYyNzQsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzI2MTc0fQ.RI79gyN8WqRREOxNBZ9UMNj_ONfzSXcazSJC0cE65ak
+2020-12-07 15:29:35.178 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-07 15:29:35.248 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273
+2020-12-07 15:29:35.259 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-07 15:29:35.284 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 1 skuId = 273
+2020-12-07 15:29:35.325 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 非法访问
+2020-12-07 15:30:21.532 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MTUzMDIxNE00IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDczMjYzMjEsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzI2MjIxfQ.NwScDHDa08X5hwo6etE1A8XieMXS2x_JeIAOaE99DOU
+2020-12-07 15:30:21.723 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-07 15:30:21.790 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273
+2020-12-07 15:30:21.791 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-07 15:30:58.445 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA3MTUzMDU4NENQIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczMjYzNTgsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzI2MjU4fQ.m-XvDGZ5rUiyk4UdkfOjZv-TBy_twiF7n_3nT-uR-sE
+2020-12-07 15:30:58.618 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-07 15:30:58.687 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273
+2020-12-07 15:30:58.695 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-07 15:30:58.712 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 273
+2020-12-07 15:30:58.787 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - skuId = 273已删除

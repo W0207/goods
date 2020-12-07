@@ -142,7 +142,7 @@ public class GoodsService {
             logger.debug("修改spu信息中，spuId不存在");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spuId不存在"));
         } else {
-            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
+            if (!shopId.equals(goodsSpuPo.getShopId())) {
                 logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spu里shopId和路径上的shopId不一致"));
             } else {
@@ -161,65 +161,56 @@ public class GoodsService {
      * @param spuId
      * @return ReturnObject
      */
-    public ReturnObject<Object> deleteSpuById(Long shopId, Long spuId) {
-        ReturnObject returnObject = null;
-        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
-        if (goodsSpuPo == null) {
-            //spuId不存在
-            logger.debug("删除spu信息中，spuId不存在");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spuId不存在"));
-        } else {
-            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
-                //shopId不对
-                logger.debug("删除spu信息中，spu里shopId和路径上的shopId不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spu里shopId和路径上的shopId不一致"));
-            } else {
-                //删除商品spu
-                return goodsDao.updateGoodsSpuState(spuId, 6L);
-            }
-        }
-        return returnObject;
-    }
+//    public ReturnObject<Object> deleteSpuById(Long shopId, Long spuId) {
+//        ReturnObject returnObject = null;
+//        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
+//        if (goodsSpuPo == null) {
+//            //spuId不存在
+//            logger.debug("删除spu信息中，spuId不存在");
+//            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spuId不存在"));
+//        } else {
+//            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
+//                //shopId不对
+//                logger.debug("删除spu信息中，spu里shopId和路径上的shopId不一致");
+//                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spu里shopId和路径上的shopId不一致"));
+//            } else {
+//                //删除商品spu
+//                return goodsDao.updateGoodsSpuState(spuId, 6L);
+//            }
+//        }
+//        return returnObject;
+//    }
 
     /**
+     * sku上架
+     *
      * @param shopId
-     * @param spuId
+     * @param skuId
      * @return
      */
-    public ReturnObject putGoodsOnSaleById(Long shopId, Long spuId) {
-        ReturnObject returnObject = null;
-        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
-        if (goodsSpuPo == null) {
-            //spuId不存在
-            logger.debug("上架spu，spuId不存在");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，spuId不存在"));
-        } else {
-            if (shopId != 0 && !shopId.equals(goodsSpuPo.getShopId())) {
-                //shopId和spu里的shopId不一致，并且不是shopID为0的情况
-                logger.debug("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上架spu，shopId和spu里的shopId不一致，并且不是shopID为0的情况"));
-            } else {
-                return goodsDao.updateGoodsSpuState(spuId, 4L);
-            }
-        }
-        return returnObject;
+    public ReturnObject putGoodsOnSaleById(Long shopId, Long skuId) {
+        return goodsDao.updateGoodsSkuState(shopId, skuId, 4L);
     }
 
     /**
-     * @param spuId
+     * sku下架
+     *
+     * @param skuId
      * @return ReturnObject
      */
-    public ReturnObject putOffGoodsOnSaleById(Long spuId) {
-        return goodsDao.updateGoodsSpuState(spuId, 0L);
+    public ReturnObject putOffGoodsOnSaleById(Long shopId, Long skuId) {
+        return goodsDao.updateGoodsSkuState(shopId, skuId, 0L);
     }
 
     /**
+     * sku删除
+     *
      * @param shopId
      * @param skuId
      * @return ReturnObject
      */
     public ReturnObject deleteSkuById(Long shopId, Long skuId) {
-        return goodsDao.deleteGoodsSku(shopId, skuId);
+        return goodsDao.updateGoodsSkuState(shopId, skuId, 6L);
     }
 
     /**
@@ -378,7 +369,7 @@ public class GoodsService {
     public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSku> goodsSkuReturnObject = goodsDao.getGoodsSkuById(id);
         Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
-        if (shopId == 0 || shopid.equals(shopId)) {
+        if (shopid.equals(shopId)) {
             if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
                 return goodsSkuReturnObject;
             }
@@ -432,7 +423,7 @@ public class GoodsService {
     public ReturnObject uploadSpuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSpu> goodsSpuReturnObject = goodsDao.getGoodsSpuById(id);
         Long shopid = goodsDao.findGoodsSpuById(id).getShopId();
-        if (shopId == 0 || shopid.equals(shopId)) {
+        if (shopid.equals(shopId)) {
             if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
                 return goodsSpuReturnObject;
             }

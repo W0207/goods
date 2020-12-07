@@ -314,7 +314,7 @@ CREATE TABLE `presale_activity`
     `end_time`          datetime          DEFAULT NULL,
     `state`             tinyint           DEFAULT NULL,
     `shop_id`           bigint            DEFAULT NULL,
-    `goods_spu_id`      bigint            DEFAULT NULL,
+    `goods_sku_id`      bigint            DEFAULT NULL,
     `quantity`          int               DEFAULT NULL,
     `advance_pay_price` bigint            DEFAULT NULL,
     `rest_pay_price`    bigint            DEFAULT NULL,
@@ -353,4 +353,4 @@ CREATE TABLE `shop`
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-07 11:25:23
+-- Dump completed on 2020-12-07 13:49:11
