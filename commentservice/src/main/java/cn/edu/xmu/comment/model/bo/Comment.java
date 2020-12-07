@@ -1,6 +1,7 @@
 package cn.edu.xmu.comment.model.bo;
 
 import cn.edu.xmu.comment.model.po.CommentPo;
+import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.comment.model.vo.CommentRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
@@ -41,6 +42,13 @@ public class Comment implements VoObject {
         this.orderitem_id = po.getOrderitemId();
         this.state = po.getState();
         this.type = po.getType();
+    }
+
+    public CommentPo createAuditPo(CommentAuditVo commentAuditVo) {
+        CommentPo commentPo= new CommentPo();
+        commentPo.setId(id);
+        commentPo.setState(commentAuditVo.getState());
+        return commentPo;
 
     }
 

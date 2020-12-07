@@ -1,6 +1,7 @@
 package cn.edu.xmu.comment.service;
 
 import cn.edu.xmu.comment.dao.CommentDao;
+import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -17,5 +18,8 @@ public class CommentService {
 
     public ReturnObject<PageInfo<VoObject>> showCommentBySkuid(Integer page, Integer pageSize, Long id) {
         return commentDao.showCommentBySkuid(page, pageSize, id);
+    }
+    public ReturnObject auditCommentByID(Long id, CommentAuditVo commentAuditVo) {
+        return commentDao.auditCommentByID(id,commentAuditVo);
     }
 }
