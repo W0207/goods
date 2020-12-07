@@ -75,6 +75,9 @@ public class Brand implements VoObject {
         return gmtModified;
     }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public BrandPo createUpdatePo(BrandInputVo brandInputVo) {
         String nameEnc = brandInputVo.getName() == null ? null : brandInputVo.getName();
@@ -90,10 +93,10 @@ public class Brand implements VoObject {
     /**
      * 创建addPo函数
      *
-     * @param  brandVo 品牌信息
+     * @param brandVo 品牌信息
      */
-    public BrandPo createAddPo(BrandInputVo brandVo){
-        BrandPo brandPo=new BrandPo();
+    public BrandPo createAddPo(BrandInputVo brandVo) {
+        BrandPo brandPo = new BrandPo();
         brandPo.setGmtModified(LocalDateTime.now());
         brandPo.setId(id);
         brandPo.setGmtCreate(LocalDateTime.now());
@@ -101,6 +104,4 @@ public class Brand implements VoObject {
         brandPo.setDetail(brandVo.getDetail());
         return brandPo;
     }
-
-
 }

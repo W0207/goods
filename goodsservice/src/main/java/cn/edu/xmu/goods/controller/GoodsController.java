@@ -1,6 +1,6 @@
 package cn.edu.xmu.goods.controller;
 
-import cn.edu.xmu.goods.model.bo.GoodsSpu;
+import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.goods.service.GoodsService;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -28,7 +28,9 @@ import java.util.List;
 
 /**
  * 权限控制器
- **/
+ *
+ * @author shibin zhan
+ */
 @Api(value = "商品服务", tags = "goods")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/goods", produces = "application/json;charset=UTF-8")
@@ -43,24 +45,24 @@ public class GoodsController {
     private HttpServletResponse httpServletResponse;
 
     /**
-     * 查看商品spu的所有状态
+     * 查看商品sku的所有状态
      *
      * @return Object
      * @Author shibin zhan
      */
-    @ApiOperation(value = "获得商品spu的所有状态")
+    @ApiOperation(value = "获得商品sku的所有状态")
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/spus/states")
-    public Object getGoodsSpuState() {
-        logger.debug("getGoodsSpuState");
-        GoodsSpu.State[] states = GoodsSpu.State.class.getEnumConstants();
-        List<SpuStateVo> spuStateVos = new ArrayList<>();
-        for (GoodsSpu.State state : states) {
-            spuStateVos.add(new SpuStateVo(state));
+    @GetMapping("/skus/states")
+    public Object getGoodsSkuState() {
+        logger.debug("getGoodsSkuState");
+        GoodsSku.State[] states = GoodsSku.State.class.getEnumConstants();
+        List<SkuStateVo> skuStateVos = new ArrayList<>();
+        for (GoodsSku.State state : states) {
+            skuStateVos.add(new SkuStateVo(state));
         }
-        return ResponseUtil.ok(new ReturnObject<List>(spuStateVos).getData());
+        return ResponseUtil.ok(new ReturnObject<List>(skuStateVos).getData());
     }
 
     /**
@@ -190,14 +192,13 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
+    @Audit //需要认证
     @PutMapping("/shops/{shopId}/spus/{id}/onshelves")
     public Object putGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " spuId = " + id);
         }
-        //ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
-        ReturnObject returnObj = null;
+        ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -646,6 +647,7 @@ public class GoodsController {
      * @param shopId
      * @param id
      * @return
+     * @author shibin zhan
      */
     @ApiOperation(value = "sku上传图片")
     @ApiImplicitParams({
@@ -662,16 +664,10 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/skus/{id}/uploadImg")
-    public Object uploadSkuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
-                               @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+    public Object uploadSkuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile) {
         logger.debug("uploadSkuImg: shopId = " + shopId + " skuId = " + id + " img :" + multipartFile.getOriginalFilename());
-        if (shopId.equals(shopid) || shopid == 0) {
-            ReturnObject returnObject = goodsService.uploadSkuImg(shopId, id, multipartFile);
-            return Common.getNullRetObj(returnObject, httpServletResponse);
-        } else {
-            logger.error("无权限上传sku照片");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObject = goodsService.uploadSkuImg(shopId, id, multipartFile);
+        return Common.getNullRetObj(returnObject, httpServletResponse);
     }
 
     /**
@@ -680,6 +676,7 @@ public class GoodsController {
      * @param shopId
      * @param id
      * @return
+     * @author shibin zhan
      */
     @ApiOperation(value = "spu上传图片")
     @ApiImplicitParams({
@@ -696,26 +693,21 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/uploadImg")
-    public Object uploadSpuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
-                               @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+    public Object uploadSpuImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile) {
         logger.debug("uploadSpuImg: shopId = " + shopId + " spuId = " + id + " img :" + multipartFile.getOriginalFilename());
-        if (shopId.equals(shopid) || shopid == 0) {
-            ReturnObject returnObject = goodsService.uploadSpuImg(shopId, id, multipartFile);
-            return Common.getNullRetObj(returnObject, httpServletResponse);
-        } else {
-            logger.error("无权限上传spu照片");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
-        }
+        ReturnObject returnObject = goodsService.uploadSpuImg(shopId, id, multipartFile);
+        return Common.getNullRetObj(returnObject, httpServletResponse);
     }
 
     /**
-     * 品牌上传图片
+     * 品牌上传图片(只有管理员可以)
      *
      * @param shopId
      * @param id
      * @return
+     * @author shibin zhan
      */
-    @ApiOperation(value = "spu上传图片")
+    @ApiOperation(value = "品牌上传图片")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺 id", required = true),
@@ -729,16 +721,14 @@ public class GoodsController {
             @ApiResponse(code = 509, message = "图片大小超限")
     })
     @Audit
-    @PostMapping("/shops/{shopId}/brand/{id}/uploadImg")
-    public Object uploadBrandImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile,
-                                 @LoginUser @ApiIgnore Long userId, @Depart Long shopid) {
+    @PostMapping("/shops/{shopId}/brands/{id}/uploadImg")
+    public Object uploadBrandImg(@PathVariable Long shopId, @PathVariable Long id, @RequestParam("img") MultipartFile multipartFile, @Depart Long shopid) {
         logger.debug("uploadBrandImg: shopId = " + shopId + " brandId = " + id + " img :" + multipartFile.getOriginalFilename());
-        if (shopId.equals(shopid) || shopid == 0) {
+        if (shopid == 0) {
             ReturnObject returnObject = goodsService.uploadBrandImg(shopId, id, multipartFile);
             return Common.getNullRetObj(returnObject, httpServletResponse);
         } else {
-            logger.error("无权限上传品牌照片");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
     }
 
@@ -763,4 +753,28 @@ public class GoodsController {
         ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
         return Common.decorateReturnObject(returnObject);
     }
+
+    /**
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return by 宇
+     */
+    @ApiOperation(value = "将SPU删除种类")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
+    })
+    @DeleteMapping("/shops/{shopId}/spus/{spuId}/categories/{id}")
+    public Object spuDeleteCategories(
+            @PathVariable Long shopId,
+            @PathVariable Long spuId,
+            @PathVariable Long id
+    ) {
+        ReturnObject returnObject = goodsService.spuDeleteCategories(shopId, spuId, id);
+        return Common.decorateReturnObject(returnObject);
+    }
+
+
 }

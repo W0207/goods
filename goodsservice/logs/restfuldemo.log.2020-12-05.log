@@ -1,0 +1,129 @@
+2020-12-05 11:03:57.540 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTEwMzU3NE1NIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxMzc1MzcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTM3NDM3fQ.0H4CkdSAzkaFgnoCmxfxtxCwSRWDEfBa4rJSDhkQwe0
+2020-12-05 11:03:57.703 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile,Long))
+2020-12-05 11:03:57.769 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/uploadImg
+2020-12-05 11:03:57.779 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 11:03:57.806 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 273 img :timg.png
+2020-12-05 11:03:58.485 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg
+2020-12-05 11:07:17.098 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTEwNzE3MDBTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxMzc3MzcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTM3NjM3fQ.nCu_9Gv3MsjztcWZ8ryHsv-Rv4w4TIN1da0M74u8fpo
+2020-12-05 11:07:17.216 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile,Long))
+2020-12-05 11:07:17.269 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/uploadImg
+2020-12-05 11:07:17.280 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 11:07:17.304 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 273 img :timg.png
+2020-12-05 11:07:18.047 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: http://192.168.1.108/webdav/aff37918-b9bc-469b-aa18-0e9266602e58.png
+2020-12-05 11:10:26.562 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTExMDI2NTFFIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxMzc5MjYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTM3ODI2fQ.aKee7G2eepu3wEuzDNIKNNv705k9MAW7lqXFt9Od8WY
+2020-12-05 11:10:26.664 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile,Long))
+2020-12-05 11:10:26.705 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/uploadImg
+2020-12-05 11:10:26.713 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 11:10:26.731 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 273 img :timg.png
+2020-12-05 11:14:14.776 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTExNDE0N0RPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxMzgxNTQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTM4MDU0fQ.0GRkAXfyct7YTx5_zu6SHL1Lj-2FcVVw-ItQ-NzUJ5M
+2020-12-05 11:14:15.065 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile,Long))
+2020-12-05 11:14:15.113 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/uploadImg
+2020-12-05 11:14:15.124 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 11:14:15.147 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 273 img :timg.png
+2020-12-05 11:14:15.837 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: aff37918-b9bc-469b-aa18-0e9266602e58.png
+2020-12-05 11:15:48.560 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTExNTQ4NDlRIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxMzgyNDgsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTM4MTQ4fQ.WBI2WwtDWmLMtlfkuT-stWv9ZtLZwY-Bpr1E_WIa4C8
+2020-12-05 11:15:48.674 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile,Long))
+2020-12-05 11:15:48.725 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/uploadImg
+2020-12-05 11:15:48.733 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 11:15:48.751 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 273 img :timg.png
+2020-12-05 12:50:46.111 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTI1MDQ2MDJIIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDM5NDYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQzODQ2fQ.xl_c1MdttZDHcPgKa9DLy4zofGsrdDgJxGaQfu-T4OE
+2020-12-05 12:50:46.280 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-05 12:50:46.323 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/uploadImg
+2020-12-05 12:50:46.331 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 12:50:46.348 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 0 spuId = 273 img :timg.png
+2020-12-05 12:50:47.031 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: ges/201612/file_586206d4c7d2f.jpg
+2020-12-05 12:55:36.001 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTI1NTM1OTdCIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDQyMzUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ0MTM1fQ.QQzznWaUhulGi1uRs4MZ6ED2GgSxJjO-ERceDC7ywAM
+2020-12-05 12:55:36.251 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-05 12:55:36.285 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/uploadImg
+2020-12-05 12:55:36.290 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 12:55:36.303 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 0 spuId = 273 img :timg.png
+2020-12-05 12:55:36.779 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: file_586206d4c7d2f.jpg
+2020-12-05 13:13:42.264 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMxMzQyMjFJIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDUzMjIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1MjIyfQ.4sR0_Sh-Z_9HSQXt1Jm6V2o5PacqR6Z7v_aJ1IHLwzI
+2020-12-05 13:13:42.403 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:13:42.438 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brand/71/uploadImg
+2020-12-05 13:13:42.444 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:13:42.459 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:15:29.327 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMxNTI5MkxVIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDU0MjksInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1MzI5fQ.26IBjs-cUsWjQ1I21VLxXM-w1HuIRBkVWvyMErqX10w
+2020-12-05 13:15:29.436 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:15:29.513 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:15:29.519 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:15:29.534 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:15:53.681 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMxNTUzNlNZIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDU0NTMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1MzUzfQ.kptoG6jY8exLxMNMe1KNrh-YSvhRRrgxW2-q4US8BNY
+2020-12-05 13:15:53.771 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-05 13:15:53.807 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/uploadImg
+2020-12-05 13:15:53.813 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:15:53.827 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 0 spuId = 273 img :timg.png
+2020-12-05 13:15:54.223 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: file_586206d4c7d2f.jpg
+2020-12-05 13:17:42.111 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMxNzQyMDhDIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDU1NjIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1NDYyfQ.7KngowGpDq9MqvXDhOyTjY6F2EsAekiWQmYwUQYriZc
+2020-12-05 13:17:42.192 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:17:42.231 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:17:42.240 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:17:42.261 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:21:38.662 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMyMTM4Nlo4IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDU3OTgsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1Njk4fQ.x7IDSjU31fjVcfS0Fri0ep-QRXcKDMxacoxcOHapzfY
+2020-12-05 13:21:38.741 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:21:38.777 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:21:38.783 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:21:38.797 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:22:33.358 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMyMjMzM01QIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDU4NTMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ1NzUzfQ.eFDhQLCBuAyClbYKN2C-TRb7L66grhqpNYTPzz-La4M
+2020-12-05 13:22:33.431 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:22:33.460 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:22:33.466 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:22:33.479 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:35:01.529 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMzNTAxNEhOIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDY2MDEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2NTAxfQ.Lm15ldYumT06t6sIzIs4rZL0NQGzpHIFrKmCmOa1y3o
+2020-12-05 13:35:01.752 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:35:01.795 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:35:01.802 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:35:01.816 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:36:32.213 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMzNjMyMTVVIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDY2OTIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2NTkyfQ.RQkh-io9BautOUT4wfgZxLUU44G7eL2NTrKxI9vTckc
+2020-12-05 13:36:32.307 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-05 13:36:32.372 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/uploadImg
+2020-12-05 13:36:32.378 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:36:32.391 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 0 spuId = 273 img :timg.png
+2020-12-05 13:36:32.811 [main] ERROR cn.edu.xmu.ooad.util.Common - delete fail: file_586206d4c7d2f.jpg
+2020-12-05 13:38:23.456 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTMzODIzNFJSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDY4MDMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2NzAzfQ.GUAKDNmCHOt33SGUsFKfifLGJk09PXYMgqydqY7JM_k
+2020-12-05 13:38:23.527 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:38:23.563 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:38:23.568 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:38:23.579 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:40:27.114 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM0MDI3MEJUIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDY5MjcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2ODI3fQ.1RseMTTDL7TYh_2vVuI9htGEufMGMfq53D2AMU8YyFg
+2020-12-05 13:40:28.756 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:40:28.785 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:40:28.790 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:40:28.800 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:41:01.255 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM0MTAxMkZIIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDY5NjEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2ODYxfQ.FPDauQeVejK8sEbw_ItTOnoJyU0WrxkE-rWVwHAh9GI
+2020-12-05 13:41:01.361 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:41:01.410 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/72/uploadImg
+2020-12-05 13:41:01.418 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:41:01.435 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 72 img :timg.png
+2020-12-05 13:42:32.331 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM0MjMyMlc3IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDcwNTIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2OTUyfQ.Wi1r0vRnSdd59jYJ9OWJf4BICCylSpUV-9_abWnlxm0
+2020-12-05 13:42:32.440 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:42:32.498 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:42:32.508 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:42:32.535 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:43:18.363 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM0MzE4M1VJIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDcwOTgsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ2OTk4fQ.uEelr_LjuuMDC08clGvdzR4JAEBIT1YZifQz4a62BuQ
+2020-12-05 13:43:18.442 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:43:18.480 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:43:18.487 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:43:18.500 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:49:00.672 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM0OTAwNkE3IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDc0NDAsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ3MzQwfQ.-Pmo9xDRLtNpsbahUqK4M_F5WkMXk0ivfrNdNkkIrz8
+2020-12-05 13:49:00.739 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:49:00.775 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:49:00.780 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:49:00.792 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:56:32.058 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM1NjMyMDdYIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDc4OTIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ3NzkyfQ.Y9BZ-R0vP8_5IbISE4aDxvWE_xULw9-CHicZ8RC1cAM
+2020-12-05 13:56:32.215 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:56:32.249 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:56:32.255 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:56:32.270 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:57:14.275 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM1NzE0MlgxIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDcxNDc5MzQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ3ODM0fQ.U0MkytGr7kW4Gs9KwAICwVra7t1R2iU1fx-LlC0aAbI
+2020-12-05 13:57:14.353 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile))
+2020-12-05 13:57:14.383 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71/uploadImg
+2020-12-05 13:57:14.389 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-05 13:57:14.401 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 0 brandId = 71 img :timg.png
+2020-12-05 13:59:59.049 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA1MTM1OTU4OTZPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDcxNDgwOTgsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3MTQ3OTk4fQ.e7ccpOdliLh3Zc5XGF6lIirIkvQpT9vtwGINUlp42BQ
+2020-12-05 13:59:59.156 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-05 13:59:59.207 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/brands/71/uploadImg
+2020-12-05 13:59:59.208 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-05 13:59:59.208 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-05 13:59:59.218 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=1
+2020-12-05 13:59:59.236 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 1 brandId = 71 img :timg.png

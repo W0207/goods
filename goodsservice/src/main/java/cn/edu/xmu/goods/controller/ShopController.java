@@ -4,6 +4,7 @@ import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.vo.ShopStateVo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.goods.service.ShopService;
+import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -49,7 +50,7 @@ public class ShopController {
 
     })
     @PostMapping("/shops")
-    public Object addAShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
+    public Object addShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
         Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
             return retObject;
@@ -122,12 +123,13 @@ public class ShopController {
      */
     @ApiOperation(value = "上架店家")
     @ApiImplicitParams({
-            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @PutMapping("/shops/{id}/onshelves")
     public Object shopOnShelves(@PathVariable Long id) {
         Shop shop = new Shop();
@@ -174,7 +176,7 @@ public class ShopController {
      *
      * @return
      */
-    @ApiOperation(value = "下线店家")
+    @ApiOperation(value = "关闭店家")
     @ApiImplicitParams({
             //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)

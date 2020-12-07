@@ -78,7 +78,7 @@ public class GoodsDao {
      */
     public ReturnObject<Object> modifySpuById(Long spuId, SpuInputVo spuInputVo) {
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
-        if (goodsSpuPo == null || (goodsSpuPo.getState() != null && GoodsSpu.State.getTypeByCode(goodsSpuPo.getState().intValue()) == GoodsSpu.State.DELETED)) {
+        if (goodsSpuPo == null) {
             logger.info("商品不存在或已被删除：spuId = " + spuId);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -223,8 +223,9 @@ public class GoodsDao {
             goodsSkuPoMapper.updateByPrimaryKeySelective(po);
             logger.info("skuId = " + skuId + " 的信息已更新");
             return new ReturnObject<>();
-        } else
+        } else {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
     }
 
 
@@ -512,5 +513,104 @@ public class GoodsDao {
      */
     public BrandPo findBrandById(Long id) {
         return brandPoMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject<GoodsSku> getGoodsSkuById(Long id) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
+        if (goodsSkuPo == null) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
+        return new ReturnObject<>(goodsSku);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject<GoodsSpu> getGoodsSpuById(Long id) {
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
+        if (goodsSpuPo == null) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSpu goodsSpu = new GoodsSpu(goodsSpuPo);
+        return new ReturnObject<>(goodsSpu);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public ReturnObject<Brand> getBrandById(Long id) {
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Brand brand = new Brand(brandPo);
+        return new ReturnObject<>(brand);
+    }
+
+    /**
+     * @param goodsSku
+     * @return
+     */
+    public ReturnObject updateGoodsSkuImgUrl(GoodsSku goodsSku) {
+        ReturnObject returnObject = new ReturnObject();
+        GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
+        goodsSkuPo.setId(goodsSku.getId());
+        goodsSkuPo.setImageUrl(goodsSku.getImageUrl());
+        int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(goodsSkuPo);
+        if (ret == 0) {
+            logger.debug("updateGoodsSkuImgUrl: update fail. sku id: " + goodsSku.getId());
+            returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        } else {
+            logger.debug("updateGoodsSkuImgUrl: update sku success : " + goodsSku.toString());
+            returnObject = new ReturnObject();
+        }
+        return returnObject;
+    }
+
+    /**
+     * @param goodsSpu
+     * @return
+     */
+    public ReturnObject updateGoodsSpuImgUrl(GoodsSpu goodsSpu) {
+        ReturnObject returnObject = new ReturnObject();
+        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+        goodsSpuPo.setId(goodsSpu.getId());
+        goodsSpuPo.setImageUrl(goodsSpu.getImageUrl());
+        int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+        if (ret == 0) {
+            logger.debug("updateGoodsSpuImgUrl: update fail. spu id: " + goodsSpu.getId());
+            returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        } else {
+            logger.debug("updateGoodsSpuImgUrl: update sku success : " + goodsSpu.toString());
+            returnObject = new ReturnObject();
+        }
+        return returnObject;
+    }
+
+    /**
+     * @param brand
+     * @return
+     */
+    public ReturnObject updateBrandImgUrl(Brand brand) {
+        ReturnObject returnObject = new ReturnObject();
+        BrandPo brandPo = new BrandPo();
+        brandPo.setId(brand.getId());
+        brandPo.setImageUrl(brand.getImageUrl());
+        int ret = brandPoMapper.updateByPrimaryKeySelective(brandPo);
+        if (ret == 0) {
+            logger.debug("updateBrandImgUrl: update fail. brand id: " + brand.getId());
+            returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        } else {
+            logger.debug("updateBrandSpuImgUrl: update brand success : " + brand.toString());
+            returnObject = new ReturnObject();
+        }
+        return returnObject;
     }
 }

@@ -14,8 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -52,11 +59,11 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 获得商品spu所有状态
+     * 获得商品sku所有状态
      */
     @Test
-    public void getAllSpuState() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/spus/states"))
+    public void getAllSkuState() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/skus/states"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未上架\", \"code\": 0 }, { \"name\": \"上架\", \"code\": 4 }, { \"name\": \"已删除\", \"code\": 6 }], \"errmsg\": \"成功\" }";
         System.out.println(responseString);
@@ -401,5 +408,71 @@ public class GoodsControllerTest {
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * sku上传照片
+     */
+    @Test
+    public void uploadSkuImage() throws Exception {
+        String token = creatTestToken(1111L, 0L, 100);
+        File file = new File("." + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "img" + File.separator + "timg.png");
+        MockMultipartFile firstFile = new MockMultipartFile("img", "timg.png", "multipart/form-data", new FileInputStream(file));
+        String responseString = mvc.perform(MockMvcRequestBuilders
+                .multipart("/goods/shops/0/skus/273/uploadImg")
+                .file(firstFile)
+                .header("authorization", token)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getImageUrl());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * spu上传照片
+     */
+    @Test
+    public void uploadSpuImage() throws Exception {
+        String token = creatTestToken(1111L, 0L, 100);
+        File file = new File("." + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "img" + File.separator + "timg.png");
+        MockMultipartFile firstFile = new MockMultipartFile("img", "timg.png", "multipart/form-data", new FileInputStream(file));
+        String responseString = mvc.perform(MockMvcRequestBuilders
+                .multipart("/goods/shops/0/spus/273/uploadImg")
+                .file(firstFile)
+                .header("authorization", token)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getImageUrl());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 品牌上传照片
+     */
+    @Test
+    public void uploadBrandImage() throws Exception {
+        String token = creatTestToken(1111L, 1L, 100);
+        File file = new File("." + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "img" + File.separator + "timg.png");
+        MockMultipartFile firstFile = new MockMultipartFile("img", "timg.png", "multipart/form-data", new FileInputStream(file));
+        String responseString = mvc.perform(MockMvcRequestBuilders
+                .multipart("/goods/shops/1/brands/71/uploadImg")
+                .file(firstFile)
+                .header("authorization", token)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getImageUrl());
+        System.out.println(responseString);
     }
 }
