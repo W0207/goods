@@ -3,3 +3,10 @@
 2020-12-08 10:41:36.494 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
 2020-12-08 10:46:33.196 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
 2020-12-08 10:48:02.394 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-08 21:37:07.836 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjEzNzA3NjBaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzQ3MjcsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDM0NjI3fQ.1wWclMTt2Vfa9A_NBiCfZiIFgKH01hcngnvbdVEYsq4
+2020-12-08 21:37:07.966 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
+2020-12-08 21:37:32.451 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-08 21:38:11.003 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-08 21:47:20.242 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-08 21:48:01.259 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-08 22:26:40.116 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
