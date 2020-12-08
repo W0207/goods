@@ -1,0 +1,10 @@
+2020-12-08 10:28:07.249 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCommentState
+2020-12-08 10:32:29.108 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:39:01.787 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:41:29.168 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:42:54.300 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:44:07.308 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:44:26.377 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:48:45.562 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:50:12.139 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
+2020-12-08 10:51:13.592 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - getCouponState
