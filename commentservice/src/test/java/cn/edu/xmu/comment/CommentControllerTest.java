@@ -1,8 +1,14 @@
 package cn.edu.xmu.comment;
 
 import cn.edu.xmu.comment.CommentServiceApplication;
+import cn.edu.xmu.comment.controller.CommentController;
+import cn.edu.xmu.comment.mapper.CommentPoMapper;
+import cn.edu.xmu.comment.model.po.CommentPo;
+import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +25,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CommentControllerTest {
     @Autowired
     MockMvc mvc;
+
+    @Autowired
+    CommentPoMapper commentPoMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
+
+    private final String creatTestToken(Long userId, Long departId, int expireTime) {
+        String token = new JwtHelper().createToken(userId, departId, expireTime);
+        logger.debug("token: " + token);
+        return token;
+    }
 
     /**
      * 获得评论所有状态
@@ -40,6 +57,74 @@ public class CommentControllerTest {
     public void show() throws Exception {
 
         String responseString = this.mvc.perform(get("/comments/skus/1/comments"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员审核评论
+     */
+    @Test
+    public void auditComment() throws Exception {
+        String requireJson = "{\n" +
+                "  \"state\":\"0\"\n" +
+                "}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/comments/shops/0/confirm/1/confirm")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        CommentPo commentPo = commentPoMapper.selectByPrimaryKey(1L);
+        System.out.println(commentPo.getState());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 买家查看自己的评价记录
+     */
+
+    @Test
+    public void showComment() throws Exception {
+
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/comments/comments").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void showComment1() throws Exception {
+
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/comments/comments?page=1&pageSize=2").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 买家查看自己的评价记录
+     */
+
+    @Test
+    public void showUnAuditCommentsByCommentid() throws Exception {
+
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/comments/shops/0/comments/all").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
