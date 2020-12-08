@@ -225,7 +225,7 @@ public class GoodsService {
      * @param id              种类 id
      * @param categoryInputVo 类目详细信息
      * @return 返回对象 ReturnObject<Object>
-     * @author shangzhao翟
+     * @author shangzhao zhai
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
         ReturnObject returnObject;
@@ -351,11 +351,12 @@ public class GoodsService {
     @Transactional
     public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSku> goodsSkuReturnObject = goodsDao.getGoodsSkuById(id);
-        Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
-        if (goodsSkuReturnObject.getData().getDisabled()) {
+        if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST || goodsSkuReturnObject.getData().getDisabled()) {
             logger.debug("uploadSkuImg : failed");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return goodsSkuReturnObject;
         }
+
+        Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
         if (shopid.equals(shopId)) {
             if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
                 return goodsSkuReturnObject;
@@ -409,11 +410,11 @@ public class GoodsService {
     @Transactional
     public ReturnObject uploadSpuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSpu> goodsSpuReturnObject = goodsDao.getGoodsSpuById(id);
-        Long shopid = goodsDao.findGoodsSpuById(id).getShopId();
-        if (goodsSpuReturnObject.getData().getDisabled()) {
+        if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST || goodsSpuReturnObject.getData().getDisabled()) {
             logger.debug("uploadSpuImg : failed");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return goodsSpuReturnObject;
         }
+        Long shopid = goodsDao.findGoodsSpuById(id).getShopId();
         if (shopid.equals(shopId)) {
             if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
                 return goodsSpuReturnObject;

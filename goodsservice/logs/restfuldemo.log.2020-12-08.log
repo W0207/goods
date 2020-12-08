@@ -185,3 +185,134 @@
 2020-12-08 09:19:38.655 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
 2020-12-08 09:19:38.682 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
 2020-12-08 09:19:38.727 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - invalidFloatPriceById : shopId = 0 floatPriceId = 1 invalidBy 9999
+2020-12-08 15:38:54.332 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTUzODU0MjkzIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTMyMzQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzMTM0fQ.1d9eUXeoDEVZ1LPCAOwerq3tAXSGuHSRSsTICXBM41I
+2020-12-08 15:38:54.492 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile))
+2020-12-08 15:38:54.538 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/272/uploadImg
+2020-12-08 15:38:54.548 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:38:54.572 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 272 img :timg.png
+2020-12-08 15:38:54.729 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - uploadSkuImg : failed
+2020-12-08 15:39:46.859 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTUzOTQ2OFZNIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTMyODYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzMTg2fQ.hNTgGzDK10O1oNbu4swOVBxB7UMccMFi8_mc3hAL3Xo
+2020-12-08 15:39:47.013 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile))
+2020-12-08 15:39:47.076 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/272/uploadImg
+2020-12-08 15:39:47.085 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:39:47.104 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 0 skuId = 272 img :timg.png
+2020-12-08 15:39:47.226 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - uploadSkuImg : failed
+2020-12-08 15:40:31.516 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0MDMxNFNCIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MTMzMzEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzMjMxfQ.NQLrOhCzlrxctfYLDbMmft4a9BfGvAWyJj3nLfeVINc
+2020-12-08 15:40:31.607 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile))
+2020-12-08 15:40:31.650 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/272/uploadImg
+2020-12-08 15:40:31.651 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-08 15:41:09.837 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0MTA5N0E5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTMzNjksInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzMjY5fQ.jK5g5j6bJ_To9qa6rmH8FXjFf26BOELPot2_DZzbOkU
+2020-12-08 15:41:09.960 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile))
+2020-12-08 15:41:10.023 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/272/uploadImg
+2020-12-08 15:41:10.033 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:41:10.060 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 1 skuId = 272 img :timg.png
+2020-12-08 15:41:10.182 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - uploadSkuImg : failed
+2020-12-08 15:42:05.081 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0MjA1MDRJIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTM0MjUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzMzI1fQ.EsFxJS47E7oyi2NmW5GnZu3E5m6N1KagesRCehb3R20
+2020-12-08 15:42:05.215 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSkuImg(Long,Long,MultipartFile))
+2020-12-08 15:42:05.272 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273/uploadImg
+2020-12-08 15:42:05.287 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:42:05.310 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSkuImg: shopId = 1 skuId = 273 img :timg.png
+2020-12-08 15:42:05.461 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
+2020-12-08 15:42:05.462 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 15:43:31.878 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0MzMxOFlRIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTM1MTEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzNDExfQ.33VEtfEcrkb9aDjcNrUXKokMjuTrLLZ2v4OJiaEU9QY
+2020-12-08 15:43:31.988 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-08 15:43:32.046 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/spus/273/uploadImg
+2020-12-08 15:43:32.056 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:43:32.079 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 1 spuId = 273 img :timg.png
+2020-12-08 15:43:32.224 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 15:44:06.981 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0NDA2OFYyIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTM1NDYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzNDQ2fQ.6735IPHnK8wiTmdW5R_QmpUznPRjWm7XdvvTwTJfWH0
+2020-12-08 15:44:07.125 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-08 15:44:07.917 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/272/uploadImg
+2020-12-08 15:44:07.930 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:44:07.960 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 0 spuId = 272 img :timg.png
+2020-12-08 15:44:08.521 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - uploadSpuImg : failed
+2020-12-08 15:44:59.739 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0NDU5NlRPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MTM1OTksInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzNDk5fQ.sBBwPaDwvG3qzF0_E1J71pi3FPXmwVB3SuBLnbmCTcw
+2020-12-08 15:44:59.862 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadSpuImg(Long,Long,MultipartFile))
+2020-12-08 15:44:59.907 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/spus/273/uploadImg
+2020-12-08 15:44:59.908 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-08 15:44:59.908 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-08 15:44:59.915 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=1
+2020-12-08 15:44:59.935 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadSpuImg: shopId = 1 spuId = 273 img :timg.png
+2020-12-08 15:45:00.080 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 15:46:21.751 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTU0NjIxNkRBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTM2ODEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDEzNTgxfQ.YhuoTL-FSCPTYRkhywwUuZ91jKsDO_My_0gAGMPuBxw
+2020-12-08 15:46:22.073 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.uploadBrandImg(Long,Long,MultipartFile,Long))
+2020-12-08 15:46:22.181 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/brands/71/uploadImg
+2020-12-08 15:46:22.192 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 15:46:22.221 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - uploadBrandImg: shopId = 1 brandId = 71 img :timg.png
+2020-12-08 16:12:56.744 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxMjU2NkVKIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MTUyNzYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1MTc2fQ.ClaHRWGX-k6K123HmuZz0GrFOJJAeUK11TI8aVi_WHo
+2020-12-08 16:12:57.074 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:12:57.111 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/137/subcategories
+2020-12-08 16:12:57.111 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-08 16:13:29.055 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxMzI4OUE0IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTUzMDgsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1MjA4fQ.FDxnRokdHxAD-vTtxz1sQYHj6S68azhqMBBGgYioaUw
+2020-12-08 16:13:29.300 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:13:29.356 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/137/subcategories
+2020-12-08 16:13:29.365 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:13:29.387 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 137
+2020-12-08 16:13:29.709 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 137 的信息已新增成功
+2020-12-08 16:13:29.713 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addCategory : cn.edu.xmu.ooad.util.ReturnObject@6e512d7f
+2020-12-08 16:14:14.071 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxNDE0MDlVIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTUzNTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1MjUzfQ.7WmHdLWdEApL9xQKuPJVVCq1LLNKSFQHzS_2fSrmNdM
+2020-12-08 16:14:14.358 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:14:14.432 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/199/subcategories
+2020-12-08 16:14:14.442 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:14:14.461 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 199
+2020-12-08 16:14:14.623 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - categoryId = 199不存在
+2020-12-08 16:14:14.623 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addCategory : Not Found!
+2020-12-08 16:15:48.139 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxNTQ4MFU1IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU0NDgsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1MzQ4fQ.6AjrPlDi16rdAeWTSWeFWUbiQ06y5KlVyL4m09A_Beg
+2020-12-08 16:15:48.384 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:15:48.426 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/199/subcategories
+2020-12-08 16:15:48.434 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:15:48.455 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 199
+2020-12-08 16:15:48.595 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - categoryId = 199不存在
+2020-12-08 16:15:48.596 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addCategory : Not Found!
+2020-12-08 16:17:01.855 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxNzAxNzhFIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU1MjEsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1NDIxfQ.AcXSnJZEf90GMv6J28okcAUcnhCJKgj1oAdrBKv0yfo
+2020-12-08 16:17:02.151 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:17:02.196 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/199/subcategories
+2020-12-08 16:17:02.206 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:17:02.228 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 199
+2020-12-08 16:17:02.369 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - categoryId = 199不存在
+2020-12-08 16:17:02.369 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addCategory : Not Found!
+2020-12-08 16:17:35.448 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxNzM1M1ozIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU1NTUsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1NDU1fQ.jsBEtnF_058gQ0bOHIaCCnJRFxKF9XGW7Du7sxfo30s
+2020-12-08 16:17:35.692 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:17:35.719 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/categories/199/subcategories
+2020-12-08 16:17:35.727 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:17:35.749 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 199
+2020-12-08 16:19:13.841 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYxOTEzNzg0IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU2NTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1NTUzfQ.XE5TNkgNI4uwr1Kknomw-hpGmScFpTOgg61XKiI9qlw
+2020-12-08 16:19:14.184 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:19:14.232 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/categories/199/subcategories
+2020-12-08 16:19:14.244 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:19:14.266 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 199
+2020-12-08 16:23:37.739 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYyMzM3Nk4wIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU5MTcsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1ODE3fQ._1AUkEJhZWoysMPDWcpR5g9Dm81RiZL0UkKMq--dPwc
+2020-12-08 16:23:38.150 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:23:38.188 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/122
+2020-12-08 16:23:38.198 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:23:38.220 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 122
+2020-12-08 16:23:38.310 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 122 的信息已更新
+2020-12-08 16:24:11.643 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYyNDExNUNHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU5NTEsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1ODUxfQ.FFh7vAYwztkvY5hq2CT5Zt0ebjpF1GhCX4b5J84vSSU
+2020-12-08 16:24:11.971 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:24:12.006 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/121
+2020-12-08 16:24:12.012 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:24:12.031 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 121
+2020-12-08 16:24:12.062 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品类目不存在或已被删除：categoryId = 121
+2020-12-08 16:24:46.580 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYyNDQ2NTZWIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTU5ODYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE1ODg2fQ.Al3kc6Rs51al5FqId_FT-BgbYHW5f6j6ueBLu-DqeRE
+2020-12-08 16:24:46.912 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-08 16:24:46.952 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/categories/121
+2020-12-08 16:24:46.961 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:24:46.976 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 121
+2020-12-08 16:29:56.385 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYyOTU2M0YwIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTYyOTYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE2MTk2fQ.lqeudXcfGMqE4pi3DEox3vQtJ_V1LU2nJWImNl67VLs
+2020-12-08 16:30:35.848 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYzMDM1N09SIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTYzMzUsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE2MjM1fQ.iQpTZMAkNFQKJFl-2a5zNziNce_cQgxQsNtZuHnGEOI
+2020-12-08 16:31:46.144 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYzMTQ2MERTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTY0MDYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE2MzA2fQ.MSG5easdh_eVg5oP_ntOTU0JCs_3AA8G4mrUIf7IQWs
+2020-12-08 16:31:46.276 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-08 16:31:46.336 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/122
+2020-12-08 16:31:46.346 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:31:46.373 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 122
+2020-12-08 16:32:28.853 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYzMjI4NzNWIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTY0NDgsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE2MzQ4fQ.N16285PdYWpMstoEEvVa5wpLHsETO9IqEu0o1Ccj578
+2020-12-08 16:32:28.958 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-08 16:32:29.006 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/122
+2020-12-08 16:32:29.014 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:32:29.035 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 122
+2020-12-08 16:33:02.187 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MTYzMzAyMUZaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MTY0ODIsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDE2MzgyfQ.8qhmKtkWmR2ujm53y2PDWOJg7RcmnoHhfqGUIZWHxSQ
+2020-12-08 16:33:02.269 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-08 16:33:02.321 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/categories/121
+2020-12-08 16:33:02.330 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 16:33:02.347 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 121
+2020-12-08 16:33:02.475 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品类目不存在或已被删除：categoryId = 121
