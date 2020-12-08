@@ -1,0 +1,187 @@
+2020-12-08 00:02:49.803 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 00:02:49.850 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 00:02:49.857 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 00:03:56.172 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 00:03:56.208 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 00:03:56.214 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 00:04:55.809 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 00:04:55.867 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 00:04:55.874 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 00:06:59.943 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 00:06:59.981 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 00:06:59.985 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 00:08:23.692 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDAwODIzNjdZIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczNTc0MDMsInVzZXJJZCI6MSwiaWF0IjoxNjA3MzU3MzAzfQ.wptZxaKI2NwlwrW3vI8HmyMMKkc0VoJX4ZKH5TSMFLo
+2020-12-08 00:08:23.753 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 00:08:23.788 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 00:08:23.794 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 00:08:23.807 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:23:40.461 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgyMzQwNDdMIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODcxMjAsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3MDIwfQ.ZNcADyt00W0Tq9YT2EJv7CguY9pp-AcGTTmQgZzQ_Qs
+2020-12-08 08:23:40.575 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:23:40.626 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:23:40.635 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:23:40.657 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:28:49.772 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgyODQ5N0JVIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc0MjksInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3MzI5fQ.1d6LrSn2h1plDJ_QHvdYo56-oKKYFPTBdSvUZbV7PAs
+2020-12-08 08:28:49.996 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:28:50.052 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:28:50.185 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:28:50.205 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:31:24.804 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzMTI0N1pTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc1ODQsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3NDg0fQ.I2PLKMCp6zTSmMb2eZ3vSM9ifCDJXtZfaDcOf3faGCw
+2020-12-08 08:31:25.074 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:31:25.132 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:31:25.141 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:31:25.160 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:32:42.270 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzMjQyMlhOIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc2NjIsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3NTYyfQ.2XfgmE4LEdwrWoHCvPl1KMpuwF3jWqKHMGfWla_DHVM
+2020-12-08 08:32:42.456 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:32:42.501 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:32:42.507 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:32:42.523 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:34:00.173 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzNDAwMVlUIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc3NDAsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3NjQwfQ.tCGGjd0c9r8lkyYm9KQx5X5lfSsA2Mr0HZMIBiSSWDI
+2020-12-08 08:34:00.362 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:34:00.412 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:34:00.421 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:34:00.439 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:36:03.497 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzNjAzNExSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc4NjMsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3NzYzfQ.38L_QVu0gutBSiRm0SOIKs4RW6N7qZiy7eQ8zFmNiBY
+2020-12-08 08:36:03.673 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:36:03.724 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:36:03.731 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:36:03.750 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:37:01.156 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzNzAxMVFaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODc5MjEsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3ODIxfQ.yU8Ai9g3Ip-IdI4e8zHvQd5SYmI7M-A49vYAUhdzRXU
+2020-12-08 08:37:01.386 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:37:01.431 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:37:01.439 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:37:01.458 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:38:34.067 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDgzODM0MDUzIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODgwMTQsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg3OTE0fQ.tyhf9y2H51PCbU91mPtktKsJKrLnZJJhZYtbTvNhpso
+2020-12-08 08:38:34.280 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:38:34.329 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:38:34.338 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:38:34.357 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:38:34.448 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - error
+2020-12-08 08:40:18.838 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0MDE4NzFNIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODgxMTgsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4MDE4fQ.NmWKiyUkDjhULzmzNaQ5vNjY6jmKRN1y-SZK-JwmWVo
+2020-12-08 08:40:19.004 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:40:19.042 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:40:19.052 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:40:19.071 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:40:19.157 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - error
+2020-12-08 08:43:51.550 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0MzUxNUVBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODgzMzEsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4MjMxfQ.bRUAeHYM3Cj0gdp0jyf1hrBQ-giIxDs24k0optfK_zM
+2020-12-08 08:43:51.727 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:43:51.775 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:43:51.787 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:43:51.807 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:43:51.907 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - []
+2020-12-08 08:43:51.908 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - error
+2020-12-08 08:45:02.711 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0NTAyNlVGIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg0MDIsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4MzAyfQ.CBCgzsGNZTyo7k6emcfB8Rd82RtLs-Zu8P7JUQEns8Y
+2020-12-08 08:45:03.058 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:45:03.126 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:45:03.136 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:45:03.160 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:45:03.270 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - 0
+2020-12-08 08:45:03.270 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - error
+2020-12-08 08:46:34.986 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0NjM0OVk3IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg0OTQsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4Mzk0fQ.fN2fQoVf3qszwm6yTfCHgDuL7OZkr_Y0gsAvyS2LO60
+2020-12-08 08:46:35.155 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:46:35.198 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:46:35.208 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:46:35.225 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:46:35.316 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - 0
+2020-12-08 08:47:27.242 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0NzI3MUFDIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg1NDcsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NDQ3fQ.TgLofG0VnIk2HzZXSW5NeT5xugOakdJBReWj0iVrvZc
+2020-12-08 08:47:27.417 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:47:27.482 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/290
+2020-12-08 08:47:27.491 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:47:27.505 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 290
+2020-12-08 08:47:27.588 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - 0
+2020-12-08 08:48:03.098 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0ODAzMFlKIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg1ODMsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NDgzfQ.NvOgoo3CI0cIbDEGj7-9PnHSkSAb9px4UFJwtN93Rbw
+2020-12-08 08:48:03.184 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:48:03.234 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:48:03.240 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:48:03.256 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 08:48:03.464 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - 1
+2020-12-08 08:48:03.464 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - error
+2020-12-08 08:49:48.603 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg0OTQ4NVc2IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDczODg2ODgsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NTg4fQ.OXltpw3v5eZnAvYYQ3AD1m0Sf4i-F9AGcsbFnZEfhmc
+2020-12-08 08:49:48.698 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.putOffGoodsOnSales(Long,Long))
+2020-12-08 08:49:48.752 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/skus/273/offshelves
+2020-12-08 08:49:48.753 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-08 08:49:48.753 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-08 08:49:48.761 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=1
+2020-12-08 08:49:48.782 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - putGoodsOnSales : shopId = 1 skuId = 273
+2020-12-08 08:49:48.919 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 08:50:17.148 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg1MDE3MDBDIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg3MTcsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NjE3fQ.o07E2IS2H2y3tm0fqUBXuitpN5fV6YoCuCBi8zmK5cw
+2020-12-08 08:50:17.273 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:50:17.332 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:50:17.340 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:50:17.360 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 08:51:48.196 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg1MTQ4MVNEIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg4MDgsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NzA4fQ.BrCoolsX8t73oJBjV2307D_6DwkctgKN2oJ_awID6yY
+2020-12-08 08:51:48.286 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:51:48.328 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:51:48.336 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:51:48.353 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 08:52:53.881 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg1MjUzOEJKIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg4NzMsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4NzczfQ.GzPVYVnWb-IyTS_N1vS9_DcV3Uyw3h0F3SmkEdjJUvY
+2020-12-08 08:52:53.960 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:52:54.007 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:52:54.015 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:52:54.032 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 08:53:28.260 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg1MzI4MkpJIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODg5MDgsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4ODA4fQ.1RMp44LfVqOvulZl8QHVq-iMJKW3KSHpYbt7pU_izVQ
+2020-12-08 08:53:28.339 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:53:28.380 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:53:28.387 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:53:28.401 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 08:55:08.027 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDg1NTA3OVRaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODkwMDcsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg4OTA3fQ.Ex-8EqAoxeazv9IN1hXQZ3ZaPl68oRK7GF-YgJAF2x0
+2020-12-08 08:55:08.109 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-08 08:55:08.159 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/291
+2020-12-08 08:55:08.166 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 08:55:08.186 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 291
+2020-12-08 09:01:40.768 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkwMTQwN1BXIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODk0MDAsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg5MzAwfQ.e-kVNvv0vKA9pRjrEuDZzrbd3hrRP88fZxnmP2XWUE0
+2020-12-08 09:01:40.979 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:01:41.037 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:01:41.044 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:01:41.067 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:01:41.094 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:02:42.918 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkwMjQyOEVXIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODk0NjIsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg5MzYyfQ.ronIkeLS0ystIJKXon5Am9IB4K9acaUlHmG5Port6e4
+2020-12-08 09:02:43.137 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:02:43.196 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:02:43.207 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:02:43.230 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:02:43.265 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:04:47.910 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkwNDQ3OFdUIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODk1ODcsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg5NDg3fQ.4_oBww8mafdUMm0QQa2OH1pazRGEJff5r7D-vH-u7C0
+2020-12-08 09:04:48.099 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:04:48.158 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:04:48.166 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:04:48.184 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:04:48.239 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:07:11.494 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkwNzExNEJSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODk3MzEsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg5NjMxfQ.rdzb5hAJAPfPmDIqKuvfoTgX8ypgkDcMXFiBefj10ws
+2020-12-08 09:07:11.691 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:07:11.736 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:07:11.744 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:07:11.764 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:07:11.790 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:07:33.849 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkwNzMzOEs2IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczODk3NTMsInVzZXJJZCI6MSwiaWF0IjoxNjA3Mzg5NjUzfQ.KkBg1mDG-FikQYpLdXFWjK0QVHETK8P2Tm8GepwtsP4
+2020-12-08 09:07:34.031 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:07:34.085 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:07:34.095 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:07:34.112 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:07:34.135 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:16:59.663 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkxNjU5NVo1IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczOTAzMTksInVzZXJJZCI6MSwiaWF0IjoxNjA3MzkwMjE5fQ.kH7fW99wpNRQavsuOA5CDKJpZZk2K8bEetKQA32ohWw
+2020-12-08 09:16:59.893 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:16:59.954 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:16:59.961 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:16:59.981 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:17:00.006 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=2
+2020-12-08 09:17:49.281 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkxNzQ5MlBEIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczOTAzNjksInVzZXJJZCI6MSwiaWF0IjoxNjA3MzkwMjY5fQ.cZZhKbEkqIDVL-HsJmpY_PA2R-Z4km9FAJYokmIlTqc
+2020-12-08 09:17:49.534 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:17:49.594 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:17:49.605 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:17:49.627 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:17:49.743 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
+2020-12-08 09:17:49.797 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - invalidFloatPriceById : shopId=0floatPriceId=1invalidBy1
+2020-12-08 09:19:09.655 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkxOTA5NldXIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczOTA0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA3MzkwMzQ5fQ.MUdm25_i3dr6F3rfFXnHcJDMOEYLrVLzPhErmsZ8Xkc
+2020-12-08 09:19:09.828 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:19:09.866 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:19:09.878 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 09:19:09.902 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:19:09.933 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
+2020-12-08 09:19:10.004 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - invalidFloatPriceById : shopId = 0 floatPriceId = 1 invalidBy 1
+2020-12-08 09:19:38.421 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MDkxOTM4MzU3IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDczOTA0NzgsInVzZXJJZCI6OTk5OSwiaWF0IjoxNjA3MzkwMzc4fQ.A6admgXcya4IqsGXJNx_hTLrNkyPrHMvzUyfkHhKT74
+2020-12-08 09:19:38.591 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.invalidFloatPrice(Long,Long,Long))
+2020-12-08 09:19:38.633 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/floatprice/1
+2020-12-08 09:19:38.640 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =9999 departId=0
+2020-12-08 09:19:38.655 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - invalidFloatPrice : shopId = 0 floatPriceId = 1
+2020-12-08 09:19:38.682 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
+2020-12-08 09:19:38.727 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - invalidFloatPriceById : shopId = 0 floatPriceId = 1 invalidBy 9999
