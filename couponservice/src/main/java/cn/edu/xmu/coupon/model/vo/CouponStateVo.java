@@ -1,20 +1,22 @@
-package cn.edu.xmu.comment.model.vo;
+package cn.edu.xmu.coupon.model.vo;
 
-import cn.edu.xmu.comment.model.bo.Comment;
+import cn.edu.xmu.coupon.model.bo.Coupon;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @author 菜鸡骞
  */
-public class CommentStateVo {
-
+@Data
+public class CouponStateVo {
     @ApiModelProperty("状态码")
     private Long code;
 
     @ApiModelProperty("状态名称")
     private String name;
 
-    public CommentStateVo(Comment.State state) {
+
+    public CouponStateVo(Coupon.State state) {
         code = Long.valueOf(state.getCode());
         name = state.getDescription();
     }
