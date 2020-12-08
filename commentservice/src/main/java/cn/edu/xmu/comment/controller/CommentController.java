@@ -41,7 +41,6 @@ public class CommentController {
     @Autowired
     private HttpServletResponse httpServletResponse;
 
-
     /**
      * 查看sku的评价列表（已通过审核）
      *
@@ -84,7 +83,7 @@ public class CommentController {
      * 管理员审核评论
      *
      * @param id:评论 id
-     * by 菜鸡骞
+     *              by 菜鸡骞
      * @return Object
      */
     @ApiOperation(value = "管理员审核评论")
@@ -100,12 +99,12 @@ public class CommentController {
     @PutMapping("/shops/{did}/confirm/{id}/confirm")
     public Object auditComment(@PathVariable Long id, @Validated @RequestBody CommentAuditVo commentAuditVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
-            logger.debug("auditComment : Id = " + id+ " vo = " + commentAuditVo);
+            logger.debug("auditComment : Id = " + id + " vo = " + commentAuditVo);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while auditComment : Id = " + id+ " vo = " + commentAuditVo);
+            logger.info("incorrect data received while auditComment : Id = " + id + " vo = " + commentAuditVo);
             return returnObject;
         }
         ReturnObject returnObj = commentService.auditCommentByID(id, commentAuditVo);
@@ -114,8 +113,9 @@ public class CommentController {
 
     /**
      * 买家查看自己的评价记录
-     *
+     * <p>
      * by 菜鸡骞
+     *
      * @return Object
      */
     @ApiOperation(value = "买家查看自己的评价记录")
@@ -137,8 +137,9 @@ public class CommentController {
 
     /**
      * 管理员查看未审核/已审核的评论列表
-     *
+     * <p>
      * by 菜鸡骞
+     *
      * @return Object
      */
     @ApiOperation(value = "管理员查看未审核/已审核的评论列表")
@@ -150,15 +151,14 @@ public class CommentController {
     })
     @Audit // 需要认证
     @GetMapping("/shops/{id}/comments/all")
-    public Object showUnAuditComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@Depart Long id) {
+    public Object showUnAuditComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @Depart Long id) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
         state = (state == null) ? 0 : state;
-        ReturnObject<PageInfo<VoObject>> returnObject = commentService.showUnAuditCommentsByCommentid(page, pageSize,state);
+        ReturnObject<PageInfo<VoObject>> returnObject = commentService.showUnAuditCommentsByCommentid(page, pageSize, state);
         return Common.getPageRetObject(returnObject);
     }
-
 
 
 }

@@ -316,3 +316,248 @@
 2020-12-08 16:33:02.330 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
 2020-12-08 16:33:02.347 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 121
 2020-12-08 16:33:02.475 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品类目不存在或已被删除：categoryId = 121
+2020-12-08 20:25:11.332 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjAyNTExMlgwIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzA0MTEsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMwMzExfQ.EnqhQ8qDrnqceLIfvWc8KwYUEdqhaEbuwxyLzdfI3dE
+2020-12-08 20:25:11.613 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:25:11.638 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands
+2020-12-08 20:25:11.644 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:25:11.660 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-08 20:25:11.810 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-08 20:25:11.811 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addBrand : cn.edu.xmu.ooad.util.ReturnObject@5e78dd7f
+2020-12-08 20:25:11.844 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-08 20:25:11.844 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-08 20:26:20.516 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjAyNjIwNFVTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzA0ODAsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMwMzgwfQ.-F75y5XG-kXEdswg5uGOwB6CigHp-cbbP5030zd-usY
+2020-12-08 20:26:20.671 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:26:20.699 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands
+2020-12-08 20:26:20.707 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:26:20.724 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-08 20:26:20.876 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-08 20:26:20.879 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addBrand : cn.edu.xmu.ooad.util.ReturnObject@e62d757
+2020-12-08 20:26:20.924 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-08 20:26:20.924 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-08 20:28:09.046 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjAyODA4OTRCIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzA1ODgsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMwNDg4fQ.eXQb_tjdTXeBvPvjP_cfZp96Dmja18hlRH6Z83hG2MQ
+2020-12-08 20:28:09.216 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:28:09.242 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands
+2020-12-08 20:28:09.249 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:28:09.263 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-08 20:28:09.388 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-08 20:28:09.390 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - addBrand : cn.edu.xmu.ooad.util.ReturnObject@387bbd7a
+2020-12-08 20:30:56.454 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-08 20:30:56.456 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-08 20:39:29.596 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjAzOTI5NVJMIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzEyNjksInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxMTY5fQ.Wu3XRuFvDhfNMBBuIhMJcOdpXctYNuFguLygTzEZv-4
+2020-12-08 20:39:29.795 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:39:29.823 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/brands
+2020-12-08 20:39:29.829 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:39:29.845 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 1
+2020-12-08 20:40:02.204 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjA0MDAyMUpJIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MzEzMDIsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxMjAyfQ.XFIRjl-Y_HeF0COWuZLkv0o_OoPkmbl9BJ2Fyn7xb9c
+2020-12-08 20:40:02.371 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:40:02.396 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands
+2020-12-08 20:40:02.396 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-08 20:40:34.575 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjA0MDM0NVBPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MzEzMzQsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxMjM0fQ.wRuzuBftjKpr4f2bHzxY6rnZBDqQ_c_Rs1xo5cJ2MCY
+2020-12-08 20:40:34.797 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-08 20:40:34.838 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/brands
+2020-12-08 20:40:34.839 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-08 20:40:34.839 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-08 20:40:34.845 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=1
+2020-12-08 20:40:34.861 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 1
+2020-12-08 20:44:57.815 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjA0NDU3N1E1IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzE1OTcsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxNDk3fQ._RpdKVTM6SHhU_Ivoa7dpADRLSVe3VfvO6z2ai3zzfo
+2020-12-08 20:44:57.879 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteBrand(Long,Long))
+2020-12-08 20:44:57.917 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/71
+2020-12-08 20:44:57.923 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:44:57.936 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 71
+2020-12-08 20:44:58.083 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-08 20:44:58.083 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-08 20:45:49.734 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjA0NTQ5NURSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzE2NDksInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxNTQ5fQ.SATsm9azZHRq98M00DDUEwUF3Xuh3Nry5sbJssR28xs
+2020-12-08 20:45:49.893 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteBrand(Long,Long))
+2020-12-08 20:45:49.960 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/70
+2020-12-08 20:45:49.971 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:45:49.990 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 70
+2020-12-08 20:45:50.103 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌不存在
+2020-12-08 20:47:23.974 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjA0NzIzOUkzIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzE3NDMsInVzZXJJZCI6MSwiaWF0IjoxNjA3NDMxNjQzfQ.lD7HnrezMeSz4Ez_W6w138V142-ppxk1O-gZ_uvLuiE
+2020-12-08 20:47:24.046 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteBrand(Long,Long))
+2020-12-08 20:47:24.101 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/brands/70
+2020-12-08 20:47:24.111 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-08 20:47:24.133 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 70
+2020-12-08 20:47:24.311 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌不存在
+2020-12-08 20:47:24.376 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =null
+2020-12-08 20:47:24.376 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =100
+2020-12-08 21:39:23.284 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjEzOTIzMlA4IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzQ4NjMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM0NzYzfQ.ZMcBQsPvgPM7ZHo_10dGjsYGzUB9YNu57uTaB9ohngw
+2020-12-08 21:39:23.358 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:39:23.394 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/categories/1
+2020-12-08 21:39:23.400 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:39:23.432 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 21:39:23.507 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu增加种类的时候，CategoriesId不存在
+2020-12-08 21:41:37.709 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0MTM3NlpFIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzQ5OTcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM0ODk3fQ.2iE3BkU5RSXIFsAHD6njgoXGD9mWOLTJCi_BezFB4s8
+2020-12-08 21:41:37.769 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:41:37.804 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/categories/122
+2020-12-08 21:41:37.811 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:41:37.838 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 21:41:37.908 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu增加种类的时候，CategoriesId不是二级种类
+2020-12-08 21:43:15.961 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0MzE1OVpPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzUwOTUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM0OTk1fQ.qCKn1abE4phlP0io9scfg294NXKlCsESlYcRXn9bt4k
+2020-12-08 21:43:16.061 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:43:16.102 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/128
+2020-12-08 21:43:16.108 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:43:16.139 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:43:16.270 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 21:44:09.175 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0NDA5MTdaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzUxNDksInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1MDQ5fQ.irq7LmZYBqWoWyzH-zsjdhC8dUMOWntqrxGEVMVAhtA
+2020-12-08 21:44:09.237 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:44:09.270 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/128
+2020-12-08 21:44:09.275 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:44:09.301 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:44:09.410 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 21:45:00.997 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0NTAwOVlBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzUyMDAsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1MTAwfQ.tFk3biFh5XEQESu6QLAj-X35G04V36nAIUv5RZpszOg
+2020-12-08 21:45:01.083 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:45:01.126 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/126
+2020-12-08 21:45:01.144 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:45:01.181 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:45:01.281 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu增加种类的时候，CategoriesId不是二级种类
+2020-12-08 21:45:31.463 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0NTMxNFJSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzUyMzEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1MTMxfQ.tsBNF-uUaIMBbbR1r36nR8J2cr5fVzm0sLz-yGayXuA
+2020-12-08 21:45:31.536 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:45:31.569 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/spus/277/categories/126
+2020-12-08 21:45:31.573 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:45:31.605 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:45:31.684 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu增加种类的时候，shopid不一致
+2020-12-08 21:46:27.620 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0NjI3NTNXIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MzUyODcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1MTg3fQ.SIcWDYjuHVy_tE3W8K735cbdAokQJvCeThZVH8HIOOs
+2020-12-08 21:46:27.683 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 21:46:27.716 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/126
+2020-12-08 21:46:27.716 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-08 21:49:41.584 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE0OTQxNVlBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU0ODEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1MzgxfQ.OvAXBTzHex0jQrmEj73Y_ex4pvfA0OJppytDL7pMDuA
+2020-12-08 21:49:41.675 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:49:41.717 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/126
+2020-12-08 21:49:41.723 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:49:41.773 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:49:41.845 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu删除种类的时候，CategoriesId不一致
+2020-12-08 21:50:06.040 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE1MDA1OVVLIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU1MDUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1NDA1fQ.4mbYmuL79OhMbOUZtNItwNHiMLkWpGsBKxUJcjHm5Ys
+2020-12-08 21:50:06.152 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:50:06.211 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 21:50:06.218 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:50:06.267 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:50:06.374 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 21:50:06.420 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 21:51:52.033 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE1MTUxOUcxIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU2MTEsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1NTExfQ.ToxATUYKhrEQo5nIugB846e4sX0IlF6xqkggmGbpZKI
+2020-12-08 21:51:52.118 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:51:52.158 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 21:51:52.164 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:51:52.204 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:51:52.277 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 21:51:52.311 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId = 127 不存在
+2020-12-08 21:53:32.158 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE1MzMyMTI0IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU3MTIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1NjEyfQ.pT8w79f-3PAhiGPKwoph06hHp99a24KL-EoqNi77dHY
+2020-12-08 21:53:32.235 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:53:32.271 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 21:53:32.277 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:53:32.305 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:53:32.385 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 21:53:32.422 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 21:54:34.184 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE1NDM0MVBGIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU3NzQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1Njc0fQ.ao5S-hO04-ujpnvOVBfz7IaIDm5CqVh6ryOz_sxjF3A
+2020-12-08 21:54:34.253 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:54:34.284 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 21:54:34.289 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:54:34.318 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:54:34.392 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 21:54:34.426 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 21:55:03.023 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjE1NTAyOUNaIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzU4MDIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM1NzAyfQ.v_zXFnAopLbQ37LQc7nnJKsyEP_wQHcl6DYVwo8Yek8
+2020-12-08 21:55:03.113 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 21:55:03.167 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/126
+2020-12-08 21:55:03.174 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 21:55:03.214 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 21:55:03.313 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu删除种类的时候，CategoriesId不一致
+2020-12-08 22:02:34.209 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIwMjM0MTJLIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzYyNTQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM2MTU0fQ._XFmuZVO8zgsvIVN4swa4MHEHLmpxV7lQZyRzeoe7vs
+2020-12-08 22:04:53.320 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIwNDUzMlQ4IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzYzOTMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM2MjkzfQ.CZzUFVcBQeOyQYrfiYwVOMX4k1F_hk6mloVOQ8ZktQ8
+2020-12-08 22:05:34.045 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIwNTM0MDRHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzY0MzQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM2MzM0fQ.JU3LXHMBL6uibppkl95eXkhLqIEz0eFF82u3rJvcgBM
+2020-12-08 22:05:34.229 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddBrand(Long,Long,Long,Long))
+2020-12-08 22:05:34.273 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/75
+2020-12-08 22:05:34.280 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:05:34.316 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:05:34.359 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-08 22:06:03.712 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIwNjAzNjhEIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzY0NjMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM2MzYzfQ.NMH8bJo6rouyqI3kLOAqo35WpPXsqbC1tBDu5p44r7g
+2020-12-08 22:06:03.870 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddBrand(Long,Long,Long,Long))
+2020-12-08 22:06:03.904 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/70
+2020-12-08 22:06:03.910 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:06:03.957 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:06:03.960 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - findBrandById : Not Found!
+2020-12-08 22:06:37.373 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIwNjM3M0NYIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MzY0OTcsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM2Mzk3fQ.PiKy-vRu8en3n5UIdFRLinhEfqNVA0QRqMO-2ZS-QbE
+2020-12-08 22:06:37.526 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddBrand(Long,Long,Long,Long))
+2020-12-08 22:06:37.561 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/1/spus/273/brands/70
+2020-12-08 22:06:37.562 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =1
+2020-12-08 22:06:37.562 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-08 22:06:37.571 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=1
+2020-12-08 22:21:25.736 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIyMTI1NkZGIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxLCJleHAiOjE2MDc0MzczODUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3Mjg1fQ.M_A7fOUA4Ef7v2r_89B-jzci79WydcJkMOuvLyUHOyM
+2020-12-08 22:21:25.893 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteBrand(Long,Long,Long,Long))
+2020-12-08 22:21:25.937 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/75
+2020-12-08 22:21:25.938 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =0
+2020-12-08 22:21:54.975 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIyMTU0OTZEIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0Mzc0MTQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3MzE0fQ.Pa5alTf35kvN3xlNKpAoCCTIXx43MSpOzfha80NSUVA
+2020-12-08 22:21:55.124 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteBrand(Long,Long,Long,Long))
+2020-12-08 22:21:55.164 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/71
+2020-12-08 22:21:55.169 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:21:55.202 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:21:55.209 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-08 22:23:50.720 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIyMzUwNlJHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0Mzc1MzAsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3NDMwfQ.zTnR9Bq-jgOR_OSu0WirQ-whIkj_JEjVPMGt301dKdk
+2020-12-08 22:23:50.797 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:23:50.838 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:23:50.843 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:23:50.875 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:23:50.970 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 22:23:51.021 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:24:23.336 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIyNDIzMjNMIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0Mzc1NjMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3NDYzfQ.vZyILNgsjlPABBtFL8Ij6GaJFahZoXfAKOhB4yZlMH0
+2020-12-08 22:24:23.470 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:24:23.507 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:24:23.512 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:24:23.540 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:24:23.541 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 22:24:23.593 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:28:14.162 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIyODE0MTVBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0Mzc3OTQsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3Njk0fQ.3euHdic5-vPRrgFqgBN4Q0Yd1pPiGS3nOddqP4LAmds
+2020-12-08 22:28:14.316 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:28:14.346 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:28:14.352 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:28:14.386 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:28:14.387 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 22:28:14.426 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:31:25.193 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzMTI1MTNMIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0Mzc5ODUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3ODg1fQ.2bBnBJDMB59lbmUhlgDFjobXVFam-NAy3oVrPhGyN2M
+2020-12-08 22:31:25.317 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:31:25.345 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:31:25.350 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:31:25.374 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:31:25.375 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 22:31:25.381 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:31:43.969 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzMTQzOTdHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgwMDMsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3OTAzfQ.3EJ8gHVLKquVpJuL8kNOTsxeO32BhsZiGU1w6Kaqx7I
+2020-12-08 22:31:44.088 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuAddCategories(Long,Long,Long,Long))
+2020-12-08 22:31:44.154 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/126
+2020-12-08 22:31:44.161 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:31:44.208 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:31:44.343 [main] DEBUG cn.edu.xmu.goods.service.GoodsService - spu增加种类的时候，CategoriesId不是二级种类
+2020-12-08 22:32:18.178 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzMjE4MTBRIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgwMzgsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3OTM4fQ.qbuuV5qLGdwO8jSPsATol0Dh5Py3ac56OZNhNADu4EM
+2020-12-08 22:32:18.308 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteBrand(Long,Long,Long,Long))
+2020-12-08 22:32:18.345 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/71
+2020-12-08 22:32:18.351 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:32:18.380 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:32:18.388 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-08 22:32:45.564 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzMjQ1NUpOIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgwNjUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3OTY1fQ.V-Tt9LsgcceGjVbYRjszwMoDQ2-6ADCMw_K6RF4IA0w
+2020-12-08 22:32:45.715 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:32:45.746 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:32:45.752 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:32:45.783 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:32:45.784 [main] INFO  cn.edu.xmu.goods.service.GoodsService - spuDeleteCategories
+2020-12-08 22:32:45.790 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:33:07.018 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzMzA2OUlHIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgwODYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM3OTg2fQ.Ty_mbwY8yH-um93tTDVKK8EF7pTzDwUqhPNNI3Cdegc
+2020-12-08 22:33:07.147 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteBrand(Long,Long,Long,Long))
+2020-12-08 22:33:07.177 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/71
+2020-12-08 22:33:07.183 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:33:07.208 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:33:07.215 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-08 22:36:15.285 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzNjE1MjJGIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgyNzUsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM4MTc1fQ.Uhtzz1v5R-7pcaKhNJHT0oSVNNKCjPartlcuNumvAB4
+2020-12-08 22:36:15.444 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteBrand(Long,Long,Long,Long))
+2020-12-08 22:36:15.478 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/273/brands/71
+2020-12-08 22:36:15.484 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:36:15.520 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-08 22:36:15.527 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId273已修改
+2020-12-08 22:37:16.766 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzNzE2N1JNIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgzMzYsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM4MjM2fQ.8413WR1A19mu-ELnHg2yiq7JGjGA4qcNObSVkYL5coY
+2020-12-08 22:37:16.904 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:37:16.945 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:37:16.952 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:37:16.982 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:37:16.990 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改
+2020-12-08 22:37:52.772 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjIzNzUyN0lFIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MzgzNzIsInVzZXJJZCI6MTExMSwiaWF0IjoxNjA3NDM4MjcyfQ.T-UR_e9wllgq3TUGy9jiLhpoiqQBJwOn-oFZVaSVRio
+2020-12-08 22:37:52.909 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.spuDeleteCategories(Long,Long,Long,Long))
+2020-12-08 22:37:52.940 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/spus/277/categories/127
+2020-12-08 22:37:52.946 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1111 departId=0
+2020-12-08 22:37:52.979 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=277
+2020-12-08 22:37:52.990 [main] INFO  cn.edu.xmu.goods.dao.GoodsDao - spuId277已修改

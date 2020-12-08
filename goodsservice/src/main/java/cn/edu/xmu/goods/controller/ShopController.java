@@ -23,6 +23,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 宇
+ */
 @Api(value = "商品服务", tags = "goods")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/shop", produces = "application/json;charset=UTF-8")
