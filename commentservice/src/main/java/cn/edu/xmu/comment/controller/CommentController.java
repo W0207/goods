@@ -6,6 +6,8 @@ import cn.edu.xmu.comment.model.bo.Comment;
 import cn.edu.xmu.comment.model.vo.CommentStateVo;
 import cn.edu.xmu.comment.service.CommentService;
 import cn.edu.xmu.ooad.annotation.Audit;
+import cn.edu.xmu.ooad.annotation.Depart;
+import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -109,4 +111,54 @@ public class CommentController {
         ReturnObject returnObj = commentService.auditCommentByID(id, commentAuditVo);
         return Common.decorateReturnObject(returnObj);
     }
+
+    /**
+     * 买家查看自己的评价记录
+     *
+     * by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "买家查看自己的评价记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit // 需要认证
+    @GetMapping("/comments")
+    public Object showComment(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @LoginUser Long userid) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userid);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentByUserid(page, pageSize, userid);
+        return Common.getPageRetObject(returnObject);
+    }
+
+    /**
+     * 管理员查看未审核/已审核的评论列表
+     *
+     * by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "管理员查看未审核/已审核的评论列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit // 需要认证
+    @GetMapping("/shops/{id}/comments/all")
+    public Object showUnAuditComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@Depart Long id) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        state = (state == null) ? 0 : state;
+        ReturnObject<PageInfo<VoObject>> returnObject = commentService.showUnAuditCommentsByCommentid(page, pageSize,state);
+        return Common.getPageRetObject(returnObject);
+    }
+
+
+
 }

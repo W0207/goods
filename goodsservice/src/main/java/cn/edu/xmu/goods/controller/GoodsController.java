@@ -113,7 +113,7 @@ public class GoodsController {
     }
 
     /**
-     * 店家修改商品spu
+     * 店家或管理员修改商品spu
      *
      * @param bindingResult 校验信息
      * @param spuInputVo    修改信息的SpuInputVo
@@ -148,7 +148,7 @@ public class GoodsController {
     }
 
     /**
-     * 店家逻辑删除商品spu
+     * 店家或管理员删除商品spu
      *
      * @param shopId 店铺id
      * @param id     spuId
@@ -164,13 +164,14 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
-    @DeleteMapping("shops/{shopId}/spus/{id}")
-    public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    @Audit //需要认证
+    @DeleteMapping("/shops/{shopId}/spus/{id}")
+    public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
         }
-        return null;
+        ReturnObject returnObject = goodsService.deleteSpuById(shopId, id);
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -219,7 +220,7 @@ public class GoodsController {
     })
     @Audit //需要认证
     @PutMapping("/shops/{shopId}/skus/{id}/offshelves")
-    public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
@@ -341,7 +342,6 @@ public class GoodsController {
             logger.debug("getSkuSimple = " + returnObject);
             object = Common.getPageRetObject(returnObject);
         }
-
         return object;
     }
 
@@ -369,7 +369,7 @@ public class GoodsController {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
         ReturnObject returnObj = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
-        return returnObj;
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -438,6 +438,17 @@ public class GoodsController {
         }
     }
 
+    /**
+     * 管理员新增商品类目(只有管理员可以)
+     *
+     * @param id
+     * @param categoryInputVo
+     * @param bindingResult
+     * @param shopId
+     * @param shopid
+     * @return
+     * @author shangzhao zhai
+     */
     @ApiOperation(value = "管理员新增商品类目")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
@@ -448,7 +459,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit // 需要认证
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
     public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
@@ -460,23 +471,25 @@ public class GoodsController {
             logger.info("incorrect data received while addCategory CategoryId = ", id);
             return returnObject;
         }
-
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopid == 0 && shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+            if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                return Common.decorateReturnObject(goodsCategory);
+            }
             returnObject = ResponseUtil.ok(goodsCategory.getData());
             return returnObject;
         } else {
-            logger.error("无权限删除品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
     /**
-     * 管理员修改商品类目信息
+     * 管理员修改商品类目信息(只有管理员可以)
      *
      * @param id:             种类 id
      * @param categoryInputVo 类目详细信息
      * @return Object
+     * @author shangzhao zhai
      */
     @ApiOperation(value = "管理员修改商品类目信息")
     @ApiImplicitParams({
@@ -500,20 +513,21 @@ public class GoodsController {
             logger.info("incorrect data received while modifyGoodsType id = ", id);
             return returnObject;
         }
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopid == 0 && shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限修改品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
+
     }
 
     /**
-     * 管理员删除商品类目信息
+     * 管理员删除商品类目信息(物理删除)
      *
      * @param id: 种类 id
      * @return Object
+     * @author shangzhao zhai
      */
     @ApiOperation(value = "管理员删除商品类目信息")
     @ApiImplicitParams({
@@ -523,18 +537,17 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/categories/{id}")
-    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, BindingResult bindingResult, @Depart Long shopid) {
+    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteCategory: CategoryId = " + id);
         }
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopid == 0 && shopId == 0) {
             ReturnObject returnObject = goodsService.deleteCategoryById(id);
             return Common.decorateReturnObject(returnObject);
         } else {
-            logger.error("无权限修改品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
@@ -616,7 +629,7 @@ public class GoodsController {
     }
 
     /**
-     * 查询商品分类关系
+     * 查询商品分类关系(用户无需登录)
      *
      * @param id 种类id
      * @return ReturnObject<List>
@@ -628,7 +641,6 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit //需要认证
     @GetMapping("/categories/{id}/subcategories")
     public Object queryType(@PathVariable Long id) {
         ReturnObject<List> returnObject = goodsService.selectCategories(id);

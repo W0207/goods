@@ -27,6 +27,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * @author Abin
+ */
 @Service
 public class GoodsService {
 
@@ -136,50 +139,29 @@ public class GoodsService {
      */
     @Transactional
     public ReturnObject<Object> modifySpuInfo(Long shopId, Long spuId, SpuInputVo spuInputVo) {
-        ReturnObject returnObject = null;
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
         if (goodsSpuPo == null) {
             logger.debug("修改spu信息中，spuId不存在");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spuId不存在"));
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if (goodsSpuPo.getDisabled() == 0) {
+            logger.debug("修改spu信息中，禁止访问");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        ReturnObject returnObject;
+        if (!shopId.equals(goodsSpuPo.getShopId())) {
+            logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
+            returnObject = new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         } else {
-            if (!shopId.equals(goodsSpuPo.getShopId())) {
-                logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("修改spu信息中，spu里shopId和路径上的shopId不一致"));
-            } else {
-                goodsSpuPo.setId(spuId);
-                goodsSpuPo.setGmtModified(LocalDateTime.now());
-                goodsSpuPo.setSpec(spuInputVo.getSpecs());
-                goodsSpuPo.setName(spuInputVo.getName());
-                goodsSpuPo.setDetail(spuInputVo.getDescription());
-                returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
-            }
+            goodsSpuPo.setId(spuId);
+            goodsSpuPo.setGmtModified(LocalDateTime.now());
+            goodsSpuPo.setSpec(spuInputVo.getSpecs());
+            goodsSpuPo.setName(spuInputVo.getName());
+            goodsSpuPo.setDetail(spuInputVo.getDescription());
+            returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
         }
         return returnObject;
     }
-
-    /**
-     * @param spuId
-     * @return ReturnObject
-     */
-//    public ReturnObject<Object> deleteSpuById(Long shopId, Long spuId) {
-//        ReturnObject returnObject = null;
-//        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
-//        if (goodsSpuPo == null) {
-//            //spuId不存在
-//            logger.debug("删除spu信息中，spuId不存在");
-//            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spuId不存在"));
-//        } else {
-//            if (!shopId.equals(goodsSpuPo.getShopId()) && shopId != 0) {
-//                //shopId不对
-//                logger.debug("删除spu信息中，spu里shopId和路径上的shopId不一致");
-//                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("删除spu信息中，spu里shopId和路径上的shopId不一致"));
-//            } else {
-//                //删除商品spu
-//                return goodsDao.updateGoodsSpuState(spuId, 6L);
-//            }
-//        }
-//        return returnObject;
-//    }
 
     /**
      * sku上架
@@ -223,7 +205,8 @@ public class GoodsService {
         return goodsDao.modifySkuById(shopId, id, skuInputVo);
     }
 
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer
+            pageSize, String spuId, String skuSn1, String spuSn) {
         ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
         return returnObject;
     }
@@ -242,7 +225,7 @@ public class GoodsService {
      * @param id              种类 id
      * @param categoryInputVo 类目详细信息
      * @return 返回对象 ReturnObject<Object>
-     * @author shangzhao翟
+     * @author shangzhao zhai
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
         ReturnObject returnObject;
@@ -368,6 +351,11 @@ public class GoodsService {
     @Transactional
     public ReturnObject uploadSkuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSku> goodsSkuReturnObject = goodsDao.getGoodsSkuById(id);
+        if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST || goodsSkuReturnObject.getData().getDisabled()) {
+            logger.debug("uploadSkuImg : failed");
+            return goodsSkuReturnObject;
+        }
+
         Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
         if (shopid.equals(shopId)) {
             if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
@@ -406,7 +394,7 @@ public class GoodsService {
             }
             return returnObject;
         } else {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         }
     }
 
@@ -422,6 +410,10 @@ public class GoodsService {
     @Transactional
     public ReturnObject uploadSpuImg(Long shopId, Long id, MultipartFile multipartFile) {
         ReturnObject<GoodsSpu> goodsSpuReturnObject = goodsDao.getGoodsSpuById(id);
+        if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST || goodsSpuReturnObject.getData().getDisabled()) {
+            logger.debug("uploadSpuImg : failed");
+            return goodsSpuReturnObject;
+        }
         Long shopid = goodsDao.findGoodsSpuById(id).getShopId();
         if (shopid.equals(shopId)) {
             if (goodsSpuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
@@ -460,7 +452,7 @@ public class GoodsService {
             }
             return returnObject;
         } else {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         }
     }
 
@@ -511,7 +503,7 @@ public class GoodsService {
             }
             return returnObject;
         } else {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         }
     }
 
@@ -595,5 +587,14 @@ public class GoodsService {
             }
         }
         return returnObject;
+    }
+
+    /**
+     * @param shopId
+     * @param id
+     * @return
+     */
+    public ReturnObject deleteSpuById(Long shopId, Long id) {
+        return goodsDao.deleteSpuById(shopId, id);
     }
 }

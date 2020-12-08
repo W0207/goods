@@ -18,6 +18,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Abin
+ */
 @Repository
 public class GoodsDao {
 
@@ -99,7 +102,7 @@ public class GoodsDao {
     }
 
     /**
-     * 修改spu状态
+     * 修改sku状态
      *
      * @param shopId 店铺id
      * @param skuId  sku id
@@ -109,13 +112,13 @@ public class GoodsDao {
      */
     public ReturnObject<Object> updateGoodsSkuState(Long shopId, Long skuId, Long code) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() == 0) {
+            logger.debug("sku或禁止访问");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
-        }
-        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
-            logger.info("商品不存在或已被删除：spuId = " + skuId);
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
@@ -186,13 +189,13 @@ public class GoodsDao {
      */
     public ReturnObject<Object> modifySkuById(Long shopId, Long skuId, SkuInputVo skuInputVo) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
-        Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
-        if (!shopid.equals(shopId)) {
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() == 0) {
+            logger.info("skuId = " + skuId + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
-        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 4) {
-            logger.info("skuId = " + skuId + " 不存在");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
+        if (!shopid.equals(shopId)) {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdatePo(skuInputVo);
@@ -200,7 +203,6 @@ public class GoodsDao {
         logger.info("skuId = " + skuId + " 的信息已更新");
         return new ReturnObject<>();
     }
-
 
     /**
      * 失效商品价格浮动
@@ -215,22 +217,26 @@ public class GoodsDao {
             logger.info("商品价格浮动不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (floatPricePo.getValid() == 1) {
-            logger.info("商品价格浮动已失效");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        GoodsSkuPo goodsSkuPo = findGoodsSkuById(floatPricePo.getGoodsSkuId());
+        if (goodsSkuPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "商品价格浮动不存在");
         }
-        Long shopid = findGoodsSpuById(findGoodsSkuById(floatPricePo.getGoodsSkuId()).getGoodsSpuId()).getShopId();
-        ReturnObject<Object> returnObject;
-        if (shopId == 0 || shopid.equals(shopId)) {
+        Long goodsSpuId = goodsSkuPo.getGoodsSpuId();
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(goodsSpuId);
+        if (goodsSpuPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "商品价格浮动不存在");
+        }
+        Long shopid = goodsSpuPo.getShopId();
+        if (shopid.equals(shopId)) {
             FloatPrice floatPrice = new FloatPrice(floatPricePo);
             FloatPricePo po = floatPrice.createUpdateStatePo(loginUserId);
             floatPricePoMapper.updateByPrimaryKeySelective(po);
-            logger.debug("invalidFloatPriceById : shopId=" + shopId + "floatPriceId=" + id + "invalidBy" + loginUserId);
-
-            returnObject = new ReturnObject<>();
-            return returnObject;
+            logger.debug("invalidFloatPriceById : shopId = " + shopId + " floatPriceId = " + id + " invalidBy " + loginUserId);
+            return new ReturnObject<>(ResponseCode.OK);
+        } else {
+            logger.debug("error");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
     }
 
     /**
@@ -249,9 +255,7 @@ public class GoodsDao {
         GoodsCategory goodsCategory = new GoodsCategory();
         GoodsCategoryPo goodsCategoryPo = goodsCategory.createAddPo(id, categoryInputVo);
         int ret = goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
-        ReturnObject<Object> returnObject;
         if (ret == 0) {
-            //检查新增是否成功
             goodsCategoryPo = null;
         } else {
             logger.info("categoryId = " + id + " 的信息已新增成功");
@@ -349,19 +353,16 @@ public class GoodsDao {
      * @author shangzhao翟
      */
     public ReturnObject<List> getCategoryByPid(Long id) {
-        GoodsCategoryPoExample example = new GoodsCategoryPoExample();
-        GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
-        criteria.andPidEqualTo(id);
         //查看是否有此分类
         GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
         if (categoryPo == null) {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+        GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+        criteria.andPidEqualTo(id);
         List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
         List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
-        if (goodsCategoryPos == null) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
-        }
         for (GoodsCategoryPo po : goodsCategoryPos) {
             goodsCategories.add(new GoodsCategory(po));
         }
@@ -458,7 +459,7 @@ public class GoodsDao {
             }
             return returnObject;
         } else {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
     }
 
@@ -587,5 +588,35 @@ public class GoodsDao {
             returnObject = new ReturnObject();
         }
         return returnObject;
+    }
+
+    /**
+     * @param shopId
+     * @param id
+     * @return
+     */
+    public ReturnObject deleteSpuById(Long shopId, Long id) {
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("不存在或禁止访问");
+            }
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Long shopid = goodsSpuPo.getShopId();
+        if (!shopid.equals(shopId)) {
+            logger.debug("访问不合法");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        GoodsSkuPoExample example = new GoodsSkuPoExample();
+        GoodsSkuPoExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsSpuIdEqualTo(id);
+        List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(example);
+        if (goodsSkuPos.size() == 0) {
+            goodsSpuPoMapper.deleteByPrimaryKey(id);
+            return new ReturnObject();
+        } else {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spu不合法"));
+        }
     }
 }

@@ -74,7 +74,7 @@ goodsservice:
   dav:
     username: oomall
     password: 123456
-    baseUrl: http://10.20.82.79/webdav/
+    baseUrl: http://192.168.1.108/webdav/
   user:
     # user的权限字在Redis中失效秒数
     expiretime: 600
