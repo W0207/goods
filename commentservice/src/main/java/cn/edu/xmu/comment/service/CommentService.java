@@ -9,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
-/**
- * @author BiuBiuBiu
- */
 @Service
 public class CommentService {
 
@@ -22,15 +18,16 @@ public class CommentService {
     public ReturnObject<PageInfo<VoObject>> showCommentBySkuid(Integer page, Integer pageSize, Long id) {
         return commentDao.showCommentBySkuid(page, pageSize, id);
     }
+
     public ReturnObject auditCommentByID(Long id, CommentAuditVo commentAuditVo) {
-        return commentDao.auditCommentByID(id,commentAuditVo);
+        return commentDao.auditCommentByID(id, commentAuditVo);
     }
 
     public ReturnObject<PageInfo<VoObject>> showCommentByUserid(Integer page, Integer pageSize, Long userid) {
-        return commentDao.showCommentByUserid(page,pageSize,userid);
+        return commentDao.showCommentByUserid(page, pageSize, userid);
     }
 
     public ReturnObject<PageInfo<VoObject>> showUnAuditCommentsByCommentid(Integer page, Integer pageSize, Integer state) {
-        return commentDao.showUnAuditCommentsByCommentid(page,pageSize,state);
+        return commentDao.showUnAuditCommentsByCommentid(page, pageSize, state);
     }
 }

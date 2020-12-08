@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
+/**
+ * @author shangzhao zhai
+ */
 @Data
 @ApiOperation(value = "类目详细信息")
 public class CategoryInputVo {
