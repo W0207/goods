@@ -113,7 +113,7 @@ public class GoodsController {
     }
 
     /**
-     * 店家修改商品spu
+     * 店家或管理员修改商品spu
      *
      * @param bindingResult 校验信息
      * @param spuInputVo    修改信息的SpuInputVo
@@ -148,7 +148,7 @@ public class GoodsController {
     }
 
     /**
-     * 店家逻辑删除商品spu
+     * 店家或管理员删除商品spu
      *
      * @param shopId 店铺id
      * @param id     spuId
@@ -164,13 +164,14 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
-    @DeleteMapping("shops/{shopId}/spus/{id}")
-    public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    @Audit //需要认证
+    @DeleteMapping("/shops/{shopId}/spus/{id}")
+    public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGoodsSpu : shopId = " + shopId + " spuId = " + id);
         }
-        return null;
+        ReturnObject returnObject = goodsService.deleteSpuById(shopId, id);
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -219,7 +220,7 @@ public class GoodsController {
     })
     @Audit //需要认证
     @PutMapping("/shops/{shopId}/skus/{id}/offshelves")
-    public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id, @Depart Long shopid) {
+    public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
@@ -341,7 +342,6 @@ public class GoodsController {
             logger.debug("getSkuSimple = " + returnObject);
             object = Common.getPageRetObject(returnObject);
         }
-
         return object;
     }
 
@@ -369,7 +369,7 @@ public class GoodsController {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
         ReturnObject returnObj = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
-        return returnObj;
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
