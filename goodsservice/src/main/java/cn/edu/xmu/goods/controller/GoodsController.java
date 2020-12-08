@@ -407,7 +407,7 @@ public class GoodsController {
     }
 
     /**
-     * 管理员删除品牌
+     * 管理员删除品牌(平台管理员)
      *
      * @param id
      * @param shopId
@@ -420,24 +420,35 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "brandId", value = "品牌id", required = true)
     })
     @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
-    //@Audit //需要认证
+    @Audit //需要认证
     @DeleteMapping("/shops/{shopId}/brands/{id}")
-    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
+    public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteBrand : shopId = " + shopId + " brandId = " + id);
         }
-        //商家只能修改自家品牌，shopId=0可以修改任意品牌
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopId == 0) {
             ReturnObject returnObj = goodsService.deleteBrandById(id);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限删除品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
+    /**
+     * 管理员新增商品类目(只有管理员可以)
+     *
+     * @param id
+     * @param categoryInputVo
+     * @param bindingResult
+     * @param shopId
+     * @param shopid
+     * @return
+     * @author shangzhao zhai
+     */
     @ApiOperation(value = "管理员新增商品类目")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
@@ -447,8 +458,9 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
-    //@Audit // 需要认证
+    @Audit // 需要认证
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
     public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
@@ -460,23 +472,25 @@ public class GoodsController {
             logger.info("incorrect data received while addCategory CategoryId = ", id);
             return returnObject;
         }
-
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+            if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                return Common.decorateReturnObject(goodsCategory);
+            }
             returnObject = ResponseUtil.ok(goodsCategory.getData());
             return returnObject;
         } else {
-            logger.error("无权限删除品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
     /**
-     * 管理员修改商品类目信息
+     * 管理员修改商品类目信息(只有管理员可以)
      *
      * @param id:             种类 id
      * @param categoryInputVo 类目详细信息
      * @return Object
+     * @author shangzhao zhai
      */
     @ApiOperation(value = "管理员修改商品类目信息")
     @ApiImplicitParams({
@@ -487,6 +501,8 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
     @Audit
     @PutMapping("/shops/{shopId}/categories/{id}")
@@ -500,20 +516,21 @@ public class GoodsController {
             logger.info("incorrect data received while modifyGoodsType id = ", id);
             return returnObject;
         }
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopid == 0 && shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
-            logger.error("无权限修改品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
+
     }
 
     /**
-     * 管理员删除商品类目信息
+     * 管理员删除商品类目信息(物理删除)
      *
      * @param id: 种类 id
      * @return Object
+     * @author shangzhao zhai
      */
     @ApiOperation(value = "管理员删除商品类目信息")
     @ApiImplicitParams({
@@ -522,19 +539,20 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
-    //@Audit // 需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/categories/{id}")
-    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, BindingResult bindingResult, @Depart Long shopid) {
+    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteCategory: CategoryId = " + id);
         }
-        if (shopId.equals(shopid) || shopId == 0) {
+        if (shopid == 0 && shopId == 0) {
             ReturnObject returnObject = goodsService.deleteCategoryById(id);
             return Common.decorateReturnObject(returnObject);
         } else {
-            logger.error("无权限修改品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
@@ -551,14 +569,24 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
     })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
     @PostMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
-    public Object spuAddBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id) {
-        ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
-        return Common.decorateReturnObject(returnObject);
+    public Object spuAddBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id, @Depart Long shopid) {
+        if (shopid == 0) {
+            ReturnObject returnObject = goodsService.spuAddBrand(shopId, spuId, id);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
+        }
     }
 
     /**
-     * 管理员新增品牌
+     * 管理员新增品牌(平台管理员)
      *
      * @param id:          店铺 id
      * @param brandInputVo 品牌详细信息
@@ -572,10 +600,11 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
-    //@Audit // 需要认证
+    @Audit // 需要认证
     @PostMapping("/shops/{id}/brands")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult, @Depart Long shopid) {
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
@@ -585,38 +614,17 @@ public class GoodsController {
             logger.info("incorrect data received while addBrand shopid = ", id);
             return returnObject;
         }
-        if (id.equals(shopid) || id == 0) {
+        if (id == 0) {
             ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
             returnObject = ResponseUtil.ok(brandCategory.getData());
             return returnObject;
         } else {
-            logger.error("无权限新增品牌");
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
     }
 
     /**
-     * 将SPU删除品牌
-     *
-     * @param shopId
-     * @param spuId
-     * @param id
-     * @return
-     */
-    @ApiOperation(value = "将SPU删除品牌")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
-    })
-    @DeleteMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
-    public Object spuDeleteBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id) {
-        ReturnObject returnObject = goodsService.spuDeleteBrand(shopId, spuId, id);
-        return Common.decorateReturnObject(returnObject);
-    }
-
-    /**
-     * 查询商品分类关系
+     * 查询商品分类关系(用户无需登录)
      *
      * @param id 种类id
      * @return ReturnObject<List>
@@ -628,7 +636,6 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit //需要认证
     @GetMapping("/categories/{id}/subcategories")
     public Object queryType(@PathVariable Long id) {
         ReturnObject<List> returnObject = goodsService.selectCategories(id);
@@ -727,6 +734,8 @@ public class GoodsController {
     }
 
     /**
+     * 将SPU加入种类
+     *
      * @param shopId
      * @param spuId
      * @param id
@@ -738,14 +747,20 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
     })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
     @PostMapping("/shops/{shopId}/spus/{spuId}/categories/{id}")
-    public Object spuAddCategories(
-            @PathVariable Long shopId,
-            @PathVariable Long spuId,
-            @PathVariable Long id
-    ) {
-        ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
-        return Common.decorateReturnObject(returnObject);
+    public Object spuAddCategories(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id, @Depart Long shopid) {
+        if (shopid == 0) {
+            ReturnObject returnObject = goodsService.spuAddCategories(shopId, spuId, id);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
+        }
     }
 
     /**
@@ -760,14 +775,50 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
     })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
     @DeleteMapping("/shops/{shopId}/spus/{spuId}/categories/{id}")
-    public Object spuDeleteCategories(
-            @PathVariable Long shopId,
-            @PathVariable Long spuId,
-            @PathVariable Long id
-    ) {
-        ReturnObject returnObject = goodsService.spuDeleteCategories(shopId, spuId, id);
-        return Common.decorateReturnObject(returnObject);
+    public Object spuDeleteCategories(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id, @Depart Long shopid) {
+        if (shopid == 0) {
+            ReturnObject returnObject = goodsService.spuDeleteCategories(shopId, spuId, id);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
+        }
+    }
+
+    /**
+     * 将SPU删除品牌
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "将SPU删除品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
+    @DeleteMapping("/shops/{shopId}/spus/{spuId}/brands/{id}")
+    public Object spuDeleteBrand(@PathVariable Long shopId, @PathVariable Long spuId, @PathVariable Long id, @Depart Long shopid) {
+        if (shopid == 0) {
+            ReturnObject returnObject = goodsService.spuDeleteBrand(shopId, spuId, id);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.AUTH_NOT_ALLOW));
+        }
     }
 
 }
