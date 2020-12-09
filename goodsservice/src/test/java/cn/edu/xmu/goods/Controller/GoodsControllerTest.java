@@ -503,6 +503,8 @@ public class GoodsControllerTest {
         System.out.println(responseString);
     }
 
+    //管理员新增商品价格浮动测试 开始
+
     /**
      * 开始时间大于结束时间
      *
@@ -592,7 +594,7 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 时间冲突
+     * 正常添加和时间冲突
      *
      * @throws Exception
      */
@@ -626,6 +628,8 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString2);
     }
+    //管理员新增商品价格浮动测试 结束
+
     /**
      * 管理员新增品牌
      *

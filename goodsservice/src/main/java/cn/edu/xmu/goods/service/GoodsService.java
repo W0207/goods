@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 
 /**
@@ -35,7 +36,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  */
 @Service
 @DubboService(version = "0.0.1")
-public class GoodsService implements Ingoodservice{
+public class GoodsService implements Ingoodservice {
 
     @Autowired
     GoodsDao goodsDao;
@@ -65,13 +66,15 @@ public class GoodsService implements Ingoodservice{
 
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
-        GoodsSkuPo goodsSkuPo=goodsDao.findGoodsSkuById(id);
-        if(goodsSkuPo==null)return null;
+        GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
+        if (goodsSkuPo == null) {
+            return null;
+        }
         SkuPresaleVo skuPresaleVo = new SkuPresaleVo(goodsSkuPo);
         SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo();
         skuToPresaleVo.setId(skuPresaleVo.getId());
         skuToPresaleVo.setName(skuPresaleVo.getName());
-        skuToPresaleVo.setGoodsSn(skuPresaleVo.getGoodsSn());
+        skuToPresaleVo.setGoodsSn(skuPresaleVo.getSkuSn());
         skuToPresaleVo.setImageUrl(skuPresaleVo.getImageUrl());
         skuToPresaleVo.setState(skuPresaleVo.getState());
         skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());

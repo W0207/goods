@@ -727,6 +727,8 @@ public class GoodsController {
     }
 
     /**
+     * spu删除种类
+     *
      * @param shopId
      * @param spuId
      * @param id
@@ -826,6 +828,13 @@ public class GoodsController {
 
     /**
      * 管理员新增商品价格浮动
+     *
+     * @param shopId
+     * @param id
+     * @param floatPriceInputVo
+     * @param userId
+     * @param bindingResult
+     * @return
      */
     @ApiOperation(value = "管理员新增商品价格浮动")
     @ApiImplicitParams({
