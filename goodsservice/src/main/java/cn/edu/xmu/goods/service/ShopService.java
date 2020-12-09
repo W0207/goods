@@ -3,6 +3,7 @@ package cn.edu.xmu.goods.service;
 import cn.edu.xmu.goods.dao.ShopDao;
 import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.po.ShopPo;
+import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -57,5 +58,9 @@ public class ShopService implements InShopService{
     public ReturnObject deleteShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.deleteShop(shop);
         return returnObject;
+    }
+
+    public ReturnObject auditShopByID(Long id, ShopAuditVo shopAuditVo) {
+        return shopDao.auditShopByID(id,shopAuditVo);
     }
 }

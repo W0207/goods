@@ -2,6 +2,7 @@ package cn.edu.xmu.goods.model.bo;
 
 
 import cn.edu.xmu.goods.model.po.ShopPo;
+import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,13 @@ public class Shop {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ShopPo createAuditPo(ShopAuditVo shopAuditVo) {
+        ShopPo shopPo=new ShopPo();
+        shopPo.setId(id);
+        shopPo.setState(shopAuditVo.getState());
+        return shopPo;
     }
 
     /**
