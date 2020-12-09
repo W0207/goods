@@ -1,5 +1,6 @@
 package cn.edu.xmu.presale.model.vo;
 
+import cn.edu.xmu.presale.model.po.PresaleActivityPo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -76,5 +77,18 @@ public class PresaleActivityVo {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public PresaleActivityPo creatPo()
+    {
+        PresaleActivityPo presaleActivityPo = new PresaleActivityPo();
+        presaleActivityPo.setName(this.getName());
+        presaleActivityPo.setAdvancePayPrice(this.advancePayPrice);
+        presaleActivityPo.setRestPayPrice(this.getRestPayPrice());
+        presaleActivityPo.setQuantity(this.getQuantity());
+        presaleActivityPo.setBeginTime(this.getBeginTime());
+        presaleActivityPo.setEndTime(this.getEndTime());
+        presaleActivityPo.setPayTime(this.getPayTime());
+        return presaleActivityPo;
     }
 }
