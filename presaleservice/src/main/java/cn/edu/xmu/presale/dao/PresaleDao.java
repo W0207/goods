@@ -5,7 +5,6 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.presale.mapper.PresaleActivityPoMapper;
-import cn.edu.xmu.presale.model.bo.PresaleActivity;
 import cn.edu.xmu.presale.model.po.PresaleActivityPo;
 import cn.edu.xmu.presale.model.po.PresaleActivityPoExample;
 import cn.edu.xmu.presale.model.vo.PresaleActivityRetVo;
@@ -15,7 +14,6 @@ import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -80,7 +78,7 @@ public class PresaleDao {
         List<PresaleActivityRetVo> presaleActivityRetVos = new ArrayList<>(presaleActivityPos.size());
         for(PresaleActivityPo po: presaleActivityPos){
             PresaleActivityRetVo vo = new PresaleActivityRetVo(po);
-            vo.setShopToPresaleVo(inShopService.presaleFindShop(po.getShopId()));
+            vo.setShopToAllVo(inShopService.presaleFindShop(po.getShopId()));
             presaleActivityRetVos.add(vo);
         }
         PageInfo<PresaleActivityPo> poPageInfo = new PageInfo<>(presaleActivityPos);
@@ -173,7 +171,7 @@ public class PresaleDao {
             List<PresaleActivityRetVo> presaleActivityRetVos = new ArrayList<>(presaleActivityPos.size());
             for(PresaleActivityPo po: presaleActivityPos){
                 PresaleActivityRetVo vo = new PresaleActivityRetVo(po);
-                vo.setShopToPresaleVo(inShopService.presaleFindShop(shopId));
+                vo.setShopToAllVo(inShopService.presaleFindShop(shopId));
                 vo.setSpuToPresaleVo(ingoodservice.presaleFindSku(id));
                 presaleActivityRetVos.add(vo);
             }

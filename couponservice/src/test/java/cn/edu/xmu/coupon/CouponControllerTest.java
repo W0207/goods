@@ -5,6 +5,8 @@ import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
 import cn.edu.xmu.coupon.mapper.CouponPoMapper;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponPo;
+import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -16,8 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import java.time.LocalDateTime;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -134,6 +137,27 @@ public class CouponControllerTest {
         System.out.println(responseString);
         CouponPo couponPo = couponPoMapper.selectByPrimaryKey(1L);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void addCouponActivity() throws Exception {
+        byte a= 10;
+        AddCouponActivityVo vo = new AddCouponActivityVo();
+        vo.setName("tzy");
+        vo.setQuantity(10);
+        vo.setQuantityType(a);
+        vo.setValidTerm(a);
+        vo.setCouponTime(LocalDateTime.now());
+        vo.setBeginTime(LocalDateTime.now());
+        vo.setEndTime(LocalDateTime.now());
+        vo.setStrategy("aaaaa");
+        String jsonStr = JacksonUtil.toJson(vo);
+
+        String responseString = this.mvc.perform(post("/coupon/shops/8/couponactivities").contentType("application/json;charset=UTF-8").content(jsonStr))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 
 }

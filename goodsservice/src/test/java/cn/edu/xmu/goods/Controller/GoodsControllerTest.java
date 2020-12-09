@@ -3,8 +3,6 @@ package cn.edu.xmu.goods.Controller;
 import cn.edu.xmu.goods.GoodsServiceApplication;
 import cn.edu.xmu.goods.controller.GoodsController;
 import cn.edu.xmu.goods.mapper.*;
-import cn.edu.xmu.goods.model.bo.FloatPrice;
-import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
@@ -213,6 +211,8 @@ public class GoodsControllerTest {
      */
     @Test
     public void changeSkuInfoById() throws Exception {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getInventory());
         String requireJson = "{\n" +
                 "  \"name\":\"123\",\n" +
                 "  \"originalPrice\":\"123\",\n" +
@@ -222,16 +222,15 @@ public class GoodsControllerTest {
                 "  \"detail\":\"123\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(put("/goods/shops/1/skus/272")
+        String responseString = this.mvc.perform(put("/goods/shops/0/skus/273")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
-        System.out.println(goodsSkuPo.getConfiguration());
-        System.out.println(goodsSkuPo.getDetail());
+        goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getInventory());
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -367,34 +366,14 @@ public class GoodsControllerTest {
      */
     @Test
     public void spuAddBrand() throws Exception {
-        String token = creatTestToken(1111L, 1L, 100);
+        String token = creatTestToken(1111L, 0L, 100);
         System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getBrandId());
-        String responseString = this.mvc.perform(post("/goods/shops/1/spus/273/brands/70")
+        String responseString = this.mvc.perform(post("/goods/shops/0/spus/273/brands/70")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
         System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getBrandId());
-    }
-
-    /**
-     * 管理员新增品牌
-     *
-     * @throws Exception
-     */
-    @Test
-    public void addBrand() throws Exception {
-        String token = creatTestToken(1L, 1L, 100);
-        String requireJson = "{\n" +
-                "  \"name\":\"123\",\n" +
-                "  \"detail\":\"123\"\n" +
-                "}";
-        String responseString = this.mvc.perform(post("/goods/shops/1/brands")
-                .header("authorization", token)
-                .contentType("application/json;charset=UTF-8")
-                .content(requireJson))
-                .andReturn().getResponse().getContentAsString();
-        System.out.println(responseString);
     }
 
     /**
@@ -521,6 +500,154 @@ public class GoodsControllerTest {
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L).getBrandId());
+        System.out.println(responseString);
+    }
+
+    //管理员新增商品价格浮动测试 开始
+
+    /**
+     * 开始时间大于结束时间
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addFloatingPrice1() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"2020-12-07 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-07 11:24:46\",\n" +
+                "  \"quantity\": 0\n" +
+                "}";
+        String responseString = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 无开始时间
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addFloatingPrice2() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"\",\n" +
+                "  \"endTime\": \"2020-12-07 11:24:46\",\n" +
+                "  \"quantity\": 0\n" +
+                "}";
+        String responseString = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 无结束时间
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addFloatingPrice3() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"2020-12-07 11:24:47\",\n" +
+                "  \"endTime\": \"\",\n" +
+                "  \"quantity\": 0\n" +
+                "}";
+        String responseString = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 设置的库存大于总库存
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addFloatingPrice4() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"2020-12-07 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-07 11:24:49\",\n" +
+                "  \"quantity\": 10\n" +
+                "}";
+        String responseString = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 正常添加和时间冲突
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addFloatingPrice5() throws Exception {
+        String token1 = creatTestToken(1L, 0L, 100);
+        String requireJson1 = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"2020-12-07 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-07 11:24:49\",\n" +
+                "  \"quantity\": 1\n" +
+                "}";
+        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token1)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString1);
+
+        String token2 = creatTestToken(1L, 0L, 100);
+        String requireJson2 = "{\n" +
+                "  \"activityPrice\": 0,\n" +
+                "  \"beginTime\": \"2020-12-07 11:24:48\",\n" +
+                "  \"endTime\": \"2020-12-07 11:24:49\",\n" +
+                "  \"quantity\": 0\n" +
+                "}";
+        String responseString2 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token2)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson2))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString2);
+    }
+    //管理员新增商品价格浮动测试 结束
+
+    /**
+     * 管理员新增品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addBrand() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        System.out.println(requireJson);
+        String responseString = this.mvc.perform(post("/goods/shops/0/brands")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
 }

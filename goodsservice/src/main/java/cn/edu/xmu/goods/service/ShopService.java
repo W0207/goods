@@ -4,7 +4,7 @@ import cn.edu.xmu.goods.dao.ShopDao;
 import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.po.ShopPo;
 import cn.edu.xmu.ininterface.service.InShopService;
-import cn.edu.xmu.ininterface.service.model.vo.ShopToPresaleVo;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ public class ShopService implements InShopService{
     ShopDao shopDao;
 
     @Override
-    public ShopToPresaleVo presaleFindShop(Long id) {
+    public ShopToAllVo presaleFindShop(Long id) {
         ShopPo shopPo = shopDao.findShopById(id);
-        ShopToPresaleVo shopToPresaleVo = new ShopToPresaleVo();
+        ShopToAllVo shopToAllVo = new ShopToAllVo();
         if(shopPo==null)return null;
         else{
-            shopToPresaleVo.setId(id);
-            shopToPresaleVo.setName(shopPo.getName());
-            return shopToPresaleVo;
+            shopToAllVo.setId(id);
+            shopToAllVo.setName(shopPo.getName());
+            return shopToAllVo;
         }
     }
 
