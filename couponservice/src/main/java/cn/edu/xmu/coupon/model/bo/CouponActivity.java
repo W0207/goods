@@ -1,6 +1,7 @@
 package cn.edu.xmu.coupon.model.bo;
 
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
@@ -136,5 +137,16 @@ public class CouponActivity implements VoObject {
     @Override
     public Object createSimpleVo() {
         return null;
+    }
+
+    public CouponActivityPo createModifyPo(CouponActivityModifyVo couponActivityModifyVo) {
+        CouponActivityPo couponActivityPo=new CouponActivityPo();
+        couponActivityPo.setName(couponActivityModifyVo.getName());
+        couponActivityPo.setBeginTime(couponActivityModifyVo.getBegin_time());
+        couponActivityPo.setEndTime(couponActivityModifyVo.getEnd_time());
+        couponActivityPo.setQuantity(couponActivityModifyVo.getQuantity());
+        couponActivityPo.setStrategy(couponActivityModifyVo.getStrategy());
+        couponActivityPo.setId(id);
+        return couponActivityPo;
     }
 }

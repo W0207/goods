@@ -10,11 +10,13 @@ import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import cn.edu.xmu.ininterface.service.Ingoodservice;
 
 /**
  * @author Abin
  */
 @Service
-public class GoodsService {
+@DubboService(version = "0.0.1")
+public class GoodsService implements Ingoodservice{
 
     @Autowired
     GoodsDao goodsDao;
@@ -49,6 +53,30 @@ public class GoodsService {
 
     public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize) {
         return goodsDao.findAllBrand(page, pageSize);
+    }
+
+
+    @Override
+    public Object echo2(Object message) {
+        System.out.println("aaa");
+        System.out.println("bbbb");
+        return "bbbbb";
+    }
+
+    @Override
+    public SkuToPresaleVo presaleFindSku(Long id) {
+        GoodsSkuPo goodsSkuPo=goodsDao.findGoodsSkuById(id);
+        if(goodsSkuPo==null)return null;
+        SkuPresaleVo skuPresaleVo = new SkuPresaleVo(goodsSkuPo);
+        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo();
+        skuToPresaleVo.setId(skuPresaleVo.getId());
+        skuToPresaleVo.setName(skuPresaleVo.getName());
+        skuToPresaleVo.setGoodsSn(skuPresaleVo.getGoodsSn());
+        skuToPresaleVo.setImageUrl(skuPresaleVo.getImageUrl());
+        skuToPresaleVo.setState(skuPresaleVo.getState());
+        skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());
+        skuToPresaleVo.setGmtModified(skuPresaleVo.getGmtModified());
+        return skuToPresaleVo;
     }
 
     /**
