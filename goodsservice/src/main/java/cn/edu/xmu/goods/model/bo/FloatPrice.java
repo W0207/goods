@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Abin
+ */
 @Data
 public class FloatPrice implements VoObject {
 
@@ -40,9 +43,13 @@ public class FloatPrice implements VoObject {
         this.quantity = floatPricePo.getQuantity();
         this.createdBy = floatPricePo.getCreatedBy();
         this.invalidBy = floatPricePo.getInvalidBy();
-        this.valid = floatPricePo.getValid() == 1 ? false : true;
+        this.valid = floatPricePo.getValid() == 1 ? true : false;
         this.gmtCreate = floatPricePo.getGmtCreate();
         this.gmtModified = floatPricePo.getGmtModified();
+    }
+
+    public FloatPrice() {
+
     }
 
     @Override

@@ -586,44 +586,6 @@ public class GoodsController {
     }
 
     /**
-     * 管理员新增品牌(平台管理员)
-     *
-     * @param id:          店铺 id
-     * @param brandInputVo 品牌详细信息
-     * @return Object
-     */
-    @ApiOperation(value = "管理员新增品牌")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "brandInputVo", name = "brandInputVo", value = "品牌详细信息", required = true),
-            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
-    })
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 705, message = "无权限访问")
-    })
-    @Audit // 需要认证
-    @PostMapping("/shops/{id}/brands")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("addBrands: BrandId = " + id);
-        }
-        // 校验前端数据
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addBrand shopid = ", id);
-            return returnObject;
-        }
-        if (id == 0) {
-            ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
-            returnObject = ResponseUtil.ok(brandCategory.getData());
-            return returnObject;
-        } else {
-            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
-        }
-    }
-
-    /**
      * 查询商品分类关系(用户无需登录)
      *
      * @param id 种类id
@@ -743,6 +705,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "将SPU加入种类")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
@@ -771,6 +734,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "将SPU删除种类")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "分类id", required = true)
@@ -801,6 +765,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "将SPU删除品牌")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "shopId", value = "店铺id", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "spuId", value = "spuId", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "id", value = "品牌id", required = true)
@@ -821,4 +786,83 @@ public class GoodsController {
         }
     }
 
+    /**
+     * 管理员新增品牌(平台管理员)
+     *
+     * @param id:          店铺 id
+     * @param brandInputVo 品牌详细信息
+     * @return Object
+     */
+    @ApiOperation(value = "管理员新增品牌")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "BrandInputVo", name = "brandInputVo", value = "品牌详细信息", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit // 需要认证
+    @PostMapping("/shops/{id}/brands")
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addBrands: BrandId = " + id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while addBrand shopid = ", id);
+            return returnObject;
+        }
+        if (id == 0) {
+            ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
+            returnObject = ResponseUtil.ok(brandCategory.getData());
+            return returnObject;
+        } else {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
+        }
+    }
+
+    /**
+     * 管理员新增商品价格浮动
+     */
+    @ApiOperation(value = "管理员新增商品价格浮动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "skuId", value = "skuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "FloatPriceInputVo", name = "floatPriceInputVo", value = "可修改的信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问"),
+            @ApiResponse(code = 902, message = "商品价格浮动时间冲突"),
+            @ApiResponse(code = 610, message = "开始时间大于结束时间"),
+            @ApiResponse(code = 611, message = "开始时间不能为空"),
+            @ApiResponse(code = 622, message = "结束时间不能为空"),
+            @ApiResponse(code = 900, message = "商品规格库存不够"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
+    @PostMapping("/shops/{shopId}/skus/{id}/floatPrices")
+    public Object addFloatingPrice(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody FloatPriceInputVo floatPriceInputVo, @LoginUser Long userId, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addFloatingPrice: shopId = " + shopId + " skuId = " + id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while addBrand shopid = ", id);
+            return returnObject;
+        }
+        ReturnObject floatPrice = goodsService.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+        if (floatPrice.getCode() == ResponseCode.OK) {
+            return ResponseUtil.ok(floatPrice.getData());
+        } else {
+            return Common.decorateReturnObject(floatPrice);
+        }
+
+    }
 }

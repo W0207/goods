@@ -202,13 +202,13 @@ public class GoodsSku implements VoObject, Serializable {
         String nameEnc = goodsSkuPo == null ? null : skuInputVo.getName();
         Long originalPriceEnc = skuInputVo.getOriginalPrice() == null ? null : skuInputVo.getOriginalPrice();
         String configurationEnc = skuInputVo.getConfiguration() == null ? null : skuInputVo.getConfiguration();
-        Long inventoryEnc = skuInputVo.getInventory() == null ? null : skuInputVo.getInventory();
+        Integer inventoryEnc = skuInputVo.getInventory() == null ? null : skuInputVo.getInventory();
         Long weightEnc = skuInputVo.getWeight() == null ? null : skuInputVo.getWeight();
         String detailEnc = skuInputVo.getDetail() == null ? null : skuInputVo.getDetail();
         goodsSkuPo.setOriginalPrice(originalPriceEnc);
         goodsSkuPo.setName(nameEnc);
         goodsSkuPo.setDetail(detailEnc);
-        goodsSkuPo.setWeight(inventoryEnc);
+        goodsSkuPo.setInventory(inventoryEnc);
         goodsSkuPo.setWeight(weightEnc);
         goodsSkuPo.setConfiguration(configurationEnc);
         return goodsSkuPo;

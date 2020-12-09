@@ -592,4 +592,18 @@ public class GoodsService {
     public ReturnObject deleteSpuById(Long shopId, Long id) {
         return goodsDao.deleteSpuById(shopId, id);
     }
+
+    /**
+     * 管理员新增商品价格浮动
+     *
+     * @param shopId
+     * @param id
+     * @param floatPriceInputVo
+     * @param userId
+     * @return
+     * @author shibin zhan
+     */
+    public ReturnObject<Object> addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
+        return goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+    }
 }

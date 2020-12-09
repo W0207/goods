@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Abin
+ */
 @Data
 public class SimpleSpuVo {
 

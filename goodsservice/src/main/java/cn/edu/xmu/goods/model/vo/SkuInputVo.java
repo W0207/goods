@@ -2,8 +2,12 @@ package cn.edu.xmu.goods.model.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
+/**
+ * @author Abin
+ */
 @Data
 @ApiOperation(value = "可修改的sku信息")
 public class SkuInputVo {
@@ -21,7 +25,7 @@ public class SkuInputVo {
     private Long weight;
 
     @ApiModelProperty("库存")
-    private Long inventory;
+    private Integer inventory;
 
     @ApiModelProperty("该型号描述")
     private String detail;
