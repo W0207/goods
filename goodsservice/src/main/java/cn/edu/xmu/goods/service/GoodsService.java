@@ -35,7 +35,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-@DubboService(version = "0.0.1")
+//@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired
@@ -636,5 +636,36 @@ public class GoodsService implements Ingoodservice {
      */
     public ReturnObject<Object> addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
         return goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+    }
+
+    /**
+     * 店家或管理员添加商品spu
+     *
+     * @param shopId
+     * @param spuInputVo
+     * @return
+     */
+    public ReturnObject addSpu(Long shopId, SpuInputVo spuInputVo) {
+        return goodsDao.addSpu(shopId, spuInputVo);
+    }
+
+    /**
+     * 获得sku的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSku(Long id) {
+        return goodsDao.getSku(id);
+    }
+
+    /**
+     * 获得spu的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSpu(Long id) {
+        return goodsDao.getSpu(id);
     }
 }

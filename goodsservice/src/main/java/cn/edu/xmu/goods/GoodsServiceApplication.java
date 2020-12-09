@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication(scanBasePackages = {"cn.edu.xmu.ooad", "cn.edu.xmu.goods"})
 @MapperScan("cn.edu.xmu.goods.mapper")
-@EnableDiscoveryClient//启动服务发现
+//@EnableDiscoveryClient//启动服务发现
 public class GoodsServiceApplication {
 
     public static void main(String[] args) {
