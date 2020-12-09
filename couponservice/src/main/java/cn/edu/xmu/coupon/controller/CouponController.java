@@ -2,6 +2,7 @@ package cn.edu.xmu.coupon.controller;
 
 import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
+import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponStateVo;
@@ -170,5 +171,16 @@ public class CouponController {
         }
         ReturnObject returnObj = couponService.useCouponByCouponId(id,userId);
         return Common.decorateReturnObject(returnObj);
+    }
+
+    @ApiOperation(value = "管理员新建己方优惠活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "shopId", required = true)
+    })
+    //@Audit // 需要认证
+    @PostMapping("/shops/{shopId}/couponactivities")
+    public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo){
+        return Common.decorateReturnObject(couponService.addCouponActivity(shopId, vo));
     }
 }
