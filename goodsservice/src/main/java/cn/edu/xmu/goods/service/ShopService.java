@@ -2,15 +2,32 @@ package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.ShopDao;
 import cn.edu.xmu.goods.model.bo.Shop;
+import cn.edu.xmu.goods.model.po.ShopPo;
+import cn.edu.xmu.ininterface.service.InShopService;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToPresaleVo;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShopService {
+@DubboService(version = "0.0.1")
+public class ShopService implements InShopService{
 
     @Autowired
     ShopDao shopDao;
+
+    @Override
+    public ShopToPresaleVo presaleFindShop(Long id) {
+        ShopPo shopPo = shopDao.findShopById(id);
+        ShopToPresaleVo shopToPresaleVo = new ShopToPresaleVo();
+        if(shopPo==null)return null;
+        else{
+            shopToPresaleVo.setId(id);
+            shopToPresaleVo.setName(shopPo.getName());
+            return shopToPresaleVo;
+        }
+    }
 
     //新建商家
     public ReturnObject insertShop(Shop shop) {
