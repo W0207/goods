@@ -20,6 +20,12 @@ public class ShopDao {
 
     private static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
 
+
+    public ShopPo findShopById(Long id)
+    {
+        return shopPoMapper.selectByPrimaryKey(id);
+    }
+
     /**
      * 增加一个店铺
      * <p>
