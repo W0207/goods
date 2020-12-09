@@ -149,9 +149,6 @@ UNLOCK TABLES;
 LOCK TABLES `float_price` WRITE;
 /*!40000 ALTER TABLE `float_price`
     DISABLE KEYS */;
-INSERT INTO `float_price`
-    value (1, 273, 1, '2020-12-07 11:24:47', '2020-12-07 11:24:47', 12, 12, null, 1, '2020-12-07 11:24:47',
-           '2020-12-07 11:24:47');
 /*!40000 ALTER TABLE `float_price`
     ENABLE KEYS */;
 UNLOCK TABLES;

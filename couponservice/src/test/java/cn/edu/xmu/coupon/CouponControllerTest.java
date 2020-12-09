@@ -1,6 +1,10 @@
 package cn.edu.xmu.coupon;
 
 import cn.edu.xmu.coupon.controller.CouponController;
+import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
+import cn.edu.xmu.coupon.mapper.CouponPoMapper;
+import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -13,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,8 +26,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 
 public class CouponControllerTest {
+
     @Autowired
     MockMvc mvc;
+
+    @Autowired
+    CouponActivityPoMapper couponActivityPoMapper;
+
+    @Autowired
+    CouponPoMapper couponPoMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(CouponController.class);
 
@@ -75,6 +87,53 @@ public class CouponControllerTest {
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员修改己方某优惠活动
+     */
+    @Test
+    public void modifyCouponActivity() throws Exception {
+        String requireJson = "{\n  \"name\":\"啊这\",\n  \"quantity\": \"20\"\n}";
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(put("/coupon/shops/123/couponactivities/1")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(1L);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 买家使用自己某优惠券
+     */
+    @Test
+    public void useCoupon1() throws Exception {
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(put("/coupon/1")
+                .header("authorization", token))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        CouponPo couponPo = couponPoMapper.selectByPrimaryKey(1L);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void useCoupon2() throws Exception {
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(put("/coupon/3")
+                .header("authorization", token))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        CouponPo couponPo = couponPoMapper.selectByPrimaryKey(1L);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
 }

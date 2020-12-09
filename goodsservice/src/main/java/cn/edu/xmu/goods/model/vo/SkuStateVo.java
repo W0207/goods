@@ -7,6 +7,7 @@ import lombok.Data;
 
 /**
  * 商品spu状态VO
+ * @author Abin
  */
 @Data
 public class SkuStateVo {

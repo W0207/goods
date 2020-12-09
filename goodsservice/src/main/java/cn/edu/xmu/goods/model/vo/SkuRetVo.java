@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 /**
  * 商品sku详细信息
+ *
+ * @author Abin
  */
 @Data
 public class SkuRetVo {
@@ -53,17 +55,17 @@ public class SkuRetVo {
 
     public SkuRetVo(GoodsSku sku) {
         this.id = sku.getId();
-        this.configuration=sku.getConfiguration();
+        this.configuration = sku.getConfiguration();
         this.imageUrl = sku.getImageUrl();
         this.detail = sku.getDetail();
         this.gmtCreate = sku.getGmtCreate();
         this.gmtModified = sku.getGmtModified();
-        this.disabled=sku.getDisabled();
-        this.goodsSpuId=sku.getGoodsSpuId();
-        this.skuSn=sku.getSkuSn();
-        this.name=sku.getName();
-        this.originalPrice=sku.getOriginalPrice();
-        this.weight=sku.getWeight();
-        this.inventory=sku.getInventory();
+        this.disabled = sku.getDisabled();
+        this.goodsSpuId = sku.getGoodsSpuId();
+        this.skuSn = sku.getSkuSn();
+        this.name = sku.getName();
+        this.originalPrice = sku.getOriginalPrice();
+        this.weight = sku.getWeight();
+        this.inventory = sku.getInventory();
     }
 }

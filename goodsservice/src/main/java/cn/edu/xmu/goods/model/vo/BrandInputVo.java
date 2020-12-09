@@ -7,6 +7,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 
+/**
+ * @author Abin
+ */
 @Data
 @ApiModel(description = "可修改的品牌信息")
 public class BrandInputVo {

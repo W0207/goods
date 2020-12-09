@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -619,7 +621,80 @@ public class GoodsDao {
             goodsSpuPoMapper.deleteByPrimaryKey(id);
             return new ReturnObject();
         } else {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spu不合法"));
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spu不合法");
+        }
+    }
+
+    /**
+     * 新增商品价格浮动
+     *
+     * @param shopId
+     * @param id
+     * @param floatPriceInputVo
+     * @param userId
+     * @return
+     */
+    public ReturnObject addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() == 0) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Long spuId = goodsSkuPo.getGoodsSpuId();
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Long shopid = goodsSpuPo.getShopId();
+        if (!shopid.equals(shopId)) {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        if ("".equals(floatPriceInputVo.getBeginTime())) {
+            return new ReturnObject<>(ResponseCode.Log_BEGIN_NULL);
+        }
+        if ("".equals(floatPriceInputVo.getEndTime())) {
+            return new ReturnObject<>(ResponseCode.Log_END_NULL);
+        }
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime beginTime = LocalDateTime.parse(floatPriceInputVo.getBeginTime(), df);
+        LocalDateTime endTime = LocalDateTime.parse(floatPriceInputVo.getEndTime(), df);
+        if (beginTime.isAfter(endTime)) {
+            //开始时间不能比结束时间晚
+            return new ReturnObject<>(ResponseCode.Log_Bigger);
+        } else {
+            //设置的库存不能大于总库存
+            if (goodsSkuPo.getInventory() < floatPriceInputVo.getQuantity()) {
+                logger.debug("库存数量不够");
+                return new ReturnObject<>(ResponseCode.SKU_NOTENOUGH);
+            } else {
+                //一个商品只能有一个价格浮动在使用
+                //查找当前时间段重合，生效，且skuId的商品价格浮动
+                FloatPricePoExample floatPricePoExample = new FloatPricePoExample();
+                FloatPricePoExample.Criteria criteria = floatPricePoExample.createCriteria();
+                criteria.andGoodsSkuIdEqualTo(id);
+                criteria.andEndTimeGreaterThan(beginTime);
+                criteria.andValidEqualTo((byte) 1);
+                List<FloatPricePo> floatPricePos = floatPricePoMapper.selectByExample(floatPricePoExample);
+                //如果存在，则返回时间段冲突
+                if (floatPricePos.size() != 0) {
+                    logger.debug("时间段冲突");
+                    return new ReturnObject<>(ResponseCode.SKUPRICE_CONFLICT);
+                } else {
+                    //时间段不冲突则新建一个商品价格浮动并且设为生效
+                    FloatPricePo floatPricePo = new FloatPricePo();
+                    floatPricePo.setGoodsSkuId(id);
+                    floatPricePo.setActivityPrice(floatPriceInputVo.getActivityPrice());
+                    floatPricePo.setBeginTime(beginTime);
+                    floatPricePo.setEndTime(endTime);
+                    floatPricePo.setQuantity(floatPriceInputVo.getQuantity());
+                    floatPricePo.setGmtCreate(LocalDateTime.now());
+                    floatPricePo.setInvalidBy(userId);
+                    floatPricePo.setGmtModified(LocalDateTime.now());
+                    floatPricePo.setValid((byte) 1);
+                    floatPricePo.setCreatedBy(userId);
+                    floatPricePoMapper.insertSelective(floatPricePo);
+                    return new ReturnObject(new FloatPrice(floatPricePo));
+                }
+            }
         }
     }
 }
