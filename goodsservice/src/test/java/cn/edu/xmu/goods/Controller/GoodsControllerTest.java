@@ -94,25 +94,6 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 修改商品spu信息
-     *
-     * @throws Exception
-     */
-    @Test
-    public void changeSpuInfoById() throws Exception {
-        String token = creatTestToken(1L, 0L, 100);
-        String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
-        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273")
-                .header("authorization", token)
-                .contentType("application/json;charset=UTF-8")
-                .content(requireJson))
-                .andReturn().getResponse().getContentAsString();
-        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
-    }
-
-    /**
      * 删除商品spu
      *
      * @throws Exception
@@ -650,4 +631,38 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
+
+    @Test
+    public void addSpu() throws Exception {
+        String token = creatTestToken(1L, 1L, 100);
+        String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
+        String responseString = this.mvc.perform(put("/goods/shops/1/spus")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 修改商品spu信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void changeSpuInfoById() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String requireJson = "{\n  \"name\":\"123\",\n  \"description\":\"123\",\n  \"specs\": \"123\"\n}";
+        String responseString = this.mvc.perform(put("/goods/shops/0/spus/273")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
 }

@@ -93,23 +93,23 @@ pagehelper:
   helper-dialect: mysql
 
 
-cloud:
-  nacos:
-    discovery:
-      server-addr: localhost:8848
-
-
-dubbo:
-  scan:
-    # dubbo 服务扫描基准包
-    base-packages: cn.edu.xmu.goods
-  protocol:
-    # dubbo 协议
-    name: dubbo
-    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: 18889
-    dubbo:
-      protocol:
-        threads=10:
-  registry:
-    address: nacos://localhost:8848
+#cloud:
+#  nacos:
+#    discovery:
+#      server-addr: localhost:8848
+#
+#
+#dubbo:
+#  scan:
+#    # dubbo 服务扫描基准包
+#    base-packages: cn.edu.xmu.goods
+#  protocol:
+#    # dubbo 协议
+#    name: dubbo
+#    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+#    port: 18889
+#    dubbo:
+#      protocol:
+#        threads=10:
+#  registry:
+#    address: nacos://localhost:8848

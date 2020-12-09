@@ -61,25 +61,7 @@ public class GoodsSpu implements VoObject {
         this.gmtModified = goodsSpuPo.getGmtModified();
     }
 
-    /**
-     * 用 vo 对象创建用来更新 spu 的 po 对象
-     *
-     * @param spuInputVo vo 对象
-     * @return po 对象
-     */
-    public GoodsSpuPo createUpdatePo(SpuInputVo spuInputVo) {
-        String nameEnc = spuInputVo.getName() == null ? null : spuInputVo.getName();
-        String descriptionEnc = spuInputVo.getDescription() == null ? null : spuInputVo.getDescription();
-        String specsEnc = spuInputVo.getSpecs() == null ? null : spuInputVo.getSpecs();
-
-        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
-
-        goodsSpuPo.setId(id);
-        goodsSpuPo.setName(nameEnc);
-        goodsSpuPo.setDetail(descriptionEnc);
-        goodsSpuPo.setSpec(specsEnc);
-        goodsSpuPo.setGmtModified(LocalDateTime.now());
-        return goodsSpuPo;
+    public GoodsSpu() {
     }
 
     /**
@@ -106,4 +88,17 @@ public class GoodsSpu implements VoObject {
     }
 
 
+    public GoodsSpuPo createUpdatePo(Long shopId, SpuInputVo spuInputVo) {
+        //在数据库中插入新建的商品spu的各项信息
+        GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
+        goodsSpuPo.setId(id);
+        goodsSpuPo.setName(spuInputVo.getName());
+        goodsSpuPo.setDetail(spuInputVo.getDescription());
+        goodsSpuPo.setSpec(spuInputVo.getSpecs());
+        goodsSpuPo.setShopId(shopId);
+        goodsSpuPo.setDisabled((byte) 4);
+        goodsSpuPo.setGmtModified(LocalDateTime.now());
+        goodsSpuPo.setGmtCreate(LocalDateTime.now());
+        return goodsSpuPo;
+    }
 }
