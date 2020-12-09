@@ -230,4 +230,32 @@ public class CouponController {
     public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo){
         return Common.decorateReturnObject(couponService.addCouponActivity(shopId, vo));
     }
+
+
+    /**
+     * 店家删除己方某优惠活动的某限定范围
+     *
+     * @param id
+     * @param shopId
+     * @return
+     */
+    @ApiOperation(value = "店家删除己方某优惠活动的某限定范围")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "Id", value = "skuId", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit
+    @DeleteMapping("/shops/{shopId}/couponskus/{id}")
+    public Object deleteCouponSku(@PathVariable Long id, @PathVariable Long shopId) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("deleteCoupon : shopId = " + shopId + " skuId = " + id);
+        }
+        ReturnObject returnObj = couponActivityService.deleteCouponSkuById(id,shopId);
+        return Common.decorateReturnObject(returnObj);
+    }
+
 }

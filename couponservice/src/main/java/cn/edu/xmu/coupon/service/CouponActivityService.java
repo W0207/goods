@@ -24,6 +24,10 @@ public class CouponActivityService {
 
     private static final Logger logger = LoggerFactory.getLogger(CouponActivityService.class);
 
+    public ReturnObject deleteCouponSkuById(Long id, Long shopId) {
+        return couponActivityDao.deleteCouponSkuById(id,shopId);
+    }
+
     public ReturnObject modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo) {
         return couponActivityDao.modifyCouponActivityByID(id,shopId,couponActivityModifyVo);
     }

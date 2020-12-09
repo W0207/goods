@@ -184,5 +184,39 @@ public class CouponControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
-    
+
+
+    /**
+     * 店家删除己方某优惠活动的某限定范围
+     * 权限足够
+     * @throws Exception
+     */
+    @Test
+    public void deleteCouponSku() throws Exception {
+        String token = creatTestToken(1111L, 123L, 100);
+        System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
+        String responseString = this.mvc.perform(delete("/coupon/shops/123/couponskus/1")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
+    }
+
+    /**
+     * 店家删除己方某优惠活动的某限定范围
+     * 权限不足
+     * @throws Exception
+     */
+    @Test
+    public void deleteCouponSku1() throws Exception {
+        String token = creatTestToken(1111L, 123L, 100);
+        System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
+        String responseString = this.mvc.perform(delete("/coupon/shops/12/couponskus/1")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
+    }
 }
