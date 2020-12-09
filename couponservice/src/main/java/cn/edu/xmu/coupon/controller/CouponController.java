@@ -1,7 +1,11 @@
 package cn.edu.xmu.coupon.controller;
 
 import cn.edu.xmu.coupon.model.bo.Coupon;
+import cn.edu.xmu.coupon.model.bo.CouponActivity;
+import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
+import cn.edu.xmu.coupon.model.vo.CouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponStateVo;
+import cn.edu.xmu.coupon.service.CouponActivityService;
 import cn.edu.xmu.coupon.service.CouponService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
@@ -14,6 +18,8 @@ import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +39,10 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
+
+
+    @Autowired
+    private CouponActivityService couponActivityService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -102,5 +112,36 @@ public class CouponController {
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize,id);
         return Common.getPageRetObject(returnObject);
     }
-
+    /**
+     * 管理员修改己方某优惠活动
+     *
+     * @param id:评论 id
+     *
+     * by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "管理员修改己方某优惠活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "CouponActivityModifyVo", name = "优惠活动信息", value = "可修改的优惠活动信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{shopid}/couponactivities/{id}")
+    public Object modifyCouponActivity(@PathVariable Long id, @Validated @RequestBody CouponActivityModifyVo couponActivityModifyVo, BindingResult bindingResult,@Depart Long shopId) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = "+id);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = "+id);
+            return returnObject;
+        }
+        ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id,shopId,couponActivityModifyVo);
+        return Common.decorateReturnObject(returnObj);
+    }
 }
