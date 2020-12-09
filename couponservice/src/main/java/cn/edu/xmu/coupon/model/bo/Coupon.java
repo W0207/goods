@@ -1,9 +1,11 @@
 package cn.edu.xmu.coupon.model.bo;
 
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +15,46 @@ import java.util.Map;
 @Data
 public class Coupon implements VoObject {
 
+    private Long id;
+
+    private Long customerId;
+
+    private String name;
+
+    private String couponSn;
+
+    private int state;
+
+    private LocalDateTime gmtCreate;
+
+    private LocalDateTime gmtModified;
+
+    private LocalDateTime beginTime;
+
+    private LocalDateTime endTime;
+
+    public Coupon(CouponPo couponPo) {
+
+        this.beginTime=couponPo.getBeginTime();
+        this.couponSn=couponPo.getCouponSn();
+        this.customerId=couponPo.getCustomerId();
+        this.endTime=couponPo.getEndTime();
+        this.beginTime=couponPo.getBeginTime();
+        this.id=couponPo.getId();
+        this.gmtCreate=couponPo.getGmtCreate();
+        this.gmtModified=couponPo.getGmtModified();
+        this.state=couponPo.getState();
+
+    }
+
+    public CouponPo createCouponUserPo() {
+
+        CouponPo couponPo=new CouponPo();
+        couponPo.setId(id);
+        couponPo.setState((byte) 2);
+        return couponPo;
+
+    }
 
     public enum State {
         UNPUBLISHED(0, "未领取"),
