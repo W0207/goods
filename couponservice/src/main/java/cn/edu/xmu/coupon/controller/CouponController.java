@@ -3,18 +3,18 @@ package cn.edu.xmu.coupon.controller;
 import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.vo.CouponStateVo;
 import cn.edu.xmu.coupon.service.CouponService;
+import cn.edu.xmu.ooad.annotation.Audit;
+import cn.edu.xmu.ooad.annotation.Depart;
+import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -42,6 +42,7 @@ public class CouponController {
      * 获得优惠券的所有状态
      *
      * @return Object
+     * by 菜鸡骞
      */
     @ApiOperation(value = "获得优惠券的所有状态")
     @ApiResponses({
@@ -57,4 +58,49 @@ public class CouponController {
         }
         return ResponseUtil.ok(new ReturnObject<List>(couponStateVos).getData());
     }
+
+    /**
+     * 查看上线的优惠活动列表
+     * @return Object
+     * by 菜鸡骞
+     */
+    @ApiOperation(value = "查看上线的优惠活动列表")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/couponactivities")
+    public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = false) Long shopId,@PathVariable(required = false) Long timeline) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId+ "    timeline =" + timeline);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        shopId = (shopId==null) ? null : shopId;
+        timeline = (timeline==null) ? 2 : timeline;
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId,timeline);
+        return Common.getPageRetObject(returnObject);
+    }
+
+
+    /**
+     * 查看本店下线的优惠活动列表
+     *
+     * by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "查看本店下线的优惠活动列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit // 需要认证
+    @GetMapping("/shops/{id}/couponactivities/invalid")
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize,@Depart Long id) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize,id);
+        return Common.getPageRetObject(returnObject);
+    }
+
 }

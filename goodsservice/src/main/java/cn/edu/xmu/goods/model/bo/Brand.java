@@ -97,8 +97,6 @@ public class Brand implements VoObject {
      */
     public BrandPo createAddPo(BrandInputVo brandVo) {
         BrandPo brandPo = new BrandPo();
-        brandPo.setGmtModified(LocalDateTime.now());
-        brandPo.setId(id);
         brandPo.setGmtCreate(LocalDateTime.now());
         brandPo.setName(brandVo.getName());
         brandPo.setDetail(brandVo.getDetail());

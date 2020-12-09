@@ -316,10 +316,14 @@ public class GoodsDao {
         return returnObject;
     }
 
-
-    //修改部分信息
+    /**
+     * 修改部分信息
+     *
+     * @param goodsSpuPo
+     * @return
+     */
     public ReturnObject modifySpuBySpuPoId(GoodsSpuPo goodsSpuPo) {
-        ReturnObject returnObject = null;
+        ReturnObject returnObject;
         int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
         if (ret == 0) {
             logger.info("spuId = " + goodsSpuPo.getId() + " 不存在");
@@ -467,13 +471,12 @@ public class GoodsDao {
      * 管理员新增品牌
      *
      * @param brandInputVo 品牌详细信息
-     * @return 返回对象 ReturnObject<Object>
+     * @return BrandPo
      */
     public BrandPo addBrandById(BrandInputVo brandInputVo) {
         Brand brand = new Brand();
         BrandPo brandPo = brand.createAddPo(brandInputVo);
         int ret = brandPoMapper.insertSelective(brandPo);
-        ReturnObject<Object> returnObject;
         if (ret == 0) {
             //检查新增是否成功
             brandPo = null;

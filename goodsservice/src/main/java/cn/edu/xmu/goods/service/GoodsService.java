@@ -10,11 +10,13 @@ import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import cn.edu.xmu.ininterface.service.Ingoodservice;
 
 /**
  * @author Abin
  */
 @Service
-public class GoodsService {
+@DubboService(version = "0.0.1")
+public class GoodsService implements Ingoodservice{
 
     @Autowired
     GoodsDao goodsDao;
@@ -49,6 +53,30 @@ public class GoodsService {
 
     public ReturnObject<PageInfo<VoObject>> findAllBrand(Integer page, Integer pageSize) {
         return goodsDao.findAllBrand(page, pageSize);
+    }
+
+
+    @Override
+    public Object echo2(Object message) {
+        System.out.println("aaa");
+        System.out.println("bbbb");
+        return "bbbbb";
+    }
+
+    @Override
+    public SkuToPresaleVo presaleFindSku(Long id) {
+        GoodsSkuPo goodsSkuPo=goodsDao.findGoodsSkuById(id);
+        if(goodsSkuPo==null)return null;
+        SkuPresaleVo skuPresaleVo = new SkuPresaleVo(goodsSkuPo);
+        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo();
+        skuToPresaleVo.setId(skuPresaleVo.getId());
+        skuToPresaleVo.setName(skuPresaleVo.getName());
+        skuToPresaleVo.setGoodsSn(skuPresaleVo.getGoodsSn());
+        skuToPresaleVo.setImageUrl(skuPresaleVo.getImageUrl());
+        skuToPresaleVo.setState(skuPresaleVo.getState());
+        skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());
+        skuToPresaleVo.setGmtModified(skuPresaleVo.getGmtModified());
+        return skuToPresaleVo;
     }
 
     /**
@@ -82,7 +110,7 @@ public class GoodsService {
     public ReturnObject<Object> addBrand(BrandInputVo brandInputVo) {
         ReturnObject returnObject;
         BrandPo brandPo = goodsDao.addBrandById(brandInputVo);
-        if (brandInputVo != null) {
+        if (brandPo != null) {
             returnObject = new ReturnObject(new Brand(brandPo));
             logger.debug("addBrand : " + returnObject);
         } else {
@@ -90,7 +118,6 @@ public class GoodsService {
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         return returnObject;
-
     }
 
     /**
@@ -265,15 +292,17 @@ public class GoodsService {
     }
 
     /**
+     * spu加入品牌
+     *
      * @param shopId
      * @param spuId
      * @param id
      * @return
      */
     public ReturnObject spuAddBrand(Long shopId, Long spuId, Long id) {
-        ReturnObject returnObject = null;
+        ReturnObject returnObject;
         GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
-        if (tempSpu == null) {
+        if (tempSpu == null || tempSpu.getDisabled() == 0) {
             logger.debug("findGoodsSkuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
@@ -292,36 +321,6 @@ public class GoodsService {
             } else {
                 logger.debug("spuAddBrand shopId和这个spu的里的shopId不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-        }
-        return returnObject;
-    }
-
-    /**
-     * spu增加品牌
-     *
-     * @param shopId
-     * @param spuId
-     * @param id
-     * @return
-     */
-    public ReturnObject spuDeleteBrand(Long shopId, Long spuId, Long id) {
-        ReturnObject returnObject = null;
-        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
-        System.out.println(tempSpu.toString());
-        if (tempSpu == null) {
-            logger.debug("findGoodsSPuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
-        } else {
-            if (tempSpu.getShopId().equals(shopId)) {
-                tempSpu.setGmtModified(LocalDateTime.now());
-                tempSpu.setBrandId(null);
-                returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
-                tempSpu = goodsDao.findGoodsSpuById(spuId);
-                System.out.println(tempSpu.toString());
-            } else {
-                logger.debug("spuDeleteBrand shopId和这个spu的里的shopId不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuDeleteBrand shopId和这个spu的里的shopId不一致"));
             }
         }
         return returnObject;
@@ -355,7 +354,6 @@ public class GoodsService {
             logger.debug("uploadSkuImg : failed");
             return goodsSkuReturnObject;
         }
-
         Long shopid = goodsDao.findGoodsSpuById(goodsDao.findGoodsSkuById(id).getGoodsSpuId()).getShopId();
         if (shopid.equals(shopId)) {
             if (goodsSkuReturnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
@@ -516,41 +514,72 @@ public class GoodsService {
      * @return by 宇
      */
     public ReturnObject spuAddCategories(Long shopId, Long spuId, Long id) {
-        ReturnObject returnObject = null;
+        ReturnObject returnObject;
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
-        if (goodsSpuPo == null) {
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
             logger.debug("findGoodsSPuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "SpuId不存在");
         } else {
             if (!shopId.equals(goodsSpuPo.getShopId())) {
                 logger.debug("spu增加种类的时候，shopid不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，shopid不一致"));
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");
             } else {
                 GoodsCategoryPo goodsCategoryPo = goodsDao.getCategoryByid(id);
                 if (goodsCategoryPo == null) {
                     logger.debug("spu增加种类的时候，CategoriesId不存在");
-                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，shopid不一致"));
+                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");
                 } else {
                     //当spu没有种类的时候，直接添加种类
-                    if (goodsSpuPo.getCategoryId() == 0) {
+                    if (goodsSpuPo.getCategoryId() == null) {
                         goodsSpuPo.setGmtModified(LocalDateTime.now());
                         goodsSpuPo.setCategoryId(id);
                         returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
                     }
                     //spu有种类了
                     else {
-                        if (goodsCategoryPo.getPid() == 0) {
-                            //不是二级种类，不予添加
-                            logger.debug("spu增加种类的时候，CategoriesId不是二级种类");
-                            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，CategoriesId不是二级种类"));
+                        if (goodsCategoryPo.getPid() == null) {
+                            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，CategoriesId不是二级种类");
                         } else {
-                            //是二级目录，更改数据库
-                            goodsSpuPo.setGmtModified(LocalDateTime.now());
-                            goodsSpuPo.setCategoryId(id);
-                            returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
+                            if (!goodsCategoryPo.getPid().equals(goodsSpuPo.getCategoryId())) {
+                                //不是二级种类，不予添加
+                                logger.debug("spu增加种类的时候，CategoriesId不是二级种类");
+                                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，CategoriesId不是二级种类");
+                            } else {
+                                //是二级目录，更改数据库
+                                goodsSpuPo.setGmtModified(LocalDateTime.now());
+                                goodsSpuPo.setCategoryId(id);
+                                returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
+                            }
                         }
                     }
                 }
+            }
+        }
+        return returnObject;
+    }
+
+    /**
+     * spu删除品牌
+     *
+     * @param shopId
+     * @param spuId
+     * @param id
+     * @return
+     */
+    public ReturnObject spuDeleteBrand(Long shopId, Long spuId, Long id) {
+        ReturnObject returnObject;
+        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
+        if (tempSpu == null || tempSpu.getDisabled() == 0) {
+            logger.debug("findGoodsSPuById : Not Found!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "SpuId不存在");
+        } else {
+            if (tempSpu.getShopId().equals(shopId) && tempSpu.getBrandId().equals(id)) {
+                tempSpu.setGmtModified(LocalDateTime.now());
+                tempSpu.setBrandId(null);
+                returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
+            } else {
+                logger.debug("spuDeleteBrand shopId和这个spu的里的shopId不一致");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuDeleteBrand shopId和这个spu的里的shopId不一致");
             }
         }
         return returnObject;
@@ -565,25 +594,19 @@ public class GoodsService {
      * @return
      */
     public ReturnObject spuDeleteCategories(Long shopId, Long spuId, Long id) {
-        ReturnObject returnObject = null;
-        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(spuId);
-        if (goodsSpuPo == null) {
+        ReturnObject returnObject;
+        GoodsSpuPo tempSpu = goodsDao.findGoodsSpuById(spuId);
+        if (tempSpu == null || tempSpu.getDisabled() == 0) {
             logger.debug("findGoodsSPuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("SpuId不存在"));
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "SpuId不存在");
         } else {
-            if (!shopId.equals(goodsSpuPo.getShopId())) {
-                logger.debug("spu删除种类的时候，shopid不一致");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，shopid不一致"));
+            if (tempSpu.getShopId().equals(shopId) && tempSpu.getCategoryId().equals(id)) {
+                tempSpu.setGmtModified(LocalDateTime.now());
+                tempSpu.setCategoryId(null);
+                returnObject = goodsDao.modifySpuBySpuPo(tempSpu);
             } else {
-                if (!id.equals(goodsSpuPo.getCategoryId())) {
-                    logger.debug("spu删除种类的时候，CategoriesId不一致");
-                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("spuAddCategories，CategoriesId不一致"));
-                } else {
-                    logger.info("spuDeleteCategories");
-                    goodsSpuPo.setCategoryId(0L);
-                    goodsSpuPo.setGmtModified(LocalDateTime.now());
-                    returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
-                }
+                logger.debug("spuDeleteBrand shopId和这个spu的里的shopId不一致");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuDeleteBrand shopId和这个spu的里的shopId不一致");
             }
         }
         return returnObject;
