@@ -9,6 +9,7 @@ import cn.edu.xmu.coupon.service.CouponActivityService;
 import cn.edu.xmu.coupon.service.CouponService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
+import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -115,7 +116,7 @@ public class CouponController {
     /**
      * 管理员修改己方某优惠活动
      *
-     * @param id:评论 id
+     * @param id:活动id
      *
      * by 菜鸡骞
      * @return Object
@@ -142,6 +143,32 @@ public class CouponController {
             return returnObject;
         }
         ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id,shopId,couponActivityModifyVo);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     * 买家使用自己某优惠券
+     *
+     * @param id:优惠券 id
+     *
+     * by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "买家使用自己某优惠券")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/{id}")
+    public Object useCoupon(@PathVariable Long id, @LoginUser Long userId) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("userCoupon : userId = " + userId + " couponId = " + id);
+        }
+        ReturnObject returnObj = couponService.useCouponByCouponId(id,userId);
         return Common.decorateReturnObject(returnObj);
     }
 }

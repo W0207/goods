@@ -40,7 +40,7 @@ public class CouponActivityDao implements InitializingBean{
         CouponActivity couponActivity = new CouponActivity(couponActivityPo);
         CouponActivityPo po = couponActivity.createModifyPo(couponActivityModifyVo);
         couponActivityPoMapper.updateByPrimaryKeySelective(po);
-        logger.info("commentid = " + id + " 的信息已更新");
+        logger.info("couponActivityId = " + id + " 的信息已更新");
         return new ReturnObject<>();
     }
 

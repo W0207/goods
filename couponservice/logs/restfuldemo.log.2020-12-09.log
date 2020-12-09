@@ -1215,3 +1215,48 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2020-12-09 09:53:57.927 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
 2020-12-09 09:53:57.938 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - modifyCouponActivity : shopId = 123 vo = CouponActivityModifyVo(name=啊这, quantity=20, begin_time=null, end_time=null, strategy=null)id = 1
 2020-12-09 09:54:26.029 [main] INFO  cn.edu.xmu.coupon.dao.CouponActivityDao - commentid = 1 的信息已更新
+2020-12-09 10:20:54.001 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTAyMDUzOUhPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4MDU1MywidXNlcklkIjoxLCJpYXQiOjE2MDc0ODA0NTN9.RnnzMR5pX6NK1_e8OF2X_D2KXpNO44nC1Qc3AhcBsMc
+2020-12-09 10:20:54.225 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.modifyCouponActivity(Long,CouponActivityModifyVo,BindingResult,Long))
+2020-12-09 10:20:54.256 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/shops/123/couponactivities/1
+2020-12-09 10:20:54.256 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =123
+2020-12-09 10:20:54.257 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-09 10:20:54.263 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 10:20:54.272 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - modifyCouponActivity : shopId = 123 vo = CouponActivityModifyVo(name=啊这, quantity=20, begin_time=null, end_time=null, strategy=null)id = 1
+2020-12-09 10:20:54.395 [main] INFO  cn.edu.xmu.coupon.dao.CouponActivityDao - commentid = 1 的信息已更新
+2020-12-09 10:25:30.121 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTAyNTMwMEZRIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4MDgzMCwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODA3MzB9.Y69Di0XnFv0ZAIiTPtkgY6Z4fZuwcg8V-rE2l3hAqxs
+2020-12-09 10:25:30.197 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.showOwnInvalidcouponacitvities(Integer,Integer,Long))
+2020-12-09 10:25:30.231 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/shops/123/couponactivities/invalid
+2020-12-09 10:25:30.231 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - did =123
+2020-12-09 10:25:30.231 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - success match Id!
+2020-12-09 10:25:30.250 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 10:25:30.265 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - show: page = null  pageSize =null userid=123
+2020-12-09 11:13:11.964 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTExMzExOVdSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4MzY5MSwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODM1OTF9.W7iDD3v4Kyz3f4y0KRJgMYOUJeDK8JPCQzVW8Hq6rH4
+2020-12-09 11:13:38.215 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTExMzM4MTVTIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4MzcxOCwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODM2MTh9.jkmfuMaZCJkgEfwiJsWubeq5bD6eol9vaeB2EaMyyYo
+2020-12-09 11:13:38.301 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.useCoupon(Long,Long))
+2020-12-09 11:13:38.336 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/1
+2020-12-09 11:13:38.342 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 11:13:38.352 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - userCoupon : userId = 1 couponId = 1
+2020-12-09 11:13:38.435 [main] INFO  cn.edu.xmu.coupon.dao.CouponDao - 优惠券id= 1 不存在
+2020-12-09 11:25:16.929 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTEyNTE2OE9QIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4NDQxNiwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODQzMTZ9.w8F_i2a5vrcmkpm6cNmVELlJesNLlVCGK8j87Hjs_4s
+2020-12-09 11:25:17.007 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.useCoupon(Long,Long))
+2020-12-09 11:25:17.044 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/1
+2020-12-09 11:25:17.050 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 11:25:17.059 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - userCoupon : userId = 1 couponId = 1
+2020-12-09 11:25:17.207 [main] INFO  cn.edu.xmu.coupon.dao.CouponDao - couponId = 1 的优惠券已使用
+2020-12-09 11:25:42.630 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTEyNTQyNVM2IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4NDQ0MiwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODQzNDJ9._2jvw3ILwVcVwIhl024c1tZdml1WrJgOh-Q9bUkihNE
+2020-12-09 11:25:42.721 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.useCoupon(Long,Long))
+2020-12-09 11:25:42.761 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/1
+2020-12-09 11:25:42.769 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 11:25:42.795 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - userCoupon : userId = 1 couponId = 1
+2020-12-09 11:25:43.005 [main] INFO  cn.edu.xmu.coupon.dao.CouponDao - couponId = 1 的优惠券已使用
+2020-12-09 11:27:46.374 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTEyNzQ2M0VRIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4NDU2NiwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODQ0NjZ9.3aw3CiYYoAWbr7Fwb7FJqniuYy4XGn8_4RR61KU0oJk
+2020-12-09 11:27:46.457 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.useCoupon(Long,Long))
+2020-12-09 11:27:46.501 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/1
+2020-12-09 11:27:46.509 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 11:27:46.520 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - userCoupon : userId = 1 couponId = 1
+2020-12-09 11:27:46.679 [main] INFO  cn.edu.xmu.coupon.dao.CouponDao - couponId = 1 的优惠券已使用
+2020-12-09 11:29:57.040 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA5MTEyOTU2OUJSIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjoxMjMsImV4cCI6MTYwNzQ4NDY5NiwidXNlcklkIjoxLCJpYXQiOjE2MDc0ODQ1OTZ9.SFUFkjHV0qBoGjLIlVx_EcBLhf1WfDyAs8ug7Xrg3jg
+2020-12-09 11:29:57.106 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.coupon.controller.CouponController.useCoupon(Long,Long))
+2020-12-09 11:29:57.161 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /coupon/3
+2020-12-09 11:29:57.174 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=123
+2020-12-09 11:29:57.184 [main] DEBUG cn.edu.xmu.coupon.controller.CouponController - userCoupon : userId = 1 couponId = 3

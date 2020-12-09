@@ -24,4 +24,8 @@ public class CouponService {
     public ReturnObject<PageInfo<VoObject>> showOwnInvalidcouponacitvitiesByid(Integer page, Integer pageSize, Long id) {
         return couponDao.showOwnInvalidcouponacitvitiesByid(page,pageSize,id);
     }
+
+    public ReturnObject useCouponByCouponId(Long id, Long userId) {
+        return couponDao.useCouponByCouponId(id,userId);
+    }
 }

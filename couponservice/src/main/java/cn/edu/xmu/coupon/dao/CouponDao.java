@@ -1,9 +1,12 @@
 package cn.edu.xmu.coupon.dao;
 
 import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
+import cn.edu.xmu.coupon.mapper.CouponPoMapper;
+import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
+import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -25,6 +28,10 @@ public class CouponDao {
 
     @Autowired
     private CouponActivityPoMapper couponActivityPoMapper;
+
+    @Autowired
+    private CouponPoMapper couponPoMapper;
+
 
     private static final Logger logger = LoggerFactory.getLogger(CouponDao.class);
 
@@ -108,5 +115,26 @@ public class CouponDao {
             logger.error("showOwnInvalidcouponacitvitiesByid: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
+    }
+
+    public ReturnObject useCouponByCouponId(Long id, Long userId) {
+        CouponPo couponPo = couponPoMapper.selectByPrimaryKey(id);
+        if (couponPo == null) {
+            logger.info("优惠券id= " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(!couponPo.getCustomerId().equals(userId))
+        {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        if(couponPo.getState()!=1)
+        {
+            return new ReturnObject<>(ResponseCode.COUPON_STATENOTALLOW);
+        }
+        Coupon coupon = new Coupon(couponPo);
+        CouponPo po = coupon.createCouponUserPo();
+        couponPoMapper.updateByPrimaryKeySelective(po);
+        logger.info("couponId = " + id + " 的优惠券已使用");
+        return new ReturnObject<>();
     }
 }
