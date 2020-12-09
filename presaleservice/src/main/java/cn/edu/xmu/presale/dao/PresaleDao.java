@@ -168,7 +168,7 @@ public class PresaleDao {
         }
         List<PresaleActivityPo> presaleActivityPos = presaleActivityPoMapper.selectByExample(presaleActivityPoExample);
         if(presaleActivityPos.equals(null)){
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"没有对于shopID和skuID的优惠活动")；
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"没有对于shopID和skuID的优惠活动");
         } else {
             List<PresaleActivityRetVo> presaleActivityRetVos = new ArrayList<>(presaleActivityPos.size());
             for(PresaleActivityPo po: presaleActivityPos){

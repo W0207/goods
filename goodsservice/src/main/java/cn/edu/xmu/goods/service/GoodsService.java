@@ -71,7 +71,7 @@ public class GoodsService implements Ingoodservice{
         SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo();
         skuToPresaleVo.setId(skuPresaleVo.getId());
         skuToPresaleVo.setName(skuPresaleVo.getName());
-        skuToPresaleVo.setGoodsSn(skuPresaleVo.getGoodsSn());
+        skuToPresaleVo.setGoodsSn(skuPresaleVo.getSkuSn());
         skuToPresaleVo.setImageUrl(skuPresaleVo.getImageUrl());
         skuToPresaleVo.setState(skuPresaleVo.getState());
         skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());
