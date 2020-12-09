@@ -2,7 +2,7 @@ package cn.edu.xmu.presale.controller;
 
 import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
-import cn.edu.xmu.ininterface.service.model.vo.ShopToPresaleVo;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -98,13 +98,13 @@ public class PresaleController {
             //Object returnObject = goodservice.echo2("123");
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuID不存在"));
         }else {
-            ShopToPresaleVo shopToPresaleVo = inShopService.presaleFindShop(shopId);
-            if(shopToPresaleVo==null){
+            ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
+            if(shopToAllVo ==null){
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("shopID不存在"));
             }
             else {
                 PresaleActivityRetVo presaleActivityRetVo= presaleService.AddPresaleActivity(presaleActivityVo);
-                presaleActivityRetVo.setShopToPresaleVo(shopToPresaleVo);
+                presaleActivityRetVo.setShopToAllVo(shopToAllVo);
                 presaleActivityRetVo.setSpuToPresaleVo(spuToPresaleVo);
                 returnObject = new ReturnObject(presaleActivityRetVo);
             }

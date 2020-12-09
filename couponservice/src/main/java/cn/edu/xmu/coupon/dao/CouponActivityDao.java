@@ -1,10 +1,13 @@
 package cn.edu.xmu.coupon.dao;
 
 import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
+import cn.edu.xmu.coupon.mapper.CouponSkuPoMapper;
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
+import cn.edu.xmu.coupon.model.bo.CouponSku;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
-import cn.edu.xmu.coupon.model.vo.CouponActivityVo;
+import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
@@ -23,6 +26,8 @@ public class CouponActivityDao implements InitializingBean{
     @Autowired
     CouponActivityPoMapper couponActivityPoMapper;
 
+    @Autowired
+    CouponSkuPoMapper couponSkuPoMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(CouponActivityDao.class);
 
@@ -47,5 +52,19 @@ public class CouponActivityDao implements InitializingBean{
     @Override
     public void afterPropertiesSet() throws Exception {
 
+    }
+
+    public CouponSkuPo rangeForCouponActivityById(Long id, Long shopId, CouponActivitySkuInputVo couponActivitySkuInputVo) {
+        CouponSku couponSku = new CouponSku();
+        CouponSkuPo couponSkuPo = couponSku.createAddCouponActivityPo(couponActivitySkuInputVo,id,shopId);
+
+        int ret = couponSkuPoMapper.insertSelective(couponSkuPo);
+        if (ret == 0) {
+            //检查新增是否成功
+            couponSkuPo = null;
+        } else {
+            logger.info("新增范围成功");
+        }
+        return couponSkuPo;
     }
 }

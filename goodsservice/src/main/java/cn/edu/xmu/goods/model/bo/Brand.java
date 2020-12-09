@@ -100,6 +100,7 @@ public class Brand implements VoObject {
         brandPo.setGmtCreate(LocalDateTime.now());
         brandPo.setName(brandVo.getName());
         brandPo.setDetail(brandVo.getDetail());
+        brandPo.setGmtModified(LocalDateTime.now());
         return brandPo;
     }
 }

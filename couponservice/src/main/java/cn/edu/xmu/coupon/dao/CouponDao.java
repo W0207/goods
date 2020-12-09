@@ -7,12 +7,17 @@ import cn.edu.xmu.coupon.model.bo.CouponActivity;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponPo;
+import cn.edu.xmu.coupon.model.vo.AddCouponActivityRetVo;
+import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
+import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,9 @@ import java.util.List;
 
 @Repository
 public class CouponDao {
+
+    @DubboReference(version = "0.0.1", check = false)
+    private InShopService inShopService;
 
     @Autowired
     private CouponActivityPoMapper couponActivityPoMapper;
@@ -136,5 +144,37 @@ public class CouponDao {
         couponPoMapper.updateByPrimaryKeySelective(po);
         logger.info("couponId = " + id + " 的优惠券已使用");
         return new ReturnObject<>();
+    }
+
+
+    /**
+     * by 宇
+     * 新建己方优惠活动
+     * @param shopId
+     * @param addCouponActivityVo
+     * @return
+     */
+    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo){
+        ReturnObject returnObject= null;
+        ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
+        System.out.println(shopToAllVo.getName());
+        if(shopToAllVo.equals(null)){
+            returnObject= new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("新建优惠活动shopId不存在"));
+        }
+        else {
+            CouponActivityPo po= addCouponActivityVo.createPo();
+            po.setGmtCreate(LocalDateTime.now());
+            int retId = couponActivityPoMapper.insert(po);
+            if(retId==0){
+                returnObject = new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库发生错误"));
+            }
+            else {
+                AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
+                vo.setShop(shopToAllVo);
+                vo.setId(Long.parseLong(String.valueOf(retId)));
+                returnObject = new ReturnObject(vo);
+            }
+        }
+        return returnObject;
     }
 }
