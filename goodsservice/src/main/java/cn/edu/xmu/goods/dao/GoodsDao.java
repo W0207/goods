@@ -846,4 +846,35 @@ public class GoodsDao {
         spuRetVo.setSkuList(simpleSkuVos);
         return spuRetVo;
     }
+    /**
+     * 新建sku
+     *
+     * @param spuId
+     * @param shopId
+     * @param skuCreatVo
+     * @return GoodsSkuPo
+     * @author zhai
+     */
+    public SkuOutputVo creatSku(Long spuId, Long shopId ,SkuCreatVo skuCreatVo) {
+
+        GoodsSpuPo goodsSpuPo=goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
+
+        if(goodsSpuPo.getShopId().equals(shopId)||shopId==0){
+            GoodsSku goodsSku=new GoodsSku();
+            GoodsSkuPo po = goodsSku.createPo(skuCreatVo,spuId);
+            int ret = goodsSkuPoMapper.insertSelective(po);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("spuId :"+spuId+" 插入sku失败");
+            } else {
+                logger.info("spuId = " + spuId + " 插入sku成功");
+            }
+            SkuOutputVo skuOutputVo=new SkuOutputVo(po);
+            return skuOutputVo;
+        }
+        logger.error("无权限修改本商品的信息");
+        SkuOutputVo skuOutputVo=null;
+        return skuOutputVo;
+    }
 }
