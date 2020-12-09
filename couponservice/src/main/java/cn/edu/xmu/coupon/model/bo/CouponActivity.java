@@ -3,6 +3,7 @@ package cn.edu.xmu.coupon.model.bo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
+import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
@@ -63,6 +64,10 @@ public class CouponActivity implements VoObject {
         this.state=po.getState();
         this.strategy=po.getStrategy();
         this.valid_term=po.getValidTerm();
+    }
+
+    public CouponActivity() {
+
     }
 
     public Long getId() {
@@ -149,4 +154,5 @@ public class CouponActivity implements VoObject {
         couponActivityPo.setId(id);
         return couponActivityPo;
     }
+
 }
