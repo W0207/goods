@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = CouponServiceApplication.class)
 @AutoConfigureMockMvc
@@ -40,6 +42,39 @@ public class CouponControllerTest {
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未领取\", \"code\": 0 }, { \"name\": \"已领取\", \"code\": 1 }, { \"name\": \"已使用\", \"code\": 2 }, { \"name\": \"已失效\", \"code\": 3 }], \"errmsg\": \"成功\" }";
         System.out.println(responseString);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 查看上线的优惠活动列表
+     */
+
+    @Test
+    public void showOwncouponactivities() throws Exception {
+        String responseString = this.mvc.perform(get("/coupon/couponactivities"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+
+    /**
+     * 查看本店下线的优惠活动列表
+     */
+
+    @Test
+    public void showOwnInvalidcouponacitvitiesByid() throws Exception {
+
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(get("/coupon/shops/123/couponactivities/invalid").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
 }

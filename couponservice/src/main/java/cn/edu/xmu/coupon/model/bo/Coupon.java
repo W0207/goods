@@ -1,5 +1,6 @@
 package cn.edu.xmu.coupon.model.bo;
 
+import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.ooad.model.VoObject;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.Map;
  */
 @Data
 public class Coupon implements VoObject {
+
 
     public enum State {
         UNPUBLISHED(0, "未领取"),
