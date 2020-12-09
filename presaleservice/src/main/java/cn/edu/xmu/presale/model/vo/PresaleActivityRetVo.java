@@ -1,6 +1,6 @@
 package cn.edu.xmu.presale.model.vo;
 
-import cn.edu.xmu.ininterface.service.model.vo.ShopToPresaleVo;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.presale.model.po.PresaleActivityPo;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class PresaleActivityRetVo {
 
     private Byte state;
 
-    private ShopToPresaleVo shopToPresaleVo;
+    private ShopToAllVo shopToAllVo;
 
     private SkuToPresaleVo spuToPresaleVo;
 
@@ -50,12 +50,12 @@ public class PresaleActivityRetVo {
         this.state = presaleActivityPo.getState();
     }
 
-    public ShopToPresaleVo getShopToPresaleVo() {
-        return shopToPresaleVo;
+    public ShopToAllVo getShopToAllVo() {
+        return shopToAllVo;
     }
 
-    public void setShopToPresaleVo(ShopToPresaleVo shopToPresaleVo) {
-        this.shopToPresaleVo = shopToPresaleVo;
+    public void setShopToAllVo(ShopToAllVo shopToAllVo) {
+        this.shopToAllVo = shopToAllVo;
     }
 
     public SkuToPresaleVo getSpuToPresaleVo() {

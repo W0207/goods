@@ -2,7 +2,7 @@ package cn.edu.xmu.ininterface.service.model.vo;
 
 import java.io.Serializable;
 
-public class ShopToPresaleVo implements Serializable {
+public class ShopToAllVo implements Serializable {
     private Long id;
     private String name;
 
