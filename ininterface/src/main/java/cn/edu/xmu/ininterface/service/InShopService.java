@@ -1,7 +1,7 @@
 package cn.edu.xmu.ininterface.service;
 
-import cn.edu.xmu.ininterface.service.model.vo.ShopToPresaleVo;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 
 public interface InShopService {
-    ShopToPresaleVo presaleFindShop(Long id);
+    ShopToAllVo presaleFindShop(Long id);
 }
