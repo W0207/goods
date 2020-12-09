@@ -6,12 +6,11 @@ import cn.edu.xmu.coupon.mapper.CouponPoMapper;
 import cn.edu.xmu.coupon.mapper.CouponSkuPoMapper;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponPo;
-<<<<<<< HEAD
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
-=======
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.ooad.util.JacksonUtil;
->>>>>>> 39bbcccd23906dd00d50307405a199efe0c17814
+import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -146,7 +145,6 @@ public class CouponControllerTest {
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
-<<<<<<< HEAD
 
     /**
      * 管理员为己方某优惠券活动新增限定范围
@@ -165,7 +163,7 @@ public class CouponControllerTest {
         CouponSkuPo couponPo = couponSkuPoMapper.selectByPrimaryKey(1L);
         System.out.println(responseString);
     }
-=======
+
     @Test
     public void addCouponActivity() throws Exception {
         byte a= 10;
@@ -186,6 +184,5 @@ public class CouponControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
-
->>>>>>> 39bbcccd23906dd00d50307405a199efe0c17814
+    
 }

@@ -176,7 +176,6 @@ public class CouponController {
         return Common.decorateReturnObject(returnObj);
     }
 
-<<<<<<< HEAD
     /**
      * 优惠券退回
      *
@@ -221,7 +220,6 @@ public class CouponController {
         return returnObject;
     }
 
-=======
     @ApiOperation(value = "管理员新建己方优惠活动")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
@@ -232,5 +230,4 @@ public class CouponController {
     public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo){
         return Common.decorateReturnObject(couponService.addCouponActivity(shopId, vo));
     }
->>>>>>> 39bbcccd23906dd00d50307405a199efe0c17814
 }
