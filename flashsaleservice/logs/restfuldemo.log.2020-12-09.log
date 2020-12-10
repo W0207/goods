@@ -1,0 +1,16 @@
+2020-12-09 17:30:48.294 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - deleteFlashSaleSku: id = 0
+2020-12-09 17:30:48.347 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 该商品不存在或已被删除：FlashSaleItemId = 0
+2020-12-09 19:37:21.701 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - deleteFlashSale: id = 0
+2020-12-09 19:37:21.776 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleItemId = 0
+2020-12-09 20:15:12.808 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - updateflashsale: id = 0
+2020-12-09 20:15:12.891 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleItemId = 0
+2020-12-09 21:17:31.951 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - updateflashsale: id = 0
+2020-12-09 21:17:32.039 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleId = 0
+2020-12-09 22:06:39.132 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - addSKUofTopic id = 0
+2020-12-09 22:06:39.316 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleId = 0
+2020-12-09 22:14:03.315 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - deleteFlashSaleSku: id = 0
+2020-12-09 22:14:03.445 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 该商品不存在或已被删除：FlashSaleItemId = 0
+2020-12-09 22:14:45.253 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - addSKUofTopic id = 0
+2020-12-09 22:14:45.318 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleId = 0
+2020-12-09 22:18:24.122 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - addSKUofTopic id = 0
+2020-12-09 22:18:24.185 [main] INFO  cn.edu.xmu.flashsale.dao.FlashSaleDao - 秒杀活动不存在或已被删除：FlashSaleId = 0
