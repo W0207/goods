@@ -56,14 +56,6 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.findAllBrand(page, pageSize);
     }
 
-
-    @Override
-    public Object echo2(Object message) {
-        System.out.println("aaa");
-        System.out.println("bbbb");
-        return "bbbbb";
-    }
-
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
@@ -127,45 +119,6 @@ public class GoodsService implements Ingoodservice {
             logger.debug("addBrand : " + returnObject);
         } else {
             logger.debug("addBrand : fail!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 获得sku的详细信息
-     *
-     * @param `id`
-     * @return ReturnObject
-     */
-    public ReturnObject findGoodsSkuById(Long id) {
-        ReturnObject returnObject;
-        GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-        if (goodsSkuPo != null) {
-            returnObject = new ReturnObject<>(new GoodsSku(goodsSkuPo));
-            logger.debug("findGoodsSkuById : " + returnObject);
-        } else {
-            logger.debug("findGoodsSkuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 获得一条商品spu的详细信息
-     *
-     * @param `id`
-     * @return ReturnObject
-     */
-
-    public ReturnObject findGoodsSpuById(Long id) {
-        ReturnObject returnObject;
-        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
-        if (goodsSpuPo != null) {
-            returnObject = new ReturnObject(new GoodsSpu(goodsSpuPo));
-            logger.debug("findGoodsSpuById : " + returnObject);
-        } else {
-            logger.debug("findGoodsSpuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         return returnObject;

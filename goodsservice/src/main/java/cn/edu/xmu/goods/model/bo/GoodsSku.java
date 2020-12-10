@@ -96,7 +96,7 @@ public class GoodsSku implements VoObject, Serializable {
         this.imageUrl = goodsSkuPo.getImageUrl();
         this.inventory = goodsSkuPo.getInventory();
         this.detail = goodsSkuPo.getDetail();
-        this.disabled = goodsSkuPo.getDisabled() == 0 ? true : false;
+        this.disabled = goodsSkuPo.getDisabled() == 0 ? false : true;
         this.gmtCreate = goodsSkuPo.getGmtCreate();
         this.gmtModified = goodsSkuPo.getGmtModified();
     }
@@ -127,7 +127,7 @@ public class GoodsSku implements VoObject, Serializable {
         this.imageUrl = po.getImageUrl();
         this.inventory = po.getInventory();
         this.detail = po.getDetail();
-        this.disabled = po.getDisabled() == 0 ? true : false;
+        this.disabled = po.getDisabled() == 0 ? false : true;
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
     }
@@ -241,9 +241,8 @@ public class GoodsSku implements VoObject, Serializable {
         goodsSkuPo.setWeight(weightEnc);
         goodsSkuPo.setConfiguration(configurationEnc);
         goodsSkuPo.setGmtCreate(LocalDateTime.now());
-        goodsSkuPo.setGmtModified(LocalDateTime.now());
         goodsSkuPo.setGoodsSpuId(spuId);
-        goodsSkuPo.setDisabled((byte) 4);
+        goodsSkuPo.setDisabled((byte) 0);
         goodsSkuPo.setSkuSn(skusnEnc);
         return goodsSkuPo;
     }

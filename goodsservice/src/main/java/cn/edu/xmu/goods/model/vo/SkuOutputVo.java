@@ -48,7 +48,7 @@ public class SkuOutputVo {
         this.originalPrice = originalPriceEnc;
         this.inventory = inventoryEnc;
         this.price = originalPriceEnc;
-        this.disabled = goodsSkuPo.getDisabled() == 0;
+        this.disabled = goodsSkuPo.getDisabled() == 0 ? false : true;
     }
 
     public SkuOutputVo() {

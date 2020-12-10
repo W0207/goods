@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class SkuToPresaleVo implements Serializable {
+
     private Long id;
 
     private String name;
