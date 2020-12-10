@@ -93,22 +93,7 @@ public class PresaleController {
     {
         System.out.println("aaaaa");
         ReturnObject returnObject = null;
-        SkuToPresaleVo spuToPresaleVo = goodservice.presaleFindSku(id);
-        if(spuToPresaleVo==null) {
-            //Object returnObject = goodservice.echo2("123");
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuID不存在"));
-        }else {
-            ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-            if(shopToAllVo ==null){
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("shopID不存在"));
-            }
-            else {
-                PresaleActivityRetVo presaleActivityRetVo= presaleService.AddPresaleActivity(presaleActivityVo);
-                presaleActivityRetVo.setShopToAllVo(shopToAllVo);
-                presaleActivityRetVo.setSpuToPresaleVo(spuToPresaleVo);
-                returnObject = new ReturnObject(presaleActivityRetVo);
-            }
-        }
+        returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -196,6 +181,26 @@ public class PresaleController {
     {
         ReturnObject returnObject = presaleService.queryPresaleofSKU(shopId, id, state);
         return  Common.decorateReturnObject(returnObject);
+    }
+
+    @ApiOperation(value = "管理员上线预售活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
+    })
+    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    public Object presaleOnShelves(@PathVariable Long shopId,@PathVariable Long id){
+        return Common.decorateReturnObject(presaleService.presaleOnShelves(shopId, id));
+    }
+
+    @ApiOperation(value = "管理员下线预售活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
+    })
+    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    public Object presaleOffShelves(@PathVariable Long shopId,@PathVariable Long id){
+        return Common.decorateReturnObject(presaleService.presaleOffShelves(shopId, id));
     }
 
 }

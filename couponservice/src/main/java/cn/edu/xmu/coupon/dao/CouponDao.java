@@ -161,9 +161,14 @@ public class CouponDao {
      * @return
      */
     public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo){
+        if(!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"addCouponActivity,活动结束时间小于开始时间");
+        }
+        if(addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime())||addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"addCouponActivity,优惠时间不在活动期间");
+        }
         ReturnObject returnObject= null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-        System.out.println(shopToAllVo.getName());
         try {
             if (shopToAllVo.equals(null)) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("新建优惠活动shopId不存在"));
