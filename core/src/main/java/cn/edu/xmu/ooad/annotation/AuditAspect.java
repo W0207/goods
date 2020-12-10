@@ -28,8 +28,7 @@ import java.util.List;
 /**
  * @auther mingqiu
  * @date 2020/6/26 下午2:16
- *      modifiedBy Ming Qiu 2020/11/3 22:59
- *
+ * modifiedBy Ming Qiu 2020/11/3 22:59
  */
 @Aspect
 @Component
@@ -37,7 +36,7 @@ public class AuditAspect {
 
     //注入Service用于把日志保存数据库
 
-    private  static  final Logger logger = LoggerFactory.getLogger(AuditAspect. class);
+    private static final Logger logger = LoggerFactory.getLogger(AuditAspect.class);
 
     //Controller层切点
     @Pointcut("@annotation(cn.edu.xmu.ooad.annotation.Audit)")
@@ -55,21 +54,21 @@ public class AuditAspect {
 
     //配置controller环绕通知,使用在方法aspect()上注册的切入点
     @Around("auditAspect()")
-    public Object around(JoinPoint joinPoint){
-        logger.debug("around: begin joinPoint = "+ joinPoint);
+    public Object around(JoinPoint joinPoint) {
+        logger.debug("around: begin joinPoint = " + joinPoint);
         MethodSignature ms = (MethodSignature) joinPoint.getSignature();
         Method method = ms.getMethod();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         String token = request.getHeader(JwtHelper.LOGIN_TOKEN_KEY);
-        if (token == null){
+        if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return ResponseUtil.fail(ResponseCode.AUTH_NEED_LOGIN);
         }
 
         JwtHelper.UserAndDepart userAndDepart = new JwtHelper().verifyTokenAndGetClaims(token);
-        if (null == userAndDepart){
+        if (null == userAndDepart) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return ResponseUtil.fail(ResponseCode.AUTH_INVALID_JWT);
         }
@@ -77,22 +76,21 @@ public class AuditAspect {
         Long departId = userAndDepart.getDepartId();
 
         //检验/shop的api中传入token是否和departId一致
-        String pathInfo=request.getPathInfo();
-        if(null!=pathInfo)
-        {
-            logger.debug("getPathInfo = "+ pathInfo);
-            String paths[]=pathInfo.split("/");
-            for(int i=0;i<paths.length;i++){
+        String pathInfo = request.getPathInfo();
+        if (null != pathInfo) {
+            logger.debug("getPathInfo = " + pathInfo);
+            String paths[] = pathInfo.split("/");
+            for (int i = 0; i < paths.length; i++) {
                 //如果departId为0,可以操作所有的shop
-                if(departId==0){
+                if (departId == 0) {
                     break;
                 }
-                if(paths[i].equals("shops")){
-                    if(i+1<paths.length){
+                if (paths[i].equals("shops")) {
+                    if (i + 1 < paths.length) {
                         //找到路径上对应id 将其与string类型的departId比较
-                        String pathId=paths[i+1];
-                        logger.debug("did ="+pathId);
-                        if(!pathId.equals(departId.toString())){
+                        String pathId = paths[i + 1];
+                        logger.debug("did =" + pathId);
+                        if (!pathId.equals(departId.toString())) {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             return ResponseUtil.fail(ResponseCode.FIELD_NOTVALID, "departId不匹配");
                         }
@@ -101,13 +99,12 @@ public class AuditAspect {
                     break;
                 }
             }
-        }
-        else{
+        } else {
             logger.error("the api path is null");
         }
 
 
-        logger.debug("around: userId ="+userId+" departId="+departId);
+        logger.debug("around: userId =" + userId + " departId=" + departId);
         if (userId == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return ResponseUtil.fail(ResponseCode.AUTH_NEED_LOGIN);
@@ -118,7 +115,7 @@ public class AuditAspect {
         for (int i = 0; i < annotations.length; i++) {
             Object param = args[i];
             Annotation[] paramAnn = annotations[i];
-            if (paramAnn.length == 0){
+            if (paramAnn.length == 0) {
                 continue;
             }
 

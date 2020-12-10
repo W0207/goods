@@ -8,9 +8,9 @@ import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
  */
 public interface Ingoodservice {
 
-     Object echo2(Object message);
-
-     SkuToPresaleVo presaleFindSku(Long id);
-
      SkuToCouponVo couponActivityFindSku(Long id);
+
+    Object echo2(Object message);
+
+    SkuToPresaleVo presaleFindSku(Long id);
 }

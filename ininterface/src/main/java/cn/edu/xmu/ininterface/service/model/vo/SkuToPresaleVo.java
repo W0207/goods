@@ -20,7 +20,7 @@ public class SkuToPresaleVo implements Serializable {
     private LocalDateTime gmtModified;
 
 
-    private Boolean disable =false;
+    private Boolean disable = false;
 
     public Long getId() {
         return id;
