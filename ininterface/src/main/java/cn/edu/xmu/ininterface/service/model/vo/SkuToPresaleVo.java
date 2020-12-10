@@ -10,18 +10,29 @@ public class SkuToPresaleVo implements Serializable {
 
     private String name;
 
-    private String goodsSn;
+    private String skuSn;
 
     private String imageUrl;
 
-    private Byte state;
+    private Integer inventory;
 
-    private LocalDateTime gmtCreate;
+    private Long originalPrice;
 
-    private LocalDateTime gmtModified;
+    private Long price;
 
 
     private Boolean disable = false;
+
+    public SkuToPresaleVo(Long id, String name, String skuSn, String imageUrl, Integer inventory, Long originalPrice, Long price, Boolean disable) {
+        this.id = id;
+        this.name = name;
+        this.skuSn = skuSn;
+        this.imageUrl = imageUrl;
+        this.inventory = inventory;
+        this.originalPrice = originalPrice;
+        this.price = price;
+        this.disable = disable;
+    }
 
     public Long getId() {
         return id;
@@ -39,12 +50,12 @@ public class SkuToPresaleVo implements Serializable {
         this.name = name;
     }
 
-    public String getGoodsSn() {
-        return goodsSn;
+    public String getSkuSn() {
+        return skuSn;
     }
 
-    public void setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn;
+    public void setSkuSn(String skuSn) {
+        this.skuSn = skuSn;
     }
 
     public String getImageUrl() {
@@ -55,28 +66,28 @@ public class SkuToPresaleVo implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public Byte getState() {
-        return state;
+    public Integer getInventory() {
+        return inventory;
     }
 
-    public void setState(Byte state) {
-        this.state = state;
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
     }
 
-    public LocalDateTime getGmtCreate() {
-        return gmtCreate;
+    public Long getOriginalPrice() {
+        return originalPrice;
     }
 
-    public void setGmtCreate(LocalDateTime gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setOriginalPrice(Long originalPrice) {
+        this.originalPrice = originalPrice;
     }
 
-    public LocalDateTime getGmtModified() {
-        return gmtModified;
+    public Long getPrice() {
+        return price;
     }
 
-    public void setGmtModified(LocalDateTime gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public Boolean getDisable() {

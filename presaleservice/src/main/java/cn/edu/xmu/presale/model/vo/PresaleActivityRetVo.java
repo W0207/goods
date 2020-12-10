@@ -33,7 +33,7 @@ public class PresaleActivityRetVo {
 
     private ShopToAllVo shopToAllVo;
 
-    private SkuToPresaleVo spuToPresaleVo;
+    private SkuToPresaleVo skuToPresaleVo;
 
     public PresaleActivityRetVo(PresaleActivityPo presaleActivityPo)
     {
@@ -50,6 +50,14 @@ public class PresaleActivityRetVo {
         this.state = presaleActivityPo.getState();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ShopToAllVo getShopToAllVo() {
         return shopToAllVo;
     }
@@ -58,11 +66,11 @@ public class PresaleActivityRetVo {
         this.shopToAllVo = shopToAllVo;
     }
 
-    public SkuToPresaleVo getSpuToPresaleVo() {
-        return spuToPresaleVo;
+    public SkuToPresaleVo getSkuToPresaleVo() {
+        return skuToPresaleVo;
     }
 
-    public void setSpuToPresaleVo(SkuToPresaleVo spuToPresaleVo) {
-        this.spuToPresaleVo = spuToPresaleVo;
+    public void setSkuToPresaleVo(SkuToPresaleVo spuToPresaleVo) {
+        this.skuToPresaleVo = spuToPresaleVo;
     }
 }

@@ -36,7 +36,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-@DubboService(version = "0.0.1")
+//@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired
@@ -60,24 +60,31 @@ public class GoodsService implements Ingoodservice {
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-        if (goodsSkuPo == null) {
+        if (goodsSkuPo == null||!goodsSkuPo.getDisabled().equals(0)) {
             return null;
         }
-        SkuPresaleVo skuPresaleVo = new SkuPresaleVo(goodsSkuPo);
-        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo();
-        skuToPresaleVo.setId(skuPresaleVo.getId());
-        skuToPresaleVo.setName(skuPresaleVo.getName());
-        skuToPresaleVo.setGoodsSn(skuPresaleVo.getSkuSn());
-        skuToPresaleVo.setImageUrl(skuPresaleVo.getImageUrl());
-        skuToPresaleVo.setState(skuPresaleVo.getState());
-        skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());
-        skuToPresaleVo.setGmtModified(skuPresaleVo.getGmtModified());
+        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo(goodsSkuPo.getId(),goodsSkuPo.getName(),goodsSkuPo.getSkuSn(),goodsSkuPo.getImageUrl(),goodsSkuPo.getInventory(),goodsSkuPo.getOriginalPrice(),goodsDao.getPrice(id),false);
         return skuToPresaleVo;
     }
 
     @Override
-    public SkuToCouponVo couponActivityFindSku(Long id)
-    {
+
+    public boolean skuExitOrNot(Long skuId) {
+        GoodsSkuPo po = goodsDao.findGoodsSkuById(skuId);
+        if(!po.equals(null)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean skuInShopOrNot(Long shopId, Long id) {
+        GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
+        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(goodsSkuPo.getGoodsSpuId());
+        return shopId.equals(goodsSpuPo.getShopId());
+    }
+      
+    public SkuToCouponVo couponActivityFindSku(Long id)  {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
         if (goodsSkuPo == null) {
             return null;
@@ -93,7 +100,6 @@ public class GoodsService implements Ingoodservice {
         skuToCouponVo.setOriginalPrice(skuCouponVo.getOriginalPrice());
         skuToCouponVo.setName(skuCouponVo.getName());
         return skuToCouponVo;
-
     }
 
     /**
