@@ -335,7 +335,7 @@ public class GrouponActivityPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andBeginTimeEqualTo(LocalDateTime value) {
+        public Criteria andBeginTimeEqualTo(String value) {
             addCriterion("begin_time =", value, "beginTime");
             return (Criteria) this;
         }
@@ -395,7 +395,7 @@ public class GrouponActivityPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andEndTimeEqualTo(LocalDateTime value) {
+        public Criteria andEndTimeEqualTo(String value) {
             addCriterion("end_time =", value, "endTime");
             return (Criteria) this;
         }
@@ -455,7 +455,7 @@ public class GrouponActivityPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andStateEqualTo(Byte value) {
+        public Criteria andStateEqualTo(Integer value) {
             addCriterion("state =", value, "state");
             return (Criteria) this;
         }

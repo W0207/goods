@@ -899,4 +899,39 @@ public class GoodsController {
         return Common.decorateReturnObject(returnObj);
     }
 
+    /**
+     * 管理员添加新的SKU到SPU里
+     *
+     * @param bindingResult 校验信息
+     * @param skuCreatVo    新建需要的SKU信息
+     * @return Object
+     * @author zhai
+     */
+    @ApiOperation(value = "管理员添加新的SKU到SPU里")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SkuCreatVo", name = "skuCreatVo", value = "新建需要的SKU信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 901, message = "商品规格重复")
+    })
+    @Audit //需要认证
+    @PostMapping("/shops/{shopId}/spus/{id}/skus")
+    public Object createSKU(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while creatSKU shopId = " + shopId + " skuId = " + id);
+            return returnObject;
+        }
+        ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
+        returnObject = ResponseUtil.ok(returnObj.getData());
+        return returnObject;
+    }
 }

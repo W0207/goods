@@ -1,7 +1,0 @@
-2020-12-08 10:31:36.980 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-08 10:38:32.843 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-08 10:41:36.494 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-08 10:46:33.196 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-08 10:48:02.394 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-08 20:03:29.099 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjA4MjAwMzI5MFRKIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc0MjkxMDksInVzZXJJZCI6MSwiaWF0IjoxNjA3NDI5MDA5fQ.eq7xN4dI7ZkslmTx374XvshWdPKPI2ocfH4PnTCA4qc
-2020-12-08 20:03:29.388 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1

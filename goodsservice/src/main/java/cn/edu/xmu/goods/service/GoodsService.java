@@ -35,7 +35,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-//@DubboService(version = "0.0.1")
+@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired
@@ -118,45 +118,6 @@ public class GoodsService implements Ingoodservice {
             logger.debug("addBrand : " + returnObject);
         } else {
             logger.debug("addBrand : fail!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 获得sku的详细信息
-     *
-     * @param `id`
-     * @return ReturnObject
-     */
-    public ReturnObject findGoodsSkuById(Long id) {
-        ReturnObject returnObject;
-        GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-        if (goodsSkuPo != null) {
-            returnObject = new ReturnObject<>(new GoodsSku(goodsSkuPo));
-            logger.debug("findGoodsSkuById : " + returnObject);
-        } else {
-            logger.debug("findGoodsSkuById : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 获得一条商品spu的详细信息
-     *
-     * @param `id`
-     * @return ReturnObject
-     */
-
-    public ReturnObject findGoodsSpuById(Long id) {
-        ReturnObject returnObject;
-        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
-        if (goodsSpuPo != null) {
-            returnObject = new ReturnObject(new GoodsSpu(goodsSpuPo));
-            logger.debug("findGoodsSpuById : " + returnObject);
-        } else {
-            logger.debug("findGoodsSpuById : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         return returnObject;
@@ -667,5 +628,27 @@ public class GoodsService implements Ingoodservice {
      */
     public ReturnObject getSpu(Long id) {
         return goodsDao.getSpu(id);
+    }
+
+    /**
+     * 新增Sku
+     *
+     * @param id
+     * @param shopId
+     * @param skuCreatVo
+     * @return ReturnObject<Object>
+     * @author zhai
+     */
+    public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
+        ReturnObject returnObject;
+        SkuOutputVo skuOutputVo = goodsDao.creatSku(id, shopId, skuCreatVo);
+        if (skuOutputVo != null) {
+            returnObject = new ReturnObject(skuOutputVo);
+            logger.debug("addSKU : " + returnObject);
+        } else {
+            logger.debug("addSKU : Failed!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
     }
 }

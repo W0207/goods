@@ -152,6 +152,9 @@ public class GoodsDao {
         } catch (DataAccessException e) {
             logger.error("findSkuSimple: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
         }
     }
 
@@ -164,7 +167,13 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject<Object> modifySkuById(Long shopId, Long skuId, SkuInputVo skuInputVo) {
-        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        GoodsSkuPo goodsSkuPo;
+        try {
+            goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        }
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() == 0) {
             logger.info("skuId = " + skuId + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
@@ -175,7 +184,12 @@ public class GoodsDao {
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdatePo(skuInputVo);
-        goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+        try {
+            goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        }
         logger.info("skuId = " + skuId + " 的信息已更新");
         return new ReturnObject<>();
     }
@@ -312,6 +326,11 @@ public class GoodsDao {
     }
 
     //修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
+
+    /**
+     * @param goodsSpuPo
+     * @return
+     */
     public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKey(goodsSpuPo);
@@ -349,6 +368,10 @@ public class GoodsDao {
         return new ReturnObject<>(goodsCategories);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public GoodsCategoryPo getCategoryByid(Long id) {
         return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
@@ -364,7 +387,7 @@ public class GoodsDao {
         BrandPoExample example = new BrandPoExample();
         BrandPoExample.Criteria criteria = example.createCriteria();
         PageHelper.startPage(page, pageSize);
-        List<BrandPo> brandPos = null;
+        List<BrandPo> brandPos;
         try {
             brandPos = brandPoMapper.selectByExample(example);
             List<VoObject> ret = new ArrayList<>(brandPos.size());
@@ -575,27 +598,32 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject deleteSpuById(Long shopId, Long id) {
-        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
-        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("不存在或禁止访问");
+        try {
+            GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
+            if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("不存在或禁止访问");
+                }
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        Long shopid = goodsSpuPo.getShopId();
-        if (!shopid.equals(shopId)) {
-            logger.debug("访问不合法");
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
-        }
-        GoodsSkuPoExample example = new GoodsSkuPoExample();
-        GoodsSkuPoExample.Criteria criteria = example.createCriteria();
-        criteria.andGoodsSpuIdEqualTo(id);
-        List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(example);
-        if (goodsSkuPos.size() == 0) {
-            goodsSpuPoMapper.deleteByPrimaryKey(id);
-            return new ReturnObject();
-        } else {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spu不合法");
+            Long shopid = goodsSpuPo.getShopId();
+            if (!shopid.equals(shopId)) {
+                logger.debug("访问不合法");
+                return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            }
+            GoodsSkuPoExample example = new GoodsSkuPoExample();
+            GoodsSkuPoExample.Criteria criteria = example.createCriteria();
+            criteria.andGoodsSpuIdEqualTo(id);
+            List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(example);
+            if (goodsSkuPos.size() == 0) {
+                goodsSpuPoMapper.deleteByPrimaryKey(id);
+                return new ReturnObject();
+            } else {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spu不合法");
+            }
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
         }
     }
 
@@ -845,5 +873,33 @@ public class GoodsDao {
         }
         spuRetVo.setSkuList(simpleSkuVos);
         return spuRetVo;
+    }
+
+    /**
+     * 新建sku
+     *
+     * @param spuId
+     * @param shopId
+     * @param skuCreatVo
+     * @return GoodsSkuPo
+     * @author zhai
+     */
+    public SkuOutputVo creatSku(Long spuId, Long shopId, SkuCreatVo skuCreatVo) {
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0 || !goodsSpuPo.getShopId().equals(shopId)) {
+            return null;
+        }
+        GoodsSku goodsSku = new GoodsSku();
+        GoodsSkuPo po = goodsSku.createPo(skuCreatVo, spuId);
+        int ret = goodsSkuPoMapper.insertSelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("spuId :" + spuId + " 插入sku失败");
+        } else {
+            logger.info("spuId = " + spuId + " 插入sku成功");
+        }
+        SkuOutputVo skuOutputVo = new SkuOutputVo(po);
+        return skuOutputVo;
     }
 }
