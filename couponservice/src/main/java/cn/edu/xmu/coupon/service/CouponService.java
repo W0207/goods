@@ -17,19 +17,19 @@ public class CouponService {
     @Autowired
     private CouponDao couponDao;
 
-
     public ReturnObject<PageInfo<VoObject>> showCouponactivities(Integer page, Integer pageSize, Long shopId, Long timeline) {
-        return couponDao.showCouponactivities(page,pageSize,shopId,timeline);
+        return couponDao.showCouponactivities(page, pageSize, shopId, timeline);
     }
 
     public ReturnObject<PageInfo<VoObject>> showOwnInvalidcouponacitvitiesByid(Integer page, Integer pageSize, Long id) {
-        return couponDao.showOwnInvalidcouponacitvitiesByid(page,pageSize,id);
+        return couponDao.showOwnInvalidcouponacitvitiesByid(page, pageSize, id);
     }
 
     public ReturnObject useCouponByCouponId(Long id, Long userId) {
-        return couponDao.useCouponByCouponId(id,userId);
+        return couponDao.useCouponByCouponId(id, userId);
     }
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo){
+
+    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
         return couponDao.addCouponActivity(shopId, addCouponActivityVo);
     }
 }

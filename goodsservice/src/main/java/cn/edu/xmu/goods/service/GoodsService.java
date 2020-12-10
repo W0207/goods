@@ -637,4 +637,57 @@ public class GoodsService implements Ingoodservice {
     public ReturnObject<Object> addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
         return goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
     }
+
+    /**
+     * 店家或管理员添加商品spu
+     *
+     * @param shopId
+     * @param spuInputVo
+     * @return
+     */
+    public ReturnObject addSpu(Long shopId, SpuInputVo spuInputVo) {
+        return goodsDao.addSpu(shopId, spuInputVo);
+    }
+
+    /**
+     * 获得sku的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSku(Long id) {
+        return goodsDao.getSku(id);
+    }
+
+    /**
+     * 获得spu的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSpu(Long id) {
+        return goodsDao.getSpu(id);
+    }
+
+    /**
+     * 新增Sku
+     *
+     * @param id
+     * @param shopId
+     * @param skuCreatVo
+     * @return ReturnObject<Object>
+     * @author zhai
+     */
+    public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
+        ReturnObject returnObject;
+        SkuOutputVo skuOutputVo = goodsDao.creatSku(id, shopId, skuCreatVo);
+        if (skuOutputVo != null) {
+            returnObject = new ReturnObject(skuOutputVo);
+            logger.debug("addSKU : " + returnObject);
+        } else {
+            logger.debug("addSKU : Failed!");
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
+    }
 }

@@ -4,6 +4,7 @@ package cn.edu.xmu.goods.dao;
 import cn.edu.xmu.goods.mapper.ShopPoMapper;
 import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.po.ShopPo;
+import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
@@ -152,4 +153,16 @@ public class ShopDao {
 
     }
 
+    public ReturnObject<Object> auditShopByID(Long id, ShopAuditVo shopAuditVo) {
+        ShopPo shopPo = shopPoMapper.selectByPrimaryKey(id);
+        if (shopPo == null) {
+            logger.info("新店id= " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Shop shop = new Shop(shopPo);
+        ShopPo po = shop.createAuditPo(shopAuditVo);
+        shopPoMapper.updateByPrimaryKeySelective(po);
+        logger.info("新店id = " + id + " 的信息已审核");
+        return new ReturnObject<>();
+    }
 }

@@ -1,5 +1,7 @@
 package cn.edu.xmu.groupon.model.po;
 
+import cn.edu.xmu.groupon.model.bo.GrouponActivity;
+
 import java.time.LocalDateTime;
 
 public class GrouponActivityPo {
@@ -46,7 +48,7 @@ public class GrouponActivityPo {
      *
      * @mbg.generated
      */
-    private Byte state;
+    private Integer state;
 
     /**
      *
@@ -197,7 +199,7 @@ public class GrouponActivityPo {
      *
      * @mbg.generated
      */
-    public Byte getState() {
+    public Integer getState() {
         return state;
     }
 
@@ -209,7 +211,7 @@ public class GrouponActivityPo {
      *
      * @mbg.generated
      */
-    public void setState(Byte state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

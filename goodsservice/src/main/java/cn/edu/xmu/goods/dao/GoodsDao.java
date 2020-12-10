@@ -41,6 +41,9 @@ public class GoodsDao {
     @Autowired
     GoodsCategoryPoMapper goodsCategoryPoMapper;
 
+    @Autowired
+    ShopPoMapper shopPoMapper;
+
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
     /**
@@ -72,35 +75,6 @@ public class GoodsDao {
         logger.debug("findGoodsSpuById : spuId=" + id);
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
         return goodsSpuPo;
-    }
-
-    /**
-     * 修改spu信息
-     *
-     * @param spuId
-     * @param spuInputVo
-     * @author shibin zhan
-     */
-    public ReturnObject<Object> modifySpuById(Long spuId, SpuInputVo spuInputVo) {
-        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
-        if (goodsSpuPo == null) {
-            logger.info("商品不存在或已被删除：spuId = " + spuId);
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        GoodsSpu goodsSpu = new GoodsSpu(goodsSpuPo);
-        GoodsSpuPo po = goodsSpu.createUpdatePo(spuInputVo);
-
-        ReturnObject<Object> returnObject;
-        int ret = goodsSpuPoMapper.updateByPrimaryKeySelective(po);
-        // 检查更新有否成功
-        if (ret == 0) {
-            logger.info("商品不存在或已被删除：spuId = " + spuId);
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        } else {
-            logger.info("spuId = " + spuId + " 的信息已更新");
-            returnObject = new ReturnObject<>();
-        }
-        return returnObject;
     }
 
     /**
@@ -338,6 +312,11 @@ public class GoodsDao {
     }
 
     //修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
+
+    /**
+     * @param goodsSpuPo
+     * @return
+     */
     public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKey(goodsSpuPo);
@@ -375,6 +354,10 @@ public class GoodsDao {
         return new ReturnObject<>(goodsCategories);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public GoodsCategoryPo getCategoryByid(Long id) {
         return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
@@ -688,13 +671,217 @@ public class GoodsDao {
                     floatPricePo.setQuantity(floatPriceInputVo.getQuantity());
                     floatPricePo.setGmtCreate(LocalDateTime.now());
                     floatPricePo.setInvalidBy(userId);
-                    floatPricePo.setGmtModified(LocalDateTime.now());
                     floatPricePo.setValid((byte) 1);
-                    floatPricePo.setCreatedBy(userId);
                     floatPricePoMapper.insertSelective(floatPricePo);
                     return new ReturnObject(new FloatPrice(floatPricePo));
                 }
             }
         }
+    }
+
+    /**
+     * 新增商品spu
+     *
+     * @param shopId
+     * @param spuInputVo
+     * @return
+     */
+    public ReturnObject addSpu(Long shopId, SpuInputVo spuInputVo) {
+        GoodsSpu goodsSpu = new GoodsSpu();
+        GoodsSpuPo goodsSpuPo = goodsSpu.createUpdatePo(shopId, spuInputVo);
+        goodsSpuPoMapper.insertSelective(goodsSpuPo);
+        SpuRetVo spuRetVo = new SpuRetVo();
+        spuRetVo.setId(goodsSpuPo.getId());
+        spuRetVo.setSpec(goodsSpuPo.getSpec());
+        spuRetVo.setName(goodsSpuPo.getName());
+        spuRetVo.setDetail(goodsSpuPo.getDetail());
+        spuRetVo.setGoodsSn(goodsSpuPo.getGoodsSn());
+        spuRetVo.setImageUrl(goodsSpuPo.getImageUrl());
+        spuRetVo.setGmtCreate(goodsSpuPo.getGmtCreate());
+        spuRetVo.setGmtModified(goodsSpuPo.getGmtModified());
+        spuRetVo.setDisable(false);
+        SimpleShopVo simpleShopVo = new SimpleShopVo();
+        System.out.println(shopPoMapper.selectByPrimaryKey(shopId).getName());
+        if (shopPoMapper.selectByPrimaryKey(shopId) != null) {
+            simpleShopVo.setShopId(shopId);
+            simpleShopVo.setName(shopPoMapper.selectByPrimaryKey(shopId).getName());
+            spuRetVo.setShop(simpleShopVo);
+        }
+        return new ReturnObject(spuRetVo);
+    }
+
+    /**
+     * 获得sku详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSku(Long id) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() == 0) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        SkuReturnVo skuReturnVo = new SkuReturnVo();
+        skuReturnVo.setId(id);
+        skuReturnVo.setName(goodsSkuPo.getName());
+        skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
+        skuReturnVo.setDetail(goodsSkuPo.getDetail());
+        skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
+        skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
+
+        //查找有效的价格浮动，记录现价
+        FloatPricePoExample floatPricePoExample = new FloatPricePoExample();
+        FloatPricePoExample.Criteria criteria = floatPricePoExample.createCriteria();
+        criteria.andGoodsSkuIdEqualTo(id);
+        criteria.andBeginTimeLessThanOrEqualTo(localDateTime);
+        criteria.andEndTimeGreaterThanOrEqualTo(localDateTime);
+        criteria.andValidEqualTo((byte) 1);
+        List<FloatPricePo> floatPricePos = floatPricePoMapper.selectByExample(floatPricePoExample);
+        //如果有合法的价格浮动，记录价格浮动的价格
+        if (floatPricePos.size() == 0) {
+            skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+        } else {
+            skuReturnVo.setPrice(floatPricePos.get(1).getActivityPrice());
+        }
+        skuReturnVo.setInventory(goodsSkuPo.getInventory());
+        skuReturnVo.setState(goodsSkuPo.getState());
+        skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
+        skuReturnVo.setWeight(goodsSkuPo.getWeight());
+        skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
+        skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
+        skuReturnVo.setDisable(goodsSkuPo.getDisabled() == 0);
+        SpuRetVo spuRetVo = getSpuRetVo(id);
+        skuReturnVo.setSpu(spuRetVo);
+        return new ReturnObject(skuReturnVo);
+    }
+
+    /**
+     * 获得spu的详细信息
+     *
+     * @param id
+     * @return
+     */
+    public ReturnObject getSpu(Long id) {
+        SpuRetVo spuRetVo = getSpuRetVo(id);
+        return new ReturnObject(spuRetVo);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public SpuRetVo getSpuRetVo(Long id) {
+        SpuRetVo spuRetVo = new SpuRetVo();
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        spuRetVo.setId(goodsSpuPo.getId());
+        spuRetVo.setName(goodsSpuPo.getName());
+
+        //记录品牌信息
+        Long brandId = goodsSpuPo.getBrandId();
+        if (brandId != null) {
+            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(brandId);
+            if (brandPo != null) {
+                SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
+                simpleBrandVo.setId(brandPo.getId());
+                simpleBrandVo.setName(brandPo.getName());
+                if (brandPo.getImageUrl() != null) {
+                    simpleBrandVo.setImageUrl(brandPo.getImageUrl());
+                }
+                spuRetVo.setBrand(simpleBrandVo);
+            }
+        }
+
+        //记录分类信息
+        Long categoryId = goodsSpuPo.getCategoryId();
+        if (categoryId != null) {
+            GoodsCategoryPo goodsCategoryPo = goodsCategoryPoMapper.selectByPrimaryKey(categoryId);
+            if (goodsCategoryPo != null) {
+                SimpleCategoryVo simpleCategoryVo = new SimpleCategoryVo();
+                simpleCategoryVo.setId(goodsCategoryPo.getId());
+                simpleCategoryVo.setName(goodsCategoryPo.getName());
+                spuRetVo.setCategory(simpleCategoryVo);
+            }
+        }
+
+        //记录店铺信息
+        Long shopId = goodsSpuPo.getShopId();
+        if (shopId != null) {
+            ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
+            if (shopPo != null) {
+                SimpleShopVo simpleShopVo = new SimpleShopVo();
+                simpleShopVo.setShopId(id);
+                simpleShopVo.setName(shopPo.getName());
+            }
+        }
+
+        spuRetVo.setGoodsSn(goodsSpuPo.getGoodsSn());
+        spuRetVo.setDetail(goodsSpuPo.getDetail());
+        spuRetVo.setImageUrl(goodsSpuPo.getImageUrl());
+        spuRetVo.setSpec(goodsSpuPo.getSpec());
+        spuRetVo.setGmtCreate(goodsSpuPo.getGmtCreate());
+        spuRetVo.setGmtModified(goodsSpuPo.getGmtModified());
+        spuRetVo.setDisable(goodsSpuPo.getDisabled() == 0);
+
+        //记录skuList信息
+        GoodsSkuPoExample goodsSkuPoExample = new GoodsSkuPoExample();
+        GoodsSkuPoExample.Criteria criteria1 = goodsSkuPoExample.createCriteria();
+        criteria1.andGoodsSpuIdEqualTo(id);
+        List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(goodsSkuPoExample);
+        List<SimpleSkuVo> simpleSkuVos = new ArrayList<>();
+        SimpleSkuVo simpleSkuVo = new SimpleSkuVo();
+        for (GoodsSkuPo goodsSkuPo1 : goodsSkuPos) {
+            simpleSkuVo.setId(goodsSkuPo1.getId());
+            simpleSkuVo.setName(goodsSkuPo1.getName());
+            simpleSkuVo.setInventory(goodsSkuPo1.getInventory());
+            simpleSkuVo.setOriginalPrice(goodsSkuPo1.getOriginalPrice());
+            simpleSkuVo.setImageUrl(goodsSkuPo1.getImageUrl());
+            simpleSkuVo.setSkuSn(goodsSkuPo1.getSkuSn());
+            FloatPricePoExample floatPricePoExample1 = new FloatPricePoExample();
+            FloatPricePoExample.Criteria criteria2 = floatPricePoExample1.createCriteria();
+            criteria2.andGoodsSkuIdEqualTo(id);
+            criteria2.andBeginTimeLessThanOrEqualTo(localDateTime);
+            criteria2.andEndTimeGreaterThanOrEqualTo(localDateTime);
+            criteria2.andValidEqualTo((byte) 1);
+            List<FloatPricePo> floatPricePos1 = floatPricePoMapper.selectByExample(floatPricePoExample1);
+            if (floatPricePos1.size() == 0) {
+                simpleSkuVo.setPrice(goodsSkuPo1.getOriginalPrice());
+            } else {
+                simpleSkuVo.setPrice(floatPricePos1.get(1).getActivityPrice());
+            }
+            simpleSkuVos.add(simpleSkuVo);
+        }
+        spuRetVo.setSkuList(simpleSkuVos);
+        return spuRetVo;
+    }
+
+    /**
+     * 新建sku
+     *
+     * @param spuId
+     * @param shopId
+     * @param skuCreatVo
+     * @return GoodsSkuPo
+     * @author zhai
+     */
+    public SkuOutputVo creatSku(Long spuId, Long shopId, SkuCreatVo skuCreatVo) {
+        GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
+        //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
+
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0 || !goodsSpuPo.getShopId().equals(shopId)) {
+            return null;
+        }
+        GoodsSku goodsSku = new GoodsSku();
+        GoodsSkuPo po = goodsSku.createPo(skuCreatVo, spuId);
+        int ret = goodsSkuPoMapper.insertSelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("spuId :" + spuId + " 插入sku失败");
+        } else {
+            logger.info("spuId = " + spuId + " 插入sku成功");
+        }
+        SkuOutputVo skuOutputVo = new SkuOutputVo(po);
+        return skuOutputVo;
     }
 }

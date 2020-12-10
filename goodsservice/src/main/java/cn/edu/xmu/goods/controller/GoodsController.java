@@ -65,89 +65,6 @@ public class GoodsController {
     }
 
     /**
-     * 获得sku的详细信息
-     *
-     * @param `id`
-     * @return Object
-     */
-    @ApiOperation(value = "获得sku的详细信息")
-    @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
-    })
-    @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id) {
-        Object returnObject;
-        ReturnObject sku = goodsService.findGoodsSkuById(id);
-        logger.debug("getSku : skuId = " + id);
-        if (!sku.getCode().equals(ResponseCode.RESOURCE_ID_NOTEXIST)) {
-            returnObject = ResponseUtil.ok(sku.getData());
-        } else {
-            returnObject = Common.getNullRetObj(new ReturnObject<>(sku.getCode(), sku.getErrmsg()), httpServletResponse);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 查看一条商品SPU的详细信息
-     *
-     * @param id
-     * @return Object
-     */
-    @ApiOperation(value = "查看一条商品spu的详细信息")
-    @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId")
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功"),
-    })
-    @GetMapping("/spus/{id}")
-    public Object getGoodsSpuBySpuId(@PathVariable Long id) {
-        Object returnObject;
-        ReturnObject spu = goodsService.findGoodsSpuById(id);
-        logger.debug("findGoodsSpuById: " + spu.getData() + "code = " + spu.getCode());
-        if (!spu.getCode().equals(ResponseCode.RESOURCE_ID_NOTEXIST)) {
-            returnObject = ResponseUtil.ok(spu.getData());
-        } else {
-            returnObject = Common.getNullRetObj(new ReturnObject<>(spu.getCode(), spu.getErrmsg()), httpServletResponse);
-        }
-        return returnObject;
-    }
-
-    /**
-     * 店家或管理员修改商品spu
-     *
-     * @param bindingResult 校验信息
-     * @param spuInputVo    修改信息的SpuInputVo
-     * @return Object
-     * @Author shibin zhan
-     */
-    @ApiOperation(value = "店家修改商品spu")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "SpuInputVo", name = "spuInputVo", value = "可修改的用户信息", required = true),
-
-    })
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
-    })
-    @Audit //需要认证
-    @PutMapping("/shops/{shopId}/spus/{id}")
-    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
-        }
-        // 校验前端数据
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
-            return returnObject;
-        }
-        ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
-        return Common.decorateReturnObject(returnObj);
-    }
-
-    /**
      * 店家或管理员删除商品spu
      *
      * @param shopId 店铺id
@@ -863,7 +780,7 @@ public class GoodsController {
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while addBrand shopid = ", id);
+            logger.info("incorrect data received while addFloatingPrice shopid = ", id);
             return returnObject;
         }
         ReturnObject floatPrice = goodsService.addFloatPrice(shopId, id, floatPriceInputVo, userId);
@@ -872,6 +789,149 @@ public class GoodsController {
         } else {
             return Common.decorateReturnObject(floatPrice);
         }
+    }
 
+    /**
+     * 店家或管理员修改商品spu
+     *
+     * @param bindingResult 校验信息
+     * @param spuInputVo    修改信息的SpuInputVo
+     * @return Object
+     * @Author shibin zhan
+     */
+    @ApiOperation(value = "店家修改商品spu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SpuInputVo", name = "spuInputVo", value = "可修改的用户信息", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/spus/{id}")
+    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
+            return returnObject;
+        }
+        ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     * 店家或管理员新建商品spu
+     *
+     * @param shopId
+     * @param spuInputVo
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation(value = "店家新建商品spu")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SpuInputVo", name = "spuInputVo", value = "可修改的用户信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/spus")
+    public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addSpu : shopId = " + shopId + " vo = " + spuInputVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId);
+            return returnObject;
+        }
+        ReturnObject returnObj = goodsService.addSpu(shopId, spuInputVo);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     * 获得sku的详细信息
+     *
+     * @param `id`
+     * @return Object
+     */
+    @ApiOperation(value = "获得sku的详细信息")
+    @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/skus/{id}")
+    public Object getSku(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("getSku");
+        }
+        ReturnObject returnObj = goodsService.getSku(id);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     * 查看一条商品SPU的详细信息
+     *
+     * @param id
+     * @return Object
+     */
+    @ApiOperation(value = "查看一条商品spu的详细信息")
+    @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @GetMapping("/spus/{id}")
+    public Object getSpu(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("getSku");
+        }
+        ReturnObject returnObj = goodsService.getSpu(id);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     * 管理员添加新的SKU到SPU里
+     *
+     * @param bindingResult 校验信息
+     * @param skuCreatVo    新建需要的SKU信息
+     * @return Object
+     * @author zhai
+     */
+    @ApiOperation(value = "管理员添加新的SKU到SPU里")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "spuId", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "SkuCreatVo", name = "skuCreatVo", value = "新建需要的SKU信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 901, message = "商品规格重复")
+    })
+    @Audit //需要认证
+    @PostMapping("/shops/{shopId}/spus/{id}/skus")
+    public Object createSKU(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult, @Depart Long shopid) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while creatSKU shopId = " + shopId + " skuId = " + id);
+            return returnObject;
+        }
+        ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
+        returnObject = ResponseUtil.ok(returnObj.getData());
+        return returnObject;
     }
 }
