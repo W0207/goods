@@ -219,4 +219,22 @@ public class CouponControllerTest {
         System.out.println(responseString);
         System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
     }
+
+    /**
+     * 查看优惠活动中的商品
+     * @return Object
+     * by 菜鸡骞
+     */
+    @Test
+    public void viewGoodsInCoupon() throws Exception {
+
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(get("/coupon/couponactivities/1/skus").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
 }

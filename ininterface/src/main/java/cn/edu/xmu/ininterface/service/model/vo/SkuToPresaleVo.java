@@ -19,6 +19,7 @@ public class SkuToPresaleVo implements Serializable {
 
     private LocalDateTime gmtModified;
 
+
     private Boolean disable =false;
 
     public Long getId() {
@@ -84,4 +85,5 @@ public class SkuToPresaleVo implements Serializable {
     public void setDisable(Boolean disable) {
         this.disable = disable;
     }
+
 }
