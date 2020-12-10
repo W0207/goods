@@ -10,6 +10,7 @@ import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
@@ -67,6 +68,7 @@ public class GoodsService implements Ingoodservice {
     }
 
     @Override
+
     public boolean skuExitOrNot(Long skuId) {
         GoodsSkuPo po = goodsDao.findGoodsSkuById(skuId);
         if(!po.equals(null)){
@@ -80,6 +82,24 @@ public class GoodsService implements Ingoodservice {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(goodsSkuPo.getGoodsSpuId());
         return shopId.equals(goodsSpuPo.getShopId());
+    }
+      
+    public SkuToCouponVo couponActivityFindSku(Long id)  {
+        GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
+        if (goodsSkuPo == null) {
+            return null;
+        }
+        SkuCouponVo skuCouponVo = new SkuCouponVo(goodsSkuPo);
+        SkuToCouponVo skuToCouponVo=new SkuToCouponVo();
+
+        skuToCouponVo.setDisable(skuCouponVo.getDisable());
+        skuToCouponVo.setGoodsSn(skuCouponVo.getGoodsSn());
+        skuToCouponVo.setId(skuCouponVo.getId());
+        skuToCouponVo.setImageUrl(skuCouponVo.getImageUrl());
+        skuToCouponVo.setInventory(skuCouponVo.getInventory());
+        skuToCouponVo.setOriginalPrice(skuCouponVo.getOriginalPrice());
+        skuToCouponVo.setName(skuCouponVo.getName());
+        return skuToCouponVo;
     }
 
     /**

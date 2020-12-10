@@ -20,6 +20,7 @@ public class SkuToPresaleVo implements Serializable {
 
     private Long price;
 
+
     private Boolean disable = false;
 
     public SkuToPresaleVo(Long id, String name, String skuSn, String imageUrl, Integer inventory, Long originalPrice, Long price, Boolean disable) {
@@ -96,4 +97,5 @@ public class SkuToPresaleVo implements Serializable {
     public void setDisable(Boolean disable) {
         this.disable = disable;
     }
+
 }

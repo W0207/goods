@@ -15,6 +15,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
 import cn.edu.xmu.ininterface.service.InShopService;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -255,4 +256,20 @@ public class CouponDao {
     }
 
 
+    public ReturnObject<PageInfo<VoObject>> viewGoodsInCouponById(Integer page, Integer pageSize, List<SkuToCouponVo> skuToCouponVos) {
+        PageHelper.startPage(page, pageSize);
+        List<VoObject> ret = new ArrayList<>(skuToCouponVos.size());
+        for (SkuToCouponVo vo : skuToCouponVos) {
+            SkuToCouponVo com = new SkuToCouponVo(vo);
+            ret.add((VoObject) com);
+        }
+        PageInfo<VoObject> rolePage = PageInfo.of(ret);
+        PageInfo<SkuToCouponVo> commentPoPage = PageInfo.of(skuToCouponVos);
+        PageInfo<VoObject> commentPage = new PageInfo<>(ret);
+        commentPage.setPages(commentPoPage.getPages());
+        commentPage.setPageNum(commentPoPage.getPageNum());
+        commentPage.setPageSize(commentPoPage.getPageSize());
+        commentPage.setTotal(commentPoPage.getTotal());
+        return new ReturnObject<>(rolePage);
+    }
 }

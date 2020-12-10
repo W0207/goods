@@ -1,8 +1,12 @@
 package cn.edu.xmu.coupon.controller;
 
+import cn.edu.xmu.coupon.mapper.CouponSkuPoMapper;
 import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
+import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
+import cn.edu.xmu.coupon.model.po.CouponSkuPoExample;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
@@ -11,6 +15,9 @@ import cn.edu.xmu.coupon.model.vo.CouponStateVo;
 import cn.edu.xmu.coupon.model.vo.*;
 import cn.edu.xmu.coupon.service.CouponActivityService;
 import cn.edu.xmu.coupon.service.CouponService;
+import cn.edu.xmu.ininterface.service.Ingoodservice;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
@@ -21,6 +28,7 @@ import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 权限控制器
@@ -46,12 +55,19 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
+    
+    @Autowired
+    private CouponSkuPoMapper couponSkuPoMapper;
 
     @Autowired
     private CouponActivityService couponActivityService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
+
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private Ingoodservice goodservice;
 
     /**
      * 获得优惠券的所有状态
@@ -268,6 +284,33 @@ public class CouponController {
     }
 
     /**
+     * 查看优惠活动中的商品
+     * @return Object
+     * by 菜鸡骞
+     */
+    @ApiOperation(value = "查看优惠活动中的商品")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @GetMapping("/couponactivities/{id}/skus")
+    public Object viewGoodsInCoupon(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable Long id) {
+
+        CouponSkuPoExample couponSkuPoExample = new CouponSkuPoExample();
+        CouponSkuPoExample.Criteria criteria = couponSkuPoExample.createCriteria();
+        List<CouponSkuPo> couponSkuPos = null;
+        List<SkuToCouponVo> skuToCouponVos = null;
+        criteria.andActivityIdEqualTo(id);
+        couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
+        for (CouponSkuPo po : couponSkuPos) {
+            skuToCouponVos.add(goodservice.couponActivityFindSku(po.getSkuId()));
+        }
+        logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
+        return Common.getPageRetObject(returnObject);
+    }
+        /**
      * 上传优惠活动照片
      *
      * @author shibin zhan
