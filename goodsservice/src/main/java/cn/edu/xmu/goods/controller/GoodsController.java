@@ -362,7 +362,6 @@ public class GoodsController {
      * @param categoryInputVo
      * @param bindingResult
      * @param shopId
-     * @param shopid
      * @return
      * @author shangzhao zhai
      */
@@ -379,7 +378,7 @@ public class GoodsController {
     })
     @Audit // 需要认证
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
         }
@@ -920,7 +919,7 @@ public class GoodsController {
     })
     @Audit //需要认证
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSKU(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult, @Depart Long shopid) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }

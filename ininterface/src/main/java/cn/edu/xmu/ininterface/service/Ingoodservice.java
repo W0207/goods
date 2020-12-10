@@ -6,11 +6,11 @@ import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 /**
  * @author ASUS
  */
-public interface Ingoodservice {
+public interface Ingoodservice 
 
-     SkuToCouponVo couponActivityFindSku(Long id);
+    SkuToCouponVo couponActivityFindSku(Long id);
 
-    Object echo2(Object message);
+    Object echo2(Object message)
 
     SkuToPresaleVo presaleFindSku(Long id);
 }
