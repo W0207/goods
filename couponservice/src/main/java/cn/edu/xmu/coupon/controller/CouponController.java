@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -34,24 +35,22 @@ import java.util.List;
 /**
  * 权限控制器
  *
- * @author BiuBiuBiu*/
+ * @author BiuBiuBiu
+ */
 @Api(value = "优惠服务", tags = "coupon")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/coupon", produces = "application/json;charset=UTF-8")
 public class CouponController {
-
     private static final Logger logger = LoggerFactory.getLogger(CouponController.class);
 
     @Autowired
     private CouponService couponService;
-
 
     @Autowired
     private CouponActivityService couponActivityService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
-
 
     /**
      * 获得优惠券的所有状态
@@ -74,8 +73,10 @@ public class CouponController {
         return ResponseUtil.ok(new ReturnObject<List>(couponStateVos).getData());
     }
 
+
     /**
      * 查看上线的优惠活动列表
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -84,21 +85,22 @@ public class CouponController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/couponactivities")
-    public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = false) Long shopId,@PathVariable(required = false) Long timeline) {
-        logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId+ "    timeline =" + timeline);
+    public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = false) Long shopId, @PathVariable(required = false) Long timeline) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId + "    timeline =" + timeline);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
-        shopId = (shopId==null) ? null : shopId;
-        timeline = (timeline==null) ? 2 : timeline;
-        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId,timeline);
+        shopId = (shopId == null) ? null : shopId;
+        timeline = (timeline == null) ? 2 : timeline;
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId, timeline);
         return Common.getPageRetObject(returnObject);
     }
 
 
     /**
      * 查看本店下线的优惠活动列表
-     *
+     * <p>
      * by 菜鸡骞
+     *
      * @return Object
      */
     @ApiOperation(value = "查看本店下线的优惠活动列表")
@@ -110,19 +112,18 @@ public class CouponController {
     })
     @Audit // 需要认证
     @GetMapping("/shops/{id}/couponactivities/invalid")
-    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize,@Depart Long id) {
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @Depart Long id) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
-        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize,id);
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize, id);
         return Common.getPageRetObject(returnObject);
     }
+
     /**
      * 管理员修改己方某优惠活动
      *
-     * @param id:活动id
-     *
-     * by 菜鸡骞
+     * @param id:活动id by 菜鸡骞
      * @return Object
      */
     @ApiOperation(value = "管理员修改己方某优惠活动")
@@ -136,17 +137,17 @@ public class CouponController {
     })
     @Audit
     @PutMapping("/shops/{shopid}/couponactivities/{id}")
-    public Object modifyCouponActivity(@PathVariable Long id, @Validated @RequestBody CouponActivityModifyVo couponActivityModifyVo, BindingResult bindingResult,@Depart Long shopId) {
+    public Object modifyCouponActivity(@PathVariable Long id, @Validated @RequestBody CouponActivityModifyVo couponActivityModifyVo, BindingResult bindingResult, @Depart Long shopId) {
         if (logger.isDebugEnabled()) {
-            logger.debug("modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = "+id);
+            logger.debug("modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = " + id);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = "+id);
+            logger.info("incorrect data received while modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id,shopId,couponActivityModifyVo);
+        ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id, shopId, couponActivityModifyVo);
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -154,8 +155,8 @@ public class CouponController {
      * 买家使用自己某优惠券
      *
      * @param id:优惠券 id
-     *
-     * by 菜鸡骞
+     *               <p>
+     *               by 菜鸡骞
      * @return Object
      */
     @ApiOperation(value = "买家使用自己某优惠券")
@@ -172,7 +173,7 @@ public class CouponController {
         if (logger.isDebugEnabled()) {
             logger.debug("userCoupon : userId = " + userId + " couponId = " + id);
         }
-        ReturnObject returnObj = couponService.useCouponByCouponId(id,userId);
+        ReturnObject returnObj = couponService.useCouponByCouponId(id, userId);
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -190,7 +191,7 @@ public class CouponController {
      * 管理员为己方某优惠券活动新增限定范围
      *
      * @param id:活动 id
-     * by 菜鸡骞
+     *              by 菜鸡骞
      * @return Object
      */
     @ApiOperation(value = "管理员为己方某优惠券活动新增限定范围")
@@ -215,10 +216,11 @@ public class CouponController {
             logger.info("rangeForCouponActivity: activityId = " + id);
             return returnObject;
         }
-        ReturnObject couponActivity = couponActivityService.rangeForCouponActivityById(id,shopId,couponActivitySkuInputVo);
+        ReturnObject couponActivity = couponActivityService.rangeForCouponActivityById(id, shopId, couponActivitySkuInputVo);
         returnObject = ResponseUtil.ok(couponActivity.getData());
         return returnObject;
     }
+
 
     @ApiOperation(value = "管理员新建己方优惠活动")
     @ApiImplicitParams({
@@ -227,7 +229,7 @@ public class CouponController {
     })
     //@Audit // 需要认证
     @PostMapping("/shops/{shopId}/couponactivities")
-    public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo){
+    public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo) {
         return Common.decorateReturnObject(couponService.addCouponActivity(shopId, vo));
     }
 
@@ -254,8 +256,31 @@ public class CouponController {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteCoupon : shopId = " + shopId + " skuId = " + id);
         }
-        ReturnObject returnObj = couponActivityService.deleteCouponSkuById(id,shopId);
+        ReturnObject returnObj = couponActivityService.deleteCouponSkuById(id, shopId);
         return Common.decorateReturnObject(returnObj);
     }
 
+    /**
+     * 上传优惠活动照片
+     */
+    @ApiOperation(value = "上传优惠活动照片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "店铺id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "Id", value = "skuId", required = true),
+            @ApiImplicitParam(paramType = "formData", dataType = "file", name = "img", value = "文件", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 506, message = "该目录文件夹没有写入的权限"),
+            @ApiResponse(code = 508, message = "图片格式不正确"),
+            @ApiResponse(code = 509, message = "图片大小超限")
+    })
+    @Audit
+    @PostMapping("/shops/{shopId}/couponactivities/{id}/uploadImg")
+    public Object uploadCouponActivityImage(@PathVariable Long id, @PathVariable Long shopId, @RequestParam("img") MultipartFile multipartFile) {
+        logger.debug("uploadCouponActivityImage: shopId = " + shopId + " spuId = " + id + " img :" + multipartFile.getOriginalFilename());
+        ReturnObject returnObject = couponActivityService.uploadCouponActivityImg(shopId, id, multipartFile);
+        return Common.getNullRetObj(returnObject, httpServletResponse);
+    }
 }

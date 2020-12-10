@@ -35,7 +35,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-//@DubboService(version = "0.0.1")
+@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired

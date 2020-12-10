@@ -898,5 +898,4 @@ public class GoodsController {
         ReturnObject returnObj = goodsService.getSpu(id);
         return Common.decorateReturnObject(returnObj);
     }
-
 }

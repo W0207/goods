@@ -312,6 +312,11 @@ public class GoodsDao {
     }
 
     //修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
+
+    /**
+     * @param goodsSpuPo
+     * @return
+     */
     public ReturnObject modifySpuBySpuPo(GoodsSpuPo goodsSpuPo) {
         ReturnObject returnObject = null;
         int ret = goodsSpuPoMapper.updateByPrimaryKey(goodsSpuPo);
@@ -349,6 +354,10 @@ public class GoodsDao {
         return new ReturnObject<>(goodsCategories);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public GoodsCategoryPo getCategoryByid(Long id) {
         return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
