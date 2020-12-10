@@ -56,7 +56,7 @@ public class GoodsSpu implements VoObject {
         this.detail = goodsSpuPo.getDetail();
         this.imageUrl = goodsSpuPo.getImageUrl();
         this.spec = goodsSpuPo.getSpec();
-        this.disabled = goodsSpuPo.getDisabled() == 0 ? true : false;
+        this.disabled = goodsSpuPo.getDisabled() == 0 ? false : true;
         this.gmtCreated = goodsSpuPo.getGmtCreate();
         this.gmtModified = goodsSpuPo.getGmtModified();
     }

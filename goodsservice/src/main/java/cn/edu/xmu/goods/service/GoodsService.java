@@ -56,14 +56,6 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.findAllBrand(page, pageSize);
     }
 
-
-    @Override
-    public Object echo2(Object message) {
-        System.out.println("aaa");
-        System.out.println("bbbb");
-        return "bbbbb";
-    }
-
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);

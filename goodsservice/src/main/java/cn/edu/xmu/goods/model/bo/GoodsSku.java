@@ -96,7 +96,7 @@ public class GoodsSku implements VoObject, Serializable {
         this.imageUrl = goodsSkuPo.getImageUrl();
         this.inventory = goodsSkuPo.getInventory();
         this.detail = goodsSkuPo.getDetail();
-        this.disabled = goodsSkuPo.getDisabled() == 0 ? true : false;
+        this.disabled = goodsSkuPo.getDisabled() == 0 ? false : true;
         this.gmtCreate = goodsSkuPo.getGmtCreate();
         this.gmtModified = goodsSkuPo.getGmtModified();
     }

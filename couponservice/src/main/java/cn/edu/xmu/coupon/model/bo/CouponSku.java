@@ -24,11 +24,11 @@ public class CouponSku implements VoObject {
     private LocalDateTime gmtModified;
 
     public CouponSku(CouponSkuPo couponSkuPo) {
-        this.activity_id=couponSkuPo.getActivityId();
-        this.id=couponSkuPo.getId();
-        this.sku_id=couponSkuPo.getSkuId();
-        this.gmtCreate=couponSkuPo.getGmtCreate();
-        this.gmtModified=couponSkuPo.getGmtModified();
+        this.activity_id = couponSkuPo.getActivityId();
+        this.id = couponSkuPo.getId();
+        this.sku_id = couponSkuPo.getSkuId();
+        this.gmtCreate = couponSkuPo.getGmtCreate();
+        this.gmtModified = couponSkuPo.getGmtModified();
 
     }
 
@@ -37,7 +37,7 @@ public class CouponSku implements VoObject {
     }
 
     public CouponSkuPo createAddCouponActivityPo(CouponActivitySkuInputVo couponActivitySkuInputVo, Long id, Long shopId) {
-        CouponSkuPo couponSkuPo=new CouponSkuPo();
+        CouponSkuPo couponSkuPo = new CouponSkuPo();
         couponSkuPo.setId(couponActivitySkuInputVo.getId());
         couponSkuPo.setGmtCreate(LocalDateTime.now());
         couponSkuPo.setActivityId(couponActivitySkuInputVo.getActivity_id());
