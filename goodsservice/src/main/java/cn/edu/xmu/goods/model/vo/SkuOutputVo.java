@@ -28,28 +28,29 @@ public class SkuOutputVo {
     @ApiModelProperty("原价")
     private Long originalPrice;
 
-    @ApiModelProperty("原价")
+    @ApiModelProperty("现价")
     private Long price;
 
     @ApiModelProperty("是否被删除")
     private Boolean disabled;
 
-    public SkuOutputVo(GoodsSkuPo goodsSkuPo){
-        Long skuId=goodsSkuPo.getId()==null ? null :goodsSkuPo.getId();
+    public SkuOutputVo(GoodsSkuPo goodsSkuPo) {
+        Long skuId = goodsSkuPo.getId() == null ? null : goodsSkuPo.getId();
         String nameEnc = goodsSkuPo.getName() == null ? null : goodsSkuPo.getName();
         String skuSnEnc = goodsSkuPo.getSkuSn() == null ? null : goodsSkuPo.getSkuSn();
         String imageUrlEnc = goodsSkuPo.getImageUrl() == null ? null : goodsSkuPo.getImageUrl();
         Integer inventoryEnc = goodsSkuPo.getInventory() == null ? null : goodsSkuPo.getInventory();
         Long originalPriceEnc = goodsSkuPo.getOriginalPrice() == null ? null : goodsSkuPo.getOriginalPrice();
-
-        this.id=skuId;
-        this.name=nameEnc;
-        this.skuSn=skuSnEnc;
-        this.imageUrl=imageUrlEnc;
-        this.originalPrice=originalPriceEnc;
-
-
-
+        this.id = skuId;
+        this.name = nameEnc;
+        this.skuSn = skuSnEnc;
+        this.imageUrl = imageUrlEnc;
+        this.originalPrice = originalPriceEnc;
+        this.inventory = inventoryEnc;
+        this.price = originalPriceEnc;
+        this.disabled = goodsSkuPo.getDisabled() == 0;
     }
-    public SkuOutputVo(){}
+
+    public SkuOutputVo() {
+    }
 }

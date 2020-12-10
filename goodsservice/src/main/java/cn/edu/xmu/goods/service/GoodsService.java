@@ -675,12 +675,12 @@ public class GoodsService implements Ingoodservice {
      * @param id
      * @param shopId
      * @param skuCreatVo
-     * @return  ReturnObject<Object>
+     * @return ReturnObject<Object>
      * @author zhai
      */
     public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
         ReturnObject returnObject;
-        SkuOutputVo skuOutputVo= goodsDao.creatSku(id,shopId,skuCreatVo);
+        SkuOutputVo skuOutputVo = goodsDao.creatSku(id, shopId, skuCreatVo);
         if (skuOutputVo != null) {
             returnObject = new ReturnObject(skuOutputVo);
             logger.debug("addSKU : " + returnObject);

@@ -918,7 +918,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 901, message = "商品规格重复")
     })
-    //@Audit //需要认证
+    @Audit //需要认证
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
     public Object createSKU(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {

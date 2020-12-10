@@ -27,7 +27,7 @@ public class SkuCreatVo {
     private String imageUrl;
 
     @ApiModelProperty("库存")
-    private Long inventory;
+    private Integer inventory;
 
     @ApiModelProperty("该型号描述")
     private String detail;

@@ -664,6 +664,7 @@ public class GoodsControllerTest {
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
     /**
      * 管理员添加新的SKU到SPU中
      *
@@ -671,6 +672,7 @@ public class GoodsControllerTest {
      */
     @Test
     public void createSku() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
         String requireJson = "{\n" +
                 "  \"sn\":\"123\",\n" +
                 "  \"name\":\"123\",\n" +
@@ -682,6 +684,7 @@ public class GoodsControllerTest {
                 "  \"detail\":\"123\"\n" +
                 "}";
         String responseString = this.mvc.perform(post("/goods/shops/0/spus/273/skus")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();

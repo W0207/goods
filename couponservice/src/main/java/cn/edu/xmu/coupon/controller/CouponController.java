@@ -262,6 +262,8 @@ public class CouponController {
 
     /**
      * 上传优惠活动照片
+     *
+     * @author shibin zhan
      */
     @ApiOperation(value = "上传优惠活动照片")
     @ApiImplicitParams({

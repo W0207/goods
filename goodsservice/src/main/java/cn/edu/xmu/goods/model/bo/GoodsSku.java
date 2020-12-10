@@ -6,6 +6,7 @@ import cn.edu.xmu.goods.model.vo.SkuCreatVo;
 import cn.edu.xmu.goods.model.vo.SkuInputVo;
 import cn.edu.xmu.goods.model.vo.SkuRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -227,23 +228,26 @@ public class GoodsSku implements VoObject, Serializable {
         String skusnEnc = skuCreatVo.getSn() == null ? null : skuCreatVo.getName();
         Long originalPriceEnc = skuCreatVo.getOriginalPrice() == null ? null : skuCreatVo.getOriginalPrice();
         String configurationEnc = skuCreatVo.getConfiguration() == null ? null : skuCreatVo.getConfiguration();
-        Long inventoryEnc = skuCreatVo.getInventory() == null ? null : skuCreatVo.getInventory();
+        Integer inventoryEnc = skuCreatVo.getInventory() == null ? null : skuCreatVo.getInventory();
         String imageUrlEnc = skuCreatVo.getImageUrl() == null ? null : skuCreatVo.getImageUrl();
         Long weightEnc = skuCreatVo.getWeight() == null ? null : skuCreatVo.getWeight();
         String detailEnc = skuCreatVo.getDetail() == null ? null : skuCreatVo.getDetail();
         goodsSkuPo.setOriginalPrice(originalPriceEnc);
         goodsSkuPo.setName(nameEnc);
         goodsSkuPo.setDetail(detailEnc);
-        goodsSkuPo.setWeight(inventoryEnc);
+        goodsSkuPo.setInventory(inventoryEnc);
+        goodsSkuPo.setWeight(weightEnc);
         goodsSkuPo.setImageUrl(imageUrlEnc);
         goodsSkuPo.setWeight(weightEnc);
         goodsSkuPo.setConfiguration(configurationEnc);
         goodsSkuPo.setGmtCreate(LocalDateTime.now());
         goodsSkuPo.setGmtModified(LocalDateTime.now());
         goodsSkuPo.setGoodsSpuId(spuId);
+        goodsSkuPo.setDisabled((byte) 4);
         goodsSkuPo.setSkuSn(skusnEnc);
         return goodsSkuPo;
     }
 
-    public  GoodsSku(){ }
+    public GoodsSku() {
+    }
 }

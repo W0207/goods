@@ -1,4 +1,0 @@
-2020-12-03 21:13:22.199 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-03 21:14:30.616 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
-2020-12-03 21:15:49.513 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
-2020-12-03 21:30:46.882 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
