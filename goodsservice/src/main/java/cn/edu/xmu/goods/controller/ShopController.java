@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.controller;
 
 import cn.edu.xmu.goods.model.bo.Shop;
+import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.goods.model.vo.ShopStateVo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.goods.service.ShopService;
@@ -31,6 +32,7 @@ import java.util.List;
 @RequestMapping(value = "/shop", produces = "application/json;charset=UTF-8")
 public class ShopController {
     private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
+
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -199,6 +201,38 @@ public class ShopController {
         } else {
             return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
         }
+    }
+
+    /**
+     * 管理员审核店铺
+     *
+     * @param id:新店 id
+     *              by 菜鸡骞
+     * @return Object
+     */
+    @ApiOperation(value = "管理员审核店铺")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "新店 id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "ShopAuditVo", name = "conclusion", value = "可修改的新店信息", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{shopId}/newshops/{id}/audit")
+    public Object auditShop(@PathVariable Long id, @Validated @RequestBody ShopAuditVo shopAuditVo, BindingResult bindingResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("auditShop : Id = " + id + " vo = " + shopAuditVo);
+        }
+        // 校验前端数据
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if (returnObject != null) {
+            logger.info("incorrect data received while auditShop : Id = " + id + " vo = " + shopAuditVo);
+            return returnObject;
+        }
+        ReturnObject returnObj = shopService.auditShopByID(id, shopAuditVo);
+        return Common.decorateReturnObject(returnObj);
     }
 
 }
