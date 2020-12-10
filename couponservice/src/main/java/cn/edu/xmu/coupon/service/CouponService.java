@@ -2,6 +2,7 @@ package cn.edu.xmu.coupon.service;
 
 import cn.edu.xmu.coupon.dao.CouponDao;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -31,5 +32,8 @@ public class CouponService {
 
     public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
         return couponDao.addCouponActivity(shopId, addCouponActivityVo);
+    }
+    public ReturnObject userGetCoupon(Long id,Long userId){
+        return couponDao.userGetCoupon(id, userId);
     }
 }

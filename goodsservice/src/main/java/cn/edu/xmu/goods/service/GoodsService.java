@@ -35,7 +35,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-@DubboService(version = "0.0.1")
+//@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired
@@ -80,6 +80,15 @@ public class GoodsService implements Ingoodservice {
         skuToPresaleVo.setGmtCreate(skuPresaleVo.getGmtCreate());
         skuToPresaleVo.setGmtModified(skuPresaleVo.getGmtModified());
         return skuToPresaleVo;
+    }
+
+    @Override
+    public boolean skuExitOrNot(Long skuId) {
+        GoodsSkuPo po = goodsDao.findGoodsSkuById(skuId);
+        if(!po.equals(null)){
+            return true;
+        }
+        return false;
     }
 
     /**
