@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author 宇
+ */
 @Repository
 public class ShopDao {
 
@@ -21,9 +24,7 @@ public class ShopDao {
 
     private static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
 
-
-    public ShopPo findShopById(Long id)
-    {
+    public ShopPo findShopById(Long id) {
         return shopPoMapper.selectByPrimaryKey(id);
     }
 

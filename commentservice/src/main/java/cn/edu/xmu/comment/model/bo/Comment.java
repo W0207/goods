@@ -45,7 +45,7 @@ public class Comment implements VoObject {
     }
 
     public CommentPo createAuditPo(CommentAuditVo commentAuditVo) {
-        CommentPo commentPo= new CommentPo();
+        CommentPo commentPo = new CommentPo();
         commentPo.setId(id);
         commentPo.setState(commentAuditVo.getState());
         return commentPo;

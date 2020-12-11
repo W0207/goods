@@ -9,8 +9,6 @@ import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.ooad.util.JacksonUtil;
-import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
-import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -19,10 +17,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -166,7 +170,7 @@ public class CouponControllerTest {
 
     @Test
     public void addCouponActivity() throws Exception {
-        byte a= 10;
+        byte a = 10;
         AddCouponActivityVo vo = new AddCouponActivityVo();
         vo.setName("tzy");
         vo.setQuantity(10);
@@ -189,6 +193,7 @@ public class CouponControllerTest {
     /**
      * 店家删除己方某优惠活动的某限定范围
      * 权限足够
+     *
      * @throws Exception
      */
     @Test
@@ -206,6 +211,7 @@ public class CouponControllerTest {
     /**
      * 店家删除己方某优惠活动的某限定范围
      * 权限不足
+     *
      * @throws Exception
      */
     @Test
@@ -218,5 +224,39 @@ public class CouponControllerTest {
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
         System.out.println(couponSkuPoMapper.selectByPrimaryKey(1L));
+    }
+
+    /**
+     * 查看优惠活动中的商品
+     * @return Object
+     * by 菜鸡骞
+     */
+    @Test
+    public void viewGoodsInCoupon() throws Exception {
+
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(get("/coupon/couponactivities/1/skus").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+    }
+
+    @Test
+    public void uploadSpuImage() throws Exception {
+        String token = creatTestToken(1111L, 0L, 100);
+        File file = new File("." + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "img" + File.separator + "timg.png");
+        MockMultipartFile firstFile = new MockMultipartFile("img", "timg.png", "multipart/form-data", new FileInputStream(file));
+        String responseString = mvc.perform(MockMvcRequestBuilders
+                .multipart("/coupon/shops/123/couponactivities/1/uploadImg")
+                .file(firstFile)
+                .header("authorization", token)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

@@ -70,49 +70,48 @@ public class GrouponActivity implements VoObject {
 
     private LocalDateTime gmtModified;
 
-    public GrouponActivity(){}
+    public GrouponActivity() {
+    }
 
-    public GrouponActivity (GrouponActivityPo po)
-    {
+    public GrouponActivity(GrouponActivityPo po) {
 
-        this.id=po.getId()==null ? null :po.getId();
-        this.name=po.getName()==null ? null :po.getName();
-        this.goodsSpu=po.getGoodsSpuId()==null ? null :po.getGoodsSpuId();
-        this.shop=po.getShopId()==null ? null :po.getShopId();
-        this.strategy=po.getStrategy()==null ?null :po.getStrategy();
-        this.state= po.getState()==null ? null :po.getState();
-        this.beginTime=po.getBeginTime()==null ? null :po.getBeginTime();
-        this.endTime=po.getEndTime()==null ? null :po.getEndTime();
-        this.gmtCreate=po.getGmtCreate()==null ? null :po.getGmtCreate();
-        this.gmtModified=po.getGmtModified()==null ? null :po.getGmtModified();
+        this.id = po.getId() == null ? null : po.getId();
+        this.name = po.getName() == null ? null : po.getName();
+        this.goodsSpu = po.getGoodsSpuId() == null ? null : po.getGoodsSpuId();
+        this.shop = po.getShopId() == null ? null : po.getShopId();
+        this.strategy = po.getStrategy() == null ? null : po.getStrategy();
+        this.state = po.getState() == null ? null : po.getState();
+        this.beginTime = po.getBeginTime() == null ? null : po.getBeginTime();
+        this.endTime = po.getEndTime() == null ? null : po.getEndTime();
+        this.gmtCreate = po.getGmtCreate() == null ? null : po.getGmtCreate();
+        this.gmtModified = po.getGmtModified() == null ? null : po.getGmtModified();
 
 
     }
 
-    public GrouponActivityPo creatUpdatePo(GrouponInputVo grouponInputVo)
-    {
-        GrouponActivityPo po=new GrouponActivityPo();
-         String strategyEnc=grouponInputVo.getStrategy() == null ? null :grouponInputVo.getStrategy();
-         LocalDateTime beginTimeEnc=grouponInputVo.getBeginTime() == null ? null :grouponInputVo.getBeginTime();
-         LocalDateTime endTimeEnc=grouponInputVo.getEndTime() == null ? null :grouponInputVo.getEndTime();
-         po.setId(this.id);
-         po.setName(this.name);
-         po.setState(this.state);
-         po.setShopId(this.shop);
-         po.setGoodsSpuId(this.goodsSpu);
-         po.setStrategy(strategyEnc);
-         po.setBeginTime(beginTimeEnc);
-         po.setEndTime(endTimeEnc);
-         po.setGmtCreate(this.gmtCreate);
-         po.setGmtModified(LocalDateTime.now());
-         return po;
+    public GrouponActivityPo creatUpdatePo(GrouponInputVo grouponInputVo) {
+        GrouponActivityPo po = new GrouponActivityPo();
+        String strategyEnc = grouponInputVo.getStrategy() == null ? null : grouponInputVo.getStrategy();
+        LocalDateTime beginTimeEnc = grouponInputVo.getBeginTime() == null ? null : grouponInputVo.getBeginTime();
+        LocalDateTime endTimeEnc = grouponInputVo.getEndTime() == null ? null : grouponInputVo.getEndTime();
+        po.setId(this.id);
+        po.setName(this.name);
+        po.setState(this.state);
+        po.setShopId(this.shop);
+        po.setGoodsSpuId(this.goodsSpu);
+        po.setStrategy(strategyEnc);
+        po.setBeginTime(beginTimeEnc);
+        po.setEndTime(endTimeEnc);
+        po.setGmtCreate(this.gmtCreate);
+        po.setGmtModified(LocalDateTime.now());
+        return po;
     }
 
-    public  GrouponActivityPo createAddPo(Long spuId,GrouponInputVo grouponInputVo,Long shopId){
-        GrouponActivityPo po=new GrouponActivityPo();
-        String strategyEnc=grouponInputVo.getStrategy() == null ? null :grouponInputVo.getStrategy();
-        LocalDateTime beginTimeEnc=grouponInputVo.getBeginTime() == null ? null :grouponInputVo.getBeginTime();
-        LocalDateTime endTimeEnc=grouponInputVo.getEndTime() == null ? null :grouponInputVo.getEndTime();
+    public GrouponActivityPo createAddPo(Long spuId, GrouponInputVo grouponInputVo, Long shopId) {
+        GrouponActivityPo po = new GrouponActivityPo();
+        String strategyEnc = grouponInputVo.getStrategy() == null ? null : grouponInputVo.getStrategy();
+        LocalDateTime beginTimeEnc = grouponInputVo.getBeginTime() == null ? null : grouponInputVo.getBeginTime();
+        LocalDateTime endTimeEnc = grouponInputVo.getEndTime() == null ? null : grouponInputVo.getEndTime();
         po.setStrategy(strategyEnc);
         po.setBeginTime(beginTimeEnc);
         po.setEndTime(endTimeEnc);
@@ -121,6 +120,7 @@ public class GrouponActivity implements VoObject {
         po.setShopId(shopId);
         return po;
     }
+
     @Override
     public Object createVo() {
         return new GrouponSelectVo(this);

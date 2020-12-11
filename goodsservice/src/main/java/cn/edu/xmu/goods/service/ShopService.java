@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @DubboService(version = "0.0.1")
-public class ShopService implements InShopService{
+public class ShopService implements InShopService {
 
     @Autowired
     ShopDao shopDao;
@@ -22,8 +22,9 @@ public class ShopService implements InShopService{
     public ShopToAllVo presaleFindShop(Long id) {
         ShopPo shopPo = shopDao.findShopById(id);
         ShopToAllVo shopToAllVo = new ShopToAllVo();
-        if(shopPo==null)return null;
-        else{
+        if (shopPo == null) {
+            return null;
+        } else {
             shopToAllVo.setId(id);
             shopToAllVo.setName(shopPo.getName());
             return shopToAllVo;
@@ -61,6 +62,6 @@ public class ShopService implements InShopService{
     }
 
     public ReturnObject auditShopByID(Long id, ShopAuditVo shopAuditVo) {
-        return shopDao.auditShopByID(id,shopAuditVo);
+        return shopDao.auditShopByID(id, shopAuditVo);
     }
 }

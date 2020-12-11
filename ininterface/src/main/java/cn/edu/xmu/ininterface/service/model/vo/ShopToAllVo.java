@@ -2,8 +2,13 @@ package cn.edu.xmu.ininterface.service.model.vo;
 
 import java.io.Serializable;
 
+/**
+ * @author 宇
+ */
 public class ShopToAllVo implements Serializable {
+
     private Long id;
+
     private String name;
 
     public Long getId() {
@@ -21,4 +26,5 @@ public class ShopToAllVo implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
 }
