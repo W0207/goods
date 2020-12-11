@@ -305,7 +305,7 @@ public class CouponController {
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
             SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
-            if(vo==null) {
+            if(vo==null||vo.getDisable()!=0) {
 
             }
             else {
@@ -376,7 +376,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
-    @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
+    @PutMapping("/shops/{shopId}/couponactivities/{id}/offshelves")
     public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
     }
