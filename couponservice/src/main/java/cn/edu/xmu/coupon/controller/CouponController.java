@@ -299,12 +299,13 @@ public class CouponController {
 
         CouponSkuPoExample couponSkuPoExample = new CouponSkuPoExample();
         CouponSkuPoExample.Criteria criteria = couponSkuPoExample.createCriteria();
-        List<CouponSkuPo> couponSkuPos = null;
-        List<SkuToCouponVo> skuToCouponVos = null;
+        List<CouponSkuPo> couponSkuPos = new ArrayList<CouponSkuPo>();
+        List<SkuToCouponVo> skuToCouponVos = new ArrayList<SkuToCouponVo>();
         criteria.andActivityIdEqualTo(id);
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
-            skuToCouponVos.add(goodservice.couponActivityFindSku(po.getSkuId()));
+            SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
+            skuToCouponVos.add(vo);
         }
         logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
         page = (page == null) ? 1 : page;
