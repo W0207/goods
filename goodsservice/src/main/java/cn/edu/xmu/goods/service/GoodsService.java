@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Console;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,7 +93,6 @@ public class GoodsService implements Ingoodservice {
         }
         SkuCouponVo skuCouponVo = new SkuCouponVo(goodsSkuPo);
         SkuToCouponVo skuToCouponVo=new SkuToCouponVo();
-
         skuToCouponVo.setDisable(skuCouponVo.getDisable());
         skuToCouponVo.setGoodsSn(skuCouponVo.getGoodsSn());
         skuToCouponVo.setId(skuCouponVo.getId());
@@ -101,7 +101,6 @@ public class GoodsService implements Ingoodservice {
         skuToCouponVo.setOriginalPrice(skuCouponVo.getOriginalPrice());
         skuToCouponVo.setName(skuCouponVo.getName());
         return skuToCouponVo;
-
     }
 
     /**

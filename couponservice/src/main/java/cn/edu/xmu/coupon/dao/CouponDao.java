@@ -9,8 +9,8 @@ import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityRetVo;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.coupon.model.bo.SkuToCoupon;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
-import cn.edu.xmu.coupon.model.vo.CouponActivityRetVo;
 import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -183,17 +183,23 @@ public class CouponDao {
     public ReturnObject<PageInfo<VoObject>> viewGoodsInCouponById(Integer page, Integer pageSize, List<SkuToCouponVo> skuToCouponVos) {
         PageHelper.startPage(page, pageSize);
         List<VoObject> ret = new ArrayList<>(skuToCouponVos.size());
-        for (SkuToCouponVo vo : skuToCouponVos) {
-            SkuToCouponVo com = new SkuToCouponVo(vo);
-            ret.add((VoObject) com);
+        try {
+            for (SkuToCouponVo vo : skuToCouponVos) {
+                SkuToCoupon sku = new SkuToCoupon(vo);
+                ret.add(sku);
+            }
+            PageInfo<VoObject> rolePage = PageInfo.of(ret);
+            PageInfo<SkuToCouponVo> commentPoPage = PageInfo.of(skuToCouponVos);
+            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
+            commentPage.setPages(commentPoPage.getPages());
+            commentPage.setPageNum(commentPoPage.getPageNum());
+            commentPage.setPageSize(commentPoPage.getPageSize());
+            commentPage.setTotal(commentPoPage.getTotal());
+            return new ReturnObject<>(rolePage);
         }
-        PageInfo<VoObject> rolePage = PageInfo.of(ret);
-        PageInfo<SkuToCouponVo> commentPoPage = PageInfo.of(skuToCouponVos);
-        PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-        commentPage.setPages(commentPoPage.getPages());
-        commentPage.setPageNum(commentPoPage.getPageNum());
-        commentPage.setPageSize(commentPoPage.getPageSize());
-        commentPage.setTotal(commentPoPage.getTotal());
-        return new ReturnObject<>(rolePage);
+        catch (DataAccessException e) {
+            logger.error("showOwnInvalidcouponacitvitiesByid: DataAccessException:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
     }
 }
