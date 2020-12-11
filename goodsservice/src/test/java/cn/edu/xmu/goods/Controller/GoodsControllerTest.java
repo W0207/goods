@@ -74,6 +74,20 @@ public class GoodsControllerTest {
      */
     @Test
     public void findGoodsSkuById() throws Exception {
+        String token1 = creatTestToken(1L, 0L, 100);
+        String requireJson1 = "{\n" +
+                "  \"activityPrice\": 222,\n" +
+                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
+                "  \"quantity\": 1\n" +
+                "}";
+        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token1)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString1);
+
         String responseString = this.mvc.perform(get("/goods/skus/273"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))

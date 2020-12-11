@@ -1,11 +1,8 @@
 package cn.edu.xmu.ininterface.service.model.vo;
 
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
-public class SkuToPresaleVo implements Serializable {
-
+public class SkuToFlashSaleVo implements Serializable {
     private Long id;
 
     private String name;
@@ -22,7 +19,7 @@ public class SkuToPresaleVo implements Serializable {
 
     private Boolean disable = false;
 
-    public SkuToPresaleVo(Long id, String name, String skuSn, String imageUrl, Integer inventory, Long originalPrice, Long price, Boolean disable) {
+    public SkuToFlashSaleVo(Long id, String name, String skuSn, String imageUrl, Integer inventory, Long originalPrice, Long price, Boolean disable) {
         this.id = id;
         this.name = name;
         this.skuSn = skuSn;
@@ -96,5 +93,4 @@ public class SkuToPresaleVo implements Serializable {
     public void setDisable(Boolean disable) {
         this.disable = disable;
     }
-
 }

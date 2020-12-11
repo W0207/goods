@@ -1,4 +1,5 @@
 package cn.edu.xmu.flashsale.model.bo;
+
 import cn.edu.xmu.flashsale.model.po.FlashSalePo;
 import cn.edu.xmu.ooad.util.*;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FlashSale implements VoObject{
+public class FlashSale implements VoObject {
     /**
      * 秒杀活动状态
      */
@@ -48,6 +49,7 @@ public class FlashSale implements VoObject{
             return description;
         }
     }
+
     Long id;
 
     LocalDateTime flashData;
@@ -60,26 +62,27 @@ public class FlashSale implements VoObject{
 
     LocalDateTime gmtModified;
 
-    public FlashSale(FlashSalePo po){
-        this.id=po.getId()==null ? null : po.getId();
-        this.flashData=po.getFlashDate()==null ? null : po.getFlashDate();
-        this.timeSegId=po.getTimeSegId()==null ? null :po.getTimeSegId();
-        this.gmtCreate=po.getGmtCreate() == null ? null :po.getGmtCreate();
-        this.gmtModified=po.getGmtModified()==null ? null : po.getGmtModified();
+    public FlashSale(FlashSalePo po) {
+        this.id = po.getId() == null ? null : po.getId();
+        this.flashData = po.getFlashDate() == null ? null : po.getFlashDate();
+        this.timeSegId = po.getTimeSegId() == null ? null : po.getTimeSegId();
+        this.gmtCreate = po.getGmtCreate() == null ? null : po.getGmtCreate();
+        this.gmtModified = po.getGmtModified() == null ? null : po.getGmtModified();
     }
 
-    public FlashSalePo createUpdatePo(FlashSaleInputVo flashSaleInputVo){
-        FlashSalePo po=new FlashSalePo();
+    public FlashSalePo createUpdatePo(FlashSaleInputVo flashSaleInputVo) {
+        FlashSalePo po = new FlashSalePo();
         po.setId(this.id);
-        LocalDateTime flashEnc=flashSaleInputVo.getFlashDate()==null ? null : flashSaleInputVo.getFlashDate();
+        LocalDateTime flashEnc = flashSaleInputVo.getFlashDate() == null ? null : flashSaleInputVo.getFlashDate();
         po.setFlashDate(flashEnc);
         po.setTimeSegId(this.timeSegId);
         po.setGmtCreate(this.gmtCreate);
         po.setGmtModified(LocalDateTime.now());
-        return  po;
+        return po;
     }
 
-    public FlashSale () {}
+    public FlashSale() {
+    }
 
     @Override
     public Object createVo() {

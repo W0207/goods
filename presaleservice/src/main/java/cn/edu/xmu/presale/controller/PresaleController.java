@@ -89,32 +89,17 @@ public class PresaleController {
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
     @PostMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object AddPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo)
-    {
+    public Object AddPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
         System.out.println("aaaaa");
         ReturnObject returnObject = null;
-        SkuToPresaleVo spuToPresaleVo = goodservice.presaleFindSku(id);
-        if(spuToPresaleVo==null) {
-            //Object returnObject = goodservice.echo2("123");
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuID不存在"));
-        }else {
-            ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-            if(shopToAllVo ==null){
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("shopID不存在"));
-            }
-            else {
-                PresaleActivityRetVo presaleActivityRetVo= presaleService.AddPresaleActivity(presaleActivityVo);
-                presaleActivityRetVo.setShopToAllVo(shopToAllVo);
-                presaleActivityRetVo.setSpuToPresaleVo(spuToPresaleVo);
-                returnObject = new ReturnObject(presaleActivityRetVo);
-            }
-        }
+        returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         return Common.decorateReturnObject(returnObject);
     }
 
 
     /**
      * 查询所有有效的活动
+     *
      * @param shopId
      * @param timeLine
      * @param skuId
@@ -134,15 +119,14 @@ public class PresaleController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer pageSize
 
-    ){
-        logger.debug("selectAllRoles: shopId = "+ shopId +"  timeLine ="+timeLine+"  spuId ="+skuId+"  page = "+page+"  pageSize"+pageSize);
-        ReturnObject returnObject= presaleService.selectAllPresale(shopId, timeLine, skuId, page, pageSize);
+    ) {
+        logger.debug("selectAllRoles: shopId = " + shopId + "  timeLine =" + timeLine + "  spuId =" + skuId + "  page = " + page + "  pageSize" + pageSize);
+        ReturnObject returnObject = presaleService.selectAllPresale(shopId, timeLine, skuId, page, pageSize);
         return Common.decorateReturnObject(returnObject);
     }
 
 
     /**
-     *
      * @param shopId
      * @param id
      * @param vo
@@ -155,13 +139,12 @@ public class PresaleController {
     })
     //@Audit
     @PutMapping("/shops/{shopId}/presales/{id}")
-    public Object modifyPresale(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo vo){
+    public Object modifyPresale(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo vo) {
         return Common.decorateReturnObject(presaleService.modifyPresale(shopId, id, vo));
     }
 
 
     /**
-     *
      * @param shopId
      * @param id
      * @return
@@ -173,13 +156,12 @@ public class PresaleController {
     })
     //@Audit
     @DeleteMapping("/shops/{shopId}/presales/{id}")
-    public Object deletePresale(@PathVariable Long shopId, @PathVariable Long id){
+    public Object deletePresale(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(presaleService.deletePresale(shopId, id));
     }
 
 
     /**
-     *
      * @param shopId
      * @param id
      * @param state
@@ -192,10 +174,29 @@ public class PresaleController {
             @ApiImplicitParam(name = "state", required = false, dataType = "Integer", paramType = "path", value = "state")
     })
     @GetMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object queryPresaleofSPU(@PathVariable Long shopId, @PathVariable Long id, @RequestParam Integer state)
-    {
+    public Object queryPresaleofSPU(@PathVariable Long shopId, @PathVariable Long id, @RequestParam Integer state) {
         ReturnObject returnObject = presaleService.queryPresaleofSKU(shopId, id, state);
-        return  Common.decorateReturnObject(returnObject);
+        return Common.decorateReturnObject(returnObject);
+    }
+
+    @ApiOperation(value = "管理员上线预售活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
+    })
+    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    public Object presaleOnShelves(@PathVariable Long shopId, @PathVariable Long id) {
+        return Common.decorateReturnObject(presaleService.presaleOnShelves(shopId, id));
+    }
+
+    @ApiOperation(value = "管理员下线预售活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
+    })
+    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    public Object presaleOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
+        return Common.decorateReturnObject(presaleService.presaleOffShelves(shopId, id));
     }
 
 }

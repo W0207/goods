@@ -12,6 +12,7 @@ import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponStateVo;
+import cn.edu.xmu.coupon.model.vo.*;
 import cn.edu.xmu.coupon.service.CouponActivityService;
 import cn.edu.xmu.coupon.service.CouponService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
@@ -237,7 +238,14 @@ public class CouponController {
         return returnObject;
     }
 
-
+    /**
+     * 管理员新建己方优惠活动
+     * by YU
+     *
+     * @param shopId
+     * @param vo
+     * @return
+     */
     @ApiOperation(value = "管理员新建己方优惠活动")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
@@ -278,6 +286,7 @@ public class CouponController {
 
     /**
      * 查看优惠活动中的商品
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -304,7 +313,8 @@ public class CouponController {
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
         return Common.getPageRetObject(returnObject);
     }
-        /**
+
+    /**
      * 上传优惠活动照片
      *
      * @author shibin zhan
@@ -328,5 +338,70 @@ public class CouponController {
         logger.debug("uploadCouponActivityImage: shopId = " + shopId + " spuId = " + id + " img :" + multipartFile.getOriginalFilename());
         ReturnObject returnObject = couponActivityService.uploadCouponActivityImg(shopId, id, multipartFile);
         return Common.getNullRetObj(returnObject, httpServletResponse);
+    }
+
+    /**
+     * by YU
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation("上线优惠活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
+    })
+    @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
+    public Object CouponActivityOnShelves(@PathVariable Long shopId, @PathVariable Long id) {
+        return Common.decorateReturnObject(couponActivityService.CouponActivityOnShelves(shopId, id));
+    }
+
+    /**
+     * by YU
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation("下线优惠活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
+    })
+    @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
+    public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
+        return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
+    }
+
+
+    /**
+     * by 宇
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    @ApiOperation("管理员删除己方优惠活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
+    })
+    @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
+    public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id) {
+        return Common.decorateReturnObject(couponActivityService.deleteCouponActivity(shopId, id));
+    }
+
+    @ApiOperation("买家领取活动优惠券")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
+    })
+    @PostMapping("/couponactivities/{id}/usercoupons")
+    public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId) {
+        return Common.decorateReturnObject(couponService.userGetCoupon(id, userId));
     }
 }
