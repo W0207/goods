@@ -62,6 +62,8 @@ public class GoodsDao {
         return goodsSkuPo;
     }
 
+
+
     /**
      * 查找spu
      *
@@ -78,15 +80,14 @@ public class GoodsDao {
     }
 
     /**
-     * 修改sku状态
+     * 上架商品(上架未上架未删除的商品)
      *
-     * @param shopId 店铺id
-     * @param skuId  sku id
-     * @param code   spu状态码
-     * @return ReturnObject
-     * @author shibin zhan
+     * @param shopId
+     * @param skuId
+     * @param code
+     * @return
      */
-    public ReturnObject<Object> updateGoodsSkuState(Long shopId, Long skuId, Long code) {
+    public ReturnObject<Object> putGoodsOnSaleById(Long shopId, Long skuId, Long code) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
             logger.debug("sku或禁止访问");
@@ -96,25 +97,126 @@ public class GoodsDao {
         if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
+        if (goodsSkuPo.getState() == 6) {
+            logger.debug("sku已删除");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if (goodsSkuPo.getState() == 4) {
+            logger.debug("sku已上架");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
         ReturnObject<Object> returnObject;
-        int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
-        // 检查更新有否成功
-        if (ret == 0) {
-            logger.info("商品不存在或已被删除：skuId = " + skuId);
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        } else {
-            if (code == 4) {
+        try {
+            int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("商品不存在或已被删除：skuId = " + skuId);
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            } else {
                 logger.info("skuId = " + skuId + "已上架");
-            } else if (code == 0) {
-                logger.info("skuId = " + skuId + "已下架");
-            } else if (code == 6) {
-                logger.info("skuId = " + skuId + "已删除");
+                returnObject = new ReturnObject<>();
             }
-            returnObject = new ReturnObject<>();
+            return returnObject;
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
         }
-        return returnObject;
+    }
+
+    /**
+     * 下架商品(下架上架，未删除的商品)
+     *
+     * @param shopId 店铺id
+     * @param skuId  sku id
+     * @param code   spu状态码
+     * @return ReturnObject
+     * @author shibin zhan
+     */
+    public ReturnObject<Object> putOffGoodsOnSaleById(Long shopId, Long skuId, Long code) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
+            logger.debug("sku或禁止访问");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
+        if (!shopid.equals(shopId)) {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        if (goodsSkuPo.getState() == 6) {
+            logger.debug("sku已删除");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if (goodsSkuPo.getState() == 0) {
+            logger.debug("sku已下架");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
+        GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
+        ReturnObject<Object> returnObject;
+        try {
+            int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("商品不存在或已被删除：skuId = " + skuId);
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            } else {
+                logger.info("skuId = " + skuId + "已下架");
+                returnObject = new ReturnObject<>();
+            }
+            return returnObject;
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        }
+
+    }
+
+    /**
+     * 逻辑删除(删除未上架，未删除)
+     *
+     * @param shopId
+     * @param skuId
+     * @param code
+     * @return
+     */
+    public ReturnObject<Object> deleteSkuById(Long shopId, Long skuId, Long code) {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
+        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
+            logger.debug("sku或禁止访问");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
+        if (!shopid.equals(shopId)) {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        if (goodsSkuPo.getState() == 6) {
+            logger.debug("sku已删除");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if (goodsSkuPo.getState() == 4) {
+            logger.debug("sku已上架");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
+        GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
+        ReturnObject<Object> returnObject;
+        try {
+            int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("商品不存在或已被删除：skuId = " + skuId);
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            } else {
+                logger.info("skuId = " + skuId + "已删除");
+                returnObject = new ReturnObject<>();
+            }
+            return returnObject;
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        }
     }
 
     /**
@@ -372,7 +474,7 @@ public class GoodsDao {
      * @param id
      * @return
      */
-    public GoodsCategoryPo getCategoryByid(Long id) {
+    public GoodsCategoryPo getCategoryById(Long id) {
         return goodsCategoryPoMapper.selectByPrimaryKey(id);
     }
 
@@ -416,21 +518,26 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject<Object> deleteBrandById(Long id) {
-        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-        if (brandPo == null) {
-            logger.info("品牌不存在");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        try {
+            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+            if (brandPo == null) {
+                logger.info("品牌不存在");
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            ReturnObject<Object> returnObject;
+            int ret = brandPoMapper.deleteByPrimaryKey(id);
+            // 检查更新有否成功
+            if (ret == 0) {
+                logger.info("品牌不存在");
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            } else {
+                returnObject = new ReturnObject<>();
+            }
+            return returnObject;
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
         }
-        ReturnObject<Object> returnObject;
-        int ret = brandPoMapper.deleteByPrimaryKey(id);
-        // 检查更新有否成功
-        if (ret == 0) {
-            logger.info("品牌不存在");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        } else {
-            returnObject = new ReturnObject<>();
-        }
-        return returnObject;
     }
 
     /**
@@ -761,7 +868,7 @@ public class GoodsDao {
         skuReturnVo.setWeight(goodsSkuPo.getWeight());
         skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
         skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
-        skuReturnVo.setDisable(goodsSkuPo.getDisabled() == 0 ? false : true);
+        skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
         SpuRetVo spuRetVo = getSpuRetVo(id);
         skuReturnVo.setSpu(spuRetVo);
         return new ReturnObject(skuReturnVo);
@@ -906,5 +1013,4 @@ public class GoodsDao {
         SkuOutputVo skuOutputVo = new SkuOutputVo(po);
         return skuOutputVo;
     }
-
 }

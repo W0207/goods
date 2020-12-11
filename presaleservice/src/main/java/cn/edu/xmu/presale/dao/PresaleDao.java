@@ -2,6 +2,8 @@ package cn.edu.xmu.presale.dao;
 
 import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
+import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.presale.mapper.PresaleActivityPoMapper;
@@ -22,19 +24,51 @@ import java.util.List;
 @Repository
 public class PresaleDao {
 
-    @DubboReference
-    private InShopService inShopService;
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private Ingoodservice goodservice;
 
-    @DubboReference
-    private Ingoodservice ingoodservice;
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private InShopService inShopService;
 
     @Autowired
     private PresaleActivityPoMapper presaleActivityPoMapper;
 
-    public Long inserPresaleActivity(PresaleActivityPo presaleActivityPo)
+    public ReturnObject inserPresaleActivity(Long shopId,Long id,PresaleActivityVo presaleActivityVo)
     {
-        int ret = presaleActivityPoMapper.insertSelective(presaleActivityPo);
-        return (long)ret;
+        ReturnObject returnObject = null;
+        ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
+        if(!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())){
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"inserPresaleActivity,结束时间小于开始时间");
+        }
+        if(shopToAllVo.equals(null)){
+            //店铺id不存在
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"inserPresaleActivity,shopId不存在");
+        } else {
+            SkuToPresaleVo skuToPresaleVo = goodservice.presaleFindSku(id);
+            if(skuToPresaleVo.equals(null)){
+                //sku不存在
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"inserPresaleActivity,skuId不存在");
+            } else {
+              //判断sku在不在shop里
+              if(!goodservice.skuInShopOrNot(shopId,id)){
+                  //不在商店里
+                  returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"inserPresaleActivity,skuId不在shopId里");
+              } else {
+                  PresaleActivityPo presaleActivityPo = presaleActivityVo.creatPo();
+                  presaleActivityPo.setState((byte)0);
+                  presaleActivityPo.setGmtCreate(LocalDateTime.now());
+                  int retId = presaleActivityPoMapper.insert(presaleActivityPo);
+                  PresaleActivityRetVo vo = new PresaleActivityRetVo(presaleActivityPo);
+                  vo.setId((long)retId);
+                  vo.setShopToAllVo(shopToAllVo);
+                  vo.setSkuToPresaleVo(skuToPresaleVo);
+                  returnObject = new ReturnObject(vo);
+              }
+            }
+        }
+        return returnObject
     }
 
     public ReturnObject<PageInfo<PresaleActivityRetVo>> findAllPresale(Long shopId, Integer timeLine, Long skuId, Integer page,Integer pageSize)
@@ -104,7 +138,7 @@ public class PresaleDao {
                 //预售活动的shopId与路径上的不同
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("修改预售信息的时候，预售活动的shopId与路径上的不同"));
             } else {
-                if(presaleActivityPo.getState()== 1){
+                if(presaleActivityPo.getState()== 2){
                     //预售活动已经关闭
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
@@ -172,12 +206,63 @@ public class PresaleDao {
             for(PresaleActivityPo po: presaleActivityPos){
                 PresaleActivityRetVo vo = new PresaleActivityRetVo(po);
                 vo.setShopToAllVo(inShopService.presaleFindShop(shopId));
-                vo.setSpuToPresaleVo(ingoodservice.presaleFindSku(id));
+                vo.setSkuToPresaleVo(goodservice.presaleFindSku(id));
                 presaleActivityRetVos.add(vo);
             }
             return new ReturnObject(presaleActivityRetVos);
         }
         return returnObject;
+    }
 
+    public ReturnObject presaleOnShelves(Long shopId,Long id) {
+        ReturnObject returnObject = null;
+        PresaleActivityPo po = presaleActivityPoMapper.selectByPrimaryKey(id);
+        if(po.equals(null)){
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,活动id不存在");
+        } else {
+            if(!po.getShopId().equals(shopId)){
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,shopID不一致");
+            }
+            else {
+                if(po.getState().equals((byte)2)){
+                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,预售状态不允许改变");
+                } else {
+                    if(po.getState().equals((byte)1)){
+                        return new ReturnObject();
+                    }
+                    po.setState((byte)1);
+                    po.setGmtModified(LocalDateTime.now());
+                    presaleActivityPoMapper.updateByPrimaryKey(po);
+                    returnObject = new ReturnObject();
+                }
+            }
+        }
+        return returnObject;
+    }
+
+    public ReturnObject presaleOffShelves(Long shopId,Long id) {
+        ReturnObject returnObject = null;
+        PresaleActivityPo po = presaleActivityPoMapper.selectByPrimaryKey(id);
+        if(po.equals(null)){
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,活动id不存在");
+        } else {
+            if(!po.getShopId().equals(shopId)){
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,shopID不一致");
+            }
+            else {
+                if(po.getState().equals((byte)2)){
+                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"presaleOnShelves,预售状态不允许改变");
+                } else {
+                    if(po.getState().equals((byte)0)){
+                        return new ReturnObject();
+                    }
+                    po.setState((byte)0);
+                    po.setGmtModified(LocalDateTime.now());
+                    presaleActivityPoMapper.updateByPrimaryKey(po);
+                    returnObject = new ReturnObject();
+                }
+            }
+        }
+        return returnObject;
     }
 }

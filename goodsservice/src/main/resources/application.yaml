@@ -95,6 +95,8 @@ pagehelper:
 
 cloud:
   nacos:
+    username: nacos
+    password: nacos
     discovery:
       server-addr: localhost:8848
 
@@ -113,3 +115,4 @@ dubbo:
         threads=10:
   registry:
     address: nacos://localhost:8848
+
