@@ -116,4 +116,18 @@ public class CouponActivityService {
             return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         }
     }
+
+    public ReturnObject CouponActivityOnShelves(Long shopId,Long id)
+    {
+        return couponActivityDao.CouponActivityOnShelves(shopId, id);
+    }
+
+    public ReturnObject CouponActivityOffShelves(Long shopId,Long id)
+    {
+        return couponActivityDao.CouponActivityOffShelves(shopId, id);
+    }
+
+    public ReturnObject deleteCouponActivity(Long shopId,Long id){
+        return couponActivityDao.deleteCouponActivity(shopId, id);
+    }
 }
