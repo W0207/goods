@@ -305,7 +305,12 @@ public class CouponController {
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
             SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
-            skuToCouponVos.add(vo);
+            if(vo==null) {
+
+            }
+            else {
+                skuToCouponVos.add(vo);
+            }
         }
         logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
         page = (page == null) ? 1 : page;
