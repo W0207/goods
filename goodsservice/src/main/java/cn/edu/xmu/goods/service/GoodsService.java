@@ -11,6 +11,7 @@ import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
+import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Console;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +38,7 @@ import cn.edu.xmu.ininterface.service.Ingoodservice;
  * @author Abin
  */
 @Service
-//@DubboService(version = "0.0.1")
+@DubboService(version = "0.0.1")
 public class GoodsService implements Ingoodservice {
 
     @Autowired
@@ -60,18 +62,42 @@ public class GoodsService implements Ingoodservice {
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-        if (goodsSkuPo == null||!goodsSkuPo.getDisabled().equals(0)) {
+        if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals(0)) {
             return null;
         }
-        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo(goodsSkuPo.getId(),goodsSkuPo.getName(),goodsSkuPo.getSkuSn(),goodsSkuPo.getImageUrl(),goodsSkuPo.getInventory(),goodsSkuPo.getOriginalPrice(),goodsDao.getPrice(id),false);
+        SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo(goodsSkuPo.getId(), goodsSkuPo.getName(), goodsSkuPo.getSkuSn(), goodsSkuPo.getImageUrl(), goodsSkuPo.getInventory(), goodsSkuPo.getOriginalPrice(),
+                goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() == 0 ? false : true);
         return skuToPresaleVo;
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Override
+    public SkuToFlashSaleVo flashFindSku(Long id) {
+        try {
+            GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
+            if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals(0)) {
+                return null;
+            }
+            SkuToFlashSaleVo skuToFlashSaleVo = new SkuToFlashSaleVo(goodsSkuPo.getId(), goodsSkuPo.getName(), goodsSkuPo.getSkuSn(), goodsSkuPo.getImageUrl(), goodsSkuPo.getInventory(), goodsSkuPo.getOriginalPrice(),
+                    goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() == 0 ? false : true);
+            return skuToFlashSaleVo;
+        } catch (Exception e) {
+            logger.error("findAllBrand: DataAccessException:" + e.getMessage());
+            return null;
+        }
+    }
 
+    /**
+     * @param skuId
+     * @return
+     */
+    @Override
     public boolean skuExitOrNot(Long skuId) {
         GoodsSkuPo po = goodsDao.findGoodsSkuById(skuId);
-        if(!po.equals(null)){
+        if (!po.equals(null)) {
             return true;
         }
         return false;
@@ -83,14 +109,15 @@ public class GoodsService implements Ingoodservice {
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(goodsSkuPo.getGoodsSpuId());
         return shopId.equals(goodsSpuPo.getShopId());
     }
-      
-    public SkuToCouponVo couponActivityFindSku(Long id)  {
+
+    public SkuToCouponVo couponActivityFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
         if (goodsSkuPo == null) {
             return null;
         }
         SkuCouponVo skuCouponVo = new SkuCouponVo(goodsSkuPo);
-        SkuToCouponVo skuToCouponVo=new SkuToCouponVo();
+
+        SkuToCouponVo skuToCouponVo = new SkuToCouponVo();
 
         skuToCouponVo.setDisable(skuCouponVo.getDisable());
         skuToCouponVo.setGoodsSn(skuCouponVo.getGoodsSn());
@@ -182,7 +209,7 @@ public class GoodsService implements Ingoodservice {
      * @return
      */
     public ReturnObject putGoodsOnSaleById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 4L);
+        return goodsDao.putGoodsOnSaleById(shopId, skuId, 4L);
     }
 
     /**
@@ -192,7 +219,7 @@ public class GoodsService implements Ingoodservice {
      * @return ReturnObject
      */
     public ReturnObject putOffGoodsOnSaleById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 0L);
+        return goodsDao.putOffGoodsOnSaleById(shopId, skuId, 0L);
     }
 
     /**
@@ -203,7 +230,7 @@ public class GoodsService implements Ingoodservice {
      * @return ReturnObject
      */
     public ReturnObject deleteSkuById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 6L);
+        return goodsDao.deleteSkuById(shopId, skuId, 6L);
     }
 
     /**
@@ -508,7 +535,7 @@ public class GoodsService implements Ingoodservice {
                 logger.debug("spu增加种类的时候，shopid不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");
             } else {
-                GoodsCategoryPo goodsCategoryPo = goodsDao.getCategoryByid(id);
+                GoodsCategoryPo goodsCategoryPo = goodsDao.getCategoryById(id);
                 if (goodsCategoryPo == null) {
                     logger.debug("spu增加种类的时候，CategoriesId不存在");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");

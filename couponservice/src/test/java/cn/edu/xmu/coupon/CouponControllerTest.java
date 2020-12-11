@@ -227,7 +227,7 @@ public class CouponControllerTest {
     }
 
     /**
-     * 查看优惠活动中的商品
+     * 查看优惠活动中的商品-返回列表为空
      * @return Object
      * by 菜鸡骞
      */
@@ -239,6 +239,25 @@ public class CouponControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+    }
+
+
+    /**
+     * 查看优惠活动中的商品
+     * @return Object
+     * by 菜鸡骞
+     */
+    @Test
+    public void viewGoodsInCoupon1() throws Exception {
+
+        String token = creatTestToken(1L, 123L, 100);
+        String responseString = this.mvc.perform(get("/coupon/couponactivities/2/skus").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
     }
 

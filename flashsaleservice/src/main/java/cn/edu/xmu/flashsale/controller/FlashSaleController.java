@@ -32,6 +32,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 权限控制器
  **/
@@ -49,6 +50,7 @@ public class FlashSaleController {
 
     /**
      * 管理员修改秒杀活动
+     *
      * @param id
      * @param flashSaleInputVo
      * @return
@@ -57,7 +59,7 @@ public class FlashSaleController {
     @ApiOperation(value = "管理员修改秒杀活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
-            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path" ,value = "秒杀活动id"),
+            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path", value = "秒杀活动id"),
             @ApiImplicitParam(name = "flashSaleInputVo", value = "可修改的秒杀活动信息", required = true, dataType = "FlashSaleInputVo", paramType = "body"),
 
     })
@@ -66,22 +68,24 @@ public class FlashSaleController {
     })
     //@Audit // 需要认证
     @PutMapping("/flashsales/{id}")
-    public Object updateflashsale(@PathVariable Long id ,@Validated @RequestBody FlashSaleInputVo flashSaleInputVo ,BindingResult bindingResult) {
+    public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("updateflashsale: id = " + id);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while updateflashsale flashSaleID = "+ id);
+            logger.info("incorrect data received while updateflashsale flashSaleID = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = flashSaleService.updateFlashSale(id,flashSaleInputVo);
+        ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
         return Common.decorateReturnObject(returnObj);
 
     }
+
     /**
-     *平台管理员删除某个时段秒杀
+     * 平台管理员删除某个时段秒杀
+     *
      * @param id
      * @return
      * @author zhai
@@ -89,8 +93,8 @@ public class FlashSaleController {
     @ApiOperation(value = "平台管理员删除某个时段秒杀")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
-            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path" ,value = "秒杀活动id"),
-             })
+            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path", value = "秒杀活动id"),
+    })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
@@ -106,11 +110,10 @@ public class FlashSaleController {
     }
 
 
-
     @ApiOperation(value = "平台管理员向秒杀活动添加商品SKU")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
-            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path" ,value = "秒杀活动id"),
+            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path", value = "秒杀活动id"),
             @ApiImplicitParam(name = "skuInputVo", value = "向秒杀活动添加的SKU信息", required = true, dataType = "SkuInputVo", paramType = "body"),
 
     })
@@ -119,24 +122,25 @@ public class FlashSaleController {
     })
     //@Audit // 需要认证
     @PostMapping("/flashsales/{id}/flashitems")
-    public Object addSKUofTopic(@PathVariable Long id ,@Validated @RequestBody SkuInputVo skuInputVo ,BindingResult bindingResult) {
+    public Object addSKUofTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSKUofTopic id = " + id);
         }
         // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
-            logger.info("incorrect data received while addSKUofTopic flashSaleID = "+ id);
+            logger.info("incorrect data received while addSKUofTopic flashSaleID = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = flashSaleService.addFlashSaleItem(id,skuInputVo);
+        ReturnObject returnObj = flashSaleService.addFlashSaleItem(id, skuInputVo);
         returnObject = ResponseUtil.ok(returnObj.getData());
         return returnObject;
 
     }
 
     /**
-     *平台管理员在秒杀活动删除商品SKU
+     * 平台管理员在秒杀活动删除商品SKU
+     *
      * @param id
      * @param fid
      * @return
@@ -145,7 +149,7 @@ public class FlashSaleController {
     @ApiOperation(value = "平台管理员在秒杀活动删除商品SKU")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
-            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path" ,value = "秒杀活动id"),
+            @ApiImplicitParam(name = "fid", required = true, dataType = "Integer", paramType = "path", value = "秒杀活动id"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀活动项Id")
     })
     @ApiResponses({
@@ -162,4 +166,24 @@ public class FlashSaleController {
 
     }
 
+    @ApiOperation(value = "平台管理员在某个时间段下新建秒杀")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "did", required = true, dataType = "Integer", paramType = "path", value = "店铺id"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀时间段"),
+            @ApiImplicitParam(name = "flashInputVo", required = true, dataType = "FlashInputVo", paramType = "body", value = "添加的秒杀信息")
+    })
+    @Audit
+    @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
+    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("createFlashSale : id = " + id);
+        }
+        if (did == 0) {
+            ReturnObject returnObject = flashSaleService.createFlash(id, flashSaleInputVo);
+            return Common.decorateReturnObject(returnObject);
+        } else {
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+    }
 }
