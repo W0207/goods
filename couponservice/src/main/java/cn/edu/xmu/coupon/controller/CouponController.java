@@ -55,7 +55,7 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
-    
+
     @Autowired
     private CouponSkuPoMapper couponSkuPoMapper;
 
@@ -241,6 +241,7 @@ public class CouponController {
     /**
      * 管理员新建己方优惠活动
      * by YU
+     *
      * @param shopId
      * @param vo
      * @return
@@ -285,6 +286,7 @@ public class CouponController {
 
     /**
      * 查看优惠活动中的商品
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -297,12 +299,18 @@ public class CouponController {
 
         CouponSkuPoExample couponSkuPoExample = new CouponSkuPoExample();
         CouponSkuPoExample.Criteria criteria = couponSkuPoExample.createCriteria();
-        List<CouponSkuPo> couponSkuPos = null;
-        List<SkuToCouponVo> skuToCouponVos = null;
+        List<CouponSkuPo> couponSkuPos = new ArrayList<CouponSkuPo>();
+        List<SkuToCouponVo> skuToCouponVos = new ArrayList<SkuToCouponVo>();
         criteria.andActivityIdEqualTo(id);
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
-            skuToCouponVos.add(goodservice.couponActivityFindSku(po.getSkuId()));
+            SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
+            if(vo==null) {
+
+            }
+            else {
+                skuToCouponVos.add(vo);
+            }
         }
         logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
         page = (page == null) ? 1 : page;
@@ -310,7 +318,8 @@ public class CouponController {
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
         return Common.getPageRetObject(returnObject);
     }
-        /**
+
+    /**
      * 上传优惠活动照片
      *
      * @author shibin zhan
@@ -335,8 +344,10 @@ public class CouponController {
         ReturnObject returnObject = couponActivityService.uploadCouponActivityImg(shopId, id, multipartFile);
         return Common.getNullRetObj(returnObject, httpServletResponse);
     }
+
     /**
      * by YU
+     *
      * @param shopId
      * @param id
      * @return
@@ -348,13 +359,13 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
-    public Object CouponActivityOnShelves(@PathVariable Long shopId,@PathVariable Long id)
-    {
+    public Object CouponActivityOnShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOnShelves(shopId, id));
     }
 
     /**
      * by YU
+     *
      * @param shopId
      * @param id
      * @return
@@ -366,14 +377,14 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
-    public Object CouponActivityOffShelves(@PathVariable Long shopId,@PathVariable Long id)
-    {
+    public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
     }
 
 
     /**
      * by 宇
+     *
      * @param shopId
      * @param id
      * @return
@@ -385,8 +396,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
-    public Object deleteCouponActivity(@PathVariable Long shopId,@PathVariable Long id)
-    {
+    public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(couponActivityService.deleteCouponActivity(shopId, id));
     }
 
@@ -396,7 +406,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @PostMapping("/couponactivities/{id}/usercoupons")
-    public Object userGetCoupon(@PathVariable Long id,@LoginUser Long userId){
+    public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId) {
         return Common.decorateReturnObject(couponService.userGetCoupon(id, userId));
     }
 }

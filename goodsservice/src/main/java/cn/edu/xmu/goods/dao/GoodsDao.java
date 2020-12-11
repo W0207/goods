@@ -47,6 +47,22 @@ public class GoodsDao {
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
     /**
+     * 已下架
+     */
+    public static final byte OFFSALE = 0;
+
+    /**
+     * 已上架
+     */
+    public static final byte ONSALE = 4;
+
+    /**
+     * 已删除
+     */
+    public static final byte DELETED = 6;
+
+
+    /**
      * 查找sku
      *
      * @param id
@@ -61,8 +77,6 @@ public class GoodsDao {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
         return goodsSkuPo;
     }
-
-
 
     /**
      * 查找spu
@@ -97,11 +111,11 @@ public class GoodsDao {
         if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if (goodsSkuPo.getState() == 6) {
+        if (goodsSkuPo.getState() == DELETED) {
             logger.debug("sku已删除");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (goodsSkuPo.getState() == 4) {
+        if (goodsSkuPo.getState() == ONSALE) {
             logger.debug("sku已上架");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -144,11 +158,11 @@ public class GoodsDao {
         if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if (goodsSkuPo.getState() == 6) {
+        if (goodsSkuPo.getState() == DELETED) {
             logger.debug("sku已删除");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (goodsSkuPo.getState() == 0) {
+        if (goodsSkuPo.getState() == OFFSALE) {
             logger.debug("sku已下架");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -191,11 +205,11 @@ public class GoodsDao {
         if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if (goodsSkuPo.getState() == 6) {
+        if (goodsSkuPo.getState() == DELETED) {
             logger.debug("sku已删除");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (goodsSkuPo.getState() == 4) {
+        if (goodsSkuPo.getState() == ONSALE) {
             logger.debug("sku已上架");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -427,9 +441,9 @@ public class GoodsDao {
         return returnObject;
     }
 
-    //修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
-
     /**
+     * 修改全部信息，针对有些值要设置为null的时候修改部分信息不能将参数传进去修改
+     *
      * @param goodsSpuPo
      * @return
      */
@@ -565,7 +579,7 @@ public class GoodsDao {
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 logger.info("brandId = " + id + " 的信息已更新");
-                returnObject = new ReturnObject<>();
+                returnObject = new ReturnObject<>(ResponseCode.OK);
             }
             return returnObject;
         } else {
@@ -581,15 +595,20 @@ public class GoodsDao {
      */
     public BrandPo addBrandById(BrandInputVo brandInputVo) {
         Brand brand = new Brand();
-        BrandPo brandPo = brand.createAddPo(brandInputVo);
-        int ret = brandPoMapper.insertSelective(brandPo);
-        if (ret == 0) {
-            //检查新增是否成功
-            brandPo = null;
-        } else {
-            logger.info("品牌已新建成功");
+        try {
+            BrandPo brandPo = brand.createAddPo(brandInputVo);
+            int ret = brandPoMapper.insertSelective(brandPo);
+            if (ret == 0) {
+                //检查新增是否成功
+                brandPo = null;
+            } else {
+                logger.info("品牌已新建成功");
+            }
+            return brandPo;
+        } catch (Exception e) {
+            logger.error("exception:" + e.getMessage());
+            return null;
         }
-        return brandPo;
     }
 
     /**

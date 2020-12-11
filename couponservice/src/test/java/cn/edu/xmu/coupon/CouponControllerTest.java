@@ -239,8 +239,10 @@ public class CouponControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
     }
+    
 
     @Test
     public void uploadSpuImage() throws Exception {
