@@ -154,7 +154,7 @@ public class GoodsService implements Ingoodservice {
      * @return
      */
     public ReturnObject putGoodsOnSaleById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 4L);
+        return goodsDao.putGoodsOnSaleById(shopId, skuId, 4L);
     }
 
     /**
@@ -164,7 +164,7 @@ public class GoodsService implements Ingoodservice {
      * @return ReturnObject
      */
     public ReturnObject putOffGoodsOnSaleById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 0L);
+        return goodsDao.putOffGoodsOnSaleById(shopId, skuId, 0L);
     }
 
     /**
@@ -175,7 +175,7 @@ public class GoodsService implements Ingoodservice {
      * @return ReturnObject
      */
     public ReturnObject deleteSkuById(Long shopId, Long skuId) {
-        return goodsDao.updateGoodsSkuState(shopId, skuId, 6L);
+        return goodsDao.deleteSkuById(shopId, skuId, 6L);
     }
 
     /**
@@ -480,7 +480,7 @@ public class GoodsService implements Ingoodservice {
                 logger.debug("spu增加种类的时候，shopid不一致");
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");
             } else {
-                GoodsCategoryPo goodsCategoryPo = goodsDao.getCategoryByid(id);
+                GoodsCategoryPo goodsCategoryPo = goodsDao.getCategoryById(id);
                 if (goodsCategoryPo == null) {
                     logger.debug("spu增加种类的时候，CategoriesId不存在");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "spuAddCategories，shopid不一致");
