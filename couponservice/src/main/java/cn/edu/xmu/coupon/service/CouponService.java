@@ -3,9 +3,11 @@ package cn.edu.xmu.coupon.service;
 import cn.edu.xmu.coupon.dao.CouponDao;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
+import cn.edu.xmu.coupon.model.vo.CouponRetVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,13 +39,20 @@ public class CouponService {
         return couponDao.addCouponActivity(shopId, addCouponActivityVo);
     }
 
-    public ReturnObject userGetCoupon(Long id,Long userId) {
+
+    public ReturnObject userGetCoupon(Long id, Long userId) {
         return couponDao.userGetCoupon(id, userId);
     }
 
     public ReturnObject<PageInfo<VoObject>> viewGoodsInCouponById(Integer page, Integer pageSize, List<SkuToCouponVo> skuToCouponVos) {
-        return couponDao.viewGoodsInCouponById(page,pageSize,skuToCouponVos);
+        return couponDao.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
     }
 
 
+    public List<CouponRetVo> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CouponRetVo> couponRetVos = couponDao.showCouponsById(state,userId);
+        PageInfo<CouponRetVo> page = new PageInfo<>(couponRetVos);
+        return couponRetVos;
+    }
 }

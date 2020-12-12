@@ -53,6 +53,9 @@ spring:
         max-wait: -1
     # 连接超时时间（毫秒）
     timeout: 5000
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 
 mybatis:
   #po对象的包

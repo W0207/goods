@@ -110,7 +110,9 @@ public class GoodsService implements Ingoodservice {
         return shopId.equals(goodsSpuPo.getShopId());
     }
 
-    public SkuToCouponVo couponActivityFindSku(Long id) {
+
+    @Override
+    public SkuToCouponVo couponActivityFindSku(Long id)  {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
         if (goodsSkuPo == null) {
             return null;

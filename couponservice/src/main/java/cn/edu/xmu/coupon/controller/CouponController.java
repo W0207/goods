@@ -115,7 +115,6 @@ public class CouponController {
 
     /**
      * 查看本店下线的优惠活动列表
-     * <p>
      * by 菜鸡骞
      *
      * @return Object
@@ -194,14 +193,6 @@ public class CouponController {
         return Common.decorateReturnObject(returnObj);
     }
 
-    /**
-     * 优惠券退回
-     *
-     * @param id:优惠券 id
-     *
-     * by 菜鸡骞
-     * @return Object
-     */
 
 
     /**
@@ -305,7 +296,7 @@ public class CouponController {
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
             SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
-            if(vo==null) {
+            if(vo==null||vo.getDisable()!=0) {
 
             }
             else {
@@ -376,8 +367,9 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
-    @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
-    public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
+    @PutMapping("/shops/{shopId}/couponactivities/{id}/offshelves")
+    public Object CouponActivityOffShelves(@PathVariable Long shopId,@PathVariable Long id)
+    {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
     }
 
@@ -408,5 +400,31 @@ public class CouponController {
     @PostMapping("/couponactivities/{id}/usercoupons")
     public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId) {
         return Common.decorateReturnObject(couponService.userGetCoupon(id, userId));
+    }
+
+
+    /**
+     * 买家查看优惠券列表
+     * by 菜鸡骞
+     *
+     * @return Object
+     */
+    @ApiOperation(value = "买家查看优惠券列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "state", value = "优惠券状态", required = false)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功")
+    })
+    @Audit
+    @GetMapping("/coupons")
+    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@LoginUser Long userId) {
+        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userId);
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 60 : pageSize;
+        state = (state == null) ? 1 : state;
+        List<CouponRetVo> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
+        return returnObject;
     }
 }
