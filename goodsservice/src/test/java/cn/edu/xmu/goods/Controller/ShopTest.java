@@ -7,14 +7,17 @@ import cn.edu.xmu.goods.model.po.ShopPo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
+import com.google.common.net.HttpHeaders;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc    //配置模拟的MVC，这样可以不启动服务器测试
 @Transactional
 public class ShopTest {
+
+
 
     private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
 
@@ -139,4 +144,24 @@ public class ShopTest {
         System.out.println(shopPo.getState());
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+
+    /* 分界线              公开测试用例
+    @Test
+    public void getShopAllStates() throws Exception {
+        byte[] ret = mallClient.get()
+                .uri("/shop/shops/states")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo("0")
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .returnResult()
+                .getResponseBodyContent();
+        String responseString = new String(ret, "UTF-8");
+        String expectedResponse = "{\"errno\":0,\"data\":[{\"name\":\"未审核\",\"code\":0},{\"name\":\"未上线\",\"code\":1},{\"name\":\"上线\",\"code\":2},{\"name\":\"关闭\",\"code\":3},{\"name\":\"审核未通过\",\"code\":4}],\"errmsg\":\"成功\"}\n";
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }*/
+
+
 }

@@ -135,3 +135,6 @@ rocketmqdemo:
     delay-level: 3
     #超时时间（秒）
     timeout: 10
+public-test:
+  managementgate: 172.0.0.1:8080
+  mallgate: 172.0.0.1:8080

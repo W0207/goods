@@ -1,6 +1,8 @@
 package cn.edu.xmu.coupon.service;
 
 import cn.edu.xmu.coupon.dao.CouponDao;
+import cn.edu.xmu.coupon.model.bo.Coupon;
+import cn.edu.xmu.coupon.model.bo.CouponRet;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
 import cn.edu.xmu.coupon.model.vo.CouponRetVo;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author BiuBiuBiu
@@ -49,10 +53,16 @@ public class CouponService {
     }
 
 
-    public List<CouponRetVo> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
+    public ReturnObject<PageInfo<VoObject>> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
         PageHelper.startPage(pageNum,pageSize);
-        List<CouponRetVo> couponRetVos = couponDao.showCouponsById(state,userId);
-        PageInfo<CouponRetVo> page = new PageInfo<>(couponRetVos);
-        return couponRetVos;
+        PageInfo<CouponRetVo> couponRetVos = couponDao.showCouponsById(state,userId);
+        List<VoObject> couponRet = couponRetVos.getList().stream().map(CouponRet::new).collect(Collectors.toList());
+
+        PageInfo<VoObject> returnObject = new PageInfo<>(couponRet);
+        returnObject.setPages(couponRetVos.getPages());
+        returnObject.setPageNum(couponRetVos.getPageNum());
+        returnObject.setPageSize(couponRetVos.getPageSize());
+        returnObject.setTotal(couponRetVos.getTotal());
+        return new ReturnObject<>(returnObject);
     }
 }

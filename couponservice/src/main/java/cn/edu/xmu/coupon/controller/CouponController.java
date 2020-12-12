@@ -424,6 +424,12 @@ public class CouponController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
         state = (state == null) ? 1 : state;
-        return couponService.showCouponsById(page, pageSize, state, userId);
+        Object object = null;
+        ReturnObject<PageInfo<VoObject>> returnObject= couponService.showCouponsById(page, pageSize, state, userId);
+        object=Common.getPageRetObject(returnObject);
+        return object;
+
+
+
     }
 }
