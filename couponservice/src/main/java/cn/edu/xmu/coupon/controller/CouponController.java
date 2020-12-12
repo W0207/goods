@@ -377,7 +377,8 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @PutMapping("/shops/{shopId}/couponactivities/{id}/offshelves")
-    public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
+    public Object CouponActivityOffShelves(@PathVariable Long shopId,@PathVariable Long id)
+    {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
     }
 
