@@ -4,6 +4,7 @@ import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
 import cn.edu.xmu.coupon.mapper.CouponPoMapper;
 import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
+import cn.edu.xmu.coupon.model.bo.CouponRet;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponPo;
@@ -12,6 +13,7 @@ import cn.edu.xmu.coupon.model.vo.AddCouponActivityRetVo;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.bo.SkuToCoupon;
 import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
+import cn.edu.xmu.coupon.model.vo.CouponRetVo;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.InShopService;
@@ -274,8 +276,27 @@ public class CouponDao {
             return new ReturnObject<>(rolePage);
         }
         catch (DataAccessException e) {
-            logger.error("showOwnInvalidcouponacitvitiesByid: DataAccessException:" + e.getMessage());
+            logger.error("viewGoodsInCouponById: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
+    }
+
+    public List<CouponRetVo> showCouponsById(Integer state, Long userId) {
+        CouponPoExample couponPoExample = new CouponPoExample();
+        CouponPoExample.Criteria couponPoCriteria = couponPoExample.createCriteria();
+        couponPoCriteria.andCustomerIdEqualTo(userId);
+        couponPoCriteria.andStateEqualTo((byte) state.intValue());
+        List<CouponPo> couponPos = null;
+        couponPos = couponPoMapper.selectByExample(couponPoExample);
+        List<CouponRetVo> vo = new ArrayList<>(couponPos.size());
+        for (CouponPo couponPo : couponPos) {
+            Coupon co = new Coupon(couponPo);
+            CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(co.getId());
+            CouponRet couponRet = new CouponRet(co);
+            couponRet.SetByActivity(couponActivityPo);
+            CouponRetVo couponRetVo = new CouponRetVo(couponRet);
+            boolean add = vo.add(couponRetVo);
+        }
+        return vo;
     }
 }

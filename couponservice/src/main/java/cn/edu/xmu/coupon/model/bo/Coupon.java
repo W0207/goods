@@ -33,6 +33,8 @@ public class Coupon implements VoObject {
 
     private LocalDateTime endTime;
 
+    private Long activityId;
+
     public Coupon(CouponPo couponPo) {
 
         this.beginTime=couponPo.getBeginTime();
@@ -44,6 +46,8 @@ public class Coupon implements VoObject {
         this.gmtCreate=couponPo.getGmtCreate();
         this.gmtModified=couponPo.getGmtModified();
         this.state=couponPo.getState();
+        this.activityId=couponPo.getActivityId();
+        this.name=couponPo.getName();
 
     }
 
@@ -102,5 +106,19 @@ public class Coupon implements VoObject {
         return null;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public Long getActivityId() {
+        return activityId;
+    }
+
+    public String getCouponSn() {
+        return couponSn;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
