@@ -10,16 +10,14 @@ import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
+import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.*;
-import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
-import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
-import com.sun.xml.bind.v2.TODO;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
@@ -32,12 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Console;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import cn.edu.xmu.ininterface.service.Ingoodservice;
+
 
 import javax.annotation.Resource;
 
@@ -96,6 +93,7 @@ public class GoodsService implements Ingoodservice {
         spuToGrouponVo.setGmtModified(spuGrouponVo.getGmtModified());
         return spuToGrouponVo;
     }
+
     /**
      * @param id
      * @return

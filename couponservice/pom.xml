@@ -7,36 +7,32 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.edu.xmu</groupId>
     <artifactId>coupon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coupon</name>
-    <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>cn.edu.xmu.ooad</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>cn.edu.xmu</groupId>
-            <artifactId>ininterface</artifactId>
+            <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>cn.edu.xmu</groupId>
             <artifactId>otherinterface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -158,6 +154,11 @@
             <artifactId>nacos-client</artifactId>
             <version>1.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.xmu</groupId>
+            <artifactId>ininterface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -224,5 +225,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

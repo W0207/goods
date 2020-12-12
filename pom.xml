@@ -30,13 +30,27 @@
 
     <properties>
         <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>cn.edu.xmu.ooad</groupId>
+                <groupId>cn.edu.xmu</groupId>
                 <artifactId>core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.edu.xmu</groupId>
+                <artifactId>ininterface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.edu.xmu</groupId>
+                <artifactId>otherinterface</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

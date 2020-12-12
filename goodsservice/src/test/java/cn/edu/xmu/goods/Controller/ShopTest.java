@@ -34,6 +34,7 @@ public class ShopTest {
         logger.debug("token: " + token);
         return token;
     }
+
     @Autowired
     ShopPoMapper shopPoMapper;
 
@@ -41,7 +42,7 @@ public class ShopTest {
     private MockMvc mvc;
 
     @Test
-    public void inserShopTest() {
+    public void insertShopTest() {
         ShopVo vo = new ShopVo();
         vo.setName("test");
         String shopJson = JacksonUtil.toJson(vo);

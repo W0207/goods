@@ -22,7 +22,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.edu.xmu.ooad</groupId>
+            <groupId>cn.edu.xmu</groupId>
             <artifactId>core</artifactId>
         </dependency>
         <dependency>

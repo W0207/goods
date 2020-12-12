@@ -5,18 +5,21 @@ import cn.edu.xmu.goods.controller.GoodsController;
 import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.ooad.util.JwtHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
@@ -29,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = GoodsServiceApplication.class)
 @AutoConfigureMockMvc
 @Transactional
+@Slf4j
 public class GoodsControllerTest {
 
     @Autowired
@@ -74,19 +78,19 @@ public class GoodsControllerTest {
      */
     @Test
     public void findGoodsSkuById() throws Exception {
-//        String token1 = creatTestToken(1L, 0L, 100);
-//        String requireJson1 = "{\n" +
-//                "  \"activityPrice\": 222,\n" +
-//                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
-//                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
-//                "  \"quantity\": 1\n" +
-//                "}";
-//        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
-//                .header("authorization", token1)
-//                .contentType("application/json;charset=UTF-8")
-//                .content(requireJson1))
-//                .andReturn().getResponse().getContentAsString();
-//        System.out.println(responseString1);
+        String token1 = creatTestToken(1L, 0L, 100);
+        String requireJson1 = "{\n" +
+                "  \"activityPrice\": 222,\n" +
+                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
+                "  \"quantity\": 1\n" +
+                "}";
+        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token1)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString1);
 
         //登陆
         String token = creatTestToken(1L, 0L, 100);

@@ -2,28 +2,21 @@ package cn.edu.xmu.coupon.controller;
 
 import cn.edu.xmu.coupon.mapper.CouponSkuPoMapper;
 import cn.edu.xmu.coupon.model.bo.Coupon;
-import cn.edu.xmu.coupon.model.bo.CouponActivity;
-import cn.edu.xmu.coupon.model.po.CouponActivityPo;
-import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.po.CouponSkuPoExample;
 import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
-import cn.edu.xmu.coupon.model.vo.CouponActivityVo;
 import cn.edu.xmu.coupon.model.vo.CouponStateVo;
-import cn.edu.xmu.coupon.model.vo.*;
 import cn.edu.xmu.coupon.service.CouponActivityService;
 import cn.edu.xmu.coupon.service.CouponService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
-import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
-import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -87,7 +80,7 @@ public class CouponController {
         for (int i = 0; i < states.length; i++) {
             couponStateVos.add(new CouponStateVo(states[i]));
         }
-        return ResponseUtil.ok(new ReturnObject<List>(couponStateVos).getData());
+        return ResponseUtil.ok(new ReturnObject<List>(couponStateVos));
     }
 
 
@@ -194,7 +187,6 @@ public class CouponController {
     }
 
 
-
     /**
      * 管理员为己方某优惠券活动新增限定范围
      *
@@ -225,7 +217,7 @@ public class CouponController {
             return returnObject;
         }
         ReturnObject couponActivity = couponActivityService.rangeForCouponActivityById(id, shopId, couponActivitySkuInputVo);
-        returnObject = ResponseUtil.ok(couponActivity.getData());
+        returnObject = ResponseUtil.ok(couponActivity);
         return returnObject;
     }
 
@@ -295,11 +287,10 @@ public class CouponController {
         criteria.andActivityIdEqualTo(id);
         couponSkuPos = couponSkuPoMapper.selectByExample(couponSkuPoExample);
         for (CouponSkuPo po : couponSkuPos) {
-            SkuToCouponVo vo=goodservice.couponActivityFindSku(po.getSkuId());
-            if(vo==null||vo.getDisable()!=0) {
+            SkuToCouponVo vo = goodservice.couponActivityFindSku(po.getSkuId());
+            if (vo == null || vo.getDisable() != 0) {
 
-            }
-            else {
+            } else {
                 skuToCouponVos.add(vo);
             }
         }
@@ -368,8 +359,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
     @PutMapping("/shops/{shopId}/couponactivities/{id}/offshelves")
-    public Object CouponActivityOffShelves(@PathVariable Long shopId,@PathVariable Long id)
-    {
+    public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(couponActivityService.CouponActivityOffShelves(shopId, id));
     }
 
@@ -419,7 +409,7 @@ public class CouponController {
     })
     @Audit
     @GetMapping("/coupons")
-    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@LoginUser Long userId) {
+    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @LoginUser Long userId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userId);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
