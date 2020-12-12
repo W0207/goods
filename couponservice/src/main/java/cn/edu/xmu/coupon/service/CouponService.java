@@ -40,13 +40,12 @@ public class CouponService {
     }
 
 
-
-    public ReturnObject userGetCoupon(Long id,Long userId) {
+    public ReturnObject userGetCoupon(Long id, Long userId) {
         return couponDao.userGetCoupon(id, userId);
     }
 
     public ReturnObject<PageInfo<VoObject>> viewGoodsInCouponById(Integer page, Integer pageSize, List<SkuToCouponVo> skuToCouponVos) {
-        return couponDao.viewGoodsInCouponById(page,pageSize,skuToCouponVos);
+        return couponDao.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
     }
 
 
