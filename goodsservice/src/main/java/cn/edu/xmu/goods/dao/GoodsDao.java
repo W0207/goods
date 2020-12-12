@@ -726,7 +726,7 @@ public class GoodsDao {
     public ReturnObject deleteSpuById(Long shopId, Long id) {
         try {
             GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
-            if (goodsSpuPo == null || goodsSpuPo.getDisabled() == 0) {
+            if (goodsSpuPo == null || goodsSpuPo.getDisabled() != 0) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("不存在或禁止访问");
                 }
