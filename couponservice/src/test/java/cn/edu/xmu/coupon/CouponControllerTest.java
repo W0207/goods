@@ -177,7 +177,7 @@ public class CouponControllerTest {
         vo.setQuantityType(a);
         vo.setValidTerm(a);
         vo.setCouponTime(LocalDateTime.now());
-        vo.setBeginTime(LocalDateTime.now());
+        vo.setBeginTime(LocalDateTime.now().minusHours(1));
         vo.setEndTime(LocalDateTime.now());
         vo.setStrategy("aaaaa");
         String jsonStr = JacksonUtil.toJson(vo);

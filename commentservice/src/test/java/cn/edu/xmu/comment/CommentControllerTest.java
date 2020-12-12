@@ -117,7 +117,7 @@ public class CommentControllerTest {
     }
 
     /**
-     * 买家查看自己的评价记录
+     * 管理员查看审核/未审核列表
      */
 
     @Test
