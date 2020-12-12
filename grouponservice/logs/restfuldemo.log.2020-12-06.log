@@ -1,0 +1,2 @@
+2020-12-06 17:01:34.562 [main] DEBUG cn.edu.xmu.groupon.controller.GrouponController - getGoodsSpuState
+2020-12-06 17:02:10.193 [main] DEBUG cn.edu.xmu.groupon.controller.GrouponController - findgrouponActivity = cn.edu.xmu.ooad.util.ReturnObject@16021f6e
