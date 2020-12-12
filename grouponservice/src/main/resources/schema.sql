@@ -114,17 +114,17 @@ CREATE TABLE `coupon_activity`
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `coupon_spu`
+-- Table structure for table `coupon_sku`
 --
 
-DROP TABLE IF EXISTS `coupon_spu`;
+DROP TABLE IF EXISTS `coupon_sku`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `coupon_spu`
+CREATE TABLE `coupon_sku`
 (
     `id`           bigint   NOT NULL AUTO_INCREMENT,
     `activity_id`  bigint            DEFAULT NULL,
-    `spu_id`       bigint            DEFAULT NULL,
+    `sku_id`       bigint            DEFAULT NULL,
     `gmt_create`   datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `gmt_modified` datetime          DEFAULT NULL,
     PRIMARY KEY (`id`)
@@ -239,6 +239,7 @@ CREATE TABLE `goods_sku`
     `disabled`       tinyint           DEFAULT NULL,
     `gmt_create`     datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `gmt_modified`   datetime          DEFAULT NULL,
+    `state`          tinyint           DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 680
@@ -263,7 +264,6 @@ CREATE TABLE `goods_spu`
     `goods_sn`     varchar(128)      DEFAULT NULL,
     `detail`       varchar(500)      DEFAULT NULL,
     `image_url`    varchar(255)      DEFAULT NULL,
-    `state`        tinyint           DEFAULT NULL,
     `spec`         varchar(500)      DEFAULT NULL,
     `disabled`     tinyint           DEFAULT NULL,
     `gmt_create`   datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -353,4 +353,4 @@ CREATE TABLE `shop`
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-29 21:14:09
+-- Dump completed on 2020-12-07 11:25:23

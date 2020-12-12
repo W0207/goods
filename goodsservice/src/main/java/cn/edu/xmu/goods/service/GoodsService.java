@@ -245,9 +245,9 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.modifySkuById(shopId, id, skuInputVo);
     }
 
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer
-            pageSize, String spuId, String skuSn1, String spuSn) {
-        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, skuSn, page, pageSize, spuId, skuSn1, spuSn);
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, Integer page, Integer
+            pageSize, Long spuId, String skuSn, String spuSn) {
+        ReturnObject<PageInfo<VoObject>> returnObject = goodsDao.findSkuSimple(shopId, page, pageSize, spuId, skuSn, spuSn);
         return returnObject;
     }
 

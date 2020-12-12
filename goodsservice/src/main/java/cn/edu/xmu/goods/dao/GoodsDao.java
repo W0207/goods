@@ -241,13 +241,21 @@ public class GoodsDao {
      * @param page
      * @param pageSize
      * @param spuId
-     * @param skuSn1
      * @param spuSn
      * @return
      */
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, String skuSn, Integer page, Integer pageSize, String spuId, String skuSn1, String spuSn) {
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, Integer page, Integer
+            pageSize, Long spuId, String skuSn, String spuSn) {
         GoodsSkuPoExample example = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = example.createCriteria();
+        if(spuId!=null)
+        {
+            criteria.andGoodsSpuIdEqualTo(spuId);
+        }
+        if(skuSn!=null)
+        {
+            criteria.andSkuSnEqualTo(skuSn);
+        }
         PageHelper.startPage(page, pageSize);
         List<GoodsSkuPo> goodsSkuPos;
         try {
