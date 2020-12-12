@@ -4,6 +4,7 @@ import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
+import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -85,9 +86,11 @@ public class PresaleController {
 
     @ApiOperation("管理员新增SPU预售活动")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
+    @Audit //需要认证
     @PostMapping("/shops/{shopId}/skus/{id}/presales")
     public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
@@ -133,10 +136,11 @@ public class PresaleController {
      */
     @ApiOperation(value = "管理员修改sku预售活动")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
-    //@Audit
+    @Audit
     @PutMapping("/shops/{shopId}/presales/{id}")
     public Object modifyPresale(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo vo) {
         return Common.decorateReturnObject(presaleService.modifyPresale(shopId, id, vo));
@@ -150,10 +154,11 @@ public class PresaleController {
      */
     @ApiOperation(value = "管理员删除sku预售活动")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
-    //@Audit
+    @Audit
     @DeleteMapping("/shops/{shopId}/presales/{id}")
     public Object deletePresale(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(presaleService.deletePresale(shopId, id));
@@ -168,32 +173,36 @@ public class PresaleController {
      */
     @ApiOperation(value = "管理员查询SPU所有预售活动(包括下线的)")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
-            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId"),
-            @ApiImplicitParam(name = "state", required = false, dataType = "Integer", paramType = "path", value = "state")
     })
-    @GetMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object queryPresaleOfSpu(@PathVariable Long shopId, @PathVariable Long id, @RequestParam Integer state) {
+    @Audit //需要认证
+    @GetMapping("/shops/{shopId}/presales")
+    public Object queryPresaleofSPU(@PathVariable Long shopId, @RequestParam(required = false) Long id, @RequestParam(required = false) Integer state) {
         ReturnObject returnObject = presaleService.queryPresaleofSKU(shopId, id, state);
         return Common.decorateReturnObject(returnObject);
     }
 
     @ApiOperation(value = "管理员上线预售活动")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
     })
-    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/presales/{id}/onshelves")
     public Object presaleOnShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(presaleService.presaleOnShelves(shopId, id));
     }
 
     @ApiOperation(value = "管理员下线预售活动")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
     })
-    @PutMapping("/shops/{shopId}/skus/{id}/presales")
+    @Audit //需要认证
+    @PutMapping("/shops/{shopId}/presales/{id}/offshelves")
     public Object presaleOffShelves(@PathVariable Long shopId, @PathVariable Long id) {
         return Common.decorateReturnObject(presaleService.presaleOffShelves(shopId, id));
     }
