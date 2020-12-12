@@ -74,25 +74,33 @@ public class GoodsControllerTest {
      */
     @Test
     public void findGoodsSkuById() throws Exception {
-        String token1 = creatTestToken(1L, 0L, 100);
-        String requireJson1 = "{\n" +
-                "  \"activityPrice\": 222,\n" +
-                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
-                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
-                "  \"quantity\": 1\n" +
-                "}";
-        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
-                .header("authorization", token1)
-                .contentType("application/json;charset=UTF-8")
-                .content(requireJson1))
-                .andReturn().getResponse().getContentAsString();
-        System.out.println(responseString1);
+//        String token1 = creatTestToken(1L, 0L, 100);
+//        String requireJson1 = "{\n" +
+//                "  \"activityPrice\": 222,\n" +
+//                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
+//                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
+//                "  \"quantity\": 1\n" +
+//                "}";
+//        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+//                .header("authorization", token1)
+//                .contentType("application/json;charset=UTF-8")
+//                .content(requireJson1))
+//                .andReturn().getResponse().getContentAsString();
+//        System.out.println(responseString1);
 
-        String responseString = this.mvc.perform(get("/goods/skus/273"))
-                .andExpect(status().isOk())
+        //登陆
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/goods/skus/273")
+                .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
+
+        //不登陆
+//        String responseString = this.mvc.perform(get("/goods/skus/273"))
+//                .andExpect(content().contentType("application/json;charset=UTF-8"))
+//                .andReturn().getResponse().getContentAsString();
+//        System.out.println(responseString);
     }
 
     /**
@@ -116,7 +124,7 @@ public class GoodsControllerTest {
     public void deleteGoodsSpu() throws Exception {
         String token = creatTestToken(1L, 1L, 100);
         System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
-        String responseString = this.mvc.perform(delete("/goods/shops/1/spus/273")
+        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/273")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -127,6 +135,7 @@ public class GoodsControllerTest {
     }
 
     //下架商品测试开始
+
     /**
      * 下架商品(token正确，单是无权限修改不属于自己店铺的东西)
      *
@@ -183,7 +192,7 @@ public class GoodsControllerTest {
     @Test
     public void putOffGoodsSpuOnSales4() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(put("/goods/shops/1/skus/273/offshelves")
+        String responseString = this.mvc.perform(put("/goods/shops/0/skus/273/offshelves")
                 .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -191,7 +200,7 @@ public class GoodsControllerTest {
         System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
     }
     //下架商品测试结束
-    
+
     /**
      * 下架商品之后重新上架
      *
@@ -226,7 +235,7 @@ public class GoodsControllerTest {
     public void deleteGoodsSku() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
         System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
-        String responseString = this.mvc.perform(delete("/goods/shops/1/skus/273")
+        String responseString = this.mvc.perform(delete("/goods/shops/0/skus/273")
                 .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();

@@ -2213,6 +2213,10 @@ UNLOCK TABLES;
 LOCK TABLES `presale_activity` WRITE;
 /*!40000 ALTER TABLE `presale_activity`
     DISABLE KEYS */;
+    insert into presale_activity values ('1','11','2020/12/13 10:37:56','2020/12/27 10:38:00','2021/1/1 10:38:10','2','1','273','100','100','100','2020/12/12 10:38:34','2020/12/12 10:38:56'),
+('2','222','2020/12/12 10:40:01','2020/12/15 10:40:04','2020/12/30 10:40:09','1','1','275','100','50','80','2020/12/12 10:40:47','2020/12/12 10:40:50'),
+('3','333','2020/12/12 10:40:01','2020/12/15 10:40:04','2020/12/30 10:40:09','0','1','275','100','50','80','2020/12/12 10:40:47','2020/12/12 10:40:50');
+
 /*!40000 ALTER TABLE `presale_activity`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2224,6 +2228,7 @@ UNLOCK TABLES;
 LOCK TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop`
     DISABLE KEYS */;
+    insert into shop value ('1','童振宇','1','2020/12/22 10:45:07','2020/12/31 10:45:12');
 /*!40000 ALTER TABLE `shop`
     ENABLE KEYS */;
 UNLOCK TABLES;

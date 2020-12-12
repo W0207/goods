@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 
 public class CouponActivity implements Serializable {
+
     private Long id;
 
     private String name;
