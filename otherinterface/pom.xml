@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>goods</artifactId>
-        <groupId>cn.edu.xmu</groupId>
+        <groupId>cn.edu.xmu.goods</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>otherinterface</artifactId>
@@ -37,7 +37,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>cn.edu.xmu</groupId>
+            <groupId>cn.edu.xmu.ooad</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

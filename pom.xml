@@ -9,17 +9,17 @@
         <version>2.3.3.RELEASE</version>
     </parent>
 
-    <groupId>cn.edu.xmu</groupId>
+    <groupId>cn.edu.xmu.goods</groupId>
     <artifactId>goods</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <modules>
         <module>goodsservice</module>
-        <module>core</module>
         <module>commentservice</module>
         <module>couponservice</module>
         <module>flashsaleservice</module>
+        <module>core</module>
         <module>presaleservice</module>
         <module>grouponservice</module>
         <module>ininterface</module>
@@ -37,21 +37,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>cn.edu.xmu</groupId>
+                <groupId>cn.edu.xmu.ooad</groupId>
                 <artifactId>core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.edu.xmu</groupId>
-                <artifactId>ininterface</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.edu.xmu</groupId>
-                <artifactId>otherinterface</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <dependency>

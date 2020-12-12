@@ -3,11 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>goods</artifactId>
-        <groupId>cn.edu.xmu</groupId>
+        <groupId>cn.edu.xmu.goods</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.edu.xmu</groupId>
     <artifactId>presale</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>presale</name>
@@ -21,12 +20,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.edu.xmu</groupId>
+            <groupId>cn.edu.xmu.ooad</groupId>
             <artifactId>core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>cn.edu.xmu</groupId>
+            <groupId>cn.edu.xmu.goods</groupId>
             <artifactId>ininterface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
