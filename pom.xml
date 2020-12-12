@@ -23,6 +23,7 @@
         <module>presaleservice</module>
         <module>grouponservice</module>
         <module>ininterface</module>
+        <module>otherinterface</module>
     </modules>
     <name>goods</name>
     <description>the role base goods management systems</description>

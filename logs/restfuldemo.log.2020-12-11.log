@@ -1,3 +1,4 @@
+
 2020-12-11 08:12:21.615 [DubboServerHandler-192.168.65.1:18889-thread-33] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
 2020-12-11 08:18:43.842 [DubboServerHandler-192.168.65.1:18889-thread-54] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
 2020-12-11 08:19:26.879 [DubboServerHandler-192.168.65.1:18889-thread-72] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
@@ -1074,6 +1075,7 @@ org.apache.dubbo.remoting.RemotingException: client(url: dubbo://192.168.1.111:1
 2020-12-11 18:26:57.379 [DubboServerHandler-192.168.65.1:18889-thread-71] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=273
 2020-12-11 18:26:58.048 [DubboServerHandler-192.168.65.1:18889-thread-72] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=274
 2020-12-11 18:58:41.025 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+2020-12-11 08:18:58.813 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'couponController' method 
 cn.edu.xmu.coupon.controller.CouponController#CouponActivityOnShelves(Long, Long)
 to {PUT /coupon/shops/{shopId}/couponactivities/{id}/onshelves, produces [application/json;charset=UTF-8]}: There is already 'couponController' bean method
