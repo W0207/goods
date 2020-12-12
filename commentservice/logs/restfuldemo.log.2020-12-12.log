@@ -1,0 +1,13 @@
+2020-12-12 14:39:04.094 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-12 14:39:43.605 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-12 14:41:23.721 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1
+2020-12-12 14:41:47.557 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEyMTQ0MTQ3NTdBIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc3NTU0MDcsInVzZXJJZCI6MSwiaWF0IjoxNjA3NzU1MzA3fQ.2xYmf9fHeoH9UZp7SmJwJpl40ZUnaDy1rqPzIIvBIUs
+2020-12-12 14:41:47.844 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 1 vo = CommentAuditVo(state=0)
+2020-12-12 14:41:47.966 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - commentid = 1 的信息已更新
+2020-12-12 14:42:14.385 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEyMTQ0MjE0M0tPIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc3NTU0MzQsInVzZXJJZCI6MSwiaWF0IjoxNjA3NzU1MzM0fQ.HVIYiHXe3K3o8g7hE71foLqpRsjLA8XFAcsELnuVNys
+2020-12-12 14:42:14.563 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
+2020-12-12 14:44:16.903 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEyMTQ0NDE2NzBIIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc3NTU1NTYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NzU1NDU2fQ.-ppzwHlxNt6X_q6cjbv0pzjWq1sn-W0VPlm9qd_IBB4
+2020-12-12 14:44:17.179 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
+2020-12-12 14:44:36.389 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEyMTQ0NDM2MjNFIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc3NTU1NzYsInVzZXJJZCI6MSwiaWF0IjoxNjA3NzU1NDc2fQ.wfTb6Y2DHKlzIAZSucXG239lDs09Gh9Sjic_jXYr114
+2020-12-12 14:44:36.716 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
+2020-12-12 14:45:26.810 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null   skuId =1

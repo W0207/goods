@@ -89,8 +89,7 @@ public class PresaleController {
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
     @PostMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object AddPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
-        System.out.println("aaaaa");
+    public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
         returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         return Common.decorateReturnObject(returnObject);
@@ -174,7 +173,7 @@ public class PresaleController {
             @ApiImplicitParam(name = "state", required = false, dataType = "Integer", paramType = "path", value = "state")
     })
     @GetMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object queryPresaleofSPU(@PathVariable Long shopId, @PathVariable Long id, @RequestParam Integer state) {
+    public Object queryPresaleOfSpu(@PathVariable Long shopId, @PathVariable Long id, @RequestParam Integer state) {
         ReturnObject returnObject = presaleService.queryPresaleofSKU(shopId, id, state);
         return Common.decorateReturnObject(returnObject);
     }
