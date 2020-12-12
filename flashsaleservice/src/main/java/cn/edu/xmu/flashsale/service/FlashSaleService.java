@@ -31,6 +31,18 @@ public class FlashSaleService {
     FlashSaleDao flashSaleDao;
 
     /**
+     * 查找某时段秒杀活动
+     * @param id
+     * @return
+     */
+    public  List<FlashSaleOutputVo> findFlashSaleByTime(Long id){
+        List<FlashSaleOutputVo> returnObject=flashSaleDao.findFlashSaleItemByTime( id);
+        return returnObject;
+    }
+
+
+
+    /**
      * 修改秒杀活动信息
      *
      * @param id
@@ -62,17 +74,10 @@ public class FlashSaleService {
      * @return
      * @author zhai
      */
-    public ReturnObject<Object> addFlashSaleItem(Long id, SkuInputVo skuInputVo) {
+    public FlashSaleItem addFlashSaleItem(Long id, SkuInputVo skuInputVo) {
         ReturnObject returnObject;
         FlashSaleItem flashSaleItem = flashSaleDao.addItem(id, skuInputVo);
-        if (flashSaleItem != null) {
-            returnObject = new ReturnObject(flashSaleItem);
-            logger.debug("addSKU : " + returnObject);
-        } else {
-            logger.debug("addSKU : Failed!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
+        return flashSaleItem;
     }
 
 

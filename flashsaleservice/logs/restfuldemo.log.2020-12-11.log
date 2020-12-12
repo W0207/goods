@@ -23,3 +23,4 @@
 2020-12-11 17:11:06.906 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjExMTcxMTA2OFRZIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc2Nzc5NjYsInVzZXJJZCI6MSwiaWF0IjoxNjA3Njc3ODY2fQ.ya40sDRs0g4gDmOjJv09GYjhlQkIvwmmhYiNY95XIhs
 2020-12-11 17:12:22.219 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjExMTcxMjIyMlQ0IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc2NzgwNDIsInVzZXJJZCI6MSwiaWF0IjoxNjA3Njc3OTQyfQ.84yA5BBblDypnNgDCb3Upg9sq_WOjlv9NnVJk_RJ9WU
 2020-12-11 17:12:22.410 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - createFlashSale : id = 3
+2020-12-11 21:09:47.860 [main] DEBUG c.edu.xmu.flashsale.controller.FlashSaleController - addSKUofTopic id = 0
