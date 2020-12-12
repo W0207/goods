@@ -122,9 +122,9 @@ public class GoodsControllerTest {
      */
     @Test
     public void deleteGoodsSpu() throws Exception {
-        String token = creatTestToken(1L, 0L, 100);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(291L).getShopId());
-        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/291")
+        String token = creatTestToken(1L, 1L, 100);
+        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
+        String responseString = this.mvc.perform(delete("/goods/shops/1/spus/273")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -291,7 +291,7 @@ public class GoodsControllerTest {
 
     @Test
     public void getSkuList() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/sku"))
+        String responseString = this.mvc.perform(get("/goods/sku?spuId=273"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -306,7 +306,7 @@ public class GoodsControllerTest {
     @Test
     public void invalidFloatPrice() throws Exception {
         String token = creatTestToken(9999L, 0L, 100);
-        System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getValid());
+        //System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getValid());
         String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/1")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
@@ -314,6 +314,8 @@ public class GoodsControllerTest {
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
         System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getInvalidBy());
+        System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getValid());
+
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -322,7 +324,7 @@ public class GoodsControllerTest {
      */
     @Test
     public void modifyBrand() throws Exception {
-        String token = creatTestToken(1L, 1L, 100);
+        String token = creatTestToken(1L, 0L, 100);
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
         String requireJson = "{\n" +
@@ -347,7 +349,7 @@ public class GoodsControllerTest {
     @Test
     public void deleteBrand() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(delete("/goods/shops/0/brands/70")
+        String responseString = this.mvc.perform(delete("/goods/shops/0/brands/71")
                 .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -366,7 +368,7 @@ public class GoodsControllerTest {
     public void addCategory() throws Exception {
         String requireJson = "{\n  \"name\":\"家电\"}";
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(post("/goods/shops/1/categories/199/subcategories")
+        String responseString = this.mvc.perform(post("/goods/shops/0/categories/139/subcategories")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
@@ -385,7 +387,7 @@ public class GoodsControllerTest {
         String token = creatTestToken(1L, 0L, 100);
         System.out.println(goodsCategoryPoMapper.selectByPrimaryKey(122L).getName());
         String requireJson = "{\n  \"name\":\"123\"}";
-        String responseString = this.mvc.perform(put("/goods/shops/1/categories/121")
+        String responseString = this.mvc.perform(put("/goods/shops/0/categories/122")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))

@@ -88,3 +88,20 @@ goodsservice:
 #pagehelper分页插件配置
 pagehelper:
   helper-dialect: mysql
+
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+    dubbo:
+      registry:
+        address: nacos://localhost:8848
+      cloud:
+        subscribed-services: spring-cloud-alibaba-dubbo-server
+      protocols:
+        dubbo:
+          port: 18888

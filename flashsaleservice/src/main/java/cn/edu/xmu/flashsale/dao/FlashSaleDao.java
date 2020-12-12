@@ -22,7 +22,9 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import cn.edu.xmu.ininterface.service.model.vo.*;
+import cn.edu.xmu.ininterface.service.*;
+import org.apache.dubbo.config.annotation.DubboReference;
 @Repository
 public class FlashSaleDao {
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleDao.class);
@@ -33,6 +35,35 @@ public class FlashSaleDao {
     @Autowired
     FlashSaleItemPoMapper flashSaleItemPoMapper;
 
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private Ingoodservice goodservice;
+
+    /**
+     * 查找某一时段秒杀活动商品
+     * @param id
+     * @return
+     */
+    public List<FlashSaleOutputVo>findFlashSaleItemByTime(Long id){
+        FlashSalePoExample example=new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria=example.createCriteria();
+        criteria.andTimeSegIdEqualTo(id);
+        List<FlashSalePo> flashSalePos=flashSalePoMapper.selectByExample(example);
+        List<FlashSaleOutputVo> flashSaleOutputVos=new ArrayList<>();
+        for(FlashSalePo flashSalePo : flashSalePos){
+            FlashSaleItemPoExample example1=new FlashSaleItemPoExample();
+            FlashSaleItemPoExample.Criteria criteria1=example1.createCriteria();
+            criteria1.andSaleIdEqualTo(flashSalePo.getId());
+            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example1);
+            for(FlashSaleItemPo flashSaleItemPo : flashSaleItemPos){
+                FlashSaleItem flashSaleItem=new FlashSaleItem(flashSaleItemPo);
+                SkuToFlashSaleVo skuToFlashSaleVo=goodservice.flashFindSku(flashSaleItem.getGoodsSkuId());
+                FlashSaleOutputVo flashSaleOutputVo=new FlashSaleOutputVo(flashSaleItem,skuToFlashSaleVo);
+                flashSaleOutputVos.add(flashSaleOutputVo);
+            }
+        }
+        return flashSaleOutputVos;
+    }
 
     /**
      * 修改秒杀活动
@@ -102,8 +133,6 @@ public class FlashSaleDao {
         FlashSaleItemPo po = flashSaleItemPoMapper.selectByPrimaryKey(id);
         if (po == null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleId = " + id);
-            System.out.println(flashSaleItem);
-            System.out.println(skuInputVo.getQuantity());
             return flashSaleItem;
         }
 

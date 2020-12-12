@@ -48,7 +48,7 @@ public class FlashSaleControllerTest {
         String requireJson = "{\n" +
                 "  \"flashData\": \"2020-11-28 17:42:20\"\n" +
                 "}";
-        String responseString = this.mvc.perform(put("/flashsale/flashsales/0")
+        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/0")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
@@ -63,7 +63,7 @@ public class FlashSaleControllerTest {
      */
     @Test
     public void deleteFlashSale() throws Exception {
-        String responseString = this.mvc.perform(delete("/flashsale/flashsales/0")
+        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/71")
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -84,7 +84,7 @@ public class FlashSaleControllerTest {
                 "  \"price\":\"1000\",\n" +
                 "  \"quantity\": \"1000\"\n" +
                 "}";
-        String responseString = this.mvc.perform(post("/flashsale/flashsales/0/flashitems")
+        String responseString = this.mvc.perform(post("/flashsale/shops/0/flashsales/0/flashitems")
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
@@ -99,7 +99,7 @@ public class FlashSaleControllerTest {
      */
     @Test
     public void deleteFlashSaleSku() throws Exception {
-        String responseString = this.mvc.perform(delete("/flashsale/flashsales/0/flashitems/0")
+        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/0/flashitems/0")
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";

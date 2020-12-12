@@ -424,7 +424,6 @@ public class CouponController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
         state = (state == null) ? 1 : state;
-        List<CouponRetVo> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
-        return returnObject;
+        return couponService.showCouponsById(page, pageSize, state, userId);
     }
 }
