@@ -295,7 +295,7 @@ public class CouponDao {
             CouponRet couponRet = new CouponRet(co);
             couponRet.SetByActivity(couponActivityPo);
             CouponRetVo couponRetVo = new CouponRetVo(couponRet);
-            boolean add = vo.add(couponRetVo);
+            vo.add(couponRetVo);
         }
         return vo;
     }
