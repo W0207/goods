@@ -255,7 +255,7 @@ public class GoodsController {
         if (page <= 0 || pageSize <= 0) {
             object = Common.getNullRetObj(new ReturnObject<>(ResponseCode.FIELD_NOTVALID), httpServletResponse);
         } else {
-            ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findSkuSimple(shopId, page, pageSize, spuId, skuSn,spuSn);
+            ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findSkuSimple(shopId, page, pageSize, spuId, skuSn, spuSn);
             logger.debug("getSkuSimple = " + returnObject);
             object = Common.getPageRetObject(returnObject);
         }
