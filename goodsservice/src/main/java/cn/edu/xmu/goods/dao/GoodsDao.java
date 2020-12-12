@@ -893,6 +893,8 @@ public class GoodsDao {
         return new ReturnObject(skuReturnVo);
     }
 
+
+
     /**
      * 获得spu的详细信息
      *

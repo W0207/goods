@@ -15,14 +15,19 @@ import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ImgHelper;
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
+import com.sun.xml.bind.v2.TODO;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +39,8 @@ import java.util.List;
 
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 
+import javax.annotation.Resource;
+
 /**
  * @author Abin
  */
@@ -43,6 +50,9 @@ public class GoodsService implements Ingoodservice {
 
     @Autowired
     GoodsDao goodsDao;
+
+    @Resource
+    RocketMQTemplate rocketMQTemplate;
 
     @Value("${goodsservice.dav.username}")
     private String davUsername;
@@ -112,7 +122,7 @@ public class GoodsService implements Ingoodservice {
 
 
     @Override
-    public SkuToCouponVo couponActivityFindSku(Long id)  {
+    public SkuToCouponVo couponActivityFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
         if (goodsSkuPo == null) {
             return null;
@@ -665,8 +675,28 @@ public class GoodsService implements Ingoodservice {
      * @param id
      * @return
      */
-    public ReturnObject getSku(Long id) {
+    public ReturnObject getSku(Long id, Long userId) {
+        System.out.println(userId);
+        if (userId != null) {
+            System.out.println(userId);
+            MessageVo messageVo = new MessageVo();
+            messageVo.setSkuId(id);
+            messageVo.setCustomerId(userId);
+            sendMessage(messageVo);
+        }
         return goodsDao.getSku(id);
+    }
+
+    /**
+     * 向RocketMQ发送消息
+     *
+     * @param messageVo
+     */
+    private void sendMessage(MessageVo messageVo) {
+        String json = JacksonUtil.toJson(messageVo);
+        Message message = MessageBuilder.withPayload(json).build();
+        rocketMQTemplate.sendOneWay("log-topic", message);
+        logger.debug(json);
     }
 
     /**

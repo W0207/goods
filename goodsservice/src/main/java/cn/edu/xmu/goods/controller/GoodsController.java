@@ -859,22 +859,26 @@ public class GoodsController {
     }
 
     /**
-     * 获得sku的详细信息
+     * 获得sku的详细信息(登陆)
      *
      * @param `id`
      * @return Object
      */
     @ApiOperation(value = "获得sku的详细信息")
-    @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = false),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true)
+    })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id) {
+    public Object getSku(@PathVariable Long id, @Validated @LoginUser Long userId) {
         if (logger.isDebugEnabled()) {
             logger.debug("getSku");
         }
-        ReturnObject returnObj = goodsService.getSku(id);
+        ReturnObject returnObj = goodsService.getSku(id, userId);
         return Common.decorateReturnObject(returnObj);
     }
 
