@@ -10,7 +10,7 @@ import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.GoodsSpuPo;
 import cn.edu.xmu.goods.model.vo.*;
-import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
+import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
 import cn.edu.xmu.ooad.model.VoObject;
@@ -70,6 +70,22 @@ public class GoodsService implements Ingoodservice {
         return skuToPresaleVo;
     }
 
+    @Override
+    public SpuToGrouponVo grouponFindSpu(Long id) {
+        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
+        if (goodsSpuPo == null) {
+            return null;
+        }
+        SpuGrouponVo spuGrouponVo = new SpuGrouponVo(goodsSpuPo);
+        SpuToGrouponVo spuToGrouponVo = new SpuToGrouponVo();
+        spuToGrouponVo.setId(spuGrouponVo.getId());
+        spuToGrouponVo.setName(spuGrouponVo.getName());
+        spuToGrouponVo.setGoodsSn(spuGrouponVo.getGoodsSn());
+        spuToGrouponVo.setImageUrl(spuGrouponVo.getImageUrl());
+        spuToGrouponVo.setGmtCreate(spuGrouponVo.getGmtCreate());
+        spuToGrouponVo.setGmtModified(spuGrouponVo.getGmtModified());
+        return spuToGrouponVo;
+    }
     /**
      * @param id
      * @return

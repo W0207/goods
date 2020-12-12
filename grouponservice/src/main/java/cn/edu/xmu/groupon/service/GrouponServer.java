@@ -71,17 +71,18 @@ public class GrouponServer {
      *  return ReturnObject<Object>
      * @Author zhai
      */
-    public ReturnObject<Object> addGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
+    public GrouponActivityPo addGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
         ReturnObject returnObject;
         GrouponActivityPo grouponActivityPo = grouponDao.addGroupon(id, grouponInputVo,shopId);
         if (grouponActivityPo != null) {
-            returnObject = new ReturnObject(new GrouponActivity(grouponActivityPo));
-            logger.debug("addGroupon : " + returnObject);
+            logger.debug("addGroupon : " + grouponActivityPo);
+            return  grouponActivityPo;
+
         } else {
             logger.debug("addGroupon : Failed");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return grouponActivityPo;
         }
-        return returnObject;
+
     }
 
     /**
@@ -104,8 +105,28 @@ public class GrouponServer {
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
      */
-    public ReturnObject<Object> updateGrouponState(Long shopId,Long id) {
-        return grouponDao.updateGrouponState(shopId,id);
+    public ReturnObject<Object> deleteGrouponState(Long shopId,Long id) {
+        return grouponDao.deleteGrouponState(shopId,id);
+    }
+
+    /**
+     * 下线团购活动
+     * @param shopId
+     * @param id
+     * @return
+     */
+    public ReturnObject<Object> offGrouponState(Long shopId,Long id) {
+        return grouponDao.offGrouponState(shopId,id);
+    }
+
+    /**
+     *
+     * @param shopId
+     * @param id
+     * @return
+     */
+    public ReturnObject<Object> onGrouponState(Long shopId,Long id) {
+        return grouponDao.onGrouponState(shopId,id);
     }
 
 }

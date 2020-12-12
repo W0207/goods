@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>cn.edu.xmu</groupId>
-            <artifactId>otherinterface</artifactId>
+            <artifactId>ininterface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -135,7 +135,6 @@
             <version>1.2.70</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -146,12 +145,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!--dubbo-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-dubbo</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
