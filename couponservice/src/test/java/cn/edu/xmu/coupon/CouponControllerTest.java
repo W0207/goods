@@ -17,10 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,8 +48,6 @@ public class CouponControllerTest {
 
     @Autowired
     CouponPoMapper couponPoMapper;
-
-
 
     private static final Logger logger = LoggerFactory.getLogger(CouponController.class);
 
@@ -303,7 +299,6 @@ public class CouponControllerTest {
 
 
     /*   公开测试用例   */
-
 
 
 }

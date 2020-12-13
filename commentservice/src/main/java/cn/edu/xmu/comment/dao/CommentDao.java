@@ -68,11 +68,6 @@ public class CommentDao implements InitializingBean {
             logger.info("评论id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(commentPo.getState()!=0)
-        {
-            logger.info("评论id= " + id +" 已被审核");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
         Comment comment = new Comment(commentPo);
         CommentPo po = comment.createAuditPo(commentAuditVo);
         commentPoMapper.updateByPrimaryKeySelective(po);
