@@ -100,7 +100,43 @@ public class CouponRetVo {
     }
 
 
+    public String getActivityName() {
+        return activityName;
+    }
 
+    public String getImage_url() {
+        return image_url;
+    }
 
+    public LocalDateTime getEnd_time() {
+        return end_time;
+    }
 
+    public LocalDateTime getBegin_time() {
+        return begin_time;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getActivityId() {
+        return activityId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCouponSn() {
+        return couponSn;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public LocalDateTime getCoupon_time() {
+        return coupon_time;
+    }
 }
