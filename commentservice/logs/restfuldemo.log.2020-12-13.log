@@ -1,3 +1,9 @@
 2020-12-13 00:09:26.325 [http-nio-8089-exec-1] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
 2020-12-13 00:11:00.039 [http-nio-8089-exec-3] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
 2020-12-13 10:52:08.711 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-13 21:15:42.829 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEzMjExNTQyN1gwIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc4NjU0NDIsInVzZXJJZCI6MSwiaWF0IjoxNjA3ODY1MzQyfQ.dFaSbPv-pIY1WOpxdkgX6AER7Bsfe8Bz19omXp7Q_zk
+2020-12-13 21:15:43.078 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 1 vo = CommentAuditVo(state=0)
+2020-12-13 21:15:43.202 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - 评论id= 1 已被审核
+2020-12-13 21:18:45.621 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjEzMjExODQ1NTUxIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc4NjU2MjUsInVzZXJJZCI6MSwiaWF0IjoxNjA3ODY1NTI1fQ.L-LwbQeTeC2O0Ip9XpfieDQW1WDJIuVPq23MiKeSsac
+2020-12-13 21:18:45.844 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 5 vo = CommentAuditVo(state=0)
+2020-12-13 21:18:45.963 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - commentid = 5 的信息已更新

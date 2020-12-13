@@ -103,7 +103,7 @@ public class CommentControllerTest {
                 "  \"state\":\"0\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(put("/comments/shops/0/confirm/1/confirm")
+        String responseString = this.mvc.perform(put("/comments/shops/0/confirm/5/confirm")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
