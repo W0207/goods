@@ -72,6 +72,14 @@ public class FlashSaleControllerTest {
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
+    @Test
+    public void queryTopicsByTime() throws Exception {
+        String responseString = this.mvc.perform(get("/flashsale/timesegments/1/flashsales")
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
     /**
      * 增加秒杀活动商品
      *

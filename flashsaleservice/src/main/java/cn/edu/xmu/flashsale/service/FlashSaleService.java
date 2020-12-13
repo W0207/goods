@@ -1,5 +1,11 @@
 package cn.edu.xmu.flashsale.service;
 
+import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
+import cn.edu.xmu.flashsale.model.po.FlashSalePo;
+import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
+import cn.edu.xmu.ooad.util.ResponseCode;
+import com.sun.el.stream.Stream;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
@@ -8,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.edu.xmu.flashsale.model.vo.*;
 import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.dao.FlashSaleDao;
+import reactor.core.publisher.Flux;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,6 +28,12 @@ public class FlashSaleService {
 
     @Autowired
     FlashSaleDao flashSaleDao;
+
+    @Autowired
+    private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
+
+    @Autowired
+    private FlashSalePoMapper flashSalePoMapper;
 
     /**
      * 查找某时段秒杀活动
@@ -91,6 +105,16 @@ public class FlashSaleService {
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
         return flashSaleDao.createFlash(id, flashSaleInputVo);
+    }
+
+    public Flux<FlashSaleItem> getFlashSale(Long id) {
+        //获取时间段的秒杀活动id(一个时间段只能有一个秒杀活动)
+        FlashSalePoExample flashSalePoExample = new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria = flashSalePoExample.createCriteria();
+        criteria.andTimeSegIdEqualTo(id);
+        List<FlashSalePo> flashSales = flashSalePoMapper.selectByExample(flashSalePoExample);
+        Long flashSaleId = flashSales.get(0).getId();
+        return reactiveRedisTemplate.opsForSet().members(flashSaleId.toString()).map(x -> (FlashSaleItem) x);
     }
 }
 
