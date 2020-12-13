@@ -24,6 +24,7 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,27 +58,27 @@ public class CouponDao {
         CouponActivityPoExample.Criteria criteria = couponActivityPoExample.createCriteria();
         List<CouponActivityPo> couponActivityPos = null;
         PageHelper.startPage(page, pageSize);
-        if(shopId!=null) {
+        if (shopId != null) {
             //shopId不为空
             criteria.andShopIdEqualTo(shopId);
         }
         //时间：0 还未开始的， 1 明天开始的，2 正在进行中的，3 已经结束的
-        if(timeline!=null){
-            if(timeline==0){
+        if (timeline != null) {
+            if (timeline == 0) {
                 //timeLine等于0还没开始的活动
                 criteria.andBeginTimeGreaterThan(LocalDateTime.now());
             } else {
-                if(timeline==1){
+                if (timeline == 1) {
                     //timeLine等于1明天开始的活动
-                    criteria.andBeginTimeGreaterThan(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth()+1,0,0,0));
+                    criteria.andBeginTimeGreaterThan(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0));
                 } else {
-                    if(timeline==2){
+                    if (timeline == 2) {
                         //timeLine等于2正在进行的活动
                         criteria.andBeginTimeLessThanOrEqualTo(LocalDateTime.now());
                         criteria.andEndTimeGreaterThan(LocalDateTime.now());
                     } else {
                         //timeLine等于3已经结束的活动
-                        if(timeline == 3){
+                        if (timeline == 3) {
                             criteria.andEndTimeLessThan(LocalDateTime.now());
                         }
                     }
@@ -140,12 +141,10 @@ public class CouponDao {
             logger.info("优惠券id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(!couponPo.getCustomerId().equals(userId))
-        {
+        if (!couponPo.getCustomerId().equals(userId)) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if(couponPo.getState()!=1)
-        {
+        if (couponPo.getState() != 1) {
             return new ReturnObject<>(ResponseCode.COUPON_STATENOTALLOW);
         }
         Coupon coupon = new Coupon(couponPo);
@@ -159,18 +158,19 @@ public class CouponDao {
     /**
      * by 宇
      * 新建己方优惠活动
+     *
      * @param shopId
      * @param addCouponActivityVo
      * @return
      */
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo){
-        if(!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())){
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"addCouponActivity,活动结束时间小于开始时间");
+    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
+        if (!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,活动结束时间小于开始时间");
         }
-        if(addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime())||addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())){
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"addCouponActivity,优惠时间不在活动期间");
+        if (addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime()) || addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,优惠时间不在活动期间");
         }
-        ReturnObject returnObject= null;
+        ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
         try {
             if (shopToAllVo.equals(null)) {
@@ -178,7 +178,7 @@ public class CouponDao {
             } else {
                 CouponActivityPo po = addCouponActivityVo.createPo();
                 po.setGmtCreate(LocalDateTime.now());
-                po.setState((byte)0);
+                po.setState((byte) 0);
                 int retId = couponActivityPoMapper.insert(po);
                 if (retId == 0) {
                     returnObject = new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库发生错误"));
@@ -190,32 +190,37 @@ public class CouponDao {
                 }
             }
             return returnObject;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("新建优惠活动shopId不存在"));
             return returnObject;
         }
     }
 
-    public ReturnObject userGetCoupon(Long id,Long userId){
+    /**
+     * 用户领取优惠券
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    public ReturnObject userGetCoupon(Long id, Long userId) {
         ReturnObject returnObject = null;
         //1.取出活动id判断是否存在
         CouponActivityPo po = couponActivityPoMapper.selectByPrimaryKey(id);
-        if(po.equals(null)){
+        if (po == null) {
             //活动不存在
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"用户领取优惠券，优惠活动不存在");
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            //判断活动是否上线
-            if(!po.getState().equals((byte)1)){
-                //活动为上线或者删除了
+            //判断活动是否删除
+            if (po.getState().equals((byte) 2)) {
+                //活动未删除了
                 returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
             } else {
                 //判断是否到了优惠时间
-                if(!po.getCouponTime().isBefore(LocalDateTime.now())){
+                if (!po.getCouponTime().isBefore(LocalDateTime.now())) {
                     //没有到达优惠时间
                     returnObject = new ReturnObject(ResponseCode.COUPON_NOTBEGIN);
-                }else {
+                } else {
                     //判断是否还有优惠券
                     if (po.getQuantity().equals(0)) {
                         //没有优惠券
@@ -230,12 +235,12 @@ public class CouponDao {
                         criteria.andActivityIdEqualTo(id);
                         criteria.andCustomerIdEqualTo(userId);
                         List<CouponPo> pos = couponPoMapper.selectByExample(example);
-                        if(pos.equals(null)){
-                            //用户没有这个优惠券
-                            if(po.getQuantitiyType().equals(0)){
-                                for(int i=1;i<=po.getQuantity();i++){
+                        if (pos.isEmpty()) {
+                            //用户没有这个优惠券（每人数量限制)(每人领取quantity张优惠券)
+                            if (po.getQuantitiyType().equals(0)) {
+                                for (int i = 1; i <= po.getQuantity(); i++) {
                                     CouponPo couponPo = new CouponPo();
-                                    couponPo.setState((byte)1);
+                                    couponPo.setState((byte) 1);
                                     couponPo.setGmtCreate(LocalDateTime.now());
                                     couponPo.setActivityId(id);
                                     couponPo.setBeginTime(po.getBeginTime());
@@ -245,6 +250,30 @@ public class CouponDao {
                                     //缺少了sn的放置
                                     couponPoMapper.insert(couponPo);
                                 }
+                                //总数控制，总共有quantity张优惠券
+                            } else if (po.getQuantitiyType().equals(1)) {
+                                if (po.getQuantity() > 0) {
+                                    CouponPo couponPo = new CouponPo();
+                                    couponPo.setState((byte) 1);
+                                    couponPo.setGmtCreate(LocalDateTime.now());
+                                    couponPo.setActivityId(id);
+                                    couponPo.setBeginTime(po.getBeginTime());
+                                    couponPo.setEndTime(po.getEndTime());
+                                    couponPo.setCustomerId(userId);
+                                    couponPo.setName(po.getName());
+                                    //缺少了sn的放置
+                                    couponPoMapper.insert(couponPo);
+                                    //取一张优惠券数量减1，当为0时直接设为-1
+                                    CouponActivityPo couponActivityPo = new CouponActivityPo();
+                                    if (po.getQuantity() - 1 > 0) {
+                                        couponActivityPo.setQuantity(po.getQuantity() - 1);
+                                    } else {
+                                        couponActivityPo.setQuantity(-1);
+                                    }
+                                    couponActivityPoMapper.updateByPrimaryKeySelective(couponActivityPo);
+                                }
+                            } else {
+                                return new ReturnObject(ResponseCode.COUPON_FINISH);
                             }
                         } else {
                             //用户有该优惠券
@@ -274,8 +303,7 @@ public class CouponDao {
             commentPage.setPageSize(commentPoPage.getPageSize());
             commentPage.setTotal(commentPoPage.getTotal());
             return new ReturnObject<>(rolePage);
-        }
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error("viewGoodsInCouponById: DataAccessException:" + e.getMessage());
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }

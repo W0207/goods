@@ -381,11 +381,20 @@ public class CouponController {
         return Common.decorateReturnObject(couponActivityService.deleteCouponActivity(shopId, id));
     }
 
+    /**
+     * 买家领取优惠券
+     *
+     * @param id
+     * @param userId
+     * @return
+     * @author 宇
+     */
     @ApiOperation("买家领取活动优惠券")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
+    @Audit
     @PostMapping("/couponactivities/{id}/usercoupons")
     public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId) {
         return Common.decorateReturnObject(couponService.userGetCoupon(id, userId));
@@ -408,14 +417,14 @@ public class CouponController {
     })
     @Audit
     @GetMapping("/coupons")
-    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@LoginUser Long userId) {
+    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @LoginUser Long userId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userId);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
         state = (state == null) ? 1 : state;
         Object object = null;
-        ReturnObject<PageInfo<VoObject>> returnObject= couponService.showCouponsById(page, pageSize, state, userId);
-        object=Common.getPageRetObject(returnObject);
+        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
+        object = Common.getPageRetObject(returnObject);
         return object;
     }
 }
