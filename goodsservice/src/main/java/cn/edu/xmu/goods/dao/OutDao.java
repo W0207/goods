@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 宇
+ */
 @Repository
 public class OutDao {
 
@@ -53,7 +56,7 @@ public class OutDao {
     public ShopInfo getShopInfo(Long shopId) {
         try {
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
-            if (shopPo.equals(null)) {
+            if (shopPo == null) {
                 return new ShopInfo("Success");
             }
             ShopInfo shopInfo = new ShopInfo(shopPo.getId(), shopPo.getName(), shopPo.getState(), shopPo.getGmtCreate(), shopPo.getGmtModified(), "Success");
@@ -65,10 +68,10 @@ public class OutDao {
 
     public ReturnObject<List<Long>> getShopSkuId(Long shopId) {
         try {
-            ReturnObject returnObject = null;
+            ReturnObject returnObject;
             //查询shopId是否存在
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
-            if (shopPo.equals(null)) {
+            if (shopPo == null) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "shopId不存在");
             } else {
                 GoodsSpuPoExample spuPoExample = new GoodsSpuPoExample();
@@ -94,14 +97,14 @@ public class OutDao {
     }
 
     public ReturnObject<GoodsSkuInfo> getSkuInfo(Long goodsSkuId) {
-        ReturnObject returnObject = null;
+        ReturnObject returnObject;
         try {
             GoodsSkuPo po = skuPoMapper.selectByPrimaryKey(goodsSkuId);
-            if (po.equals(null)) {
+            if (po == null) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "skuId不存在");
             } else {
                 String spuName = spuPoMapper.selectByPrimaryKey(po.getGoodsSpuId()).getName();
-                GoodsSkuInfo goodsSkuInfo = new GoodsSkuInfo(po.getId(), po.getName(), spuName, po.getSkuSn(), po.getImageUrl(), po.getInventory(), po.getOriginalPrice(), goodsDao.getPrice(goodsSkuId).equals(null) ? po.getOriginalPrice() : goodsDao.getPrice(goodsSkuId), false);
+                GoodsSkuInfo goodsSkuInfo = new GoodsSkuInfo(po.getId(), po.getName(), spuName, po.getSkuSn(), po.getImageUrl(), po.getInventory(), po.getOriginalPrice(), goodsDao.getPrice(goodsSkuId) == null ? po.getOriginalPrice() : goodsDao.getPrice(goodsSkuId), false);
                 returnObject = new ReturnObject(goodsSkuInfo);
             }
             return returnObject;

@@ -19,7 +19,6 @@
         <module>commentservice</module>
         <module>couponservice</module>
         <module>flashsaleservice</module>
-        <module>core</module>
         <module>presaleservice</module>
         <module>grouponservice</module>
         <module>ininterface</module>

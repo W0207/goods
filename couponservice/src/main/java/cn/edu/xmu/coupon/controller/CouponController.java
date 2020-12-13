@@ -83,7 +83,6 @@ public class CouponController {
         return ResponseUtil.ok(new ReturnObject<List>(couponStateVos));
     }
 
-
     /**
      * 查看上线的优惠活动列表
      *

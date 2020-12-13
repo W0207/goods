@@ -27,7 +27,7 @@ public class GrouponServer {
     private static final Logger logger = LoggerFactory.getLogger(GrouponServer.class);
 
     @Autowired
-   GrouponDao grouponDao;
+    GrouponDao grouponDao;
 
 
     /** 查询团购活动

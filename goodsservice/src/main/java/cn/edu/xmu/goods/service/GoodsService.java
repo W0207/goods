@@ -35,7 +35,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-
 import javax.annotation.Resource;
 
 /**
@@ -69,11 +68,11 @@ public class GoodsService implements Ingoodservice {
     @Override
     public SkuToPresaleVo presaleFindSku(Long id) {
         GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-        if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals(0)) {
+        if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals((byte) 0)) {
             return null;
         }
         SkuToPresaleVo skuToPresaleVo = new SkuToPresaleVo(goodsSkuPo.getId(), goodsSkuPo.getName(), goodsSkuPo.getSkuSn(), goodsSkuPo.getImageUrl(), goodsSkuPo.getInventory(), goodsSkuPo.getOriginalPrice(),
-                goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() == 0 ? false : true);
+                goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() != 0);
         return skuToPresaleVo;
     }
 
@@ -102,11 +101,11 @@ public class GoodsService implements Ingoodservice {
     public SkuToFlashSaleVo flashFindSku(Long id) {
         try {
             GoodsSkuPo goodsSkuPo = goodsDao.findGoodsSkuById(id);
-            if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals(0)) {
+            if (goodsSkuPo == null || !goodsSkuPo.getDisabled().equals((byte) 0)) {
                 return null;
             }
             SkuToFlashSaleVo skuToFlashSaleVo = new SkuToFlashSaleVo(goodsSkuPo.getId(), goodsSkuPo.getName(), goodsSkuPo.getSkuSn(), goodsSkuPo.getImageUrl(), goodsSkuPo.getInventory(), goodsSkuPo.getOriginalPrice(),
-                    goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() == 0 ? false : true);
+                    goodsDao.getPrice(id) == null ? goodsSkuPo.getOriginalPrice() : goodsDao.getPrice(id), goodsSkuPo.getDisabled() != 0);
             return skuToFlashSaleVo;
         } catch (Exception e) {
             logger.error("findAllBrand: DataAccessException:" + e.getMessage());
@@ -121,10 +120,7 @@ public class GoodsService implements Ingoodservice {
     @Override
     public boolean skuExitOrNot(Long skuId) {
         GoodsSkuPo po = goodsDao.findGoodsSkuById(skuId);
-        if (!po.equals(null)) {
-            return true;
-        }
-        return false;
+        return po != null;
     }
 
     @Override

@@ -3,13 +3,15 @@ package cn.edu.xmu.groupon.model.bo;
 import cn.edu.xmu.groupon.model.po.GrouponActivityPo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.groupon.model.vo.*;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author zhai
+ */
 @Data
 public class GrouponActivity implements VoObject {
 
@@ -18,7 +20,7 @@ public class GrouponActivity implements VoObject {
      */
     public enum State {
         OFFLINE(0, "已下线"),
-        ONLINE(1,"已上线"),
+        ONLINE(1, "已上线"),
         DELETED(2, "已删除");
 
         private static final Map<Integer, State> stateMap;
@@ -71,15 +73,14 @@ public class GrouponActivity implements VoObject {
 
     private LocalDateTime gmtModified;
 
-    public GrouponActivity(){}
+    public GrouponActivity() {
+    }
 
-    public GrouponActivity (GrouponActivityPo po)
-    {
+    public GrouponActivity(GrouponActivityPo po) {
 
-        if(po==null){
+        if (po == null) {
 
-        }
-        else {
+        } else {
             this.id = po.getId() == null ? null : po.getId();
             this.name = po.getName() == null ? null : po.getName();
             this.goodsSpu = po.getGoodsSpuId() == null ? null : po.getGoodsSpuId();
@@ -94,30 +95,29 @@ public class GrouponActivity implements VoObject {
 
     }
 
-    public GrouponActivityPo creatUpdatePo(GrouponInputVo grouponInputVo)
-    {
-        GrouponActivityPo po=new GrouponActivityPo();
-         String strategyEnc=grouponInputVo.getStrategy() == null ? null :grouponInputVo.getStrategy();
-         LocalDateTime beginTimeEnc=grouponInputVo.getBeginTime() == null ? null :grouponInputVo.getBeginTime();
-         LocalDateTime endTimeEnc=grouponInputVo.getEndTime() == null ? null :grouponInputVo.getEndTime();
-         po.setId(this.id);
-         po.setName(this.name);
-         po.setState(this.state);
-         po.setShopId(this.shop);
-         po.setGoodsSpuId(this.goodsSpu);
-         po.setStrategy(strategyEnc);
-         po.setBeginTime(beginTimeEnc);
-         po.setEndTime(endTimeEnc);
-         po.setGmtCreate(this.gmtCreate);
-         po.setGmtModified(LocalDateTime.now());
-         return po;
+    public GrouponActivityPo creatUpdatePo(GrouponInputVo grouponInputVo) {
+        GrouponActivityPo po = new GrouponActivityPo();
+        String strategyEnc = grouponInputVo.getStrategy() == null ? null : grouponInputVo.getStrategy();
+        LocalDateTime beginTimeEnc = grouponInputVo.getBeginTime() == null ? null : grouponInputVo.getBeginTime();
+        LocalDateTime endTimeEnc = grouponInputVo.getEndTime() == null ? null : grouponInputVo.getEndTime();
+        po.setId(this.id);
+        po.setName(this.name);
+        po.setState(this.state);
+        po.setShopId(this.shop);
+        po.setGoodsSpuId(this.goodsSpu);
+        po.setStrategy(strategyEnc);
+        po.setBeginTime(beginTimeEnc);
+        po.setEndTime(endTimeEnc);
+        po.setGmtCreate(this.gmtCreate);
+        po.setGmtModified(LocalDateTime.now());
+        return po;
     }
 
-    public  GrouponActivityPo createAddPo(Long spuId,GrouponInputVo grouponInputVo,Long shopId){
-        GrouponActivityPo po=new GrouponActivityPo();
-        String strategyEnc=grouponInputVo.getStrategy() == null ? null :grouponInputVo.getStrategy();
-        LocalDateTime beginTimeEnc=grouponInputVo.getBeginTime() == null ? null :grouponInputVo.getBeginTime();
-        LocalDateTime endTimeEnc=grouponInputVo.getEndTime() == null ? null :grouponInputVo.getEndTime();
+    public GrouponActivityPo createAddPo(Long spuId, GrouponInputVo grouponInputVo, Long shopId) {
+        GrouponActivityPo po = new GrouponActivityPo();
+        String strategyEnc = grouponInputVo.getStrategy() == null ? null : grouponInputVo.getStrategy();
+        LocalDateTime beginTimeEnc = grouponInputVo.getBeginTime() == null ? null : grouponInputVo.getBeginTime();
+        LocalDateTime endTimeEnc = grouponInputVo.getEndTime() == null ? null : grouponInputVo.getEndTime();
         po.setStrategy(strategyEnc);
         po.setBeginTime(beginTimeEnc);
         po.setEndTime(endTimeEnc);
