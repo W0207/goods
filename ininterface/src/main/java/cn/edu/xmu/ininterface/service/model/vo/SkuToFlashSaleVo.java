@@ -5,6 +5,9 @@ import com.sun.jdi.Value;
 
 import java.io.Serializable;
 
+/**
+ * @author Abin
+ */
 public class SkuToFlashSaleVo implements VoObject, Serializable {
     private Long id;
 

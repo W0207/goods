@@ -22,6 +22,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author Abin
+ */
 @SpringBootApplication(scanBasePackages = {"cn.edu.xmu.ooad", "cn.edu.xmu.flashsale"})
 @MapperScan("cn.edu.xmu.flashsale.mapper")
 @EnableDiscoveryClient//启动服务发现

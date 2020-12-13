@@ -24,4 +24,5 @@ public class FlashSaleItemRetVo {
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
+
 }

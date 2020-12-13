@@ -10,9 +10,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * @author Abin
+ */
 @Data
 public class FlashSaleItem implements VoObject, Serializable {
     Long id;
@@ -29,7 +30,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
     LocalDateTime gmtModified;
 
-    SkuToFlashSaleVo skuToFlashSaleVo;
+    SkuRetVo skuRetVo;
 
     public FlashSaleItem(Long id, SkuInputVo skuInputVo) {
         this.saleId = id;
@@ -42,7 +43,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
     public FlashSaleItem(FlashSaleItemPo itemPo, SkuToFlashSaleVo skuPo) {
         this.id = skuPo.getId();
-        this.skuToFlashSaleVo = skuPo;
+        this.skuRetVo = new SkuRetVo(skuPo);
         this.price = itemPo.getPrice();
         this.saleId = itemPo.getSaleId();
         this.quantity = itemPo.getQuantity();
@@ -80,7 +81,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
         flashSaleItemRetVo.setId(this.id);
 
-        SkuRetVo skuRetVo = (SkuRetVo) skuToFlashSaleVo.createVo();
+        SkuRetVo skuRetVo = new SkuRetVo();
 
         skuRetVo.setPrice(this.price);
         skuRetVo.setInventory(this.quantity);
