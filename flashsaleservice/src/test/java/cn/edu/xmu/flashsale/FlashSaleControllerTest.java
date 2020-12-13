@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,21 @@ public class FlashSaleControllerTest {
 
     @Autowired
     FlashSaleItemPoMapper flashSaleItemPoMapper;
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Test
+    public void getFlashSaleTest() {
+
+        webTestClient.get().uri("/flashsale/timesegments/1/flashsales").exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[?(@.id == 1)].goodsSku.name").isEqualTo("铭瑄GeForce GT 1030显卡")
+                .jsonPath("$[?(@.id == 2)].goodsSku.name").isEqualTo("美商海盗船CX650电源")
+                .jsonPath("$[?(@.id == 3)].goodsSku.name").isEqualTo("戴尔23.8英寸显示器")
+                .jsonPath("$[?(@.id == 4)].goodsSku.name").isEqualTo("一晨卫生纸");
+    }
 
     /**
      * 修改秒杀活动

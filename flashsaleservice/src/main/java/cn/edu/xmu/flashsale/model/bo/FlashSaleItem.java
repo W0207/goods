@@ -85,7 +85,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
         skuRetVo.setPrice(this.price);
         skuRetVo.setInventory(this.quantity);
-        flashSaleItemRetVo.setSimpleSku(skuRetVo);
+        flashSaleItemRetVo.setGoodsSku(skuRetVo);
 
 
         flashSaleItemRetVo.setPrice(this.price);

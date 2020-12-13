@@ -48,7 +48,7 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         FlashSaleItemPoExample example = new FlashSaleItemPoExample();
         List<FlashSaleItemPo> flashSaleItemPoList = flashSaleItemPoMapper.selectByExample(example);
         //以时间段为key载入redis
@@ -63,7 +63,8 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
             //转为flashsaleitem
             FlashSaleItem item = new FlashSaleItem(itemPo, skuToFlashSaleVo);
             //将参与秒杀的sku信息载入内存(key为时间段)
-            redisTemplate.opsForSet().add(String.valueOf(timeSge), item);
+            String key = "cp_" + timeSge;
+            redisTemplate.opsForSet().add(key, item);
         }
     }
 
