@@ -166,7 +166,7 @@ public class GrouponDao {
     }
 
     /**
-     * 新增团购活动  待完善
+     * 新增团购活动
      *
      * @param id
      * @param grouponInputVo
@@ -201,6 +201,14 @@ public class GrouponDao {
     public ReturnObject<Object> modifyGrouponById(Long id, GrouponInputVo grouponInputVo, Long shopId) {
         ReturnObject<Object> returnObject;
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
+        if(grouponInputVo.getBeginTime().isAfter(grouponInputVo.getEndTime())){
+            logger.info("团购活动开始时间晚于结束时间");
+            return  new ReturnObject<>(ResponseCode.Log_Bigger);
+        }
+        if(grouponInputVo.getBeginTime().isAfter(LocalDateTime.now())){
+            logger.info("团购活动开始时间晚于当前时间");
+            return  new ReturnObject<>(ResponseCode.Log_Bigger);
+        }
         if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：Id = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
