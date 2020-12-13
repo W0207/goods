@@ -281,7 +281,7 @@ public class CouponDao {
         }
     }
 
-    public List<CouponRetVo> showCouponsById(Integer state, Long userId) {
+    public PageInfo<CouponRetVo> showCouponsById(Integer state, Long userId) {
         CouponPoExample couponPoExample = new CouponPoExample();
         CouponPoExample.Criteria couponPoCriteria = couponPoExample.createCriteria();
         couponPoCriteria.andCustomerIdEqualTo(userId);
@@ -297,6 +297,6 @@ public class CouponDao {
             CouponRetVo couponRetVo = new CouponRetVo(couponRet);
             vo.add(couponRetVo);
         }
-        return vo;
+        return new PageInfo<>(vo);
     }
 }

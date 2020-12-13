@@ -50,6 +50,19 @@ public class CouponRet implements VoObject {
         this.couponSn=co.getCouponSn();
     }
 
+    public CouponRet(CouponRetVo couponRetVo) {
+        this.activityId=couponRetVo.getActivityId();
+        this.activityName=couponRetVo.getActivityName();
+        this.id=couponRetVo.getId();
+        this.name=couponRetVo.getName();
+        this.couponSn=couponRetVo.getCouponSn();
+        this.begin_time=couponRetVo.getBegin_time();
+        this.end_time=couponRetVo.getEnd_time();
+        this.image_url=couponRetVo.getImage_url();
+        this.coupon_time=couponRetVo.getCoupon_time();
+        this.quantity=couponRetVo.getQuantity();
+    }
+
     public void SetByActivity(CouponActivityPo couponActivityPo)
     {
         this.activityName=couponActivityPo.getName();
@@ -110,4 +123,6 @@ public class CouponRet implements VoObject {
     public String getActivityName() {
         return activityName;
     }
+
+
 }

@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,17 @@ public class CommentControllerTest {
 
     @Autowired
     CommentPoMapper commentPoMapper;
+
+    private WebTestClient mallClient;
+
+
+    public CommentControllerTest() {
+        this.mallClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:8089")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8")
+                .build();
+
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
@@ -46,6 +59,22 @@ public class CommentControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未审核\", \"code\": 0 }, { \"name\": \"评论成功\", \"code\": 1 }, { \"name\": \"未通过\", \"code\": 2 }], \"errmsg\": \"成功\" }";
         System.out.println(responseString);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void getAllStates() throws Exception {
+        byte[] ret = mallClient.get()
+                .uri("/comments/states")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo("0")
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .returnResult()
+                .getResponseBodyContent();
+        String responseString = new String(ret, "UTF-8");
+        String expectedResponse = "{\"errno\":0,\"data\":[{\"name\":\"未审核\",\"code\":0},{\"name\":\"评论成功\",\"code\":1},{\"name\":\"未通过\",\"code\":2}],\"errmsg\":\"成功\"}\n";
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
