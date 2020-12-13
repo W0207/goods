@@ -8,10 +8,8 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import cn.edu.xmu.groupon.service .GrouponServer;
+import cn.edu.xmu.groupon.service.GrouponServer;
 import cn.edu.xmu.ooad.annotation.Audit;
-import cn.edu.xmu.ooad.annotation.Depart;
-import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -24,18 +22,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 import cn.edu.xmu.ininterface.service.model.vo.*;
-import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+
 import cn.edu.xmu.ininterface.service.*;
 
 /**
  * 权限控制器
- **/
+ *
+ * @author zhai
+ */
 @Api(value = "团购服务", tags = "groupon")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/groupon", produces = "application/json;charset=UTF-8")
@@ -62,7 +61,7 @@ public class GrouponController {
      * 获得团购活动的所有状态
      *
      * @return Object
-     * @Author zhai
+     * @author zhai
      */
     @ApiOperation(value = "获得团购活动的所有状态")
     @ApiImplicitParams({
@@ -86,13 +85,13 @@ public class GrouponController {
      * 查询所有团购活动
      *
      * @return Object
-     * @Author zhai
+     * @author zhai
      */
     @ApiOperation(value = "查询所有团购活动")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "timeline", value = "时间", required = false),
-            @ApiImplicitParam(paramType = "query", dataType = "Long", name = "spuid", value = "spuId", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Long", name = "spuId", value = "spuId", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "shopId", value = "商店id", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false)
@@ -100,19 +99,19 @@ public class GrouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
+    @Audit
     @GetMapping("/groupons")
     public Object queryGroupons(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) Integer timeline,
-            @RequestParam(required = false) Long spuid
+            @RequestParam(required = false) Long spuId
     ) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
-        ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findgrouponActivity(timeline, spuid, shopId, page, pageSize);
-        logger.debug("findgrouponActivity = " + returnObject);
+        ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findgrouponActivity(timeline, spuId, shopId, page, pageSize);
+        logger.debug("findGrouponActivity = " + returnObject);
         return Common.getPageRetObject(returnObject);
 
     }
@@ -122,13 +121,13 @@ public class GrouponController {
      * 管理员查询所有团购（包括下线,删除的）
      *
      * @return Object
-     * @Author zhai
+     * @author zhai
      **/
     @ApiOperation(value = "管理员查询所有团购（包括下线,删除的）")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "商店id", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "Long", name = "spuid", value = "spuId", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Long", name = "spuId", value = "spuId", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "beginTime", value = "开始时间", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "endTime", value = "结束时间", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "state", value = "状态", required = false),
@@ -138,7 +137,7 @@ public class GrouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    //@Audit //需要认证
+    @Audit
     @GetMapping("/shops/{id}/groupons")
     public Object queryGroupon(@PathVariable Long id,
                                @RequestParam(required = false) Integer page,
@@ -149,41 +148,9 @@ public class GrouponController {
                                @RequestParam(required = false) Long spuId
     ) {
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findShopGroupon(state, spuId, id, page, pageSize, beginTime, endTime);
-        logger.debug("findgrouponActivity = " + returnObject);
+        logger.debug("findGrouponActivity = " + returnObject);
         return Common.getPageRetObject(returnObject);
     }
-
-    /**
-     * 管理员查询某SPU所有团购活动
-     *
-     * @param id
-     * @param state
-     * @param shopId
-     * @return
-     * @author zhai
-
-    @ApiOperation(value = "管理员查询某SPU所有团购活动")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Integer", name = "shopId", value = "商铺id", required = true),
-            @ApiImplicitParam(paramType = "path", dataType = "Integer", name = "id", value = "Skuid", required = true),
-            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "state", value = "状态", required = false),
-    })
-    @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
-    })
-    //@Audit //需要认证
-    @GetMapping("/shops/{shopId}/spus/{id}/groupons")
-    public Object queryGrouponofSPU(@PathVariable Long id, Integer state, @PathVariable Long shopId
-    ) {
-
-        ReturnObject<List> returnObject;
-        returnObject = grouponServer.findSkuGroupon(id, state, shopId);
-        logger.debug("findgrouponActivity = " + returnObject);
-        return Common.decorateReturnObject(returnObject);
-    }
-     */
-
 
     /**
      * 管理员对SPU新增团购活动
@@ -193,7 +160,7 @@ public class GrouponController {
      * @param bindingResult
      * @param shopId
      * @return
-     * @Author zhai
+     * @author zhai
      */
     @ApiOperation(value = "管理员对SPU新增团购活动")
     @ApiImplicitParams({
@@ -205,7 +172,7 @@ public class GrouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/groupons")
     public Object createGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
@@ -217,23 +184,22 @@ public class GrouponController {
             logger.info("incorrect data received while createGrouponofSPU: spuId = ", id);
             return returnObj;
         }
-        ReturnObject returnObject =null;
+        ReturnObject returnObject;
         SpuToGrouponVo spuToGrouponVo = goodservice.grouponFindSpu(id);
-        if(spuToGrouponVo==null) {
-            //Object returnObject = goodservice.echo2("123");
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("spuID不存在"));
-        }else {
+        if (spuToGrouponVo == null) {
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
             ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
             if (shopToAllVo == null) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("shopID不存在"));
             } else {
                 GrouponActivityPo groupon = grouponServer.addGroupon(id, grouponInputVo, shopId);
-                if(groupon==null){
+                if (groupon == null) {
                     return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
                 }
-                GrouponActivity grouponActivity=new GrouponActivity(groupon);
+                GrouponActivity grouponActivity = new GrouponActivity(groupon);
                 returnObject = new ReturnObject<>(grouponActivity);
-                GrouponOutputVo grouponOutputVo=new GrouponOutputVo(groupon);
+                GrouponOutputVo grouponOutputVo = new GrouponOutputVo(groupon);
                 grouponOutputVo.setShopToAllVo(shopToAllVo);
                 grouponOutputVo.setGoodsSpu(spuToGrouponVo);
 
@@ -262,7 +228,7 @@ public class GrouponController {
             @ApiResponse(code = 907, message = "团购活动状态禁止"),
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}")
     public Object changeGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, @PathVariable Long shopId) {
         System.out.println(grouponInputVo.getBeginTime());
@@ -282,7 +248,7 @@ public class GrouponController {
      * @param id
      * @param shopId
      * @return
-     * @Author zhai
+     * @author zhai
      */
 
     @ApiOperation(value = "管理员下架SPU团购活动")
@@ -295,7 +261,7 @@ public class GrouponController {
             @ApiResponse(code = 907, message = "团购活动状态禁止"),
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/groupons/{id}")
     public Object cancelGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
         System.out.println("hello");
@@ -309,6 +275,7 @@ public class GrouponController {
 
     /**
      * 管理员下线SPU团购活动
+     *
      * @param id
      * @param shopId
      * @return
@@ -324,7 +291,7 @@ public class GrouponController {
             @ApiResponse(code = 907, message = "团购活动状态禁止"),
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}/offshelves")
     public Object offGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
         System.out.println("hello");
@@ -338,10 +305,11 @@ public class GrouponController {
 
     /**
      * 管理员上线SPU团购活动
+     *
      * @param id
      * @param shopId
      * @return
-     * @author  zhai
+     * @author zhai
      */
     @ApiOperation(value = "管理员上线SPU团购活动")
     @ApiImplicitParams({
@@ -353,7 +321,7 @@ public class GrouponController {
             @ApiResponse(code = 907, message = "团购活动状态禁止"),
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}/onshelves")
     public Object onGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
         System.out.println("hello");

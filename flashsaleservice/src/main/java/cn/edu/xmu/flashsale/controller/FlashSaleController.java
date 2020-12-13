@@ -5,39 +5,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.flashsale.model.vo.*;
 import cn.edu.xmu.flashsale.model.bo.*;
-import cn.edu.xmu.flashsale.model.po.*;
 import cn.edu.xmu.flashsale.service.FlashSaleService;
-import io.swagger.annotations.Api;
 import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.ooad.annotation.Audit;
-import cn.edu.xmu.ooad.annotation.Depart;
-import cn.edu.xmu.ooad.annotation.LoginUser;
-import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
-import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 import org.apache.dubbo.config.annotation.DubboReference;
+
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
+
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 
 /**
  * 权限控制器
- **/
+ *
+ * @author zhai
+ */
 @Api(value = "秒杀服务", tags = "flashsale")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/flashsale", produces = "application/json;charset=UTF-8")
@@ -56,6 +48,7 @@ public class FlashSaleController {
 
     /**
      * 查询某一时段秒杀活动详情
+     *
      * @param id
      * @return
      * @author zhai
@@ -73,7 +66,7 @@ public class FlashSaleController {
     public Object queryTopicsByTime(@PathVariable Long id) {
 
         List<FlashSaleOutputVo> flashSaleOutputVos = flashSaleService.findFlashSaleByTime(id);
-        ReturnObject<List> returnObject=new ReturnObject<List>(flashSaleOutputVos);
+        ReturnObject<List> returnObject = new ReturnObject<List>(flashSaleOutputVos);
         return Common.decorateReturnObject(returnObject);
 
     }
@@ -81,6 +74,7 @@ public class FlashSaleController {
 
     /**
      * 查询当前时段秒杀活动详情
+     *
      * @param id
      * @return
      * @author zhai
@@ -93,14 +87,15 @@ public class FlashSaleController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @GetMapping("/flashsales/current")
-    public Object getCurrentflash( Long id) {
+    public Object getCurrentFlash(Long id) {
 
         //需要将当前时间传到其他模块，并要求其他模块返回当前时段id
         List<FlashSaleOutputVo> flashSaleOutputVos = flashSaleService.findFlashSaleByTime(id);
-        ReturnObject<List> returnObject=new ReturnObject<List>(flashSaleOutputVos);
+        ReturnObject<List> returnObject = new ReturnObject<List>(flashSaleOutputVos);
         return Common.decorateReturnObject(returnObject);
 
     }
+
     /**
      * 管理员修改秒杀活动
      *
@@ -120,7 +115,7 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
     public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
@@ -153,7 +148,7 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @DeleteMapping("/shops/{did}/flashsales/{id}")
     public Object deleteflashsale(@PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -176,9 +171,9 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{did}/flashsales/{id}/flashitems")
-    public Object addSKUofTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
+    public Object addSkuOfTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSKUofTopic id = " + id);
         }
@@ -188,17 +183,16 @@ public class FlashSaleController {
             logger.info("incorrect data received while addSKUofTopic flashSaleID = " + id);
             return ret;
         }
-        ReturnObject returnObject =null;
-        SkuToFlashSaleVo skuToFlashSaleVo=goodservice.flashFindSku(skuInputVo.getSkuId());
-        if(skuToFlashSaleVo==null){
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("skuID不存在"));
-        }
-        else {
+        ReturnObject returnObject = null;
+        SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(skuInputVo.getSkuId());
+        if (skuToFlashSaleVo == null) {
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
             FlashSaleItem flashSaleItem = flashSaleService.addFlashSaleItem(id, skuInputVo);
-            if (flashSaleItem==null){
+            if (flashSaleItem == null) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("sku添加失败"));
-            }else {
-                FlashSaleOutputVo flashSaleOutputVo=new FlashSaleOutputVo(flashSaleItem,skuToFlashSaleVo);
+            } else {
+                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
                 returnObject = new ReturnObject<>(flashSaleOutputVo);
             }
         }
@@ -224,7 +218,7 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
+    @Audit
     @DeleteMapping("/shops/{did}/flashsales/{fid}/flashitems/{id}")
     public Object deleteFlashSaleSku(@PathVariable Long id, @PathVariable Long fid) {
         if (logger.isDebugEnabled()) {

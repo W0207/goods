@@ -2,29 +2,28 @@ package cn.edu.xmu.flashsale.dao;
 
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Repository;
 import cn.edu.xmu.flashsale.mapper.*;
 import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.model.po.*;
 import cn.edu.xmu.flashsale.model.vo.*;
 import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
-import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import org.apache.dubbo.config.annotation.DubboReference;
+
+/**
+ * @author zhai
+ */
 @Repository
 public class FlashSaleDao {
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleDao.class);
@@ -41,24 +40,25 @@ public class FlashSaleDao {
 
     /**
      * 查找某一时段秒杀活动商品
+     *
      * @param id
      * @return
      */
-    public List<FlashSaleOutputVo>findFlashSaleItemByTime(Long id){
-        FlashSalePoExample example=new FlashSalePoExample();
-        FlashSalePoExample.Criteria criteria=example.createCriteria();
+    public List<FlashSaleOutputVo> findFlashSaleItemByTime(Long id) {
+        FlashSalePoExample example = new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria = example.createCriteria();
         criteria.andTimeSegIdEqualTo(id);
-        List<FlashSalePo> flashSalePos=flashSalePoMapper.selectByExample(example);
-        List<FlashSaleOutputVo> flashSaleOutputVos=new ArrayList<>();
-        for(FlashSalePo flashSalePo : flashSalePos){
-            FlashSaleItemPoExample example1=new FlashSaleItemPoExample();
-            FlashSaleItemPoExample.Criteria criteria1=example1.createCriteria();
+        List<FlashSalePo> flashSalePos = flashSalePoMapper.selectByExample(example);
+        List<FlashSaleOutputVo> flashSaleOutputVos = new ArrayList<>();
+        for (FlashSalePo flashSalePo : flashSalePos) {
+            FlashSaleItemPoExample example1 = new FlashSaleItemPoExample();
+            FlashSaleItemPoExample.Criteria criteria1 = example1.createCriteria();
             criteria1.andSaleIdEqualTo(flashSalePo.getId());
-            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example1);
-            for(FlashSaleItemPo flashSaleItemPo : flashSaleItemPos){
-                FlashSaleItem flashSaleItem=new FlashSaleItem(flashSaleItemPo);
-                SkuToFlashSaleVo skuToFlashSaleVo=goodservice.flashFindSku(flashSaleItem.getGoodsSkuId());
-                FlashSaleOutputVo flashSaleOutputVo=new FlashSaleOutputVo(flashSaleItem,skuToFlashSaleVo);
+            List<FlashSaleItemPo> flashSaleItemPos = flashSaleItemPoMapper.selectByExample(example1);
+            for (FlashSaleItemPo flashSaleItemPo : flashSaleItemPos) {
+                FlashSaleItem flashSaleItem = new FlashSaleItem(flashSaleItemPo);
+                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(flashSaleItem.getGoodsSkuId());
+                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
                 flashSaleOutputVos.add(flashSaleOutputVo);
             }
         }
@@ -141,12 +141,10 @@ public class FlashSaleDao {
         if (ret == 0) {
             logger.info("商品新增失败：FlashSaleId = " + id);
             flashSaleItem = null;
-            return flashSaleItem;
         } else {
             logger.info("商品新增成功：FlashSaleId = " + id);
-            return flashSaleItem;
         }
-
+        return flashSaleItem;
     }
 
     /**

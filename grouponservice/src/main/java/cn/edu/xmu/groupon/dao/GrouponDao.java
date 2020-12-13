@@ -8,18 +8,19 @@ import cn.edu.xmu.groupon.model.vo.*;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author zhai
+ */
 @Repository
 public class GrouponDao {
 
@@ -27,6 +28,7 @@ public class GrouponDao {
 
     @Autowired
     GrouponActivityPoMapper grouponActivityPoMapper;
+
     /**
      * 查看所有团购活动
      *
@@ -34,37 +36,37 @@ public class GrouponDao {
      * @param shopId
      * @param page
      * @param pageSize
-     * @return ReturnObject<PageInfo<VoObject>>
-     * @Author zhai
+     * @return ReturnObject<PageInfo < VoObject>>
+     * @author zhai
      */
     public PageInfo<GrouponActivityPo> findgroupons(Integer timeLine, Long spuId, Long shopId, Integer page, Integer pageSize) {
         GrouponActivityPoExample example = new GrouponActivityPoExample();
         GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andStateEqualTo(1);
-        if(spuId!=null){
+        if (spuId != null) {
             criteria.andGoodsSpuIdEqualTo(spuId);
         }
-        if(shopId!=null){
+        if (shopId != null) {
 
-               criteria.andShopIdEqualTo(shopId);
+            criteria.andShopIdEqualTo(shopId);
         }
         //时间：0 还未开始的， 1 明天开始的，2 正在进行中的，3 已经结束的
-        if(timeLine!=null){
-            if(timeLine==0){
+        if (timeLine != null) {
+            if (timeLine == 0) {
                 //timeLine等于0还没开始的活动
                 criteria.andBeginTimeGreaterThan(LocalDateTime.now());
             } else {
-                if(timeLine==1){
+                if (timeLine == 1) {
                     //timeLine等于1明天开始的活动
-                    criteria.andBeginTimeGreaterThan(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth()+1,0,0,0));
+                    criteria.andBeginTimeGreaterThan(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0));
                 } else {
-                    if(timeLine==2){
+                    if (timeLine == 2) {
                         //timeLine等于2正在进行的活动
                         criteria.andBeginTimeLessThanOrEqualTo(LocalDateTime.now());
                         criteria.andEndTimeGreaterThan(LocalDateTime.now());
                     } else {
                         //timeLine等于3已经结束的活动
-                        if(timeLine == 3){
+                        if (timeLine == 3) {
                             criteria.andEndTimeLessThan(LocalDateTime.now());
                         }
                     }
@@ -73,12 +75,13 @@ public class GrouponDao {
             }
         }
         List<GrouponActivityPo> grouponActivityPos;
-            grouponActivityPos = grouponActivityPoMapper.selectByExample(example);
-            return new PageInfo<>(grouponActivityPos);
+        grouponActivityPos = grouponActivityPoMapper.selectByExample(example);
+        return new PageInfo<>(grouponActivityPos);
     }
 
     /**
      * 查询shop团购活动
+     *
      * @param state
      * @param spuId
      * @param id
@@ -89,32 +92,31 @@ public class GrouponDao {
      * @return
      * @author zhai
      */
-    public ReturnObject<PageInfo<VoObject>>   findShopGroupon(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime){
+    public ReturnObject<PageInfo<VoObject>> findShopGroupon(Integer state, Long spuId, Long id, Integer page, Integer pageSize, String beginTime, String endTime) {
         GrouponActivityPoExample example = new GrouponActivityPoExample();
         GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andShopIdEqualTo(id);
-        if(state!=null) {
+        if (state != null) {
             if (!state.toString().isBlank()) {
                 criteria.andStateEqualTo(state);
             }
         }
-        if(spuId!=null) {
+        if (spuId != null) {
             if (!spuId.toString().isBlank()) {
                 criteria.andGoodsSpuIdEqualTo(spuId);
             }
         }
 
-        if(beginTime!=null) {
+        if (beginTime != null) {
             if (!beginTime.isBlank()) {
                 criteria.andBeginTimeEqualTo(beginTime);
             }
         }
-        if(endTime!=null) {
+        if (endTime != null) {
             if (!endTime.isBlank()) {
                 criteria.andEndTimeEqualTo(endTime);
             }
         }
-        //PageHelper.startPage(page, pageSize);
         List<GrouponActivityPo> grouponActivityPos;
         try {
             grouponActivityPos = grouponActivityPoMapper.selectByExample(example);
@@ -139,28 +141,30 @@ public class GrouponDao {
 
     /**
      * 查询sku团购活动
+     *
      * @param id
      * @param state
      * @param shopId
      * @return
      * @author zhai
      */
-    public  ReturnObject<List> findSkuGrouponById(Long id,Integer state,Long shopId){
-        GrouponActivityPoExample example=new GrouponActivityPoExample();
-        GrouponActivityPoExample.Criteria criteria=example.createCriteria();
+    public ReturnObject<List> findSkuGrouponById(Long id, Integer state, Long shopId) {
+        GrouponActivityPoExample example = new GrouponActivityPoExample();
+        GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andGoodsSpuIdEqualTo(id);
         criteria.andShopIdEqualTo(shopId);
-        List<GrouponActivityPo> grouponActivityPos=grouponActivityPoMapper.selectByExample(example);
-        List<GrouponSelectVo> grouponSelectVos=new ArrayList<>(grouponActivityPos.size());
-        if (grouponActivityPos == null) {
+        List<GrouponActivityPo> grouponActivityPos = grouponActivityPoMapper.selectByExample(example);
+        List<GrouponSelectVo> grouponSelectVos = new ArrayList<>(grouponActivityPos.size());
+        if (grouponActivityPos.isEmpty()) {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
-        for (GrouponActivityPo po :grouponActivityPos) {
+        for (GrouponActivityPo po : grouponActivityPos) {
             grouponSelectVos.add(new GrouponSelectVo(po));
         }
         return new ReturnObject<>(grouponSelectVos);
 
     }
+
     /**
      * 新增团购活动  待完善
      *
@@ -168,23 +172,12 @@ public class GrouponDao {
      * @param grouponInputVo
      * @param shopId
      * @return
-     * @Author zhai
+     * @author zhai
      */
 
-    public GrouponActivityPo addGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
-
-        GrouponActivityPoExample example=new GrouponActivityPoExample();
-        GrouponActivityPoExample.Criteria criteria=example.createCriteria();
-        criteria.andGoodsSpuIdEqualTo(id);
-        List <GrouponActivityPo> po=grouponActivityPoMapper.selectByExample(example);
-        /*if(po!=null){
-            GrouponActivityPo grouponActivityPo=new GrouponActivityPo();
-            grouponActivityPo=null;
-            return grouponActivityPo;
-        }*/
-        System.out.println(grouponInputVo.getBeginTime());
+    public GrouponActivityPo addGroupon(Long id, GrouponInputVo grouponInputVo, Long shopId) {
         GrouponActivity grouponActivity = new GrouponActivity();
-        GrouponActivityPo grouponActivityPo = grouponActivity.createAddPo(id, grouponInputVo,shopId);
+        GrouponActivityPo grouponActivityPo = grouponActivity.createAddPo(id, grouponInputVo, shopId);
         grouponActivityPo.setState(0);
         int ret = grouponActivityPoMapper.insertSelective(grouponActivityPo);
         if (ret == 0) {
@@ -194,33 +187,33 @@ public class GrouponDao {
         } else {
             logger.info("grouponId = " + id + " 的信息已新增成功");
         }
-        logger.debug(grouponActivityPo.getStrategy().toString());
         return grouponActivityPo;
     }
+
     /**
      * 修改团购活动
      *
-     * @param id              团购活动 id
+     * @param id             团购活动 id
      * @param grouponInputVo 可修改的团购活动信息
      * @return 返回对象 ReturnObject<Object>
      * @author zhai
      */
-    public ReturnObject<Object> modifyGrouponById(Long id, GrouponInputVo grouponInputVo,Long shopId) {
+    public ReturnObject<Object> modifyGrouponById(Long id, GrouponInputVo grouponInputVo, Long shopId) {
         ReturnObject<Object> returnObject;
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
-        if (po == null||po.getState()==null) {
+        if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：Id = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        Long shopid=po.getShopId()==null ? null :po.getShopId();
-        if(shopId.equals(shopid)) {
+        Long shopid = po.getShopId() == null ? null : po.getShopId();
+        if (shopId.equals(shopid)) {
             GrouponActivity grouponActivity = new GrouponActivity(po);
             GrouponActivityPo grouponActivityPo = grouponActivity.creatUpdatePo(grouponInputVo);
-            if(po.getState()==1){
+            if (po.getState() == 1) {
                 logger.info("团购活动已上线，无法修改：grouponId = " + id);
                 return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
             }
-            if(po.getState()==2){
+            if (po.getState() == 2) {
                 logger.info("团购活动已删除，无法修改：grouponId = " + id);
                 return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
             }
@@ -235,11 +228,10 @@ public class GrouponDao {
                 return returnObject;
             }
 
-        }
-        else {
-        logger.error("无权限修改团购活动");
-        returnObject = new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
-        return returnObject;
+        } else {
+            logger.error("无权限修改团购活动");
+            returnObject = new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return returnObject;
         }
     }
 
@@ -249,28 +241,28 @@ public class GrouponDao {
      * @param id 种类 id
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
-    */
-    public ReturnObject<Object> deleteGrouponState(Long shopId,Long id) {
+     */
+    public ReturnObject<Object> deleteGrouponState(Long shopId, Long id) {
 
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
-        if (po == null||po.getState()==null) {
+        if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
 
-        if(po.getShopId()==null){
+        if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if( po.getState()==2){
+        if (po.getState() == 2) {
             logger.info("团购活动已删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
-        }else if(po.getState()==1){
+        } else if (po.getState() == 1) {
             logger.info("团购活动已上线，无法修改：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
         }
 
-        if( po.getShopId().equals(shopId)){
+        if (po.getShopId().equals(shopId)) {
 
             po.setState(2);
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(po);
@@ -290,31 +282,32 @@ public class GrouponDao {
 
     /**
      * 上线团购活动
+     *
      * @param shopId
      * @param id
      * @return
      */
-    public ReturnObject<Object> onGrouponState(Long shopId,Long id) {
+    public ReturnObject<Object> onGrouponState(Long shopId, Long id) {
 
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
-        if (po == null||po.getState()==null) {
+        if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
 
-        if(po.getShopId()==null){
+        if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if( po.getState()==2){
+        if (po.getState() == 2) {
             logger.info("团购活动已删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
-        }else if(po.getState()==1){
+        } else if (po.getState() == 1) {
             logger.info("团购活动已上线：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
         }
 
-        if( po.getShopId().equals(shopId)){
+        if (po.getShopId().equals(shopId)) {
 
             po.setState(1);
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(po);
@@ -335,31 +328,32 @@ public class GrouponDao {
 
     /**
      * 下线团购活动
+     *
      * @param shopId
      * @param id
      * @return
      */
-    public ReturnObject<Object> offGrouponState(Long shopId,Long id) {
+    public ReturnObject<Object> offGrouponState(Long shopId, Long id) {
 
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
-        if (po == null||po.getState()==null) {
+        if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
 
-        if(po.getShopId()==null){
+        if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
-        if( po.getState()==2){
+        if (po.getState() == 2) {
             logger.info("团购活动已删除：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
-        }else if(po.getState()==0){
+        } else if (po.getState() == 0) {
             logger.info("团购活动已下线：GrouponId = " + id);
             return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
         }
 
-        if( po.getShopId().equals(shopId)){
+        if (po.getShopId().equals(shopId)) {
 
             po.setState(0);
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(po);
@@ -370,8 +364,8 @@ public class GrouponDao {
             } else {
                 logger.info("团购活动下线成功：GrouponId = " + id);
                 returnObject = new ReturnObject<>();
-                return returnObject;
             }
+            return returnObject;
         }
         logger.info("无权限修改团购活动：GrouponId = " + id);
         return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);

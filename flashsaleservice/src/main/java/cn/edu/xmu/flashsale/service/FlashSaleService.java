@@ -1,28 +1,19 @@
 package cn.edu.xmu.flashsale.service;
 
 import org.springframework.stereotype.Service;
-import cn.edu.xmu.ooad.util.encript.AES;
-import com.github.pagehelper.PageHelper;
-import org.springframework.stereotype.Service;
-import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import cn.edu.xmu.flashsale.model.vo.*;
 import cn.edu.xmu.flashsale.model.bo.*;
-import cn.edu.xmu.flashsale.model.po.*;
 import cn.edu.xmu.flashsale.dao.FlashSaleDao;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * @author zhai
+ */
 @Service
 public class FlashSaleService {
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleService.class);
@@ -32,14 +23,14 @@ public class FlashSaleService {
 
     /**
      * 查找某时段秒杀活动
+     *
      * @param id
      * @return
      */
-    public  List<FlashSaleOutputVo> findFlashSaleByTime(Long id){
-        List<FlashSaleOutputVo> returnObject=flashSaleDao.findFlashSaleItemByTime( id);
+    public List<FlashSaleOutputVo> findFlashSaleByTime(Long id) {
+        List<FlashSaleOutputVo> returnObject = flashSaleDao.findFlashSaleItemByTime(id);
         return returnObject;
     }
-
 
 
     /**
@@ -75,7 +66,6 @@ public class FlashSaleService {
      * @author zhai
      */
     public FlashSaleItem addFlashSaleItem(Long id, SkuInputVo skuInputVo) {
-        ReturnObject returnObject;
         FlashSaleItem flashSaleItem = flashSaleDao.addItem(id, skuInputVo);
         return flashSaleItem;
     }
