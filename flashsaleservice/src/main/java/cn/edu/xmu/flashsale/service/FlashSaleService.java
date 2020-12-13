@@ -108,13 +108,7 @@ public class FlashSaleService {
     }
 
     public Flux<FlashSaleItem> getFlashSale(Long id) {
-        //获取时间段的秒杀活动id(一个时间段只能有一个秒杀活动)
-        FlashSalePoExample flashSalePoExample = new FlashSalePoExample();
-        FlashSalePoExample.Criteria criteria = flashSalePoExample.createCriteria();
-        criteria.andTimeSegIdEqualTo(id);
-        List<FlashSalePo> flashSales = flashSalePoMapper.selectByExample(flashSalePoExample);
-        Long flashSaleId = flashSales.get(0).getId();
-        return reactiveRedisTemplate.opsForSet().members(flashSaleId.toString()).map(x -> (FlashSaleItem) x);
+        return reactiveRedisTemplate.opsForSet().members(id.toString()).map(x -> (FlashSaleItem) x);
     }
 }
 

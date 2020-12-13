@@ -48,13 +48,19 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         FlashSaleItemPoExample example = new FlashSaleItemPoExample();
         List<FlashSaleItemPo> flashSaleItemPoList = flashSaleItemPoMapper.selectByExample(example);
+        //以时间段为key载入redis
         for (FlashSaleItemPo itemPo : flashSaleItemPoList) {
-            Long id = itemPo.getId();
+            Long flashSaleId = itemPo.getSaleId();
+            FlashSalePo flashSalePo = flashSalePoMapper.selectByPrimaryKey(flashSaleId);
+            //获取时间段id
+            Long timeSge = flashSalePo.getTimeSegId();
             Long skuId = itemPo.getGoodsSkuId();
+            //获取sku信息
             SkuToFlashSaleVo skuToFlashSaleVo = ingoodservice.flashFindSku(skuId);
+            //转为flashsaleitem
             FlashSaleItem item = new FlashSaleItem(itemPo, skuToFlashSaleVo);
             //将参与秒杀的sku信息载入内存(key为时间段)
-            redisTemplate.opsForSet().add(String.valueOf(id), item);
+            redisTemplate.opsForSet().add(String.valueOf(timeSge), item);
         }
     }
 
