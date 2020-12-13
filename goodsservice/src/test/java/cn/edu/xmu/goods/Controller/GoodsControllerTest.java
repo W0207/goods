@@ -438,7 +438,7 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 查询商品分类信息
+     * 商品分类信息
      *
      * @throws Exception
      */
