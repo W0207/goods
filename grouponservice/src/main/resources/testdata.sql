@@ -2207,15 +2207,13 @@ UNLOCK TABLES;
 LOCK TABLES `groupon_activity` WRITE;
 /*!40000 ALTER TABLE `groupon_activity`
     DISABLE KEYS */;
-INSERT INTO `groupon_activity`
-VALUES (1, 'GEKKI', '2020-12-10 19:28:57', '2020-12-10 19:28:57', 1, 0, 273, 12, '2020-12-10 19:28:57',
-        '2020-12-10 19:28:57'),
-       (2, 'GEKKI', '2020-12-10 19:28:57', '2020-12-10 19:28:57', 1, 0, 273, 12, '2020-12-10 19:28:57',
-        '2020-12-10 19:28:57'),
-       (3, 'GEKKI', '2020-12-10 19:28:57', '2020-12-10 19:28:57', 1, 0, 273, 12, '2020-12-10 19:28:57',
-        '2020-12-10 19:28:57'),
-       (4, 'GEKKI', '2020-12-10 19:28:57', '2020-12-10 19:28:57', 1, 0, 273, 12, '2020-12-10 19:28:57',
-        '2020-12-10 19:28:57');
+
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`, `gmt_create`, `gmt_modified`) VALUES (1, '双十一', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 1, '', '2020-12-09 11:57:39', '2020-12-09 11:57:39');
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`, `gmt_create`, `gmt_modified`) VALUES (2, '双十二', '2020-12-07 11:57:39', '2020-12-09 11:57:39', 0, 2, 2, '', '2020-12-09 11:57:39', '2020-12-09 11:57:39');
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`, `gmt_create`, `gmt_modified`) VALUES (3, '黑色星期五', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 1, '', '2020-12-09 11:57:39', '2020-12-09 11:57:39');
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`, `gmt_create`, `gmt_modified`) VALUES (4, '儿童节', '2020-6-1 11:57:39', '2020-6-2 11:57:39', 1, 2, 2, '', '2020-6-1 11:57:39', '2020-6-1 11:57:39');
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`, `gmt_create`, `gmt_modified`) VALUES (5, '劳动节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273, '', '2020-12-09 11:57:39', '2020-12-09 11:57:39');
+
 /*!40000 ALTER TABLE `groupon_activity`
     ENABLE KEYS */;
 UNLOCK TABLES;
