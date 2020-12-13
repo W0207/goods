@@ -3,6 +3,7 @@ package cn.edu.xmu.groupon.controller;
 import cn.edu.xmu.groupon.GrouponServiceApplication;
 import cn.edu.xmu.groupon.controller.GrouponController;
 import cn.edu.xmu.groupon.mapper.GrouponActivityPoMapper;
+import cn.edu.xmu.ooad.util.JwtHelper;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
@@ -29,12 +30,17 @@ public class GrouponControllerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(GrouponController.class);
 
+    private final String creatTestToken(Long userId, Long departId, int expireTime) {
+        String token = new JwtHelper().createToken(userId, departId, expireTime);
+        logger.debug("token: " + token);
+        return token;
+    }
 
     /**
      * 获得团购活动的所有状态
      */
     @Test
-    public void getgrouponState () throws Exception {
+    public void getgrouponState() throws Exception {
         String responseString = this.mvc.perform(get("/groupon/groupons/states"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"已下线\", \"code\": 0 }, { \"name\": \"已上线\", \"code\": 1 }, { \"name\": \"已删除\", \"code\": 2 }], \"errmsg\": \"成功\" }";
@@ -43,11 +49,13 @@ public class GrouponControllerTest {
     }
 
     /**
-     * 查看所有的团购活动
+     * 查看所有的团购活动(上线的)
      */
     @Test
     public void queryGroupons() throws Exception {
-        String responseString = this.mvc.perform(get("/groupon/groupons"))
+        String token1 = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/groupon/groupons")
+                .header("authorization", token1))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -121,6 +129,7 @@ public class GrouponControllerTest {
 
     /**
      * 上线团购活动
+     *
      * @throws Exception
      */
     @Test
@@ -136,6 +145,7 @@ public class GrouponControllerTest {
 
     /**
      * 下线团购活动
+     *
      * @throws Exception
      */
     @Test

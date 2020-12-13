@@ -193,7 +193,6 @@ public class ShopTest {
     /**
      * 测试新建商店
      *
-     *
      * @throws Exception
      */
 
@@ -203,7 +202,7 @@ public class ShopTest {
         String json = "{\"name\":\"星巴克\"}";
         byte[] ret = mallClient.post()
                 .uri("/shop/shops")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isOk()
@@ -223,7 +222,7 @@ public class ShopTest {
         String json = "{\"name\":\"麦当劳\"}";
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/1")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isOk()
@@ -243,7 +242,7 @@ public class ShopTest {
         String json = "{\"name\":\"麦当劳\"}";
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/10")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isNotFound()
@@ -262,7 +261,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.delete()
                 .uri("/shop/shops/1")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -281,7 +280,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.delete()
                 .uri("/shop/shops/10")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody()
@@ -289,7 +288,8 @@ public class ShopTest {
                 .jsonPath("$.errmsg").isEqualTo("操作的资源id不存在")
                 .returnResult()
                 .getResponseBodyContent();
-        String responseString = new String(ret, "UTF-8");String expectedResponse = "{\"errno\":504,\"errmsg\":\"操作的资源id不存在\"}\n";
+        String responseString = new String(ret, "UTF-8");
+        String expectedResponse = "{\"errno\":504,\"errmsg\":\"操作的资源id不存在\"}\n";
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -298,7 +298,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.delete()
                 .uri("/shop/shops/3")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -317,7 +317,7 @@ public class ShopTest {
         String json = "{\"conclusion\":\"true\"}";
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/0/newshops/1/audit")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isOk()
@@ -338,7 +338,7 @@ public class ShopTest {
         String json = "{\"conclusion\":\"true\"}";
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/0/newshops/2/audit")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isOk()
@@ -358,7 +358,7 @@ public class ShopTest {
         String json = "{\"conclusion\":\"true\"}";
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/0/newshops/10/audit")
-                .header("authorization",token)
+                .header("authorization", token)
                 .bodyValue(json)
                 .exchange()
                 .expectStatus().isOk()
@@ -378,7 +378,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/3/onshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -396,7 +396,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/10/onshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -414,7 +414,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/1/onshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody()
@@ -428,13 +428,12 @@ public class ShopTest {
     }
 
 
-
     @Test
     public void offlineShop1() throws Exception {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/4/offshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -452,7 +451,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/10/offshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -470,7 +469,7 @@ public class ShopTest {
         String token = creatTestToken(1L, 0L, 1000);
         byte[] ret = mallClient.put()
                 .uri("/shop/shops/1/offshelves")
-                .header("authorization",token)
+                .header("authorization", token)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
