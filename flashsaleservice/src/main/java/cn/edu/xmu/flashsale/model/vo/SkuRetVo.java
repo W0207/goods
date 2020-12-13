@@ -1,5 +1,6 @@
 package cn.edu.xmu.flashsale.model.vo;
 
+import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
 import lombok.Data;
 
 /**
@@ -15,4 +16,20 @@ public class SkuRetVo {
     private Long originalPrice;
     private Long price;
     private Boolean disable;
+
+    public SkuRetVo() {
+
+    }
+
+    public SkuRetVo(SkuToFlashSaleVo skuToFlashSaleVo) {
+        this.id = skuToFlashSaleVo.getId();
+        this.name = skuToFlashSaleVo.getName();
+        this.skuSn = skuToFlashSaleVo.getSkuSn();
+        this.imageUrl = skuToFlashSaleVo.getImageUrl();
+        this.inventory = skuToFlashSaleVo.getInventory();
+        this.originalPrice = skuToFlashSaleVo.getOriginalPrice();
+        this.price = skuToFlashSaleVo.getPrice();
+        this.disable = skuToFlashSaleVo.getDisable();
+    }
+
 }

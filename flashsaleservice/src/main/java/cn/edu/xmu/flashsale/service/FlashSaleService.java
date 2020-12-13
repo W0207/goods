@@ -32,9 +32,6 @@ public class FlashSaleService {
     @Autowired
     private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
 
-    @Autowired
-    private FlashSalePoMapper flashSalePoMapper;
-
     /**
      * 查找某时段秒杀活动
      *

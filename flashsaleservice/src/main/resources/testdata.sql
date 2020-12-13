@@ -129,7 +129,7 @@ LOCK TABLES `flash_sale` WRITE;
 /*!40000 ALTER TABLE `flash_sale`
     DISABLE KEYS */;
 INSERT INTO `flash_sale`
-values (1, '2020-12-13 21:55:27', 1, '2020-12-13 21:55:27', '2020-12-13 21:55:27');
+values (1, '2020-12-13 21:55:27', 1, '2020-12-13 21:55:27', '2020-12-13 21:55:27', 1);
 /*!40000 ALTER TABLE `flash_sale`
     ENABLE KEYS */;
 UNLOCK TABLES;
