@@ -248,12 +248,10 @@ public class GoodsDao {
             pageSize, Long spuId, String skuSn, String spuSn) {
         GoodsSkuPoExample example = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = example.createCriteria();
-        if(spuId!=null)
-        {
+        if (spuId != null) {
             criteria.andGoodsSpuIdEqualTo(spuId);
         }
-        if(skuSn!=null)
-        {
+        if (skuSn != null) {
             criteria.andSkuSnEqualTo(skuSn);
         }
         PageHelper.startPage(page, pageSize);
@@ -902,7 +900,6 @@ public class GoodsDao {
     }
 
 
-
     /**
      * 获得spu的详细信息
      *
@@ -931,7 +928,7 @@ public class GoodsDao {
         criteria.andValidEqualTo((byte) 1);
         List<FloatPricePo> floatPricePos = floatPricePoMapper.selectByExample(floatPricePoExample);
         //如果有合法的价格浮动，记录价格浮动的价格
-        if (floatPricePos.size() == 0) {
+        if (floatPricePos.isEmpty()) {
             return null;
         } else {
             return floatPricePos.get(0).getActivityPrice();

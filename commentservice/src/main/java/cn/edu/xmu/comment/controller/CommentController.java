@@ -4,7 +4,6 @@ import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.comment.service.CommentService;
 import cn.edu.xmu.comment.model.bo.Comment;
 import cn.edu.xmu.comment.model.vo.CommentStateVo;
-import cn.edu.xmu.comment.service.CommentService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
@@ -27,7 +26,9 @@ import java.util.List;
 
 /**
  * 权限控制器
- **/
+ *
+ * @author 菜鸡骞
+ */
 @Api(value = "评论服务", tags = "comments")
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/comments", produces = "application/json;charset=UTF-8")
@@ -74,8 +75,8 @@ public class CommentController {
         logger.debug("getCommentState");
         Comment.State[] states = Comment.State.class.getEnumConstants();
         List<CommentStateVo> commentStateVos = new ArrayList<>();
-        for (int i = 0; i < states.length; i++) {
-            commentStateVos.add(new CommentStateVo(states[i]));
+        for (Comment.State state : states) {
+            commentStateVos.add(new CommentStateVo(state));
         }
         return ResponseUtil.ok(new ReturnObject<List>(commentStateVos).getData());
     }

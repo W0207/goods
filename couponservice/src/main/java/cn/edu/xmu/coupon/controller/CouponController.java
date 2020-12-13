@@ -83,7 +83,6 @@ public class CouponController {
         return ResponseUtil.ok(new ReturnObject<List>(couponStateVos));
     }
 
-
     /**
      * 查看上线的优惠活动列表
      *
@@ -95,7 +94,7 @@ public class CouponController {
             @ApiResponse(code = 0, message = "成功")
     })
     @GetMapping("/couponactivities")
-    public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = false) Long shopId, @PathVariable(required = false) Long timeline) {
+    public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Long shopId, @RequestParam(required = false) Long timeline) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId + "    timeline =" + timeline);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
@@ -121,7 +120,7 @@ public class CouponController {
     })
     @Audit // 需要认证
     @GetMapping("/shops/{id}/couponactivities/invalid")
-    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @Depart Long id) {
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;

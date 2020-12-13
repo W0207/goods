@@ -5,7 +5,7 @@ management:
         include: "*"
 
 server:
-  port: 8089
+  port: 8083
   tomcat:
     threads:
       max: 1000
@@ -107,7 +107,7 @@ dubbo:
     # dubbo 协议
     name: dubbo
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: 18889
+    port: -1
     dubbo:
       protocol:
         threads=10:

@@ -160,6 +160,9 @@ public class ShopDao {
             logger.info("新店id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        if(shopPo.getState()!=0) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         Shop shop = new Shop(shopPo);
         ShopPo po = shop.createAuditPo(shopAuditVo);
         shopPoMapper.updateByPrimaryKeySelective(po);

@@ -86,22 +86,22 @@ public class CouponActivity implements VoObject {
     }
 
     public CouponActivity(CouponActivityPo po) {
-        this.id=po.getId();
-        this.name=po.getName();
-        this.begin_time=po.getBeginTime();
-        this.coupon_time=po.getCouponTime();
-        this.created_by=po.getCreatedBy();
-        this.end_time=po.getEndTime();
-        this.gmtCreate=po.getGmtCreate();
-        this.gmtModified=po.getGmtModified();
-        this.image_url=po.getImageUrl();
-        this.modi_by=po.getModiBy();
-        this.quantity=po.getQuantity();
-        this.quantity_type=po.getQuantitiyType();
-        this.shop_id=po.getShopId();
-        this.state=po.getState();
-        this.strategy=po.getStrategy();
-        this.valid_term=po.getValidTerm();
+        this.id = po.getId();
+        this.name = po.getName();
+        this.begin_time = po.getBeginTime();
+        this.coupon_time = po.getCouponTime();
+        this.created_by = po.getCreatedBy();
+        this.end_time = po.getEndTime();
+        this.gmtCreate = po.getGmtCreate();
+        this.gmtModified = po.getGmtModified();
+        this.image_url = po.getImageUrl();
+        this.modi_by = po.getModiBy();
+        this.quantity = po.getQuantity();
+        this.quantity_type = po.getQuantitiyType();
+        this.shop_id = po.getShopId();
+        this.state = po.getState();
+        this.strategy = po.getStrategy();
+        this.valid_term = po.getValidTerm();
     }
 
     public CouponActivity() {
@@ -183,7 +183,7 @@ public class CouponActivity implements VoObject {
     }
 
     public CouponActivityPo createModifyPo(CouponActivityModifyVo couponActivityModifyVo) {
-        CouponActivityPo couponActivityPo=new CouponActivityPo();
+        CouponActivityPo couponActivityPo = new CouponActivityPo();
         couponActivityPo.setName(couponActivityModifyVo.getName());
         couponActivityPo.setBeginTime(couponActivityModifyVo.getBegin_time());
         couponActivityPo.setEndTime(couponActivityModifyVo.getEnd_time());
