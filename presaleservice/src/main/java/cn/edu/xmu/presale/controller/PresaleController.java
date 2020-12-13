@@ -62,35 +62,13 @@ public class PresaleController {
         return ResponseUtil.ok(new ReturnObject<List>(presaleActivityStateVos).getData());
     }
 
-
-    /**
-     * 管理员新增SPU预售活动
-     * @param shopId
-     * @param id
-     * @param presaleActivityVo
-     * @return
-     */
-    /**
-     * @ApiOperation("管理员新增SPU预售活动")
-     * @ApiImplicitParams({
-     * @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
-     * @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
-     * })
-     * @PostMapping("/shops/{shopId}/spus/{id}/presales") public Object AddPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo)
-     * {
-     * PresaleActivity presaleActivity = new PresaleActivity(presaleActivityVo);
-     * presaleActivity.setCreate(LocalDateTime.now());
-     * return Common.decorateReturnObject(presaleService.AddPresaleActivity(shopId,id,presaleActivity));
-     * }
-     */
-
     @ApiOperation("管理员新增SPU预售活动")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "spuId"),
     })
-    @Audit //需要认证
+    @Audit
     @PostMapping("/shops/{shopId}/skus/{id}/presales")
     public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
