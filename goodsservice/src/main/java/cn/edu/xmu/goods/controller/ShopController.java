@@ -54,7 +54,7 @@ public class ShopController {
             @ApiResponse(code = 908, message = "店铺已经存在")
 
     })
-    @PostMapping("/shops")
+    @RequestMapping(value = "/shops" ,method = RequestMethod.POST)
     public Object addShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
         Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
@@ -80,7 +80,7 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/states")
+    @GetMapping("/shops/states")
     public Object getShopState() {
         Shop.State[] states = Shop.State.class.getEnumConstants();
         List<ShopStateVo> stateVos = new ArrayList<>();
@@ -104,7 +104,7 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @PutMapping("/shops/{id}")
+    @RequestMapping(value = "/shops/{id}" ,method = RequestMethod.PUT)
     public Object modifyShop(@PathVariable("id") Long id, @Validated @RequestBody ShopVo shopVo, BindingResult bindingResult) {
         Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
@@ -142,6 +142,7 @@ public class ShopController {
         shop.setState(Shop.State.UP);
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.shopOnShelves(shop);
+        System.out.println(returnObject);
         if (returnObject.getCode() == ResponseCode.OK) {
             return Common.decorateReturnObject(returnObject);
         } else {

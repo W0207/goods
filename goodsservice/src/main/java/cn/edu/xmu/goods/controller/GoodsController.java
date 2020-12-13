@@ -394,6 +394,7 @@ public class GoodsController {
                 return Common.decorateReturnObject(goodsCategory);
             }
             returnObject = ResponseUtil.ok(goodsCategory.getData());
+            System.out.println(returnObject);
             return returnObject;
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));

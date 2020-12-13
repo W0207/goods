@@ -75,9 +75,10 @@ public class CouponControllerTest {
 
     @Test
     public void showOwncouponactivities() throws Exception {
-        String responseString = this.mvc.perform(get("/coupon/couponactivities"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+        String requireJson = "{\n  \"page\":\"1\",\n  \"pageSize\": \"2\"\n}";
+        String responseString = this.mvc.perform(get("/coupon/couponactivities")
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
@@ -295,4 +296,9 @@ public class CouponControllerTest {
         System.out.println(responseString);
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
     }
+
+
+    /*   公开测试用例   */
+
+
 }

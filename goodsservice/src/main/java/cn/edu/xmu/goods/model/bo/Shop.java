@@ -39,8 +39,8 @@ public class Shop {
     public enum State {
         //商-店铺：0：未审核，1：未上线，2：上线，3：关闭，4：审核未通过
         NEW(0, "未审核"),
-        UP(2, "上线"),
         DOWN(1, "未上线"),
+        UP(2, "上线"),
         CLOSE(3, "关闭"),
         UNPASS(4, "审核未通过");
 
