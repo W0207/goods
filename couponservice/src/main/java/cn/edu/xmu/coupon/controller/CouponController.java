@@ -409,11 +409,14 @@ public class CouponController {
     })
     @Audit
     @GetMapping("/coupons")
-    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @LoginUser Long userId) {
+    public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state,@LoginUser Long userId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userId);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
         state = (state == null) ? 1 : state;
-        return couponService.showCouponsById(page, pageSize, state, userId);
+        Object object = null;
+        ReturnObject<PageInfo<VoObject>> returnObject= couponService.showCouponsById(page, pageSize, state, userId);
+        object=Common.getPageRetObject(returnObject);
+        return object;
     }
 }
