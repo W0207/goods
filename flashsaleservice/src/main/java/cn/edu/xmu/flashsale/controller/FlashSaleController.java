@@ -24,6 +24,7 @@ import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
+import reactor.core.publisher.Flux;
 
 /**
  * 权限控制器
@@ -51,7 +52,7 @@ public class FlashSaleController {
      *
      * @param id
      * @return
-     * @author zhai
+     * @author zhan
      */
     @ApiOperation(value = "查询某一时段秒杀活动详情")
     @ApiImplicitParams({
@@ -61,16 +62,10 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
     @GetMapping("/timesegments/{id}/flashsales")
-    public Object queryTopicsByTime(@PathVariable Long id) {
-
-        List<FlashSaleOutputVo> flashSaleOutputVos = flashSaleService.findFlashSaleByTime(id);
-        ReturnObject<List> returnObject = new ReturnObject<List>(flashSaleOutputVos);
-        return Common.decorateReturnObject(returnObject);
-
+    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
+        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
-
 
     /**
      * 查询当前时段秒杀活动详情

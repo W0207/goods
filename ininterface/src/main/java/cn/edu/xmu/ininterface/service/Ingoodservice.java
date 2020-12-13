@@ -22,10 +22,12 @@ public interface Ingoodservice {
 
     /**
      * 团购获取spu信息
+     *
      * @param id
      * @return
      */
     SpuToGrouponVo grouponFindSpu(Long id);
+
     /**
      * 秒杀获取sku信息
      *
@@ -51,5 +53,4 @@ public interface Ingoodservice {
      * @return
      */
     boolean skuInShopOrNot(Long shopId, Long id);
-
 }
