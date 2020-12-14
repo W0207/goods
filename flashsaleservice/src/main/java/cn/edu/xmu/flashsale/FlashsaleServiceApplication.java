@@ -6,8 +6,10 @@ import cn.edu.xmu.flashsale.model.bo.FlashSaleItem;
 import cn.edu.xmu.flashsale.model.po.FlashSaleItemPo;
 import cn.edu.xmu.flashsale.model.po.FlashSaleItemPoExample;
 import cn.edu.xmu.flashsale.model.po.FlashSalePo;
+import cn.edu.xmu.flashsale.model.vo.FlashSaleItemRetVo;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
@@ -32,6 +35,9 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
 
     @Autowired
     private FlashSaleItemPoMapper flashSaleItemPoMapper;
+
+    @Autowired
+    private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
 
     @Autowired
     private FlashSalePoMapper flashSalePoMapper;
@@ -64,7 +70,9 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
             FlashSaleItem item = new FlashSaleItem(itemPo, skuToFlashSaleVo);
             //将参与秒杀的sku信息载入内存(key为时间段)
             String key = "cp_" + timeSge;
-            redisTemplate.opsForSet().add(key, String.valueOf(item));
+            System.out.println("push : " + JacksonUtil.toJson(item));
+            redisTemplate.opsForSet().add(key, item);
+            //System.out.println("pop : " + JacksonUtil.toJson(redisTemplate.opsForSet().pop(key)));
         }
     }
 

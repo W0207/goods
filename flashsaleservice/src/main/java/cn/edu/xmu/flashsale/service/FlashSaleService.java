@@ -105,7 +105,7 @@ public class FlashSaleService implements DisableFlashActivityService {
     }
 
     public Flux<FlashSaleItem> getFlashSale(Long id) {
-        return reactiveRedisTemplate.opsForSet().members(id.toString()).map(x -> (FlashSaleItem) x);
+        return reactiveRedisTemplate.opsForSet().members("cp_" + id.toString()).map(x -> (FlashSaleItem) x);
     }
 
     @Override
