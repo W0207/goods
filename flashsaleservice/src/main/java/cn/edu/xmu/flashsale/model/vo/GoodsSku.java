@@ -7,7 +7,7 @@ import lombok.Data;
  * @author Abin
  */
 @Data
-public class SkuRetVo {
+public class GoodsSku {
     private Long id;
     private String name;
     private String skuSn;
@@ -17,11 +17,11 @@ public class SkuRetVo {
     private Long price;
     private Boolean disable;
 
-    public SkuRetVo() {
+    public GoodsSku() {
 
     }
 
-    public SkuRetVo(SkuToFlashSaleVo skuToFlashSaleVo) {
+    public GoodsSku(SkuToFlashSaleVo skuToFlashSaleVo) {
         this.id = skuToFlashSaleVo.getId();
         this.name = skuToFlashSaleVo.getName();
         this.skuSn = skuToFlashSaleVo.getSkuSn();

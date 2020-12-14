@@ -2,10 +2,8 @@ package cn.edu.xmu.flashsale.model.bo;
 
 import cn.edu.xmu.flashsale.model.po.FlashSaleItemPo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
-import cn.edu.xmu.ooad.util.*;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.flashsale.model.vo.*;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,6 +14,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class FlashSaleItem implements VoObject, Serializable {
+
     Long id;
 
     Long saleId;
@@ -30,7 +29,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
     LocalDateTime gmtModified;
 
-    SkuRetVo skuRetVo;
+    GoodsSku goodsSku;
 
     public FlashSaleItem(Long id, SkuInputVo skuInputVo) {
         this.saleId = id;
@@ -42,8 +41,8 @@ public class FlashSaleItem implements VoObject, Serializable {
     }
 
     public FlashSaleItem(FlashSaleItemPo itemPo, SkuToFlashSaleVo skuPo) {
-        this.id = skuPo.getId();
-        this.skuRetVo = new SkuRetVo(skuPo);
+        this.id = itemPo.getId();
+        this.goodsSku = new GoodsSku(skuPo);
         this.price = itemPo.getPrice();
         this.saleId = itemPo.getSaleId();
         this.quantity = itemPo.getQuantity();
@@ -81,12 +80,11 @@ public class FlashSaleItem implements VoObject, Serializable {
 
         flashSaleItemRetVo.setId(this.id);
 
-        SkuRetVo skuRetVo = new SkuRetVo();
+        GoodsSku goodsSku = new GoodsSku();
 
-        skuRetVo.setPrice(this.price);
-        skuRetVo.setInventory(this.quantity);
-        flashSaleItemRetVo.setGoodsSku(skuRetVo);
-
+        goodsSku.setPrice(this.price);
+        goodsSku.setInventory(this.quantity);
+        flashSaleItemRetVo.setGoodsSku(goodsSku);
 
         flashSaleItemRetVo.setPrice(this.price);
         flashSaleItemRetVo.setQuantity(this.quantity);
