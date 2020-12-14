@@ -29,7 +29,6 @@ public class Shop {
     public ShopPo createAuditPo(ShopAuditVo shopAuditVo) {
         ShopPo shopPo=new ShopPo();
         shopPo.setId(id);
-        shopPo.setState(shopAuditVo.getState());
         return shopPo;
     }
 
@@ -106,5 +105,38 @@ public class Shop {
         Byte state = (byte) this.state.code;
         shopPo.setState(state);
         return shopPo;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

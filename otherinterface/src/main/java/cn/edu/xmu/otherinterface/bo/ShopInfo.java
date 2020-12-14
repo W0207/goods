@@ -14,19 +14,14 @@ public class ShopInfo implements Serializable {
     private Byte state;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private String message;
 
-    public ShopInfo(String message) {
-        this.message = message;
-    }
 
-    public ShopInfo(Long id, String name, Byte state, LocalDateTime gmtCreate, LocalDateTime gmtModified, String message) {
+    public ShopInfo(Long id, String name, Byte state, LocalDateTime gmtCreate, LocalDateTime gmtModified) {
         this.id = id;
         this.name = name;
         this.state = state;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
-        this.message = message;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -45,13 +40,6 @@ public class ShopInfo implements Serializable {
         this.gmtModified = gmtModified;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public Long getId() {
         return id;

@@ -143,7 +143,7 @@ public class CouponActivityDao implements InitializingBean {
         ReturnObject returnObject = null;
         CouponActivityPo po = couponActivityPoMapper.selectByPrimaryKey(id);
         //1.判断优惠活动是否存在
-        if(po.equals(null)){
+        if(po == null){
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"优惠活动id不存在");
         } else {
             //2.判断店铺id是否相同
@@ -154,7 +154,7 @@ public class CouponActivityDao implements InitializingBean {
                 //3.判断优惠活动状态是否为下线
                 if(po.getState().equals((byte)1)) {
                     //上线状态
-                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "活动的状态为上架，不予更改");
+                    returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
                 } else {
                     //处在删除状态就不进行任何操作
                     if(po.getState().equals((byte)0)){
@@ -262,5 +262,45 @@ public class CouponActivityDao implements InitializingBean {
             returnObject = new ReturnObject();
         }
         return returnObject;
+    }
+
+    public boolean disableActivity(Long shopId) {
+        try{
+            CouponActivityPoExample example = new CouponActivityPoExample();
+            CouponActivityPoExample.Criteria criteria = example.createCriteria();
+            criteria.andShopIdEqualTo(shopId);
+            List<Byte> states = new ArrayList<>();
+            states.add((byte)0);
+            states.add((byte)1);
+            criteria.andStateIn(states);
+            List<CouponActivityPo> pos = couponActivityPoMapper.selectByExample(example);
+            for(CouponActivityPo po: pos){
+                //删除优惠活动
+                po.setGmtModified(LocalDateTime.now());
+                po.setState((byte)2);
+                couponActivityPoMapper.updateByPrimaryKey(po);
+                CouponPoExample couponPoExample = new CouponPoExample();
+                CouponPoExample.Criteria criteria1 = couponPoExample.createCriteria();
+                criteria1.andActivityIdEqualTo(po.getId());
+                List<CouponPo> pos1 = couponPoMapper.selectByExample(couponPoExample);
+                for(CouponPo po1:pos1){
+                    //优惠券失效
+                    po1.setGmtModified(LocalDateTime.now());
+                    po1.setState((byte) 3);
+                    couponPoMapper.updateByPrimaryKey(po1);
+                }
+                //删除商品sku
+                CouponSkuPoExample example1 = new CouponSkuPoExample();
+                CouponSkuPoExample.Criteria criteria2 = example1.createCriteria();
+                criteria2.andActivityIdEqualTo(po.getId());
+                List<CouponSkuPo> pos2 = couponSkuPoMapper.selectByExample(example1);
+                for(CouponSkuPo po1 :pos2){
+                    couponSkuPoMapper.deleteByPrimaryKey(po1.getId());
+                }
+            }
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 }

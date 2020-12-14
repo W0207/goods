@@ -6,6 +6,7 @@ import cn.edu.xmu.coupon.model.bo.CouponSku;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
+import cn.edu.xmu.ininterface.service.DisableCouponActivityService;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -23,7 +24,7 @@ import java.io.IOException;
  * @author BiuBiuBiu
  */
 @Service
-public class CouponActivityService {
+public class CouponActivityService implements DisableCouponActivityService {
 
     @Autowired
     CouponActivityDao couponActivityDao;
@@ -129,5 +130,10 @@ public class CouponActivityService {
 
     public ReturnObject deleteCouponActivity(Long shopId,Long id){
         return couponActivityDao.deleteCouponActivity(shopId, id);
+    }
+
+    @Override
+    public boolean disableActivity(Long shopId) {
+        return couponActivityDao.disableActivity(shopId);
     }
 }

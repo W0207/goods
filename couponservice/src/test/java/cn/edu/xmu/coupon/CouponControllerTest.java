@@ -61,6 +61,37 @@ public class CouponControllerTest {
         return token;
     }
 
+
+    /**
+     * 删除己方优惠活动
+     */
+    @Test
+    public void deleteCouponActivity() throws Exception {
+        String responseString = this.mvc.perform(delete("/coupon/shops/1/couponactivities/1").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 上线优惠活动
+     */
+    @Test
+    public void CouponActivityOnShelves() throws Exception {
+        String responseString = this.mvc.perform(put("/coupon/shops/1/couponactivities/3/onshelves").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void CouponActivityOffShelves() throws Exception {
+        String responseString = this.mvc.perform(put("/coupon/shops/1/couponactivities/2/offshelves").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
     /**
      * 获得优惠券所有状态
      */

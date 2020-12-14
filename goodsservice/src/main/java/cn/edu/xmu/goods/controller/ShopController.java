@@ -6,6 +6,7 @@ import cn.edu.xmu.goods.model.vo.ShopStateVo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.goods.service.ShopService;
 import cn.edu.xmu.ooad.annotation.Audit;
+import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -47,6 +48,7 @@ public class ShopController {
      */
     @ApiOperation(value = "申请商店信息")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "String", name = "name", value = "可修改的用户信息", required = true)
     })
     @ApiResponses({
@@ -54,23 +56,16 @@ public class ShopController {
             @ApiResponse(code = 908, message = "店铺已经存在")
 
     })
+    @Audit
     @RequestMapping(value = "/shops" ,method = RequestMethod.POST)
-    public Object addShop(@Validated @RequestBody ShopVo vo, BindingResult bindingResult) {
-        Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (null != retObject) {
-            return retObject;
+    public Object addShop(@Validated @RequestBody ShopVo vo,@Depart Long departId ) {
+        if(departId!=-1){
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.USER_HASSHOP));
         }
         Shop shop = vo.createShop();
         shop.setGmtCreate(LocalDateTime.now());
         ReturnObject returnObject = shopService.insertShop(shop);
-        if (returnObject.getData() != null) {
-            httpServletResponse.setStatus(HttpStatus.CREATED.value());
-            System.out.println(returnObject.getData());
-            System.out.println(returnObject.toString());
-            return Common.decorateReturnObject(returnObject);
-        } else {
-            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
-        }
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -114,11 +109,7 @@ public class ShopController {
         shop.setId(id);
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.updateShop(shop);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return Common.getRetObject(returnObject);
-        } else {
-            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
-        }
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -143,11 +134,7 @@ public class ShopController {
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.shopOnShelves(shop);
         System.out.println(returnObject);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return Common.decorateReturnObject(returnObject);
-        } else {
-            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
-        }
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -170,11 +157,7 @@ public class ShopController {
         shop.setState(Shop.State.DOWN);
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.shopOffShelves(shop);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return Common.decorateReturnObject(returnObject);
-        } else {
-            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
-        }
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -197,11 +180,7 @@ public class ShopController {
         shop.setState(Shop.State.CLOSE);
         shop.setGmtModified(LocalDateTime.now());
         ReturnObject returnObject = shopService.deleteShop(shop);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return Common.decorateReturnObject(returnObject);
-        } else {
-            return Common.getNullRetObj(new ReturnObject<>(returnObject.getCode(), returnObject.getErrmsg()), httpServletResponse);
-        }
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
