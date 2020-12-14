@@ -281,7 +281,6 @@ public class GrouponController {
     @Audit
     @DeleteMapping("/shops/{shopId}/groupons/{id}")
     public Object cancelGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
-        System.out.println("hello");
         if (logger.isDebugEnabled()) {
             logger.debug("deleteGroupon: GrouponId = " + id);
         }
