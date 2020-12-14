@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
+import reactor.core.publisher.Flux;
 
 /**
  * 权限控制器
@@ -51,7 +53,7 @@ public class FlashSaleController {
      *
      * @param id
      * @return
-     * @author zhai
+     * @author Abin
      */
     @ApiOperation(value = "查询某一时段秒杀活动详情")
     @ApiImplicitParams({
@@ -61,40 +63,30 @@ public class FlashSaleController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    //@Audit // 需要认证
     @GetMapping("/timesegments/{id}/flashsales")
-    public Object queryTopicsByTime(@PathVariable Long id) {
-
-        List<FlashSaleOutputVo> flashSaleOutputVos = flashSaleService.findFlashSaleByTime(id);
-        ReturnObject<List> returnObject = new ReturnObject<List>(flashSaleOutputVos);
-        return Common.decorateReturnObject(returnObject);
-
+    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
+        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
 
     /**
-     * 查询当前时段秒杀活动详情
+     * 获取当前时段秒杀列表
      *
      * @param id
      * @return
-     * @author zhai
+     * @author Abin
      */
-    @ApiOperation(value = "查询某一时段秒杀活动详情")
-    @ApiImplicitParams({
-
-    })
+    @ApiOperation(value = "获取当前时段秒杀列表")
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
     @GetMapping("/flashsales/current")
     public Object getCurrentFlash(Long id) {
-
-        //需要将当前时间传到其他模块，并要求其他模块返回当前时段id
-        List<FlashSaleOutputVo> flashSaleOutputVos = flashSaleService.findFlashSaleByTime(id);
-        ReturnObject<List> returnObject = new ReturnObject<List>(flashSaleOutputVos);
-        return Common.decorateReturnObject(returnObject);
-
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //id调用其他模块获取
+        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
+
 
     /**
      * 管理员修改秒杀活动

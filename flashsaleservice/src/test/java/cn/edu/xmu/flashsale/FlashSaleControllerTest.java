@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,6 +72,14 @@ public class FlashSaleControllerTest {
         System.out.println(responseString);
 
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void queryTopicsByTime() throws Exception {
+        String responseString = this.mvc.perform(get("/flashsale/timesegments/1/flashsales")
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 
     /**

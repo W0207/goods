@@ -1,8 +1,14 @@
 package cn.edu.xmu.ininterface.service.model.vo;
 
+import cn.edu.xmu.ooad.model.VoObject;
+import com.sun.jdi.Value;
+
 import java.io.Serializable;
 
-public class SkuToFlashSaleVo implements Serializable {
+/**
+ * @author Abin
+ */
+public class SkuToFlashSaleVo implements VoObject, Serializable {
     private Long id;
 
     private String name;
@@ -92,5 +98,28 @@ public class SkuToFlashSaleVo implements Serializable {
 
     public void setDisable(Boolean disable) {
         this.disable = disable;
+    }
+
+    public SkuToFlashSaleVo() {
+
+    }
+
+    @Override
+    public Object createVo() {
+        SkuToFlashSaleVo skuToFlashSaleVo = new SkuToFlashSaleVo();
+        skuToFlashSaleVo.setId(this.id);
+        skuToFlashSaleVo.setDisable(this.disable);
+        skuToFlashSaleVo.setSkuSn(this.skuSn);
+        skuToFlashSaleVo.setName(this.name);
+        skuToFlashSaleVo.setInventory(this.inventory);
+        skuToFlashSaleVo.setOriginalPrice(this.originalPrice);
+        skuToFlashSaleVo.setImageUrl(this.imageUrl);
+        skuToFlashSaleVo.setPrice(this.price);
+        return skuToFlashSaleVo;
+    }
+
+    @Override
+    public Object createSimpleVo() {
+        return null;
     }
 }

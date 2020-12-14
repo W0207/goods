@@ -1,5 +1,11 @@
 package cn.edu.xmu.flashsale.service;
 
+import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
+import cn.edu.xmu.flashsale.model.po.FlashSalePo;
+import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
+import cn.edu.xmu.ooad.util.ResponseCode;
+import com.sun.el.stream.Stream;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
@@ -8,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.edu.xmu.flashsale.model.vo.*;
 import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.dao.FlashSaleDao;
+import reactor.core.publisher.Flux;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,6 +29,9 @@ public class FlashSaleService {
     @Autowired
     FlashSaleDao flashSaleDao;
 
+    @Autowired
+    private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
+
     /**
      * 查找某时段秒杀活动
      *
@@ -31,7 +42,6 @@ public class FlashSaleService {
         List<FlashSaleOutputVo> returnObject = flashSaleDao.findFlashSaleItemByTime(id);
         return returnObject;
     }
-
 
     /**
      * 修改秒杀活动信息
@@ -91,6 +101,10 @@ public class FlashSaleService {
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
         return flashSaleDao.createFlash(id, flashSaleInputVo);
+    }
+
+    public Flux<FlashSaleItem> getFlashSale(Long id) {
+        return reactiveRedisTemplate.opsForSet().members(id.toString()).map(x -> (FlashSaleItem) x);
     }
 }
 

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import cn.edu.xmu.ininterface.service.model.vo.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,7 +176,7 @@ public class GrouponController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/groupons")
-    public Object createGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
+    public Object createGrouponofSPU(@PathVariable @NotNull Long id, @NotNull @Validated @RequestBody GrouponInputVo grouponInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
             logger.debug("createGrouponofSPU: SpuId = " + id);
         }
@@ -186,15 +188,30 @@ public class GrouponController {
         }
         ReturnObject returnObject;
         SpuToGrouponVo spuToGrouponVo = goodservice.grouponFindSpu(id);
+        if(grouponInputVo.getBeginTime().isAfter(grouponInputVo.getEndTime())){
+            logger.info("团购活动开始时间晚于结束时间");
+            return  new ReturnObject<>(ResponseCode.Log_Bigger);
+        }
+        if(grouponInputVo.getBeginTime().isAfter(LocalDateTime.now())){
+            logger.info("团购活动开始时间晚于当前时间");
+            return  new ReturnObject<>(ResponseCode.Log_Bigger);
+        }
         if (spuToGrouponVo == null) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+            logger.info("该商品不存在");
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
             if (shopToAllVo == null) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("shopID不存在"));
+                logger.info("该店铺不存在");
+               return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
+                if(!goodservice.spuInShopOrNot(shopId,id)){
+                    logger.info("该商品不属于该店铺");
+                    return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                }
                 GrouponActivityPo groupon = grouponServer.addGroupon(id, grouponInputVo, shopId);
                 if (groupon == null) {
+
                     return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
                 }
                 GrouponActivity grouponActivity = new GrouponActivity(groupon);
