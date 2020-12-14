@@ -114,6 +114,10 @@ public class GrouponController {
         pageSize = (pageSize == null) ? 60 : pageSize;
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findgrouponActivity(timeline, spuId, shopId, page, pageSize);
         logger.debug("findGrouponActivity = " + returnObject);
+        if(returnObject==null){
+            logger.info("没有找到符合条件的结果");
+            return   new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         return Common.getPageRetObject(returnObject);
 
     }
@@ -149,8 +153,17 @@ public class GrouponController {
                                @RequestParam(required = false) Integer state,
                                @RequestParam(required = false) Long spuId
     ) {
+        boolean bool= inShopService.shopExitOrNot(id);
+        if(!bool){
+            logger.info("该店铺不存在");
+            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findShopGroupon(state, spuId, id, page, pageSize, beginTime, endTime);
         logger.debug("findGrouponActivity = " + returnObject);
+        if(returnObject==null){
+            logger.info("没有找到符合条件的结果");
+            return   new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         return Common.getPageRetObject(returnObject);
     }
 
@@ -248,9 +261,10 @@ public class GrouponController {
     @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}")
     public Object changeGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, @PathVariable Long shopId) {
-        System.out.println(grouponInputVo.getBeginTime());
-        if (logger.isDebugEnabled()) {
-            logger.debug("changeGroupon: grouponId = " + id);
+        boolean bool= inShopService.shopExitOrNot(id);
+        if(!bool){
+            logger.info("该店铺不存在");
+            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
 
         ReturnObject returnObj = grouponServer.changeGroupon(id, grouponInputVo, shopId);
