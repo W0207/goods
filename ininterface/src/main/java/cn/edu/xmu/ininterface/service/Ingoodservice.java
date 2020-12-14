@@ -53,4 +53,7 @@ public interface Ingoodservice {
      * @return
      */
     boolean skuInShopOrNot(Long shopId, Long id);
+
+    boolean spuInShopOrNot(Long shopId, Long id);
+
 }
