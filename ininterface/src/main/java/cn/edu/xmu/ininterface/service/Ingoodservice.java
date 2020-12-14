@@ -54,4 +54,6 @@ public interface Ingoodservice {
      */
     boolean skuInShopOrNot(Long shopId, Long id);
 
+    boolean spuInShopOrNot(Long shopId, Long id);
+
 }
