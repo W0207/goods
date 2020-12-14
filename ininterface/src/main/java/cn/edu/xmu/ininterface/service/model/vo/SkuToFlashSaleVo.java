@@ -2,12 +2,14 @@ package cn.edu.xmu.ininterface.service.model.vo;
 
 import cn.edu.xmu.ooad.model.VoObject;
 import com.sun.jdi.Value;
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * @author Abin
  */
+@Data
 public class SkuToFlashSaleVo implements VoObject, Serializable {
     private Long id;
 

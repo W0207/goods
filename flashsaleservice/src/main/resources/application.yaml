@@ -5,7 +5,7 @@ management:
         include: "*"
 
 server:
-  port: 8080
+  port: 8090
   tomcat:
     threads:
       max: 1000
@@ -89,9 +89,6 @@ goodsservice:
 pagehelper:
   helper-dialect: mysql
 
-
-
-
 cloud:
   nacos:
     username: nacos
@@ -99,12 +96,17 @@ cloud:
     discovery:
       server-addr: 127.0.0.1:8848
 
-
-  dubbo:
-    registry:
-      address: nacos://localhost:8848
-    cloud:
-      subscribed-services: spring-cloud-alibaba-dubbo-server
-    protocols:
-      dubbo:
-        port: 18888
+dubbo:
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: cn.edu.xmu.goods
+  protocol:
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: -1
+    dubbo:
+      protocol:
+        threads=10:
+  registry:
+    address: nacos://localhost:8848
