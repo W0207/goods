@@ -97,25 +97,17 @@ public class GrouponDao {
         GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andShopIdEqualTo(id);
         if (state != null) {
-            if (!state.toString().isBlank()) {
                 criteria.andStateEqualTo(state);
-            }
         }
         if (spuId != null) {
-            if (!spuId.toString().isBlank()) {
                 criteria.andGoodsSpuIdEqualTo(spuId);
-            }
         }
 
         if (beginTime != null) {
-            if (!beginTime.isBlank()) {
                 criteria.andBeginTimeEqualTo(beginTime);
-            }
         }
         if (endTime != null) {
-            if (!endTime.isBlank()) {
                 criteria.andEndTimeEqualTo(endTime);
-            }
         }
         List<GrouponActivityPo> grouponActivityPos;
         try {
