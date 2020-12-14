@@ -1,5 +1,6 @@
 package cn.edu.xmu.flashsale.controller;
 
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +66,7 @@ public class FlashSaleController {
     })
     @GetMapping("/timesegments/{id}/flashsales")
     public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
+        System.out.println(flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo()));
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
