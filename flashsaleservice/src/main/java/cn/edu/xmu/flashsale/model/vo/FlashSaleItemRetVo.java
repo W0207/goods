@@ -15,7 +15,7 @@ public class FlashSaleItemRetVo {
 
     private Long id;
 
-    private SkuRetVo SimpleSku;
+    private SkuRetVo goodsSku;
 
     private Long price;
 

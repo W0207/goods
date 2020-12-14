@@ -10,9 +10,13 @@ import lombok.Data;
 public class ShopAuditVo {
 
     @ApiModelProperty(value = "新店状态")
-    private byte state;
+    private Boolean conclusion;
 
-    public Byte getState() {
-        return state;
+    public Boolean getConclusion() {
+        return conclusion;
+    }
+
+    public void setConclusion(Boolean conclusion) {
+        this.conclusion = conclusion;
     }
 }

@@ -17,8 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,12 +51,45 @@ public class CouponControllerTest {
     @Autowired
     CouponPoMapper couponPoMapper;
 
+
+
     private static final Logger logger = LoggerFactory.getLogger(CouponController.class);
 
     private final String creatTestToken(Long userId, Long departId, int expireTime) {
         String token = new JwtHelper().createToken(userId, departId, expireTime);
         logger.debug("token: " + token);
         return token;
+    }
+
+
+    /**
+     * 删除己方优惠活动
+     */
+    @Test
+    public void deleteCouponActivity() throws Exception {
+        String responseString = this.mvc.perform(delete("/coupon/shops/1/couponactivities/1").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 上线优惠活动
+     */
+    @Test
+    public void CouponActivityOnShelves() throws Exception {
+        String responseString = this.mvc.perform(put("/coupon/shops/1/couponactivities/3/onshelves").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void CouponActivityOffShelves() throws Exception {
+        String responseString = this.mvc.perform(put("/coupon/shops/1/couponactivities/2/offshelves").contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 
     /**
@@ -299,6 +334,7 @@ public class CouponControllerTest {
 
 
     /*   公开测试用例   */
+
 
 
 }

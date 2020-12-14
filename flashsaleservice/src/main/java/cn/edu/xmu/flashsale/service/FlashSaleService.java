@@ -3,6 +3,7 @@ package cn.edu.xmu.flashsale.service;
 import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
 import cn.edu.xmu.flashsale.model.po.FlashSalePo;
 import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
+import cn.edu.xmu.ininterface.service.DisableFlashActivityService;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import com.sun.el.stream.Stream;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author zhai
  */
 @Service
-public class FlashSaleService {
+public class FlashSaleService implements DisableFlashActivityService {
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleService.class);
 
     @Autowired
@@ -42,7 +43,6 @@ public class FlashSaleService {
         List<FlashSaleOutputVo> returnObject = flashSaleDao.findFlashSaleItemByTime(id);
         return returnObject;
     }
-
 
     /**
      * 修改秒杀活动信息
@@ -106,6 +106,11 @@ public class FlashSaleService {
 
     public Flux<FlashSaleItem> getFlashSale(Long id) {
         return reactiveRedisTemplate.opsForSet().members(id.toString()).map(x -> (FlashSaleItem) x);
+    }
+
+    @Override
+    public boolean disableActivity(Long skuId) {
+        return flashSaleDao.disableActivity(skuId);
     }
 }
 

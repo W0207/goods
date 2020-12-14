@@ -55,14 +55,16 @@ public class ShopTest {
 
     @Test
     public void insertShopTest() {
+        String token = creatTestToken(1L, 2L, 100);
+
         ShopVo vo = new ShopVo();
         vo.setName("test");
         String shopJson = JacksonUtil.toJson(vo);
         String expectedResponse = "";
         String responseString = null;
+
         try {
-            responseString = this.mvc.perform(post("/shop/shops").contentType("application/json;charset=UTF-8").content(shopJson))
-                    .andExpect(status().isCreated())
+            responseString = this.mvc.perform(post("/shop/shops").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
                     .andExpect(content().contentType("application/json;charset=UTF-8"))
                     .andReturn().getResponse().getContentAsString();
         } catch (Exception e) {
@@ -76,7 +78,6 @@ public class ShopTest {
             e.printStackTrace();
         }
         System.out.println(responseString);*/
-
     }
 
     @Test

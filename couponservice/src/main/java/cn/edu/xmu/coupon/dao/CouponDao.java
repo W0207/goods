@@ -173,7 +173,7 @@ public class CouponDao {
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
         try {
-            if (shopToAllVo.equals(null)) {
+            if (shopToAllVo == null) {
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("新建优惠活动shopId不存在"));
             } else {
                 CouponActivityPo po = addCouponActivityVo.createPo();
