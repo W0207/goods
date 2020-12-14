@@ -2,7 +2,6 @@ package cn.edu.xmu.flashsale;
 
 import cn.edu.xmu.flashsale.mapper.FlashSaleItemPoMapper;
 import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
-import cn.edu.xmu.flashsale.model.bo.FlashSale;
 import cn.edu.xmu.flashsale.model.bo.FlashSaleItem;
 import cn.edu.xmu.flashsale.model.po.FlashSaleItemPo;
 import cn.edu.xmu.flashsale.model.po.FlashSaleItemPoExample;
@@ -20,6 +19,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 /**
@@ -31,9 +31,6 @@ import java.util.List;
 public class FlashsaleServiceApplication implements ApplicationRunner {
 
     @Autowired
-    private RedisTemplate<String, Serializable> redisTemplate;
-
-    @Autowired
     private FlashSaleItemPoMapper flashSaleItemPoMapper;
 
     @Autowired
@@ -42,6 +39,9 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
     @Autowired
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice ingoodservice;
+
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
 
     public static void main(String[] args) {
         SpringApplication.run(FlashsaleServiceApplication.class, args);
@@ -64,7 +64,7 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
             FlashSaleItem item = new FlashSaleItem(itemPo, skuToFlashSaleVo);
             //将参与秒杀的sku信息载入内存(key为时间段)
             String key = "cp_" + timeSge;
-            redisTemplate.opsForSet().add(key, item);
+            redisTemplate.opsForSet().add(key, String.valueOf(item));
         }
     }
 

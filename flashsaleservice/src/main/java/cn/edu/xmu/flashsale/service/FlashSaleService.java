@@ -43,7 +43,6 @@ public class FlashSaleService {
         return returnObject;
     }
 
-
     /**
      * 修改秒杀活动信息
      *
