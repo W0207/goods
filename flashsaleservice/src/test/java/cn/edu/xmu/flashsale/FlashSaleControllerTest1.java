@@ -30,6 +30,6 @@ public class FlashSaleControllerTest1 {
         webTestClient.get().uri("/flashsale/timesegments/1/flashsales").exchange()
                 .expectBody()
                 .jsonPath("$[?(@.id == 1)].goodsSku.imageUrl").isEqualTo("http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg")
-                .jsonPath("$[?(@.id == 2)].price").isEqualTo(24);
+                .jsonPath("$[?(@.id == 2)].goodsSku.price").isEqualTo(23);
     }
 }

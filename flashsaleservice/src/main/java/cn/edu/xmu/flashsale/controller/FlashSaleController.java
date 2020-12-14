@@ -66,7 +66,6 @@ public class FlashSaleController {
     })
     @GetMapping("/timesegments/{id}/flashsales")
     public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
-        System.out.println(flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo()));
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
