@@ -45,13 +45,13 @@ public class ShopService implements InShopService {
 
     //上线商家
     public ReturnObject shopOnShelves(Shop shop) {
-        ReturnObject<Shop> returnObject = shopDao.shopShelves(shop);
+        ReturnObject returnObject = shopDao.shopShelves(shop);
         return returnObject;
     }
 
     //下线商家
     public ReturnObject shopOffShelves(Shop shop) {
-        ReturnObject<Shop> returnObject = shopDao.shopShelves(shop);
+        ReturnObject returnObject = shopDao.shopShelves(shop);
         return returnObject;
     }
 

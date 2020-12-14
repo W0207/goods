@@ -1,7 +1,6 @@
 package cn.edu.xmu.otherinterface.service;
 
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.otherinterface.bo.CouponActivity;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
 
 import java.util.List;
@@ -22,7 +21,10 @@ public interface IGoodsService {
    */
   ReturnObject<GoodsSkuInfo> getSkuInfo(Long goodsSkuId);
 
-
+    /**
+     * 通过spuId找到对应的skuId list
+      */
+    ReturnObject<List<Long>> getSkuIdList(Long spuId);
 
 }
 

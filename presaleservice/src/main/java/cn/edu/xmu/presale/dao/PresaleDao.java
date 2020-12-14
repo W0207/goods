@@ -35,18 +35,39 @@ public class PresaleDao {
     @Autowired
     private PresaleActivityPoMapper presaleActivityPoMapper;
 
+    public boolean disableActivity(Long shopId) {
+        try {
+            PresaleActivityPoExample example = new PresaleActivityPoExample();
+            PresaleActivityPoExample.Criteria criteria = example.createCriteria();
+            criteria.andShopIdEqualTo(shopId);
+            List<Byte> states = new ArrayList<>();
+            states.add((byte) 0);
+            states.add((byte) 1);
+            criteria.andStateIn(states);
+            List<PresaleActivityPo> pos = presaleActivityPoMapper.selectByExample(example);
+            for (PresaleActivityPo po : pos) {
+                po.setGmtModified(LocalDateTime.now());
+                po.setState((byte) 2);
+                presaleActivityPoMapper.updateByPrimaryKey(po);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public ReturnObject inserPresaleActivity(Long shopId, Long id, PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
         if (!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())) {
-            return new ReturnObject(ResponseCode.Log_Bigger);
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,结束时间小于开始时间");
         }
-        if (shopToAllVo == null) {
+        if (shopToAllVo.equals(null)) {
             //店铺id不存在
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,shopId不存在");
         } else {
             SkuToPresaleVo skuToPresaleVo = goodservice.presaleFindSku(id);
-            if (skuToPresaleVo == null) {
+            if (skuToPresaleVo.equals(null)) {
                 //sku不存在
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,skuId不存在");
             } else {
@@ -108,6 +129,10 @@ public class PresaleDao {
             //spuId不为空
             criteria.andGoodsSkuIdEqualTo(skuId);
         }
+        List<Byte> states = new ArrayList<>();
+        states.add((byte) 0);
+        states.add((byte) 1);
+        criteria.andStateIn(states);
         List<PresaleActivityPo> presaleActivityPos = presaleActivityPoMapper.selectByExample(presaleActivityPoExample);
         List<PresaleActivityRetVo> presaleActivityRetVos = new ArrayList<>(presaleActivityPos.size());
         for (PresaleActivityPo po : presaleActivityPos) {
@@ -129,7 +154,7 @@ public class PresaleDao {
     }
 
     public ReturnObject modifyPresale(Long shopId, Long id, PresaleActivityVo vo) {
-        ReturnObject returnObject;
+        ReturnObject returnObject = null;
         //判断开始时间是不是在结束时间之前
         if (vo.getEndTime().isBefore(vo.getBeginTime())) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -140,7 +165,7 @@ public class PresaleDao {
         PresaleActivityPo presaleActivityPo = presaleActivityPoMapper.selectByPrimaryKey(id);
         if (presaleActivityPo == null) {
             //预售活动的id不存在
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("修改预售信息的时候，预售活动的id不存在"));
         } else {
             if (!shopId.equals(presaleActivityPo.getShopId())) {
                 //预售活动的shopId与路径上的不同
@@ -210,6 +235,11 @@ public class PresaleDao {
         }
         if (state != null) {
             criteria.andStateEqualTo((byte) (int) state);
+        } else {
+            List<Byte> states = new ArrayList<>();
+            states.add((byte) 0);
+            states.add((byte) 1);
+            criteria.andStateIn(states);
         }
         List<PresaleActivityPo> presaleActivityPos = presaleActivityPoMapper.selectByExample(presaleActivityPoExample);
         if (presaleActivityPos == null) {

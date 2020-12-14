@@ -1,5 +1,6 @@
 package cn.edu.xmu.groupon.service;
 
+import cn.edu.xmu.ininterface.service.DisableGrouponActivityService;
 import cn.edu.xmu.ooad.util.encript.AES;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GrouponServer {
+public class GrouponServer implements DisableGrouponActivityService {
 
     private static final Logger logger = LoggerFactory.getLogger(GrouponServer.class);
 
@@ -129,4 +130,8 @@ public class GrouponServer {
         return grouponDao.onGrouponState(shopId,id);
     }
 
+    @Override
+    public boolean disableActivity(Long shopId) {
+        return grouponDao.disableActivity(shopId);
+    }
 }
