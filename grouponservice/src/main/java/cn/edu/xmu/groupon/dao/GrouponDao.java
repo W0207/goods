@@ -379,4 +379,24 @@ public class GrouponDao {
         return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
     }
 
+    public boolean disableActivity(Long shopId) {
+        try{
+            GrouponActivityPoExample example = new GrouponActivityPoExample();
+            GrouponActivityPoExample.Criteria criteria = example.createCriteria();
+            criteria.andShopIdEqualTo(shopId);
+            List<Byte> states = new ArrayList<>();
+            states.add((byte) 0);
+            states.add((byte)1);
+            criteria.andStateIn(states);
+            List<GrouponActivityPo> pos = grouponActivityPoMapper.selectByExample(example);
+            for(GrouponActivityPo po: pos){
+                po.setGmtModified(LocalDateTime.now());
+                po.setState(2);
+                grouponActivityPoMapper.updateByPrimaryKey(po);
+            }
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

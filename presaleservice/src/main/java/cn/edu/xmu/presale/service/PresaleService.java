@@ -1,5 +1,6 @@
 package cn.edu.xmu.presale.service;
 
+import cn.edu.xmu.ininterface.service.DisablePresaleActivityService;
 import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 
 @Service
-public class PresaleService {
+public class PresaleService implements DisablePresaleActivityService {
 
     @Autowired
     private PresaleDao presaleDao;
@@ -55,5 +56,10 @@ public class PresaleService {
 
     public ReturnObject presaleOffShelves(Long shopId,Long id) {
         return presaleDao.presaleOffShelves(shopId, id);
+    }
+
+    @Override
+    public boolean disableActivity(Long shopId) {
+        return presaleDao.disableActivity(shopId);
     }
 }

@@ -1,9 +1,5 @@
 package cn.edu.xmu.otherinterface.bo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 
@@ -26,6 +22,18 @@ public class GoodsSkuInfo implements Serializable {
     private Long price;
 
     private boolean disable;
+
+    public GoodsSkuInfo(Long id, String skuName, String spuName, String skuSn, String imgUrl, int inventory, Long originalPrice, Long price, boolean disable) {
+        this.id = id;
+        this.skuName = skuName;
+        this.spuName = spuName;
+        this.skuSn = skuSn;
+        this.imgUrl = imgUrl;
+        this.inventory = inventory;
+        this.originalPrice = originalPrice;
+        this.price = price;
+        this.disable = disable;
+    }
 
     public Long getId() {
         return id;
@@ -96,18 +104,6 @@ public class GoodsSkuInfo implements Serializable {
     }
 
     public void setDisable(boolean disable) {
-        this.disable = disable;
-    }
-
-    public GoodsSkuInfo(Long id, String skuName, String spuName, String skuSn, String imgUrl, int inventory, Long originalPrice, Long price, boolean disable) {
-        this.id = id;
-        this.skuName = skuName;
-        this.spuName = spuName;
-        this.skuSn = skuSn;
-        this.imgUrl = imgUrl;
-        this.inventory = inventory;
-        this.originalPrice = originalPrice;
-        this.price = price;
         this.disable = disable;
     }
 }
