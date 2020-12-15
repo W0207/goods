@@ -825,7 +825,8 @@ public class GoodsDao {
                     floatPricePo.setInvalidBy(userId);
                     floatPricePo.setValid((byte) 1);
                     floatPricePoMapper.insertSelective(floatPricePo);
-                    return new ReturnObject(new FloatPrice(floatPricePo));
+                    FloatPriceRetVo floatPriceRetVo = new FloatPriceRetVo(floatPricePo);
+                    return new ReturnObject(floatPriceRetVo);
                 }
             }
         }

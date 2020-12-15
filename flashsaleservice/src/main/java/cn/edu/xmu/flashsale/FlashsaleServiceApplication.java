@@ -68,6 +68,9 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
             //将参与秒杀的sku信息载入内存(key为时间段)
             String key = "cp_" + timeSge;
             redisTemplate.opsForSet().add(key, item);
+            if (redisTemplate.opsForSet().pop(key) != null) {
+                redisTemplate.opsForSet().pop(key);
+            }
         }
     }
 }
