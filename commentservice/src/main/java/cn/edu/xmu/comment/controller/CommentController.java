@@ -11,6 +11,7 @@ import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class CommentController {
 
     @Autowired
     private HttpServletResponse httpServletResponse;
+
+    IUserService iUserService;
 
     /**
      * 查看sku的评价列表（已通过审核）
