@@ -23,6 +23,7 @@
         <module>grouponservice</module>
         <module>ininterface</module>
         <module>otherinterface</module>
+        <module>core</module>
     </modules>
     <name>goods</name>
     <description>the role base goods management systems</description>
