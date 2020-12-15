@@ -55,7 +55,7 @@ public class ShopTest {
 
     @Test
     public void insertShopTest() {
-        String token = creatTestToken(1L, 2L, 100);
+        String token = creatTestToken(1L, -1L, 100);
 
         ShopVo vo = new ShopVo();
         vo.setName("test");
@@ -127,7 +127,7 @@ public class ShopTest {
     public void deleteShop() throws Exception {
 
         String responseString = this.mvc.perform(
-                delete("/shop/shops/9")
+                delete("/shop/shops/1")
                         .contentType("application/json;charset=UTF-8")
         ).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
         System.out.println(responseString);

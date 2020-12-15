@@ -2,6 +2,7 @@ package cn.edu.xmu.otherinterface.service;
 
 
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
 
 /**
@@ -25,6 +26,6 @@ public interface GoodsModuleService {
      * @param shopId
      * @return
      */
-    ReturnObject<ShopInfo> getShopInfo(Long shopId);
+    MyReturn<ShopInfo> getShopInfo(Long shopId);
 }
 

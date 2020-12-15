@@ -1,6 +1,8 @@
 package cn.edu.xmu.otherinterface.bo;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
 
     private Long id;
 

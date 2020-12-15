@@ -285,6 +285,7 @@ public class CouponActivityDao implements InitializingBean {
                 List<CouponPo> pos1 = couponPoMapper.selectByExample(couponPoExample);
                 for(CouponPo po1:pos1){
                     //优惠券失效
+                    logger.debug("失效优惠券.....");
                     po1.setGmtModified(LocalDateTime.now());
                     po1.setState((byte) 3);
                     couponPoMapper.updateByPrimaryKey(po1);

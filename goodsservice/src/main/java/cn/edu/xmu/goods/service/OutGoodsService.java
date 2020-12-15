@@ -3,6 +3,7 @@ package cn.edu.xmu.goods.service;
 import cn.edu.xmu.goods.dao.OutDao;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
 import cn.edu.xmu.otherinterface.service.GoodsModuleService;
 import cn.edu.xmu.otherinterface.service.IGoodsService;
@@ -24,21 +25,21 @@ public class OutGoodsService implements IGoodsService, GoodsModuleService {
     }
 
     @Override
-    public ReturnObject<ShopInfo> getShopInfo(Long shopId) {
+    public MyReturn<ShopInfo> getShopInfo(Long shopId) {
         return outDao.getShopInfo(shopId);
     }
     @Override
-    public ReturnObject<List<Long>> getShopSkuId(Long shopId) {
+    public MyReturn<List<Long>> getShopSkuId(Long shopId) {
         return outDao.getShopSkuId(shopId);
     }
 
     @Override
-    public ReturnObject<GoodsSkuInfo> getSkuInfo(Long goodsSkuId) {
+    public MyReturn<GoodsSkuInfo> getSkuInfo(Long goodsSkuId) {
         return outDao.getSkuInfo(goodsSkuId);
     }
 
     @Override
-    public ReturnObject<List<Long>> getSkuIdList(Long spuId) {
+    public MyReturn<List<Long>> getSkuIdList(Long spuId) {
         return outDao.getSkuIdList(spuId);
     }
 }

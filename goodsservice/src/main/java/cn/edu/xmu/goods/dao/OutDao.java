@@ -7,6 +7,7 @@ import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,26 +52,26 @@ public class OutDao {
         }
     }
 
-    public ReturnObject<ShopInfo> getShopInfo(Long shopId) {
+    public MyReturn<ShopInfo> getShopInfo(Long shopId) {
         try {
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
             if (shopPo == null) {
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
             ShopInfo shopInfo = new ShopInfo(shopPo.getId(), shopPo.getName(), shopPo.getState(), shopPo.getGmtCreate(), shopPo.getGmtModified());
-            return new ReturnObject<>(shopInfo);
+            return new MyReturn<>(shopInfo);
         } catch (Exception e){
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
+            return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
         }
     }
 
-    public ReturnObject<List<Long>> getShopSkuId(Long shopId) {
+    public MyReturn<List<Long>> getShopSkuId(Long shopId) {
         try{
-            ReturnObject returnObject =  null;
+            MyReturn returnObject =  null;
             //查询shopId是否存在
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
             if(shopPo == null){
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"shopId不存在");
+                returnObject = new MyReturn(ResponseCode.RESOURCE_ID_NOTEXIST,"shopId不存在");
             } else {
                 GoodsSpuPoExample spuPoExample = new GoodsSpuPoExample();
                 GoodsSpuPoExample.Criteria criteria = spuPoExample.createCriteria();
@@ -86,35 +87,35 @@ public class OutDao {
                         skuIds.add(po.getId());
                     }
                 }
-                returnObject = new ReturnObject(skuIds);
+                returnObject = new MyReturn(skuIds);
             }
             return returnObject;
         } catch (Exception e){
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
+            return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
         }
     }
 
-    public ReturnObject<GoodsSkuInfo> getSkuInfo(Long goodsSkuId) {
-        ReturnObject returnObject = null;
+    public MyReturn<GoodsSkuInfo> getSkuInfo(Long goodsSkuId) {
+        MyReturn returnObject = null;
         try{
             GoodsSkuPo po = skuPoMapper.selectByPrimaryKey(goodsSkuId);
             if(po == null){
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"skuId不存在");
+                returnObject = new MyReturn(ResponseCode.RESOURCE_ID_NOTEXIST,"skuId不存在");
             } else {
                 String spuName = spuPoMapper.selectByPrimaryKey(po.getGoodsSpuId()).getName();
                 GoodsSkuInfo goodsSkuInfo = new GoodsSkuInfo(po.getId(),po.getName(),spuName,po.getSkuSn(),po.getImageUrl(),po.getInventory(),po.getOriginalPrice(),goodsDao.getPrice(goodsSkuId)==null? po.getOriginalPrice():goodsDao.getPrice(goodsSkuId),false);
-                returnObject = new ReturnObject(goodsSkuInfo);
+                returnObject = new MyReturn(goodsSkuInfo);
             }
             return returnObject;
         } catch (Exception e) {
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
+            return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
         }
     }
 
-    public ReturnObject<List<Long>> getSkuIdList(Long spuId) {
+    public MyReturn<List<Long>> getSkuIdList(Long spuId) {
         GoodsSpuPo goodsSpuPo = spuPoMapper.selectByPrimaryKey(spuId);
         if(goodsSpuPo==null){
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         GoodsSkuPoExample example = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = example.createCriteria();
@@ -126,9 +127,9 @@ public class OutDao {
             for (GoodsSkuPo po : pos) {
                 skuList.add(po.getId());
             }
-            return new ReturnObject<>(skuList);
+            return new MyReturn<>(skuList);
         } catch (Exception e){
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
+            return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
         }
     }
 
