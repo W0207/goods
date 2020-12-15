@@ -16,9 +16,9 @@ public class FlashSale implements VoObject {
      * 秒杀活动状态
      */
     public enum State {
-        CREATED(0, "未开始"),
-        PROCESSING(1, "进行中"),
-        END(2, "已结束");
+        OFFLINE(0, "已下线"),
+        ONLINE(1, "已上线"),
+        DELETED(2, "已删除");
 
         private static final Map<Integer, State> stateMap;
 
