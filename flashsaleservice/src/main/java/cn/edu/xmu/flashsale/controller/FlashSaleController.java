@@ -121,7 +121,6 @@ public class FlashSaleController {
         }
         ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**
