@@ -12,7 +12,7 @@ server:
 
 spring:
   application:
-    name: goods-service
+    name: goods-flashsale
   profiles:
     active: dev
   datasource:
@@ -99,14 +99,18 @@ cloud:
 dubbo:
   scan:
     # dubbo 服务扫描基准包
-    base-packages: cn.edu.xmu.goods
+    base-packages: cn.edu.xmu.flashsale
   protocol:
     # dubbo 协议
     name: dubbo
     # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
     port: -1
-    dubbo:
-      protocol:
-        threads=10:
-  registry:
-    address: nacos://localhost:8848
+
+    registry:
+        address: nacos://localhost:8848
+    cloud:
+        subscribed-services: goods-service
+    protocols:
+        dubbo:
+          port: 18888
+

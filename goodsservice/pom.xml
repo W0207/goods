@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.edu.xmu.ooad</groupId>
-            <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
         </dependency>
@@ -177,6 +171,11 @@
             <artifactId>reactor-test</artifactId>
             <version>3.4.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.xmu</groupId>
+            <artifactId>privilegeservice-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

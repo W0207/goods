@@ -10,6 +10,7 @@ import cn.edu.xmu.presale.model.po.PresaleActivityPo;
 import cn.edu.xmu.presale.model.vo.PresaleActivityRetVo;
 import cn.edu.xmu.presale.model.vo.PresaleActivityVo;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 
 @Service
+@DubboService(version = "0.0.1")
 public class PresaleService implements DisablePresaleActivityService {
 
     @Autowired
