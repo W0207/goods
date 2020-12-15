@@ -177,11 +177,12 @@ public class FlashSaleController {
         ReturnObject returnObject = null;
         SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(skuInputVo.getSkuId());
         if (skuToFlashSaleVo == null) {
+            logger.info("该商品不存在");
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             FlashSaleItem flashSaleItem = flashSaleService.addFlashSaleItem(id, skuInputVo);
             if (flashSaleItem == null) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("sku添加失败"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("商品添加失败"));
             } else {
                 FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
                 returnObject = new ReturnObject<>(flashSaleOutputVo);

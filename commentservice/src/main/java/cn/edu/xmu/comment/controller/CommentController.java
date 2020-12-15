@@ -13,6 +13,7 @@ import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.service.OtherModulService;
+import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -59,6 +60,7 @@ public class CommentController {
         MyReturn returnObject = otherModulService.getTimeSegInfo(10L);
         return Common.decorateReturnObject(returnObject);
     }
+    IUserService iUserService;
 
     /**
      * 查看sku的评价列表（已通过审核）
