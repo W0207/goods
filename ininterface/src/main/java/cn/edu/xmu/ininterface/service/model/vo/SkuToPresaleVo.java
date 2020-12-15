@@ -4,6 +4,9 @@ package cn.edu.xmu.ininterface.service.model.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * @author Abin
+ */
 public class SkuToPresaleVo implements Serializable {
 
     private Long id;
