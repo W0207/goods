@@ -1,6 +1,7 @@
 package cn.edu.xmu.flashsale.dao;
 
 import com.sun.xml.bind.v2.TODO;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import cn.edu.xmu.flashsale.mapper.*;
 import cn.edu.xmu.flashsale.model.bo.*;
@@ -12,7 +13,9 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,33 +41,8 @@ public class FlashSaleDao {
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
 
-    /**
-     * 查找某一时段秒杀活动商品
-     *
-     * @param id
-     * @return
-     */
-    public List<FlashSaleOutputVo> findFlashSaleItemByTime(Long id) {
-        FlashSalePoExample example = new FlashSalePoExample();
-        FlashSalePoExample.Criteria criteria = example.createCriteria();
-        criteria.andTimeSegIdEqualTo(id);
-        List<FlashSalePo> flashSalePos = flashSalePoMapper.selectByExample(example);
-        List<FlashSaleOutputVo> flashSaleOutputVos = new ArrayList<>();
-        for (FlashSalePo flashSalePo : flashSalePos) {
-            FlashSaleItemPoExample example1 = new FlashSaleItemPoExample();
-            FlashSaleItemPoExample.Criteria criteria1 = example1.createCriteria();
-            criteria1.andSaleIdEqualTo(flashSalePo.getId());
-            List<FlashSaleItemPo> flashSaleItemPos = flashSaleItemPoMapper.selectByExample(example1);
-            for (FlashSaleItemPo flashSaleItemPo : flashSaleItemPos) {
-                FlashSaleItem flashSaleItem = new FlashSaleItem(flashSaleItemPo);
-                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(flashSaleItem.getGoodsSkuId());
-                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
-                flashSaleOutputVos.add(flashSaleOutputVo);
-            }
-        }
-        return flashSaleOutputVos;
-    }
-
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
     /**
      * 修改秒杀活动
      *
@@ -76,9 +54,17 @@ public class FlashSaleDao {
     public ReturnObject<Object> updateFlashSale(Long id, FlashSaleInputVo flashSaleInputVo) {
 
         FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
-        if (po == null) {
+        if (po == null||po.getState()==null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(po.getState()==1){
+            logger.info("秒杀活动已上线，无法修改 ");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        else if(po.getState()==2){
+            logger.info("秒杀活动已删除，无法修改 ");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
         FlashSale flashSale = new FlashSale(po);
         FlashSalePo flashSalePo = flashSale.createUpdatePo(flashSaleInputVo);
@@ -108,13 +94,26 @@ public class FlashSaleDao {
             logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        int ret = flashSalePoMapper.deleteByPrimaryKey(id);
+        if(po.getState()==1){
+            logger.info("秒杀活动已上线，无法删除 ");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        else if(po.getState()==2){
+            logger.info("秒杀活动已删除");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        po.setState(Byte.valueOf("2"));
+        int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             logger.info("秒杀活动删除失败：FlashSaleId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             logger.info("秒杀活动删除成功：FlashSaleItemId = " + id);
+            String key="cp_"+po.getTimeSegId();
+            if(redisTemplate.opsForSet().pop(key)!=null){
+                redisTemplate.opsForSet().pop(key);
+            }
             returnObject = new ReturnObject<>();
         }
         return returnObject;
@@ -130,19 +129,27 @@ public class FlashSaleDao {
     public FlashSaleItem addItem(Long id, SkuInputVo skuInputVo) {
 
         FlashSaleItem flashSaleItem = new FlashSaleItem(id, skuInputVo);
-        FlashSaleItemPo po = flashSaleItemPoMapper.selectByPrimaryKey(id);
-        if (po == null) {
+        FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
+        if (po == null||po.getState()==null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleId = " + id);
-            return flashSaleItem;
+            return null;
         }
-
+        if(po.getState()==2){
+            logger.info("秒杀活动已被删除：FlashSaleId = " + id);
+            return null;
+        }
+        String key="cp_"+po.getTimeSegId();
         FlashSaleItemPo flashSaleItemPo = flashSaleItem.createItemPo();
         int ret = flashSaleItemPoMapper.insertSelective(flashSaleItemPo);
         if (ret == 0) {
             logger.info("商品新增失败：FlashSaleId = " + id);
             flashSaleItem = null;
         } else {
+            SkuToFlashSaleVo skuToFlashSaleVo= goodservice.flashFindSku(skuInputVo.getSkuId());
+            FlashSaleItem item=new FlashSaleItem(flashSaleItemPo,skuToFlashSaleVo);
+            redisTemplate.opsForSet().add(key,item);
             logger.info("商品新增成功：FlashSaleId = " + id);
+
         }
         return flashSaleItem;
     }
@@ -157,6 +164,11 @@ public class FlashSaleDao {
      */
     public ReturnObject<Object> deleteSku(Long fid, Long id) {
 
+        FlashSalePo flashSalePo=flashSalePoMapper.selectByPrimaryKey(fid);
+        if(flashSalePo==null||flashSalePo.getState()==null){
+            logger.info("该秒杀活动不存在或已被删除：FlashSaleId = " + fid);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         FlashSaleItemPo po = flashSaleItemPoMapper.selectByPrimaryKey(id);
         if (po == null) {
             logger.info("该商品不存在或已被删除：FlashSaleItemId = " + id);
@@ -176,11 +188,15 @@ public class FlashSaleDao {
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 logger.info("商品删除成功：FlashSaleItemId = " + id);
+                String key="cp_"+flashSalePo.getTimeSegId();
+                if(redisTemplate.opsForSet().pop(key)!=null){
+                    redisTemplate.opsForSet().pop(key);
+                }
                 returnObject = new ReturnObject<>();
             }
             return returnObject;
         }
-        logger.info("无权限修改团购活动：GrouponId = " + id);
+        logger.info("无权限删除该商品");
         return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
     }
 

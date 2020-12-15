@@ -33,16 +33,6 @@ public class FlashSaleService implements DisableFlashActivityService {
     @Autowired
     private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
 
-    /**
-     * 查找某时段秒杀活动
-     *
-     * @param id
-     * @return
-     */
-    public List<FlashSaleOutputVo> findFlashSaleByTime(Long id) {
-        List<FlashSaleOutputVo> returnObject = flashSaleDao.findFlashSaleItemByTime(id);
-        return returnObject;
-    }
 
     /**
      * 修改秒杀活动信息
