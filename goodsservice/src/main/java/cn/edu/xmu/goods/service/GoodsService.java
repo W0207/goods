@@ -1,14 +1,12 @@
 package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.GoodsDao;
+import cn.edu.xmu.goods.mapper.GoodsCategoryPoMapper;
 import cn.edu.xmu.goods.model.bo.Brand;
 import cn.edu.xmu.goods.model.bo.GoodsCategory;
 import cn.edu.xmu.goods.model.bo.GoodsSku;
 import cn.edu.xmu.goods.model.bo.GoodsSpu;
-import cn.edu.xmu.goods.model.po.BrandPo;
-import cn.edu.xmu.goods.model.po.GoodsCategoryPo;
-import cn.edu.xmu.goods.model.po.GoodsSkuPo;
-import cn.edu.xmu.goods.model.po.GoodsSpuPo;
+import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.*;
@@ -49,6 +47,9 @@ public class GoodsService implements Ingoodservice {
 
     @Resource
     RocketMQTemplate rocketMQTemplate;
+
+    @Autowired
+    GoodsCategoryPoMapper goodsCategoryPoMapper;
 
     @Value("${goodsservice.dav.username}")
     private String davUsername;
@@ -131,9 +132,9 @@ public class GoodsService implements Ingoodservice {
     }
 
     @Override
-   public boolean spuInShopOrNot(Long shopId, Long id) {
-       GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
-       return shopId.equals(goodsSpuPo.getShopId());
+    public boolean spuInShopOrNot(Long shopId, Long id) {
+        GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
+        return shopId.equals(goodsSpuPo.getShopId());
     }
 
     @Override
@@ -185,16 +186,7 @@ public class GoodsService implements Ingoodservice {
      * @return 返回对象 ReturnObject<Object>
      */
     public ReturnObject<Object> addBrand(BrandInputVo brandInputVo) {
-        ReturnObject returnObject;
-        BrandPo brandPo = goodsDao.addBrandById(brandInputVo);
-        if (brandPo != null) {
-            returnObject = new ReturnObject(new Brand(brandPo));
-            logger.debug("addBrand : " + returnObject);
-        } else {
-            logger.debug("addBrand : fail!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
+        return goodsDao.addBrand(brandInputVo);
     }
 
     /**
@@ -293,11 +285,21 @@ public class GoodsService implements Ingoodservice {
      * @author shangzhao zhai
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
+        if (categoryInputVo.getName() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能为空");
+        }
+        GoodsCategoryPoExample goodsCategoryPo = new GoodsCategoryPoExample();
+        GoodsCategoryPoExample.Criteria criteria = goodsCategoryPo.createCriteria();
+        criteria.andNameEqualTo(categoryInputVo.getName());
+        List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPo);
+        if (!goodsCategoryPos.isEmpty()) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能重复");
+        }
+
         ReturnObject returnObject;
-        GoodsCategoryPo goodsCategoryPo = goodsDao.addCategoryById(id, categoryInputVo);
+        GoodsCategoryPo goodsCategoryPo1 = goodsDao.addCategoryById(id, categoryInputVo);
         if (goodsCategoryPo != null) {
-            returnObject = new ReturnObject(new GoodsCategory(goodsCategoryPo));
-            logger.debug("addCategory : " + returnObject);
+            returnObject = new ReturnObject(new GoodsCategory(goodsCategoryPo1));
         } else {
             logger.debug("addCategory : Not Found!");
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -691,11 +693,10 @@ public class GoodsService implements Ingoodservice {
      * @return
      */
     public ReturnObject getSku(Long id, Long userId) {
-        System.out.println(userId);
         if (userId != null) {
             System.out.println(userId);
             MessageVo messageVo = new MessageVo();
-            messageVo.setSkuId(id);
+            messageVo.setGoodsSkuId(id);
             messageVo.setCustomerId(userId);
             sendMessage(messageVo);
         }
@@ -710,7 +711,7 @@ public class GoodsService implements Ingoodservice {
     private void sendMessage(MessageVo messageVo) {
         String json = JacksonUtil.toJson(messageVo);
         Message message = MessageBuilder.withPayload(json).build();
-        rocketMQTemplate.sendOneWay("log-topic", message);
+        rocketMQTemplate.sendOneWay("goods-foot-topic", message);
         logger.debug(json);
     }
 

@@ -129,7 +129,7 @@ dubbo:
 # 配置rocketmq
 rocketmq:
   # 指定namesrv地址
-  name-server: 127.0.0.1:9876
+  name-server: 192.168.43.249:9876
   producer:
     #生产者group名称
     group: producer_group
