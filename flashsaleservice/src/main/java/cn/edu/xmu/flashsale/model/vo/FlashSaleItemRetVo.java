@@ -12,7 +12,7 @@ public class FlashSaleItemRetVo {
 
     private Long id;
 
-    private GoodsSku goodsSku;
+    private ProductRetVo goodsSku;
 
     private Long price;
 

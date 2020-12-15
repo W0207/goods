@@ -178,6 +178,11 @@
             <version>3.4.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.xmu</groupId>
+            <artifactId>privilegeservice-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -69,7 +69,6 @@ public class FlashSaleController {
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
-
     /**
      * 获取当前时段秒杀列表
      *
@@ -122,7 +121,6 @@ public class FlashSaleController {
         }
         ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**

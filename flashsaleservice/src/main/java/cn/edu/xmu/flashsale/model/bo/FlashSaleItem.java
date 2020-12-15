@@ -15,21 +15,25 @@ import java.time.LocalDateTime;
 @Data
 public class FlashSaleItem implements VoObject, Serializable {
 
-    Long id;
+    private Long id;
 
-    Long saleId;
+    private Long saleId;
 
-    Long goodsSkuId;
+    private Long goodsSkuId;
 
-    Long price;
+    private Long price;
 
-    Integer quantity;
+    private Integer quantity;
 
-    LocalDateTime gmtCreate;
+    private LocalDateTime gmtCreate;
 
-    LocalDateTime gmtModified;
+    private LocalDateTime gmtModified;
 
-    GoodsSku goodsSku;
+    private Product product;
+
+    public FlashSaleItem() {
+        super();
+    }
 
     public FlashSaleItem(Long id, SkuInputVo skuInputVo) {
         this.saleId = id;
@@ -42,7 +46,8 @@ public class FlashSaleItem implements VoObject, Serializable {
 
     public FlashSaleItem(FlashSaleItemPo itemPo, SkuToFlashSaleVo skuPo) {
         this.id = itemPo.getId();
-        this.goodsSku = new GoodsSku(skuPo);
+        this.goodsSkuId = itemPo.getGoodsSkuId();
+        this.product = new Product(skuPo);
         this.price = itemPo.getPrice();
         this.saleId = itemPo.getSaleId();
         this.quantity = itemPo.getQuantity();
@@ -71,27 +76,20 @@ public class FlashSaleItem implements VoObject, Serializable {
         return po;
     }
 
-    public FlashSaleItem() {
-    }
-
     @Override
     public Object createVo() {
-        FlashSaleItemRetVo flashSaleItemRetVo = new FlashSaleItemRetVo();
+        FlashSaleItemRetVo retVo = new FlashSaleItemRetVo();
+        retVo.setId(this.id);
 
-        flashSaleItemRetVo.setId(this.id);
-
-        GoodsSku goodsSku = new GoodsSku();
-
-        goodsSku.setPrice(this.price);
-        goodsSku.setInventory(this.quantity);
-        flashSaleItemRetVo.setGoodsSku(goodsSku);
-
-        flashSaleItemRetVo.setPrice(this.price);
-        flashSaleItemRetVo.setQuantity(this.quantity);
-        flashSaleItemRetVo.setGmtCreate(this.gmtCreate);
-        flashSaleItemRetVo.setGmtModified(this.gmtModified);
-
-        return flashSaleItemRetVo;
+        ProductRetVo productRetVo = (ProductRetVo) product.createVo();
+        productRetVo.setPrice(this.price);
+        productRetVo.setInventory(this.quantity);
+        retVo.setGoodsSku(productRetVo);
+        retVo.setPrice(this.price);
+        retVo.setQuantity(this.quantity);
+        retVo.setGmtCreate(this.gmtCreate);
+        retVo.setGmtModified(this.gmtModified);
+        return retVo;
     }
 
     @Override

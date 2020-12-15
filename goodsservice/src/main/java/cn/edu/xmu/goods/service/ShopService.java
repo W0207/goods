@@ -2,6 +2,7 @@ package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.ShopDao;
 import cn.edu.xmu.goods.model.bo.Shop;
+import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.goods.model.po.ShopPo;
 import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.ininterface.service.InShopService;
@@ -31,6 +32,16 @@ public class ShopService implements InShopService {
         }
     }
 
+    /**
+     * 判断店铺是否存在
+     * @param shopId
+     * @return
+     */
+    @Override
+    public boolean shopExitOrNot(Long shopId) {
+        ShopPo shopPo = shopDao.findShopById(shopId);
+        return shopPo != null;
+    }
     //新建商家
     public ReturnObject insertShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.insertShop(shop);
