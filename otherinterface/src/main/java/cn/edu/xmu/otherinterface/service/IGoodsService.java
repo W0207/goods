@@ -2,6 +2,7 @@ package cn.edu.xmu.otherinterface.service;
 
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 
 import java.util.List;
 
@@ -12,19 +13,19 @@ public interface IGoodsService {
      * 用于条件查询
      * @return 该店铺全部sku列表
      */
-  ReturnObject<List<Long>> getShopSkuId(Long shopId);
+    MyReturn<List<Long>> getShopSkuId(Long shopId);
 
 
 
   /**
    * 根据skuId获得sku信息
    */
-  ReturnObject<GoodsSkuInfo> getSkuInfo(Long goodsSkuId);
+  MyReturn<GoodsSkuInfo> getSkuInfo(Long goodsSkuId);
 
     /**
      * 通过spuId找到对应的skuId list
       */
-    ReturnObject<List<Long>> getSkuIdList(Long spuId);
+    MyReturn<List<Long>> getSkuIdList(Long spuId);
 
 }
 

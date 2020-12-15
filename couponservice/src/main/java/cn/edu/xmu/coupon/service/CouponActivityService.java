@@ -10,6 +10,7 @@ import cn.edu.xmu.ininterface.service.DisableCouponActivityService;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.io.IOException;
  * @author BiuBiuBiu
  */
 @Service
+@DubboService(version = "0.0.1")
 public class CouponActivityService implements DisableCouponActivityService {
 
     @Autowired

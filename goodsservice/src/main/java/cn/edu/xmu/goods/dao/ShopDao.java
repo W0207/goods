@@ -127,9 +127,7 @@ public class ShopDao {
      */
     public boolean disableAllActivity(Long shopId){
 
-        while (!disableCouponActivity.disableActivity(shopId)){
-
-        }
+        disableCouponActivity.disableActivity(shopId);
         GoodsSpuPoExample example = new GoodsSpuPoExample();
         GoodsSpuPoExample.Criteria criteria = example.createCriteria();
         criteria.andShopIdEqualTo(shopId);
@@ -143,12 +141,8 @@ public class ShopDao {
                 disableFlashActivityService.disableActivity(po1.getId());
             }
         }
-        while (!disablePresaleActivityService.disableActivity(shopId)){
-
-        };
-        while (!disableGrouponActivityService.disableActivity(shopId)){
-
-        }
+        disablePresaleActivityService.disableActivity(shopId);
+        disableGrouponActivityService.disableActivity(shopId);
         return false;
     }
 

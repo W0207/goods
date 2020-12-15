@@ -3,6 +3,7 @@ package cn.edu.xmu.groupon.service;
 import cn.edu.xmu.ininterface.service.DisableGrouponActivityService;
 import cn.edu.xmu.ooad.util.encript.AES;
 import com.github.pagehelper.PageHelper;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@DubboService(version = "0.0.1")
 public class GrouponServer implements DisableGrouponActivityService {
 
     private static final Logger logger = LoggerFactory.getLogger(GrouponServer.class);

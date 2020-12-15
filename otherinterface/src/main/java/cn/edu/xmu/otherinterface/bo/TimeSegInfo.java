@@ -1,8 +1,9 @@
 package cn.edu.xmu.otherinterface.bo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class TimeSegInfo {
+public class TimeSegInfo implements Serializable {
     private Long id;
 
     private LocalDateTime beginTime;

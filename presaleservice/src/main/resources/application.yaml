@@ -5,7 +5,7 @@ management:
         include: "*"
 
 server:
-  port: 8085
+  port: 8086
   tomcat:
     threads:
       max: 1000
@@ -97,12 +97,22 @@ pagehelper:
         server-addr: 127.0.0.1:8848
 
 
-  dubbo:
+dubbo:
+  scan:
+    # dubbo 服务扫描基准包
+    base-packages: cn.edu.xmu.presale
+  protocol:
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
+    port: 20890
+
     registry:
-      address: nacos://localhost:8848
+        address: nacos://localhost:8848
     cloud:
-      subscribed-services: goods-service
+        subscribed-services: goods-service
     protocols:
-      dubbo:
-        port: 18888
+        dubbo:
+          port: 18888
+
 

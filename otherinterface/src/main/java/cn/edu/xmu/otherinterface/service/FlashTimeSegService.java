@@ -1,6 +1,7 @@
 package cn.edu.xmu.otherinterface.service;
 
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 
 public interface FlashTimeSegService {
 
@@ -11,5 +12,5 @@ public interface FlashTimeSegService {
      * @return 是否全部置为空值，请注意校验个数
      */
 
-    ReturnObject<Boolean> delFlashTimeSeg(Long segId);
+    MyReturn<Boolean> delFlashTimeSeg(Long segId);
 }

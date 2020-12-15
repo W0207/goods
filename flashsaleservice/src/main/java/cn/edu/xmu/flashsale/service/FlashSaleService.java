@@ -6,6 +6,7 @@ import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
 import cn.edu.xmu.ininterface.service.DisableFlashActivityService;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import com.sun.el.stream.Stream;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author zhai
  */
 @Service
+@DubboService(version = "0.0.1")
 public class FlashSaleService implements DisableFlashActivityService {
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleService.class);
 

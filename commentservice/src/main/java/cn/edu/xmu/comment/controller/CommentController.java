@@ -11,9 +11,12 @@ import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
+import cn.edu.xmu.otherinterface.service.OtherModulService;
 import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +43,23 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @DubboReference(version = "0.0.1", check = false)
+    OtherModulService otherModulService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
+
+    @GetMapping("test")
+    public Object test() {
+        MyReturn returnObject = otherModulService.getUserInfo(100L);
+        return Common.decorateReturnObject(returnObject);
+    }
+
+    @GetMapping("test2")
+    public Object test2() {
+        MyReturn returnObject = otherModulService.getTimeSegInfo(10L);
+        return Common.decorateReturnObject(returnObject);
+    }
 
     IUserService iUserService;
 

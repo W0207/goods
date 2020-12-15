@@ -111,8 +111,20 @@ dubbo:
     dubbo:
       protocol:
         threads=10:
-  registry:
-    address: nacos://localhost:8848
+      registry:
+        address: nacos://localhost:8848
+      cloud:
+        subscribed-services: goods-service,
+                             groupon-service,
+                             coupon-service,
+                             presale-service
+      protocols:
+        dubbo:
+          port: 18888
+
+
+
+
 
 # 配置rocketmq
 rocketmq:

@@ -3,6 +3,7 @@ package cn.edu.xmu.coupon.service;
 import cn.edu.xmu.coupon.dao.OutDao;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.CouponActivity;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.service.CouponModelService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class OutService implements CouponModelService {
     OutDao outDao;
 
     @Override
-    public ReturnObject<List<CouponActivity>> getCouponActivity(Long goodsSkuId) {
+    public MyReturn<List<CouponActivity>> getCouponActivity(Long goodsSkuId) {
         return outDao.getCouponActivity(goodsSkuId);
     }
 }
