@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,21 +46,21 @@ public class CommentController {
     @DubboReference(version = "0.0.1", check = false)
     OtherModulService otherModulService;
 
-
     @Autowired
     private HttpServletResponse httpServletResponse;
 
     @GetMapping("test")
-    public Object test(){
+    public Object test() {
         MyReturn returnObject = otherModulService.getUserInfo(100L);
         return Common.decorateReturnObject(returnObject);
     }
 
     @GetMapping("test2")
-    public Object test2(){
+    public Object test2() {
         MyReturn returnObject = otherModulService.getTimeSegInfo(10L);
         return Common.decorateReturnObject(returnObject);
     }
+
     IUserService iUserService;
 
     /**
