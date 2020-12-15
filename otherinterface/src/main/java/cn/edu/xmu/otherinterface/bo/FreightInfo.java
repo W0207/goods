@@ -1,8 +1,9 @@
 package cn.edu.xmu.otherinterface.bo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class FreightInfo {
+public class FreightInfo implements Serializable {
     private Long id;
 
     private String name;

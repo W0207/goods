@@ -2238,6 +2238,7 @@ LOCK TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop`
     DISABLE KEYS */;
     insert into shop value ('1','童振宇','1','2020/12/22 10:45:07','2020/12/31 10:45:12');
+    insert into shop value ('2','童振宇','1','2020/12/22 10:45:07','2020/12/31 10:45:12');
 /*!40000 ALTER TABLE `shop`
     ENABLE KEYS */;
 UNLOCK TABLES;

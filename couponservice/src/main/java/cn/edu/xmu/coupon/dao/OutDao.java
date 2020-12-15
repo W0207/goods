@@ -8,6 +8,7 @@ import cn.edu.xmu.coupon.model.po.CouponSkuPoExample;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.CouponActivity;
+import cn.edu.xmu.otherinterface.bo.MyReturn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class OutDao {
     @Autowired
     CouponActivityPoMapper couponActivityPoMapper;
 
-    public ReturnObject<List<CouponActivity>> getCouponActivity(Long goodsSkuId) {
+    public MyReturn<List<CouponActivity>> getCouponActivity(Long goodsSkuId) {
         try {
             CouponSkuPoExample example = new CouponSkuPoExample();
             CouponSkuPoExample.Criteria criteria = example.createCriteria();
@@ -47,9 +48,9 @@ public class OutDao {
                 CouponActivity couponActivity = new CouponActivity(couponActivityPo.getId(),couponActivityPo.getName(),couponActivityPo.getBeginTime(),couponActivityPo.getEndTime());
                 activities.add(couponActivity);
             }
-            return new ReturnObject<>(activities);
+            return new MyReturn<>(activities);
         } catch (Exception e){
-         return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%s",e.getMessage()));
+         return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%s",e.getMessage()));
         }
     }
 }
