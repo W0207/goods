@@ -66,10 +66,8 @@ public class FlashSaleController {
     })
     @GetMapping("/timesegments/{id}/flashsales")
     public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
-        System.out.println(flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo()));
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
-
 
     /**
      * 获取当前时段秒杀列表
@@ -123,7 +121,6 @@ public class FlashSaleController {
         }
         ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     /**

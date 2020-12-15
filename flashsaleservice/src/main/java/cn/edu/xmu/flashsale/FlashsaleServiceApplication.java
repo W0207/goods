@@ -37,9 +37,6 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
     private FlashSaleItemPoMapper flashSaleItemPoMapper;
 
     @Autowired
-    private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
-
-    @Autowired
     private FlashSalePoMapper flashSalePoMapper;
 
     @Autowired
@@ -70,10 +67,7 @@ public class FlashsaleServiceApplication implements ApplicationRunner {
             FlashSaleItem item = new FlashSaleItem(itemPo, skuToFlashSaleVo);
             //将参与秒杀的sku信息载入内存(key为时间段)
             String key = "cp_" + timeSge;
-            System.out.println("push : " + JacksonUtil.toJson(item));
             redisTemplate.opsForSet().add(key, item);
-            //System.out.println("pop : " + JacksonUtil.toJson(redisTemplate.opsForSet().pop(key)));
         }
     }
-
 }
