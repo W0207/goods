@@ -1,0 +1,191 @@
+server:
+  port: 8090
+
+#dubbo:
+#  # 配置服务信息
+#  application:
+#    name: other-gateway
+#    # 禁用QOS同一台机器可能会有端口冲突现象
+#    qos-enable: false
+#    qos-accept-foreign-ip: false
+#  # 配置注册中心
+#  registry:
+#    address: nacos://172.16.0.18:8848
+#  # 设置协议-协议由提供方指定消费方被动接受
+#  protocol:
+#    name: dubbo
+#    port: -1
+#    # 设置超时时间
+#  consumer:
+#    timeout: 4000
+#    check: false
+
+spring:
+  application:
+    name: other-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+      routes:
+
+        #包含不需要token的路径
+        - id: users-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/users, /users/login, /users/password/**
+          filters:
+            - PrefixPath=/user
+        #包含需要token的路径
+        - id: users
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/users/states, /users/all, users/logout, /users/{id}/**
+          filters:
+            - PrefixPath=/user
+            - Auth=authorization
+
+        #goods模块
+        #包含不需要token的
+        - id: goods-nonAuth
+          uri: https://localhost:8080/
+          predicetae:
+            - Path=/skus/states, /skus, /skus/{id}, /categories/**, /spus/{id},  /brands
+          filters:
+            - PrefixPath=/goods
+        #包含需要token的路径
+        - id: goods
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/shops/{shopId}/skus/{id}/uploadImg, /shops/{shopId}/skus/{id}, /shops/{shopId}/skus/{id}/onshelves, /shops/{shopId}/skus/{id}/offshelves, /shops/{shopId}/skus/{id}/floatPrices, /shops/{shopId}/spus/{spuId}/categories/{id}/**, /shops/{shopId}/spus/{spuId}/brands/{id}/**, /shops/{shopId}/spus/{id}, /shops/{shopId}/categories/**, /share/**, /shops/{shopId}/floatPrice/**, /shops/{shopId}/brands/**
+          filters:
+            - PrefixPath=/goods
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: flashsale-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/timesegments/{id}/flashsale, /flashsale/current
+          filters:
+            - PrefixPath=/flashsale
+        #包含需要token的路径
+        - id: flashsale
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/shop/{did}/timesegments/{id}/flashsales, /shops/{did}/flashsales/**
+          filters:
+            - PrefixPath=/flashsale
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: comment-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/comments/states, /skus/{id}/comments
+          filters:
+            - PrefixPath=/comment
+        #包含需要token的路径
+        - id: comment
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/comments, /shop/{did}/comments/**, /orderitems/{id}/comments, /shops/{id}/comments/all
+          filters:
+            - PrefixPath=/comment
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: coupon-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/couponactivities, /couponactivities/{id}/skus
+          filters:
+            - PrefixPath=/coupon
+        #包含需要token的路径
+        - id: coupon
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/coupons/**, /shopId/{shopId}/couponactivities/**, /couponactivities/{id}/usercoupons, /shops/{shopId}/couponskus/{id}
+          filters:
+            - PrefixPath=/coupon
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: presale-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/presales/**,
+          filters:
+            - PrefixPath=/presale
+        #包含需要token的路径
+        - id: presale
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/shops/{shopId}/presales/**, /shops/{shopId}/skus/{id}/presales
+          filters:
+            - PrefixPath=/presale
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: groupon-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=
+          filters:
+            - PrefixPath=/presale
+        #包含需要token的路径
+        - id: groupon
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/groupons/**, /shops/{id}/groupon, /shops/{shopId}/groupons/{id}/**, /shops/{shopId}/spus/{id}/groupon
+          filters:
+            - PrefixPath=/presale
+            - Auth=authorization
+
+        #包含不需要token的路径
+        - id: shop-nonAuth
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/shops/states
+          filters:
+            - PrefixPath=/shop
+        #包含需要token的路径
+        - id: shop
+          uri: http://localhost:8080/
+          predicates:
+            - Path=/shops, /shops/{id}, /shops/{id}/onshelves, /shops/{id}/offshelves, /shops/{shopId}/newshops/{id}/audit
+          filters:
+            - PrefixPath=/shop
+            - Auth=authorization
+management:
+  endpoint:
+    gateway:
+      enabled: true
+
+## 配置rocketmq
+#rocketmq:
+#  # 指定namesrv地址
+#  name-server: 47.115.162.144:9876
+#  producer:
+#    #生产者group名称
+#    group: producer_group
+#    #一次发送多少数量消息
+#    max-message-size: 4096
+#    #发送消息超时时间,默认3000
+#    send-message-timeout: 3000
+#    #发送消息失败重试次数，默认2
+#    retry-times-when-send-async-failed: 2
+#
+## 网关token相关配置
+gateway:
+  jwtExpire: 3600
+  refreshJwtTime: 60

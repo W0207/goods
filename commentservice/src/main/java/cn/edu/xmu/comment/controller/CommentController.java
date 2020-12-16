@@ -40,7 +40,7 @@ import java.util.List;
  */
 @Api(value = "评论服务", tags = "comments")
 @RestController /*Restful的Controller对象*/
-@RequestMapping(value = "/comments", produces = "application/json;charset=UTF-8")
+@RequestMapping(value = "/comment", produces = "application/json;charset=UTF-8")
 public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
