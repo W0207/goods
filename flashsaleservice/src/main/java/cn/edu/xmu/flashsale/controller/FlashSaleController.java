@@ -32,7 +32,7 @@ import reactor.core.publisher.Flux;
  * @author zhai
  */
 @Api(value = "秒杀服务", tags = "flashsale")
-@RestController /*Restful的Controller对象*/
+@RestController
 @RequestMapping(value = "/flashsale", produces = "application/json;charset=UTF-8")
 public class FlashSaleController {
 
@@ -103,7 +103,10 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象")
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "秒杀日期不能为空"),
+            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象"),
+
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
@@ -135,6 +138,9 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象"),
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{id}")
@@ -146,6 +152,46 @@ public class FlashSaleController {
         return Common.decorateReturnObject(returnObj);
 
     }
+
+    @ApiOperation(value = "管理员上线秒杀活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "did", required = true, dataType = "Integer", paramType = "path", value = "店铺id"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀id"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{did}/flashsales/{id}/onshelves")
+    public Object onShelvesflashsale(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("onShelvesFlashSale: id = " + id);
+        }
+        ReturnObject returnObj = flashSaleService.onshelvesFlashSale(id);
+        return Common.decorateReturnObject(returnObj);
+    }
+
+    @ApiOperation(value = "管理员下线秒杀活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "did", required = true, dataType = "Integer", paramType = "path", value = "店铺id"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀id"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
+    public Object offShelvesflashsale(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("offShelvesFlashSale: id = " + id);
+        }
+        ReturnObject returnObj = flashSaleService.offshelvesFlashSale(id);
+        return Common.decorateReturnObject(returnObj);
+
+    }
+
 
     /**
      * @param id

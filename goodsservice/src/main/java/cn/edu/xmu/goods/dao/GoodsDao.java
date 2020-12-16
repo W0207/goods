@@ -559,10 +559,9 @@ public class GoodsDao {
             int ret = brandPoMapper.deleteByPrimaryKey(id);
             // 检查更新有否成功
             if (ret == 0) {
-                logger.info("品牌不存在");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
             } else {
-                returnObject = new ReturnObject<>();
+                returnObject = new ReturnObject<>(ResponseCode.OK);
             }
             return returnObject;
         } catch (Exception e) {
@@ -580,38 +579,34 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject modifyBrandById(Long shopId, Long id, BrandInputVo brandInputVo) {
-        if (shopId == 0) {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-            if (brandPo == null) {
-                logger.info("brandId = " + id + " 不存在");
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            if (brandInputVo.getName() == null) {
-                return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能为空");
-            }
-            BrandPoExample brandPoExample = new BrandPoExample();
-            BrandPoExample.Criteria criteria = brandPoExample.createCriteria();
-            criteria.andNameEqualTo(brandInputVo.getName());
-            List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
-            if (!brandPos.isEmpty()) {
-                return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
-            }
-            Brand brand = new Brand(brandPo);
-            BrandPo po = brand.createUpdatePo(brandInputVo);
-            ReturnObject<Object> returnObject;
-            int ret = brandPoMapper.updateByPrimaryKeySelective(po);
-            // 检查更新有否成功
-            if (ret == 0) {
-                logger.info("brandId = " + id + " 不存在");
-                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
-            } else {
-                logger.info("brandId = " + id + " 的信息已更新");
-                returnObject = new ReturnObject<>(ResponseCode.OK);
-            }
-            return returnObject;
-        } else {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            logger.info("brandId = " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        if (brandInputVo.getName() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能为空");
+        }
+        BrandPoExample brandPoExample = new BrandPoExample();
+        BrandPoExample.Criteria criteria = brandPoExample.createCriteria();
+        criteria.andNameEqualTo(brandInputVo.getName());
+        List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
+        if (!brandPos.isEmpty()) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
+        }
+        Brand brand = new Brand(brandPo);
+        BrandPo po = brand.createUpdatePo(brandInputVo);
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("brandId = " + id + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } else {
+            logger.info("brandId = " + id + " 的信息已更新");
+            returnObject = new ReturnObject<>(ResponseCode.OK);
+        }
+        return returnObject;
     }
 
     /**

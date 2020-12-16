@@ -25,7 +25,7 @@
             <artifactId>core</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.edu.xmu.external</groupId>
+            <groupId>cn.edu.xmu.goods</groupId>
             <artifactId>Other-External-Interface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

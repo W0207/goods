@@ -57,9 +57,9 @@ public class ShopController {
 
     })
     @Audit
-    @RequestMapping(value = "/shops" ,method = RequestMethod.POST)
-    public Object addShop(@Validated @RequestBody ShopVo vo,@Depart Long departId ) {
-        if(departId!=-1){
+    @RequestMapping(value = "/shops", method = RequestMethod.POST)
+    public Object addShop(@Validated @RequestBody ShopVo vo, @Depart Long departId) {
+        if (departId != -1) {
             return Common.decorateReturnObject(new ReturnObject(ResponseCode.USER_HASSHOP));
         }
         Shop shop = vo.createShop();
@@ -99,7 +99,7 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @RequestMapping(value = "/shops/{id}" ,method = RequestMethod.PUT)
+    @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
     public Object modifyShop(@PathVariable("id") Long id, @Validated @RequestBody ShopVo shopVo, BindingResult bindingResult) {
         Object retObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (null != retObject) {
