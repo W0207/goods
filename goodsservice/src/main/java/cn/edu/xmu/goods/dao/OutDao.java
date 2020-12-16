@@ -6,6 +6,7 @@ import cn.edu.xmu.goods.mapper.ShopPoMapper;
 import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.GoodInfo;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
@@ -34,6 +35,22 @@ public class OutDao {
 
     private static final Logger logger = LoggerFactory.getLogger(GoodsDao.class);
 
+    public MyReturn<GoodInfo> getFreightModelIdBySkuId(Long goodSkuId) {
+        GoodsSkuPo po = new GoodsSkuPo();
+        po = skuPoMapper.selectByPrimaryKey(goodSkuId);
+        if(po==null){
+            return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            //通过sku获取spu
+            GoodsSpuPo goodsSpuPo = spuPoMapper.selectByPrimaryKey(po.getGoodsSpuId());
+            GoodInfo goodInfo = new GoodInfo(goodsSpuPo.getFreightId(),po.getWeight());
+            if(goodsSpuPo==null){
+                return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            return new MyReturn<>(goodInfo);
+        }
+
+    }
     public Boolean deleteFreightModelId(Long freightModelId, Long ShopId) {
         GoodsSpuPoExample example = new GoodsSpuPoExample();
         GoodsSpuPoExample.Criteria criteria = example.createCriteria();

@@ -38,6 +38,12 @@ spring:
           slow-sql-millis: 100
       validation-query: select 1
     sql-script-encoding: UTF-8
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 47.113.100.78:8848
   redis:
     # Redis数据库索引（默认为0）
     database: 0
@@ -83,6 +89,18 @@ goodsservice:
     multiply: false
     #jwt过期的时间(秒)
     jwtExpire: 3600
+
+dubbo:
+
+  scan:
+    base-packages: cn.edu.xmu.comment
+  registry:
+    address: nacos://47.113.100.78:8848
+  cloud:
+    subscribed-services: time-service
+  protocols:
+    dubbo:
+      port: 20880
 
 
 #pagehelper分页插件配置

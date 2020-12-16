@@ -39,17 +39,17 @@ public class ShopDao {
     @Autowired
     GoodsSpuPoMapper spuPoMapper;
 
-    @DubboReference(version = "0.0.1", check = false)
-    DisableCouponActivityService disableCouponActivity;
-
-    @DubboReference(version = "0.0.1", check = false)
-    DisableFlashActivityService disableFlashActivityService;
-
-    @DubboReference(version = "0.0.1", check = false)
-    DisablePresaleActivityService disablePresaleActivityService;
-
-    @DubboReference(version = "0.0.1", check = false)
-    DisableGrouponActivityService disableGrouponActivityService;
+//    @DubboReference(version = "0.0.1", check = false)
+//    DisableCouponActivityService disableCouponActivity;
+//
+//    @DubboReference(version = "0.0.1", check = false)
+//    DisableFlashActivityService disableFlashActivityService;
+//
+//    @DubboReference(version = "0.0.1", check = false)
+//    DisablePresaleActivityService disablePresaleActivityService;
+//
+//    @DubboReference(version = "0.0.1", check = false)
+//    DisableGrouponActivityService disableGrouponActivityService;
 
 
     private static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
@@ -125,26 +125,26 @@ public class ShopDao {
     /**
      * 删除所有活动
      */
-    public boolean disableAllActivity(Long shopId){
-
-        disableCouponActivity.disableActivity(shopId);
-        GoodsSpuPoExample example = new GoodsSpuPoExample();
-        GoodsSpuPoExample.Criteria criteria = example.createCriteria();
-        criteria.andShopIdEqualTo(shopId);
-        List<GoodsSpuPo> pos = spuPoMapper.selectByExample(example);
-        for(GoodsSpuPo po :pos){
-            GoodsSkuPoExample poExample = new GoodsSkuPoExample();
-            GoodsSkuPoExample.Criteria criteria1 = poExample.createCriteria();
-            criteria1.andGoodsSpuIdEqualTo(po.getId());
-            List<GoodsSkuPo> skuPos = skuPoMapper.selectByExample(poExample);
-            for(GoodsSkuPo po1 : skuPos){
-                disableFlashActivityService.disableActivity(po1.getId());
-            }
-        }
-        disablePresaleActivityService.disableActivity(shopId);
-        disableGrouponActivityService.disableActivity(shopId);
-        return false;
-    }
+//    public boolean disableAllActivity(Long shopId){
+//
+//        disableCouponActivity.disableActivity(shopId);
+//        GoodsSpuPoExample example = new GoodsSpuPoExample();
+//        GoodsSpuPoExample.Criteria criteria = example.createCriteria();
+//        criteria.andShopIdEqualTo(shopId);
+//        List<GoodsSpuPo> pos = spuPoMapper.selectByExample(example);
+//        for(GoodsSpuPo po :pos){
+//            GoodsSkuPoExample poExample = new GoodsSkuPoExample();
+//            GoodsSkuPoExample.Criteria criteria1 = poExample.createCriteria();
+//            criteria1.andGoodsSpuIdEqualTo(po.getId());
+//            List<GoodsSkuPo> skuPos = skuPoMapper.selectByExample(poExample);
+//            for(GoodsSkuPo po1 : skuPos){
+//                disableFlashActivityService.disableActivity(po1.getId());
+//            }
+//        }
+//        disablePresaleActivityService.disableActivity(shopId);
+//        disableGrouponActivityService.disableActivity(shopId);
+//        return false;
+//    }
 
     /**
      * 上下线商店
@@ -173,7 +173,7 @@ public class ShopDao {
                     }
                     if(shopPo.getState().equals((byte)1)){
                         //上架状态转为下架需要将活动进行删除
-                        disableAllActivity(shopPo.getId());
+                        //disableAllActivity(shopPo.getId());
                     }
                     shopPoMapper.updateByPrimaryKeySelective(shopPo);
                     returnObject = new ReturnObject<>();
@@ -234,7 +234,7 @@ public class ShopDao {
                         }
                     }
                     //如果处在上线状态进行删除就关闭所有的活动
-                    disableAllActivity(shopPo.getId());
+                    //disableAllActivity(shopPo.getId());
                     returnObject = new ReturnObject<>();
                 }
             }

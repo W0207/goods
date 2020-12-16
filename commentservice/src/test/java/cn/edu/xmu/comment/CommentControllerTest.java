@@ -1,6 +1,5 @@
 package cn.edu.xmu.comment;
 
-import cn.edu.xmu.comment.CommentServiceApplication;
 import cn.edu.xmu.comment.controller.CommentController;
 import cn.edu.xmu.comment.mapper.CommentPoMapper;
 import cn.edu.xmu.comment.model.po.CommentPo;
@@ -32,6 +31,14 @@ public class CommentControllerTest {
     CommentPoMapper commentPoMapper;
 
     private WebTestClient mallClient;
+
+    @Test
+    public void test() throws Exception {
+        String responseString = this.mvc.perform(get("/comments/test"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
 
 
     public CommentControllerTest() {
