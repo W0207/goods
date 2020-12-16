@@ -4,16 +4,21 @@ import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.comment.service.CommentService;
 import cn.edu.xmu.comment.model.bo.Comment;
 import cn.edu.xmu.comment.model.vo.CommentStateVo;
+import cn.edu.xmu.external.OtherExternalApplication;
+import cn.edu.xmu.external.bo.TimeSegInfo;
+import cn.edu.xmu.external.model.MyReturn;
+import cn.edu.xmu.external.service.IGoodsService;
+import cn.edu.xmu.external.service.ITimeService;
 import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.Common;
+import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.service.OtherModulService;
-import cn.edu.xmu.privilegeservice.client.IUserService;
+//import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -44,24 +49,36 @@ public class CommentController {
     private CommentService commentService;
 
     @DubboReference(version = "0.0.1", check = false)
-    OtherModulService otherModulService;
+    private ITimeService iTimeService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
 
-    @GetMapping("test")
-    public Object test() {
-        MyReturn returnObject = otherModulService.getUserInfo(100L);
-        return Common.decorateReturnObject(returnObject);
+
+    @ApiOperation(value = "查看sku的评价列表（已通过审核）")
+    @GetMapping("/test")
+    public Object test(){
+        System.out.println("123");
+        try {
+            MyReturn<TimeSegInfo> returnObject = iTimeService.getTimeSeg(10L);
+
+            if (returnObject.getCode() == ResponseCode.OK) {
+                TimeSegInfo timeSegInfo = returnObject.getData();
+                return Common.decorateReturnObject(new ReturnObject(returnObject.getData()));
+            }
+
+            return Common.decorateReturnObject(new ReturnObject(returnObject.getCode()));
+        } catch (Exception e){
+            return Common.decorateReturnObject(new ReturnObject(e.getMessage()));
+        }
     }
 
-    @GetMapping("test2")
-    public Object test2() {
-        MyReturn returnObject = otherModulService.getTimeSegInfo(10L);
-        return Common.decorateReturnObject(returnObject);
-    }
-
-    IUserService iUserService;
+//    @GetMapping("test2")
+//    public Object test2(){
+//        MyReturn returnObject = iGoodsService.getTimeSegInfo(10L);
+//        return Common.decorateReturnObject(returnObject);
+//    }
+//    IUserService iUserService;
 
     /**
      * 查看sku的评价列表（已通过审核）
