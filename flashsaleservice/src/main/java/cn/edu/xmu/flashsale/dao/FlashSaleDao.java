@@ -53,7 +53,6 @@ public class FlashSaleDao {
      * @author zhai
      */
     public ReturnObject<Object> updateFlashSale(Long id, FlashSaleInputVo flashSaleInputVo) {
-
         FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
         if (po == null || po.getState() == null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
@@ -66,16 +65,19 @@ public class FlashSaleDao {
             logger.info("秒杀活动已删除，无法修改 ");
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
+        if (flashSaleInputVo.getFlashDate() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "秒杀日期不能为空");
+        }
         FlashSale flashSale = new FlashSale(po);
         FlashSalePo flashSalePo = flashSale.createUpdatePo(flashSaleInputVo);
         int ret = flashSalePoMapper.updateByPrimaryKeySelective(flashSalePo);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             logger.info("秒杀活动修改失败：FlashSaleId = " + id);
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         } else {
             logger.info("秒杀活动修改成功：FlashSaleItemId = " + id);
-            returnObject = new ReturnObject<>();
+            returnObject = new ReturnObject<>(ResponseCode.OK);
         }
         return returnObject;
     }
@@ -88,7 +90,6 @@ public class FlashSaleDao {
      * @author zhai
      */
     public ReturnObject<Object> deleteFlashSale(Long id) {
-
         FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
         if (po == null || po.getState() == null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
@@ -106,7 +107,7 @@ public class FlashSaleDao {
         ReturnObject<Object> returnObject;
         if (ret == 0) {
             logger.info("秒杀活动删除失败：FlashSaleId = " + id);
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         } else {
             logger.info("秒杀活动删除成功：FlashSaleItemId = " + id);
             String key = "cp_" + po.getTimeSegId();

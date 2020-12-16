@@ -75,8 +75,6 @@ public class FlashSale implements VoObject {
         po.setId(this.id);
         LocalDateTime flashEnc = flashSaleInputVo.getFlashDate() == null ? null : flashSaleInputVo.getFlashDate();
         po.setFlashDate(flashEnc);
-        po.setTimeSegId(this.timeSegId);
-        po.setGmtCreate(this.gmtCreate);
         po.setGmtModified(LocalDateTime.now());
         return po;
     }

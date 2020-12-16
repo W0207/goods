@@ -32,7 +32,7 @@ import reactor.core.publisher.Flux;
  * @author zhai
  */
 @Api(value = "秒杀服务", tags = "flashsale")
-@RestController /*Restful的Controller对象*/
+@RestController
 @RequestMapping(value = "/flashsale", produces = "application/json;charset=UTF-8")
 public class FlashSaleController {
 
@@ -103,7 +103,10 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象")
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "秒杀日期不能为空"),
+            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象"),
+
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
@@ -135,6 +138,9 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象"),
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{id}")
@@ -164,7 +170,6 @@ public class FlashSaleController {
         }
         ReturnObject returnObj = flashSaleService.onshelvesFlashSale(id);
         return Common.decorateReturnObject(returnObj);
-
     }
 
     @ApiOperation(value = "管理员下线秒杀活动")
