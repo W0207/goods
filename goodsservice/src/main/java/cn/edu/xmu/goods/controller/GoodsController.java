@@ -313,7 +313,6 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyBrand : shopId = " + shopId + " brandId = " + id + " vo = " + brandInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyBrand shopId = " + shopId + " skuId = " + id);
@@ -376,7 +375,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
-    @Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
     public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
@@ -394,7 +393,6 @@ public class GoodsController {
                 return Common.decorateReturnObject(goodsCategory);
             }
             returnObject = ResponseUtil.ok(goodsCategory.getData());
-            System.out.println(returnObject);
             return returnObject;
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
@@ -427,13 +425,12 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsType: CategoryId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsType id = ", id);
             return returnObject;
         }
-        if (shopid == 0 && shopId == 0) {
+        if (shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
@@ -722,13 +719,12 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
-    @Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{id}/brands")
     public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while addBrand shopid = ", id);

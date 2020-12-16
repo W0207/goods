@@ -10,6 +10,6 @@ public class MessageVo {
 
     private Long customerId;
 
-    private Long skuId;
+    private Long goodsSkuId;
 
 }

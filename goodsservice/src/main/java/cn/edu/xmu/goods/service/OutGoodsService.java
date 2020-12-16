@@ -2,6 +2,7 @@ package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.OutDao;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.GoodInfo;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
@@ -28,6 +29,12 @@ public class OutGoodsService implements IGoodsService, GoodsModuleService {
     public MyReturn<ShopInfo> getShopInfo(Long shopId) {
         return outDao.getShopInfo(shopId);
     }
+    
+    @Override
+    public MyReturn<GoodInfo> getFreightModelIdBySkuId(Long goodSkuId) {
+        return outDao.getFreightModelIdBySkuId(goodSkuId);
+    }
+
     @Override
     public MyReturn<List<Long>> getShopSkuId(Long shopId) {
         return outDao.getShopSkuId(shopId);

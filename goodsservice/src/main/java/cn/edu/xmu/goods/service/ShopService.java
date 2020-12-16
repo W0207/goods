@@ -34,6 +34,7 @@ public class ShopService implements InShopService {
 
     /**
      * 判断店铺是否存在
+     *
      * @param shopId
      * @return
      */
@@ -42,6 +43,7 @@ public class ShopService implements InShopService {
         ShopPo shopPo = shopDao.findShopById(shopId);
         return shopPo != null;
     }
+
     //新建商家
     public ReturnObject insertShop(Shop shop) {
         ReturnObject<Shop> returnObject = shopDao.insertShop(shop);
