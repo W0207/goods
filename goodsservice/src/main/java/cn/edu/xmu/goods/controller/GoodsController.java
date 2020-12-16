@@ -246,8 +246,8 @@ public class GoodsController {
     @GetMapping("/sku")
     public Object getSkuList(
             @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @RequestParam(required = false) Integer shopId,
+            @RequestParam(required = false, defaultValue = "100") Integer pageSize,
+            @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) String skuSn,
             @RequestParam(required = false) Long spuId,
             @RequestParam(required = false) String spuSn
