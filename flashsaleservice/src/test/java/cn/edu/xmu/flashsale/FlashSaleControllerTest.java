@@ -118,6 +118,18 @@ public class FlashSaleControllerTest {
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
+    @Test
+    public void offshelvesFlashSale() throws Exception {
+        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/1/onshelves")
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+
     /**
      * 平台管理员在某个时间段下新建秒杀活动
      */
@@ -140,4 +152,6 @@ public class FlashSaleControllerTest {
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
     }
+
+
 }

@@ -29,4 +29,7 @@ public class FlashSaleControllerTest1 {
 
         System.out.println(webTestClient.get().uri("/flashsale/timesegments/1/flashsales"));
     }
+
+
+
 }
