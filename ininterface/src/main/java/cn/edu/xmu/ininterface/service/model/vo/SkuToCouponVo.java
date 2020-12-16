@@ -22,13 +22,13 @@ public class SkuToCouponVo implements Serializable {
     private Byte disable;
 
     public SkuToCouponVo(SkuToCouponVo vo) {
-        this.id=vo.getId();
-        this.disable= vo.getDisable();;
-        this.goodsSn=vo.getGoodsSn();
-        this.imageUrl=vo.getImageUrl();
-        this.inventory=vo.getInventory();
-        this.name=vo.getName();
-        this.originalPrice=vo.originalPrice;
+        this.id = vo.getId();
+        this.disable = vo.getDisable();
+        this.goodsSn = vo.getGoodsSn();
+        this.imageUrl = vo.getImageUrl();
+        this.inventory = vo.getInventory();
+        this.name = vo.getName();
+        this.originalPrice = vo.originalPrice;
     }
 
     public SkuToCouponVo() {
@@ -64,7 +64,9 @@ public class SkuToCouponVo implements Serializable {
         this.originalPrice = originalPrice;
     }
 
-    public Long getOriginalPrice() {return originalPrice; }
+    public Long getOriginalPrice() {
+        return originalPrice;
+    }
 
     public String getGoodsSn() {
         return goodsSn;

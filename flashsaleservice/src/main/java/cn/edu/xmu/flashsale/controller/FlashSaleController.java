@@ -1,6 +1,5 @@
 package cn.edu.xmu.flashsale.controller;
 
-import cn.edu.xmu.ooad.util.JacksonUtil;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,6 @@ import org.apache.dubbo.config.annotation.DubboReference;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
@@ -37,6 +35,7 @@ import reactor.core.publisher.Flux;
 @RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/flashsale", produces = "application/json;charset=UTF-8")
 public class FlashSaleController {
+
     private static final Logger logger = LoggerFactory.getLogger(FlashSaleController.class);
 
     @Autowired
@@ -53,16 +52,15 @@ public class FlashSaleController {
      * 查询某一时段秒杀活动详情
      *
      * @param id
-     * @return
      * @author Abin
      */
     @ApiOperation(value = "查询某一时段秒杀活动详情")
     @ApiImplicitParams({
-
             @ApiImplicitParam(name = "id", required = true, dataType = "Long", paramType = "path", value = "时间段id"),
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在")
     })
     @GetMapping("/timesegments/{id}/flashsales")
     public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
@@ -87,7 +85,6 @@ public class FlashSaleController {
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
-
     /**
      * 管理员修改秒杀活动
      *
@@ -106,6 +103,7 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 505, message = "操作的资源id不是自己的对象")
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
@@ -113,7 +111,6 @@ public class FlashSaleController {
         if (logger.isDebugEnabled()) {
             logger.debug("updateflashsale: id = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while updateflashsale flashSaleID = " + id);
@@ -150,7 +147,12 @@ public class FlashSaleController {
 
     }
 
-
+    /**
+     * @param id
+     * @param skuInputVo
+     * @param bindingResult
+     * @return
+     */
     @ApiOperation(value = "平台管理员向秒杀活动添加商品SKU")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
@@ -168,7 +170,6 @@ public class FlashSaleController {
         if (logger.isDebugEnabled()) {
             logger.debug("addSKUofTopic id = " + id);
         }
-        // 校验前端数据
         Object ret = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (ret != null) {
             logger.info("incorrect data received while addSKUofTopic flashSaleID = " + id);
@@ -189,7 +190,6 @@ public class FlashSaleController {
             }
         }
         return Common.decorateReturnObject(returnObject);
-
     }
 
     /**
@@ -218,9 +218,16 @@ public class FlashSaleController {
         }
         ReturnObject returnObj = flashSaleService.deleteFlashSaleSku(fid, id);
         return Common.decorateReturnObject(returnObj);
-
     }
 
+    /**
+     * 平台管理员在某个时间段下新建秒杀
+     *
+     * @param did
+     * @param id
+     * @param flashSaleInputVo
+     * @return
+     */
     @ApiOperation(value = "平台管理员在某个时间段下新建秒杀")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),

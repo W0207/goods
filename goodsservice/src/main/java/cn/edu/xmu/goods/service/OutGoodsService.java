@@ -28,6 +28,7 @@ public class OutGoodsService implements IGoodsService, GoodsModuleService {
     public MyReturn<ShopInfo> getShopInfo(Long shopId) {
         return outDao.getShopInfo(shopId);
     }
+
     @Override
     public MyReturn<List<Long>> getShopSkuId(Long shopId) {
         return outDao.getShopSkuId(shopId);

@@ -11,6 +11,5 @@ public interface FlashTimeSegService {
      * @param segId 时间段id
      * @return 是否全部置为空值，请注意校验个数
      */
-
     MyReturn<Boolean> delFlashTimeSeg(Long segId);
 }

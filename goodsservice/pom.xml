@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.edu.xmu.ooad</groupId>
-            <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
         </dependency>
@@ -168,12 +162,6 @@
         <dependency>
             <groupId>cn.edu.xmu.goods</groupId>
             <artifactId>ininterface</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.edu.xmu.goods</groupId>
-            <artifactId>otherinterface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
