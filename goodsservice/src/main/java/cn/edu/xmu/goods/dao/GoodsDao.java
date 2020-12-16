@@ -244,16 +244,45 @@ public class GoodsDao {
      * @param spuSn
      * @return
      */
-    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Integer shopId, Integer page, Integer
+    public ReturnObject<PageInfo<VoObject>> findSkuSimple(Long shopId, Integer page, Integer
             pageSize, Long spuId, String skuSn, String spuSn) {
+
         GoodsSkuPoExample example = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = example.createCriteria();
-        if (spuId != null) {
-            criteria.andGoodsSpuIdEqualTo(spuId);
-        }
+        //spu
+        GoodsSpuPoExample spuPoExample = new GoodsSpuPoExample();
+        GoodsSpuPoExample.Criteria spuCriteria = spuPoExample.createCriteria();
+        //参数判断
         if (skuSn != null) {
             criteria.andSkuSnEqualTo(skuSn);
         }
+        if(shopId != null) {
+            spuCriteria.andShopIdEqualTo(shopId);
+        }
+        if(spuSn != null) {
+            spuCriteria.andGoodsSnEqualTo(spuSn);
+        }
+        List<GoodsSpuPo> goodsSpuPos;
+
+        if(spuSn != null || shopId != null) {
+            goodsSpuPos = goodsSpuPoMapper.selectByExample(spuPoExample);
+        }
+        else {
+            goodsSpuPos = null;
+        }
+        Long spuFindId = null;
+
+        if(goodsSpuPos!=null&&!goodsSpuPos.isEmpty()) {
+            spuFindId=goodsSpuPos.get(0).getId();
+            criteria.andGoodsSpuIdEqualTo(spuFindId);
+        }
+        if (spuId != null) {
+            if(!spuId.equals(spuFindId)&&spuFindId!=null) {
+                return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"输入spuId和spu信息查询结果不符");
+            }
+            criteria.andGoodsSpuIdEqualTo(spuId);
+        }
+
         PageHelper.startPage(page, pageSize);
         List<GoodsSkuPo> goodsSkuPos;
         try {

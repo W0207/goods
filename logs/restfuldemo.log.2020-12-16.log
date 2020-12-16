@@ -1,0 +1,13 @@
+2020-12-16 17:08:16.671 [http-nio-8088-exec-1] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-16 17:09:36.016 [http-nio-8088-exec-3] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-16 18:01:32.316 [http-nio-8088-exec-6] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
+2020-12-16 18:07:27.882 [http-nio-8088-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 18:07:27.890 [http-nio-8088-exec-7] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
+2020-12-16 18:09:25.258 [http-nio-8088-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 18:09:25.258 [http-nio-8088-exec-9] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
+2020-12-16 19:38:02.666 [http-nio-8088-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 19:38:02.674 [http-nio-8088-exec-1] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
+2020-12-16 19:38:03.780 [http-nio-8088-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 19:38:03.784 [http-nio-8088-exec-2] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
+2020-12-16 19:38:55.626 [http-nio-8088-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 19:38:55.634 [http-nio-8088-exec-3] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1

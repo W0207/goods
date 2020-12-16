@@ -5,7 +5,13 @@ import cn.edu.xmu.goods.controller.GoodsController;
 import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
 import cn.edu.xmu.ooad.util.JwtHelper;
+import cn.edu.xmu.ooad.util.ResponseCode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
@@ -24,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -60,7 +67,20 @@ public class GoodsControllerTest {
         logger.debug("token: " + token);
         return token;
     }
+    private WebTestClient mallClient;
+    private WebTestClient manageClient;
 
+    public GoodsControllerTest() {
+        this.mallClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:8083")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8")
+                .build();
+
+        /*this.manageClient = WebTestClient.bindToServer()
+                .baseUrl("http://"+managementGate)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8")
+                .build();*/
+    }
     /**
      * 获得商品sku所有状态
      */
@@ -250,15 +270,29 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 获得所有品牌
+     * 查看所有品牌 传参通过
      */
     @Test
     public void getAllBrand() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/brands"))
+        String responseString = this.mvc.perform(get("/goods/brands?pageSize=40&page=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        String expectedResponse = "{\"errno\":0,\"errormessage\":成功,\"data\":{\"total\":18,\"pages\":2,\"pageSize\":10,\"page\":1,\"list\":[{\"id\":2,\"name\":\"查看任意用户信息\",\"imageUrl\":\"123\",\"detail\":0,\"gmtCreate\":\"2020-11-01T09:52:20\",\"gmtModified\":\"2020-11-02T21:51:45\"}";
+        //String expectedResponse = "{\"errno\":0,\"errormessage\":成功,\"data\":{\"total\":18,\"pages\":2,\"pageSize\":10,\"page\":1,\"list\":[{\"id\":2,\"name\":\"查看任意用户信息\",\"imageUrl\":\"123\",\"detail\":0,\"gmtCreate\":\"2020-11-01T09:52:20\",\"gmtModified\":\"2020-11-02T21:51:45\"}";
+        System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 获得所有品牌 页码不大于0
+     */
+    @Test
+    public void getAllBrand1() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/brands?pageSize=-1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errormessage\":成功,\"data\":{\"total\":18,\"pages\":2,\"pageSize\":10,\"page\":1,\"list\":[{\"id\":2,\"name\":\"查看任意用户信息\",\"imageUrl\":\"123\",\"detail\":0,\"gmtCreate\":\"2020-11-01T09:52:20\",\"gmtModified\":\"2020-11-02T21:51:45\"}";
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
@@ -293,9 +327,36 @@ public class GoodsControllerTest {
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
-    @Test
+    @Test//spuId和spuSn冲突
     public void getSkuList() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/sku?spuId=273"))
+        String responseString = this.mvc.perform(get("/goods/sku?page=1&pageSize=10&spuId=274&spuSn=drh-d0001"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test //通过查询 spuId和spuSn无冲突
+    public void getSkuList1() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/sku?page=1&pageSize=10&spuId=273&spuSn=drh-d0001"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test //通过查询 spuId和spuSn无冲突
+    public void getSkuList2() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/sku?page=1&pageSize=10&spuId=273&spuSn=drh-d0001"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test //spuId和shopId冲突
+    public void getSkuList3() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/sku?page=1&pageSize=10&spuId=273&shopId=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -772,4 +833,179 @@ public class GoodsControllerTest {
         System.out.println(responseString);
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+
+    /*       公开测试用例
+
+    @Test
+    @Order(2)
+    public void getAllSkus(){
+        byte[] responseBuffer = null;
+        WebTestClient.RequestHeadersSpec res = mallClient.get().uri(getPath("/skus"));
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.OK.getCode())
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .jsonPath("$.data.total").isNumber()
+                .jsonPath("$.data.pages").isNumber()
+                .returnResult()
+                .getResponseBodyContent();
+    }
+
+    //通过id获取sku
+    @Test
+    @Order(3)
+    public void getkuById(){
+        byte[] responseBuffer = null;
+        WebTestClient.RequestHeadersSpec res = mallClient.get().uri(getPath("/skus/300"));
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.OK.getCode())
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .jsonPath("$.data.name").isEqualTo("+")
+                .jsonPath("$.data.spu.id").isEqualTo("300")
+                .jsonPath("$.data.spu.name").isEqualTo("金和汇景•赵紫云•粉彩绣球瓷瓶")
+                .returnResult()
+                .getResponseBodyContent();
+    }
+
+
+    //添加sku到spu  已登录
+    @Test
+    @Order(4)
+    public void addSkuToSpu1() throws Exception{
+        byte[] responseBuffer = null;
+        String token = login("13088admin", "123456");
+        String bodyValue = "{\n" +
+                "  \"sn\": \"string\",\n" +
+                "  \"name\": \"测试商品\",\n" +
+                "  \"originalPrice\": 100,\n" +
+                "  \"configuration\": \"ddddd\",\n" +
+                "  \"weight\": 10,\n" +
+                "  \"imageUrl\": null,\n" +
+                "  \"inventory\": 100,\n" +
+                "  \"detail\": \"aaaaa\"\n" +
+                "}";
+        WebTestClient.RequestHeadersSpec res = manageClient.post().uri(getPath("/shops/0/spus/300/skus")).bodyValue(bodyValue).header("authorization",token);
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.OK.getCode())
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .jsonPath("$.data.name").isEqualTo("测试商品")
+                .jsonPath("$.data.inventory").isEqualTo(100)
+                .returnResult()
+                .getResponseBodyContent();
+        String response = new String(responseBuffer, "utf-8");
+        ObjectMapper mapper = new ObjectMapper().registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
+        JsonNode node;
+        Long id = null;
+        try {
+            node = mapper.readTree(response);
+            JsonNode leaf = node.get("data");
+            if (leaf != null) {
+                JsonNode temp = leaf.get("id");
+                if(temp != null){
+                    id = temp.asLong();
+                }
+            }
+        } catch (IOException e) {
+            id =null;
+        }
+
+        WebTestClient.RequestHeadersSpec res2 = mallClient.get().uri(getPath("/skus/"+id.toString()));
+        responseBuffer = res2.exchange().expectStatus().isNotFound().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.RESOURCE_ID_NOTEXIST.getCode())
+                .returnResult()
+                .getResponseBodyContent();
+    }
+
+
+    //添加sku到spu 未登录
+    @Test
+    @Order(5)
+    public void addSkuToSpu2() throws Exception{
+        byte[] responseBuffer = null;
+        String bodyValue = "{\n" +
+                "  \"sn\": \"string\",\n" +
+                "  \"name\": \"测试商品\",\n" +
+                "  \"originalPrice\": 100,\n" +
+                "  \"configuration\": \"ddddd\",\n" +
+                "  \"weight\": 10,\n" +
+                "  \"imageUrl\": null,\n" +
+                "  \"inventory\": 100,\n" +
+                "  \"detail\": \"aaaaa\"\n" +
+                "}";
+        WebTestClient.RequestHeadersSpec res = manageClient.post().uri(getPath("/shops/0/spus/300/skus")).bodyValue(bodyValue);
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.AUTH_NEED_LOGIN.getCode())
+                .returnResult()
+                .getResponseBodyContent();
+        String response = new String(responseBuffer, "utf-8");
+    }
+
+    //添加sku到spu 登录 但是操作的sku不存在
+    @Test
+    @Order(6)
+    public void addSkuToSpu3() throws Exception{
+        byte[] responseBuffer = null;
+        String token = login("13088admin", "123456");
+        String bodyValue = "{\n" +
+                "  \"sn\": \"string\",\n" +
+                "  \"name\": \"测试商品\",\n" +
+                "  \"originalPrice\": 100,\n" +
+                "  \"configuration\": \"ddddd\",\n" +
+                "  \"weight\": 10,\n" +
+                "  \"imageUrl\": null,\n" +
+                "  \"inventory\": 100,\n" +
+                "  \"detail\": \"aaaaa\"\n" +
+                "}";
+        WebTestClient.RequestHeadersSpec res = manageClient.post().uri(getPath("/shops/0/spus/9000/skus")).bodyValue(bodyValue).header("authorization",token);
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.RESOURCE_ID_NOTEXIST.getCode())
+                .returnResult()
+                .getResponseBodyContent();
+        String response = new String(responseBuffer, "utf-8");
+    }
+
+
+    //正常删除 快乐路径
+    @Test
+    @Order(8)
+    public void deleteSku() throws  Exception{
+        byte[] responseBuffer = null;
+        String token = login("13088admin", "123456");
+        WebTestClient.RequestHeadersSpec res = manageClient.delete().uri(getPath("/shops/1/skus/8989")).header("authorization", token);
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.OK.getCode())
+                .jsonPath("$.errmsg").isEqualTo("成功")
+                .returnResult()
+                .getResponseBodyContent();
+
+        WebTestClient.RequestHeadersSpec res2 = mallClient.get().uri(getPath("/skus/8989"));
+        responseBuffer = res2.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.RESOURCE_ID_NOTEXIST.getCode())
+                .returnResult()
+                .getResponseBodyContent();
+    }
+
+    //删除的sku不属于自己的商铺
+    @Test
+    @Order(7)
+    public void deleteSku2() throws Exception{
+        byte[] responseBuffer = null;
+        String token = login("13088admin", "123456");
+        WebTestClient.RequestHeadersSpec res = manageClient.delete().uri(getPath("/shops/1/skus/300")).header("authorization", token);
+        responseBuffer = res.exchange().expectHeader().contentType("application/json;charset=UTF-8")
+                .expectBody()
+                .jsonPath("$.errno").isEqualTo(ResponseCode.RESOURCE_ID_OUTSCOPE.getCode())
+                .returnResult()
+                .getResponseBodyContent();
+    }
+*/
 }

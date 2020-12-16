@@ -1,5 +1,6 @@
 package cn.edu.xmu.coupon.controller;
 
+import cn.edu.xmu.coupon.mapper.CouponActivityPoMapper;
 import cn.edu.xmu.coupon.mapper.CouponSkuPoMapper;
 import cn.edu.xmu.coupon.model.bo.Coupon;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
@@ -16,7 +17,9 @@ import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.order.bo.Shop;
 import cn.edu.xmu.ooad.util.Common;
+import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -51,6 +54,9 @@ public class CouponController {
 
     @Autowired
     private CouponSkuPoMapper couponSkuPoMapper;
+
+    @Autowired
+    private CouponActivityPoMapper couponActivityPoMapper;
 
     @Autowired
     private CouponActivityService couponActivityService;
@@ -120,12 +126,17 @@ public class CouponController {
     })
     @Audit // 需要认证
     @GetMapping("/shops/{id}/couponactivities/invalid")
-    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id) {
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
-        ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize, id);
-        return Common.getPageRetObject(returnObject);
+        if(!couponActivityPoMapper.selectByPrimaryKey(id).getShopId().equals(ShopId)){
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE,"操作的资源id不是自己的对象");
+        }
+        else {
+            ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize, id);
+            return Common.getPageRetObject(returnObject);
+        }
     }
 
     /**
@@ -233,7 +244,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "shopId", required = true)
     })
-    //@Audit // 需要认证
+    @Audit // 需要认证
     @PostMapping("/shops/{shopId}/couponactivities")
     public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo) {
         return Common.decorateReturnObject(couponService.addCouponActivity(shopId, vo));
