@@ -189,7 +189,9 @@ public class GoodsController {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 100 : pageSize;
-
+        if (page <= 0 || pageSize <= 0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findAllBrand(page, pageSize);
         return Common.getPageRetObject(returnObject);

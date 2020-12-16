@@ -1,0 +1,21 @@
+2020-12-16 14:38:17.529 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSkuSimple = cn.edu.xmu.ooad.util.ReturnObject@29dfc14a
+2020-12-16 15:01:07.909 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =20
+2020-12-16 15:01:07.909 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =20
+2020-12-16 15:02:15.983 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =20
+2020-12-16 15:02:15.984 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =20
+2020-12-16 15:03:07.816 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =20
+2020-12-16 15:03:07.828 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =20
+2020-12-16 15:08:22.567 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = null  pageSize =-1
+2020-12-16 15:50:09.391 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE2MTU1MDA5M1czIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDgxMDUxMDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MTA1MDA5fQ.1RTaVlp1DCN23yL2WvfnzsuHiwQVvK2F94Rj0cT5UOI
+2020-12-16 15:50:09.509 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addFloatingPrice(Long,Long,FloatPriceInputVo,Long,BindingResult))
+2020-12-16 15:50:09.528 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/shops/0/skus/273/floatPrices
+2020-12-16 15:50:09.532 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 15:50:09.542 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - addFloatingPrice: shopId = 0 skuId = 273
+2020-12-16 15:50:09.689 [main] DEBUG cn.edu.xmu.goods.dao.GoodsDao - 时间段冲突
+2020-12-16 15:50:09.715 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE2MTU1MDA5NzJWIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDgxMDUxMDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MTA1MDA5fQ.eisu3KXDI4sP3RS8Gnbh2dstwAc88CGVdSppkUzFfiE
+2020-12-16 15:50:09.718 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.getSku(Long,Long))
+2020-12-16 15:50:09.720 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - getPathInfo = /goods/skus/273
+2020-12-16 15:50:09.720 [main] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 15:50:09.720 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-16 15:50:12.735 [main] ERROR org.apache.rocketmq.spring.core.RocketMQTemplate - sendOneWay failed. destination:goods-foot-topic, message:GenericMessage [payload={"customerId":1,"goodsSkuId":273}, headers={id=d34e89ec-18c7-ea50-5abb-125a0803c157, timestamp=1608105009729}] 
+2020-12-16 15:52:36.117 [main] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku

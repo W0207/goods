@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,6 +57,13 @@ public class CommentControllerTest {
     }
 
     /**
+     * 伪造token
+     */
+    @Test
+    public void create(){
+        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    }
+    /**
      * 获得评论所有状态
      */
     @Test
@@ -92,7 +98,7 @@ public class CommentControllerTest {
     @Test
     public void show() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comments/skus/1/comments"))
+        String responseString = this.mvc.perform(get("/comment/skus/1/comments?pageSize=10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
