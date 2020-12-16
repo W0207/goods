@@ -1,3 +1,0 @@
-2020-12-15 08:35:17.959 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE1MDgzNTE3OEFUIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc5OTI2MTcsInVzZXJJZCI6MSwiaWF0IjoxNjA3OTkyNTE3fQ.T7gq1iLWOtoLaeeenMg0EXSW0QRHk0BxhBB9YEhlpH4
-2020-12-15 08:35:18.218 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - auditComment : Id = 5 vo = CommentAuditVo(state=0)
-2020-12-15 08:35:18.369 [main] INFO  cn.edu.xmu.comment.dao.CommentDao - commentid = 5 的信息已更新
