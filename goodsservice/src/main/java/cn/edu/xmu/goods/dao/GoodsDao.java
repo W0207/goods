@@ -389,6 +389,17 @@ public class GoodsDao {
             logger.info("商品类目不存在或已被删除：categoryId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        if (categoryInputVo.getName() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能为空");
+        }
+        GoodsCategoryPoExample goodsCategoryPoExample = new GoodsCategoryPoExample();
+        GoodsCategoryPoExample.Criteria criteria = goodsCategoryPoExample.createCriteria();
+        criteria.andNameEqualTo(categoryInputVo.getName());
+        List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPoExample);
+        if (!goodsCategoryPos.isEmpty()) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能重复");
+        }
+
         GoodsCategory goodsCategory = new GoodsCategory(po);
         GoodsCategoryPo goodsCategoryPo = goodsCategory.createUpdatePo(categoryInputVo);
         int ret = goodsCategoryPoMapper.updateByPrimaryKeySelective(goodsCategoryPo);
@@ -396,7 +407,7 @@ public class GoodsDao {
         if (ret == 0) {
             //检查更新是否成功
             logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         } else {
             logger.info("categoryId = " + id + " 的信息已更新");
             returnObject = new ReturnObject<>();
@@ -548,10 +559,9 @@ public class GoodsDao {
             int ret = brandPoMapper.deleteByPrimaryKey(id);
             // 检查更新有否成功
             if (ret == 0) {
-                logger.info("品牌不存在");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
             } else {
-                returnObject = new ReturnObject<>();
+                returnObject = new ReturnObject<>(ResponseCode.OK);
             }
             return returnObject;
         } catch (Exception e) {
@@ -569,28 +579,34 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject modifyBrandById(Long shopId, Long id, BrandInputVo brandInputVo) {
-        if (shopId == 0) {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-            if (brandPo == null) {
-                logger.info("brandId = " + id + " 不存在");
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            Brand brand = new Brand(brandPo);
-            BrandPo po = brand.createUpdatePo(brandInputVo);
-            ReturnObject<Object> returnObject;
-            int ret = brandPoMapper.updateByPrimaryKeySelective(po);
-            // 检查更新有否成功
-            if (ret == 0) {
-                logger.info("brandId = " + id + " 不存在");
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            } else {
-                logger.info("brandId = " + id + " 的信息已更新");
-                returnObject = new ReturnObject<>(ResponseCode.OK);
-            }
-            return returnObject;
-        } else {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            logger.info("brandId = " + id + " 不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        if (brandInputVo.getName() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能为空");
+        }
+        BrandPoExample brandPoExample = new BrandPoExample();
+        BrandPoExample.Criteria criteria = brandPoExample.createCriteria();
+        criteria.andNameEqualTo(brandInputVo.getName());
+        List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
+        if (!brandPos.isEmpty()) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
+        }
+        Brand brand = new Brand(brandPo);
+        BrandPo po = brand.createUpdatePo(brandInputVo);
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("brandId = " + id + " 不存在");
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } else {
+            logger.info("brandId = " + id + " 的信息已更新");
+            returnObject = new ReturnObject<>(ResponseCode.OK);
+        }
+        return returnObject;
     }
 
     /**
@@ -602,6 +618,9 @@ public class GoodsDao {
     public BrandPo addBrandById(BrandInputVo brandInputVo) {
         Brand brand = new Brand();
         try {
+            if (brandInputVo.getName() == null) {
+                return null;
+            }
             BrandPo brandPo = brand.createAddPo(brandInputVo);
             int ret = brandPoMapper.insertSelective(brandPo);
             if (ret == 0) {
@@ -1039,5 +1058,34 @@ public class GoodsDao {
         }
         SkuOutputVo skuOutputVo = new SkuOutputVo(po);
         return skuOutputVo;
+    }
+
+    /**
+     * 管理员新增品牌
+     *
+     * @param brandInputVo
+     * @return
+     */
+    public ReturnObject<Object> addBrand(BrandInputVo brandInputVo) {
+        if (brandInputVo.getName() == null) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能为空");
+        }
+        String name = brandInputVo.getName();
+        BrandPoExample brandPoExample = new BrandPoExample();
+        BrandPoExample.Criteria criteria = brandPoExample.createCriteria();
+        criteria.andNameEqualTo(name);
+        List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
+        if (!brandPos.isEmpty()) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
+        }
+        Brand brand = new Brand();
+        BrandPo brandPo = brand.createAddPo(brandInputVo);
+        int ret = brandPoMapper.insertSelective(brandPo);
+        if (ret == 0) {
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } else {
+            logger.info("品牌已新建成功");
+            return new ReturnObject(new Brand(brandPo));
+        }
     }
 }

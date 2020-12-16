@@ -1,8 +1,12 @@
 package cn.edu.xmu.ininterface.service.model.vo;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class SpuToGrouponVo implements  Serializable{
+/**
+ * @author Abin
+ */
+public class SpuToGrouponVo implements Serializable {
 
     private Long id;
 
@@ -18,7 +22,7 @@ public class SpuToGrouponVo implements  Serializable{
 
     private LocalDateTime gmtModified;
 
-    private Boolean disable =false;
+    private Boolean disable = false;
 
     public Long getId() {
         return id;

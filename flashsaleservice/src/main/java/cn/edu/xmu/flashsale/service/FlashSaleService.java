@@ -59,6 +59,13 @@ public class FlashSaleService implements DisableFlashActivityService {
         return flashSaleDao.deleteFlashSale(id);
     }
 
+    public ReturnObject<Object> onshelvesFlashSale(Long id) {
+        return flashSaleDao.onshelvesFlashSale(id);
+    }
+
+    public ReturnObject<Object> offshelvesFlashSale(Long id) {
+        return flashSaleDao.offshelvesFlashSale(id);
+    }
 
     /**
      * 增加秒杀活动商品

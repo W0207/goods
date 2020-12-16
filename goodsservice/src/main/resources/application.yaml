@@ -38,6 +38,13 @@ spring:
           slow-sql-millis: 100
       validation-query: select 1
     sql-script-encoding: UTF-8
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 47.113.100.78:8848
+
   redis:
     # Redis数据库索引（默认为0）
     database: 0
@@ -93,35 +100,18 @@ pagehelper:
   helper-dialect: mysql
 
 
-cloud:
-  nacos:
-    discovery:
-      server-addr: localhost:8848
-
 
 dubbo:
-  scan:
-    # dubbo 服务扫描基准包
-    base-packages: cn.edu.xmu.goods
-  protocol:
-    # dubbo 协议
-    name: dubbo
-    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: -1
-    dubbo:
-      protocol:
-        threads=10:
-      registry:
-        address: nacos://localhost:8848
-      cloud:
-        subscribed-services: goods-service,
-                             groupon-service,
-                             coupon-service,
-                             presale-service
-      protocols:
-        dubbo:
-          port: 18888
 
+  scan:
+    base-packages: cn.edu.xmu.goods
+  registry:
+    address: nacos://47.113.100.78:8848
+  cloud:
+    subscribed-services: presale-service，goods-flashsale,coupon-service,comment-service,groupon-service
+  protocols:
+    dubbo:
+      port: 20880
 
 
 
@@ -129,7 +119,7 @@ dubbo:
 # 配置rocketmq
 rocketmq:
   # 指定namesrv地址
-  name-server: 127.0.0.1:9876
+  name-server: 192.168.43.249:9876
   producer:
     #生产者group名称
     group: producer_group

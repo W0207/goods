@@ -7,7 +7,7 @@ import cn.edu.xmu.otherinterface.bo.MyReturn;
 public interface OrderModulService {
 
     /**
-     *获取运费信息
+     * 获取运费信息
      */
     MyReturn<FreightInfo> getFreightInfo(Long freightid);
 

@@ -13,6 +13,7 @@ import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import java.util.List;
  * @author shibin zhan
  */
 @Api(value = "商品服务", tags = "goods")
-@RestController /*Restful的Controller对象*/
+@RestController
 @RequestMapping(value = "/goods", produces = "application/json;charset=UTF-8")
 public class GoodsController {
 
@@ -305,7 +306,12 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "body", dataType = "BrandInputVo", name = "brandInputVo", value = "可修改的品牌信息", required = true)
     })
     @ApiResponses({
-            @ApiResponse(code = 0, message = "成功")
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "品牌名称不能为空"),
+            @ApiResponse(code = 503, message = "品牌名称不能重复"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+            @ApiResponse(code = 705, message = "无权限访问")
     })
     @Audit
     @PutMapping("/shops/{shopId}/brands/{id}")
@@ -313,14 +319,17 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyBrand : shopId = " + shopId + " brandId = " + id + " vo = " + brandInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyBrand shopId = " + shopId + " skuId = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = goodsService.modifyBrandInfo(shopId, id, brandInputVo);
-        return Common.decorateReturnObject(returnObj);
+        if (shopId == 0) {
+            ReturnObject returnObj = goodsService.modifyBrandInfo(shopId, id, brandInputVo);
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.AUTH_NOT_ALLOW));
+        }
     }
 
     /**
@@ -338,10 +347,11 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
-    @Audit //需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/brands/{id}")
     public Object deleteBrand(@PathVariable Long id, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
@@ -374,9 +384,13 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "商品类目名字不能为空"),
+            @ApiResponse(code = 503, message = "商品类目名字不能重复"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
-    @Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
     public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
@@ -390,12 +404,7 @@ public class GoodsController {
         }
         if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
-            if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
-                return Common.decorateReturnObject(goodsCategory);
-            }
-            returnObject = ResponseUtil.ok(goodsCategory.getData());
-            System.out.println(returnObject);
-            return returnObject;
+            return Common.decorateReturnObject(goodsCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }
@@ -418,6 +427,9 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "商品类目名称不能为空"),
+            @ApiResponse(code = 503, message = "商品类目名称不能重复"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
@@ -427,13 +439,12 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsType: CategoryId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsType id = ", id);
             return returnObject;
         }
-        if (shopid == 0 && shopId == 0) {
+        if (shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
             return Common.decorateReturnObject(returnObj);
         } else {
@@ -720,15 +731,17 @@ public class GoodsController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "品牌名字不能为空"),
+            @ApiResponse(code = 503, message = "品牌名字不能重复"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
-    @Audit // 需要认证
+    @Audit
     @PostMapping("/shops/{id}/brands")
     public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while addBrand shopid = ", id);
@@ -736,8 +749,7 @@ public class GoodsController {
         }
         if (id == 0) {
             ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
-            returnObject = ResponseUtil.ok(brandCategory.getData());
-            return returnObject;
+            return Common.decorateReturnObject(brandCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
         }

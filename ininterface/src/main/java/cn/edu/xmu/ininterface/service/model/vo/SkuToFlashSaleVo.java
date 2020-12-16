@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 public class SkuToFlashSaleVo implements VoObject, Serializable {
+
     private Long id;
 
     private String name;

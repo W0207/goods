@@ -1,11 +1,13 @@
 package cn.edu.xmu.goods.model.vo;
 
 import cn.edu.xmu.goods.model.po.FloatPricePo;
-import cn.edu.xmu.privilegeservice.client.IUserService;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Abin
+ */
 @Data
 public class FloatPriceRetVo {
     private Long id;
@@ -19,7 +21,7 @@ public class FloatPriceRetVo {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
-    IUserService iUserService;
+    //IUserService iUserService;
 
     public FloatPriceRetVo(FloatPricePo floatPricePo) {
         this.id = floatPricePo.getId();
@@ -28,8 +30,8 @@ public class FloatPriceRetVo {
         this.beginTime = floatPricePo.getBeginTime();
         this.endTime = floatPricePo.getEndTime();
         SimpleAdminUser simpleAdminUser = new SimpleAdminUser();
-        simpleAdminUser.setId(floatPricePo.getCreatedBy());
-        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        //simpleAdminUser.setId(floatPricePo.getCreatedBy());
+        //simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
         this.createdBy = simpleAdminUser;
         this.valid = floatPricePo.getValid() == 1;
         this.gmtCreate = floatPricePo.getGmtCreate();
