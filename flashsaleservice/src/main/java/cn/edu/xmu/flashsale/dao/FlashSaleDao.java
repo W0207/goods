@@ -90,7 +90,7 @@ public class FlashSaleDao {
     public ReturnObject<Object> deleteFlashSale(Long id) {
 
         FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
-        if (po == null) {
+        if (po == null||po.getState()==null) {
             logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -119,6 +119,71 @@ public class FlashSaleDao {
         return returnObject;
     }
 
+    /**
+     * 上线秒杀活动
+     * @param id
+     * @return
+     */
+    public ReturnObject<Object> onshelvesFlashSale(Long id) {
+
+        FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
+        if (po == null||po.getState()==null) {
+            logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(po.getState()==1){
+            logger.info("秒杀活动已上线，无法重复上线 ");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        else if(po.getState()==2){
+            logger.info("秒杀活动已删除");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        po.setState(Byte.valueOf("1"));
+        int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            logger.info("秒杀活动上线失败：FlashSaleId = " + id);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("秒杀活动上线成功：FlashSaleItemId = " + id);
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
+
+    /**
+     * 下线秒杀活动
+     * @param id
+     * @return
+     */
+    public ReturnObject<Object> offshelvesFlashSale(Long id) {
+
+        FlashSalePo po = flashSalePoMapper.selectByPrimaryKey(id);
+        if (po == null||po.getState()==null) {
+            logger.info("秒杀活动不存在或已被删除：FlashSaleItemId = " + id);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(po.getState()==0){
+            logger.info("秒杀活动已下线，无法重复上线 ");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        else if(po.getState()==2){
+            logger.info("秒杀活动已删除");
+            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+        }
+        po.setState(Byte.valueOf("1"));
+        int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
+        ReturnObject<Object> returnObject;
+        if (ret == 0) {
+            logger.info("秒杀活动下线失败：FlashSaleId = " + id);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("秒杀活动下线成功：FlashSaleItemId = " + id);
+            returnObject = new ReturnObject<>();
+        }
+        return returnObject;
+    }
     /**
      * 增加秒杀活动商品
      *

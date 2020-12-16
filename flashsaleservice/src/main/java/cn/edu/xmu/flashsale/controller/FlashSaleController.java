@@ -147,6 +147,47 @@ public class FlashSaleController {
 
     }
 
+    @ApiOperation(value = "管理员上线秒杀活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "did", required = true, dataType = "Integer", paramType = "path", value = "店铺id"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀id"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{did}/flashsales/{id}/onshelves")
+    public Object onShelvesflashsale(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("onShelvesFlashSale: id = " + id);
+        }
+        ReturnObject returnObj = flashSaleService.onshelvesFlashSale(id);
+        return Common.decorateReturnObject(returnObj);
+
+    }
+
+    @ApiOperation(value = "管理员下线秒杀活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "did", required = true, dataType = "Integer", paramType = "path", value = "店铺id"),
+            @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "秒杀id"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
+    public Object offShelvesflashsale(@PathVariable Long id) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("offShelvesFlashSale: id = " + id);
+        }
+        ReturnObject returnObj = flashSaleService.offshelvesFlashSale(id);
+        return Common.decorateReturnObject(returnObj);
+
+    }
+
+
     /**
      * @param id
      * @param skuInputVo
