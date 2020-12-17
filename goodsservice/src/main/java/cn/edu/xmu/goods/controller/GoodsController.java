@@ -190,7 +190,7 @@ public class GoodsController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 100 : pageSize;
         if (page <= 0 || pageSize <= 0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findAllBrand(page, pageSize);
@@ -798,11 +798,7 @@ public class GoodsController {
             return returnObject;
         }
         ReturnObject floatPrice = goodsService.addFloatPrice(shopId, id, floatPriceInputVo, userId);
-        if (floatPrice.getCode() == ResponseCode.OK) {
-            return ResponseUtil.ok(floatPrice.getData());
-        } else {
-            return Common.decorateReturnObject(floatPrice);
-        }
+        return Common.decorateReturnObject(floatPrice);
     }
 
     /**
@@ -857,7 +853,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功")
     })
     @Audit
-    @PutMapping("/shops/{shopId}/spus")
+    @PostMapping("/shops/{shopId}/spus")
     public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSpu : shopId = " + shopId + " vo = " + spuInputVo);
