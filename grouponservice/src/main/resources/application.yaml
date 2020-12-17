@@ -97,21 +97,16 @@ pagehelper:
 
 
 dubbo:
-  scan:
-      # dubbo 服务扫描基准包
-    base-packages: cn.edu.xmu.groupon
-  protocol:
-        # dubbo 协议
-    name: dubbo
-        # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: -1
 
-    registry:
-        address: nacos://localhost:8848
-    cloud:
-        subscribed-services: goods-service
-    protocols:
-          port: 18888
+  scan:
+    base-packages: cn.edu.xmu.groupon
+  registry:
+    address: nacos://47.113.100.78:8848
+  cloud:
+    subscribed-services: goods-service
+  protocols:
+    dubbo:
+      port: -1
 
 
 

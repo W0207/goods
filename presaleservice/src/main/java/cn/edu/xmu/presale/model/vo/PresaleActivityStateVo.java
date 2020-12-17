@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class PresaleActivityStateVo {
-    private Long code;
-
     private String name;
+
+    private Long code;
 
     public PresaleActivityStateVo(PresaleActivity.State state) {
         code = Long.valueOf(state.getCode());

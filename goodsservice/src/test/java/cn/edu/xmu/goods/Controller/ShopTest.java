@@ -39,6 +39,12 @@ public class ShopTest {
 
     private WebTestClient mallClient;
 
+    @Test
+    public void create(){
+        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    }
+
+
 
     public ShopTest() {
         this.mallClient = WebTestClient.bindToServer()
