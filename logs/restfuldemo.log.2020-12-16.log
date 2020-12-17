@@ -1,13 +1,136 @@
-2020-12-16 17:08:16.671 [http-nio-8088-exec-1] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-16 17:09:36.016 [http-nio-8088-exec-3] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-16 18:01:32.316 [http-nio-8088-exec-6] DEBUG cn.edu.xmu.comment.controller.CommentController - getCommentState
-2020-12-16 18:07:27.882 [http-nio-8088-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
-2020-12-16 18:07:27.890 [http-nio-8088-exec-7] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
-2020-12-16 18:09:25.258 [http-nio-8088-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
-2020-12-16 18:09:25.258 [http-nio-8088-exec-9] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
-2020-12-16 19:38:02.666 [http-nio-8088-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
-2020-12-16 19:38:02.674 [http-nio-8088-exec-1] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
-2020-12-16 19:38:03.780 [http-nio-8088-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
-2020-12-16 19:38:03.784 [http-nio-8088-exec-2] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=0
-2020-12-16 19:38:55.626 [http-nio-8088-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
-2020-12-16 19:38:55.634 [http-nio-8088-exec-3] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
+2020-12-16 19:43:19.910 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-16 20:02:53.076 [http-nio-8083-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-16 20:02:53.136 [http-nio-8083-exec-7] ERROR o.a.c.c.C.[.[localhost].[/].[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+java.lang.NullPointerException: null
+	at cn.edu.xmu.goods.dao.GoodsDao.getSpuRetVo(GoodsDao.java:965)
+	at cn.edu.xmu.goods.dao.GoodsDao.getSpu(GoodsDao.java:930)
+	at cn.edu.xmu.goods.dao.GoodsDao$$FastClassBySpringCGLIB$$a5fa6019.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at cn.edu.xmu.goods.dao.GoodsDao$$EnhancerBySpringCGLIB$$e12b46c7.getSpu(<generated>)
+	at cn.edu.xmu.goods.service.GoodsService.getSpu(GoodsService.java:725)
+	at cn.edu.xmu.goods.service.GoodsService$$FastClassBySpringCGLIB$$c44c2cf9.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:687)
+	at cn.edu.xmu.goods.service.GoodsService$$EnhancerBySpringCGLIB$$6bcaa717.getSpu(<generated>)
+	at cn.edu.xmu.goods.controller.GoodsController.getSpu(GoodsController.java:914)
+	at cn.edu.xmu.goods.controller.GoodsController$$FastClassBySpringCGLIB$$2b1bfc21.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at cn.edu.xmu.goods.controller.GoodsController$$EnhancerBySpringCGLIB$$dc23afc6.getSpu(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1589)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-16 20:07:35.926 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-16 20:20:36.638 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addSpu(Long,SpuInputVo,BindingResult))
+2020-12-16 20:20:36.672 [http-nio-8083-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 20:20:36.675 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 20:20:36.683 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - addSpu : shopId = 1 vo = SpuInputVo(name=test, description=null, specs=test)
+2020-12-16 20:27:48.599 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addSpu(Long,SpuInputVo,BindingResult))
+2020-12-16 20:27:48.639 [http-nio-8083-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 20:27:48.645 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 20:27:48.659 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - addSpu : shopId = 1 vo = SpuInputVo(name=test, description=null, specs=test)
+2020-12-16 20:29:25.782 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addSpu(Long,SpuInputVo,BindingResult))
+2020-12-16 20:29:25.814 [http-nio-8083-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 20:29:25.818 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 20:29:25.832 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - addSpu : shopId = 1 vo = SpuInputVo(name=test, description=null, specs=test)
+2020-12-16 20:31:45.882 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addSpu(Long,SpuInputVo,BindingResult))
+2020-12-16 20:31:45.921 [http-nio-8083-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 20:31:45.929 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 20:31:45.943 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - addSpu : shopId = 1 vo = SpuInputVo(name=test, decription=test, specs=test)
+2020-12-16 20:56:41.537 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsSpu(Long,Long,SpuInputVo,BindingResult))
+2020-12-16 20:56:41.541 [http-nio-8083-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 20:56:41.541 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 20:56:41.542 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 20001 spuId = 20684 vo = SpuInputVo(name=string, decription=string, specs=string)
+2020-12-16 20:56:41.572 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=20684
+2020-12-16 20:56:41.579 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.service.GoodsService - 修改spu信息中，spu里shopId和路径上的shopId不一致
+2020-12-16 21:04:32.124 [http-nio-8083-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsSpu(Long,Long,SpuInputVo,BindingResult))
+2020-12-16 21:04:32.126 [http-nio-8083-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 21:04:32.127 [http-nio-8083-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 21:04:32.127 [http-nio-8083-exec-6] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsSpu : shopId = 0 spuId = 20680 vo = SpuInputVo(name=string, decription=string, specs=string)
+2020-12-16 21:04:32.137 [http-nio-8083-exec-6] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=20680
+2020-12-16 21:04:32.144 [http-nio-8083-exec-6] DEBUG cn.edu.xmu.goods.service.GoodsService - 修改spu信息中，禁止访问
+2020-12-16 21:04:48.618 [http-nio-8083-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-16 21:04:48.620 [http-nio-8083-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 21:04:48.620 [http-nio-8083-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 21:04:48.621 [http-nio-8083-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 20680
+2020-12-16 21:13:46.779 [http-nio-8083-exec-9] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-16 21:22:30.001 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSpu(Long,Long))
+2020-12-16 21:22:30.040 [http-nio-8083-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 21:22:30.046 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 21:22:30.056 [http-nio-8083-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSpu : shopId = 0 spuId = 20680
+2020-12-16 21:25:57.108 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-16 21:25:57.111 [http-nio-8083-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 21:25:57.111 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 21:25:57.112 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 273
+2020-12-16 21:25:57.120 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-16 21:25:57.151 [http-nio-8083-exec-3] DEBUG cn.edu.xmu.goods.dao.GoodsDao - sku已上架
+2020-12-16 21:26:52.313 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteGoodsSku(Long,Long))
+2020-12-16 21:26:52.314 [http-nio-8083-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-16 21:26:52.314 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-16 21:26:52.314 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteGoodsSku : shopId = 0 skuId = 20680
+2020-12-16 21:26:52.319 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=20680
+2020-12-16 21:26:52.322 [http-nio-8083-exec-4] DEBUG cn.edu.xmu.goods.dao.GoodsDao - sku已上架

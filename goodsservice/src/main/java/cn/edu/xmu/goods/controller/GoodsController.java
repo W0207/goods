@@ -82,7 +82,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/spus/{id}")
     public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -824,13 +824,12 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/spus/{id}")
     public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
@@ -857,13 +856,12 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/spus")
     public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSpu : shopId = " + shopId + " vo = " + spuInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId);
