@@ -101,20 +101,14 @@ pagehelper:
 
 
 dubbo:
-  scan:
-        # dubbo 服务扫描基准包
-    base-packages: cn.edu.xmu.coupon
-  protocol:
-          # dubbo 协议
-    name: dubbo
-          # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: 20885
 
-    registry:
-        address: nacos://47.113.100.78:8848
-    cloud:
-        subscribed-services: goods-service
-    protocols:
-        dubbo:
-          port: 18888
+  scan:
+    base-packages: cn.edu.xmu.coupon
+  registry:
+    address: nacos://47.113.100.78:8848
+  cloud:
+    subscribed-services: goods-service
+  protocols:
+    dubbo:
+      port: -1
 
