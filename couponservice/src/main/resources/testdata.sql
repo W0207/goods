@@ -20,7 +20,7 @@
 --
 
 LOCK
-TABLES `brand` WRITE;
+    TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand`
     DISABLE KEYS */;
 INSERT INTO `brand`
@@ -84,14 +84,14 @@ values (20120, 'cpz1', NULL, NULL, '2020-12-10 22:36:01', '2020-12-10 22:36:01')
 /*!40000 ALTER TABLE `brand`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `comment`
 --
 
 LOCK
-TABLES `comment` WRITE;
+    TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment`
     DISABLE KEYS */;
 /*XiangSuXianTest*/
@@ -102,14 +102,14 @@ VALUES (1, 1, 273, 0, 1, '还不错', 0, '2020-12-10 22:36:01', '2020-12-10 22:3
 /*!40000 ALTER TABLE `comment`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon`
 --
 
 LOCK
-TABLES `coupon` WRITE;
+    TABLES `coupon` WRITE;
 /*!40000 ALTER TABLE `coupon`
     DISABLE KEYS */;
 /*ChenPinzhenTest*/
@@ -132,13 +132,13 @@ values (20001, NULL, 'cpz1', 1, 1, '2020-11-30 19:22:52', '2021-11-30 19:31:44',
 /*!40000 ALTER TABLE `coupon`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon_activity`
 --
 LOCK
-TABLES `coupon_activity` WRITE;
+    TABLES `coupon_activity` WRITE;
 /*BaiHaoyueTest*/
 /*!40000 ALTER TABLE `coupon_activity`
     DISABLE KEYS */;
@@ -182,14 +182,14 @@ values (20001, 'cpz1', '2020-11-01 03:22:30', '2021-01-31 03:22:39', '2020-12-01
 /*!40000 ALTER TABLE `coupon_activity`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon_sku`
 --
 
 LOCK
-TABLES `coupon_sku` WRITE;
+    TABLES `coupon_sku` WRITE;
 /*!40000 ALTER TABLE `coupon_sku`
     DISABLE KEYS */;
 /*BaiHaoyueTest*/
@@ -206,14 +206,14 @@ values (20001, 20001, 20680, '2020-12-16 03:34:55', NULL),
 /*!40000 ALTER TABLE `coupon_sku`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `flash_sale`
 --
 
 LOCK
-TABLES `flash_sale` WRITE;
+    TABLES `flash_sale` WRITE;
 /*!40000 ALTER TABLE `flash_sale`
     DISABLE KEYS */;
 /*SongRunhanTest*/
@@ -225,14 +225,14 @@ VALUES (1, addDate(now(), interval 1 day), 0, '2020-12-11 00:00:00', '2020-12-11
 /*!40000 ALTER TABLE `flash_sale`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `flash_sale_item`
 --
 
 LOCK
-TABLES `flash_sale_item` WRITE;
+    TABLES `flash_sale_item` WRITE;
 /*!40000 ALTER TABLE `flash_sale_item`
     DISABLE KEYS */;
 /*SongRunhanTest*/
@@ -249,14 +249,14 @@ VALUES (1, 1, 290, 305, 30, '2020-12-11 00:00:00', NULL),
 /*!40000 ALTER TABLE `flash_sale_item`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `float_price`
 --
 
 LOCK
-TABLES `float_price` WRITE;
+    TABLES `float_price` WRITE;
 /*!40000 ALTER TABLE `float_price`
     DISABLE KEYS */;
 /*WangYiFeiTest*/
@@ -278,14 +278,14 @@ values (20001, 20680, 78, '2020-12-01 01:41:22', '2020-12-10 01:41:28', 32, 0, 0
 /*!40000 ALTER TABLE `float_price`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_category`
 --
 
 LOCK
-TABLES `goods_category` WRITE;
+    TABLES `goods_category` WRITE;
 /*!40000 ALTER TABLE `goods_category`
     DISABLE KEYS */;
 INSERT INTO `goods_category`
@@ -315,14 +315,14 @@ values (20140, 'cpz1', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
 /*!40000 ALTER TABLE `goods_category`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_sku`
 --
 
 LOCK
-TABLES `goods_sku` WRITE;
+    TABLES `goods_sku` WRITE;
 /*!40000 ALTER TABLE `goods_sku`
     DISABLE KEYS */;
 INSERT INTO `goods_sku`
@@ -1173,14 +1173,14 @@ values (20680, 20680, NULL, 'cpz1', 980000, NULL, 10, 'http://47.52.88.176/file/
 /*!40000 ALTER TABLE `goods_sku`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_spu`
 --
 
 LOCK
-TABLES `goods_spu` WRITE;
+    TABLES `goods_spu` WRITE;
 /*!40000 ALTER TABLE `goods_spu`
     DISABLE KEYS */;
 INSERT INTO `goods_spu`
@@ -2429,14 +2429,14 @@ values (20680, 'cpz1', 20120, 20140, NULL, 0, 'drh-d0001', NULL,
 /*!40000 ALTER TABLE `goods_spu`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `groupon_activity`
 --
 
 LOCK
-TABLES `groupon_activity` WRITE;
+    TABLES `groupon_activity` WRITE;
 /*!40000 ALTER TABLE `groupon_activity`
     DISABLE KEYS */;
 /*LiDiHanTest*/
@@ -2462,14 +2462,14 @@ VALUES (5, '劳动节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273,
 /*!40000 ALTER TABLE `groupon_activity`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `presale_activity`
 --
 
 LOCK
-TABLES `presale_activity` WRITE;
+    TABLES `presale_activity` WRITE;
 /*!40000 ALTER TABLE `presale_activity`
     DISABLE KEYS */;
 /*XiangSuXianTest*/
@@ -2496,14 +2496,14 @@ VALUES (5, '女生节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273,
 /*!40000 ALTER TABLE `presale_activity`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `shop`
 --
 
 LOCK
-TABLES `shop` WRITE;
+    TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop`
     DISABLE KEYS */;
 /*LiDiHanTest*/
@@ -2528,7 +2528,7 @@ values (20001, 'cpz1', 0, '2020-12-15 20:14:21', NULL);
 /*!40000 ALTER TABLE `shop`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 /*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE = @OLD_SQL_MODE */;

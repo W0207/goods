@@ -52,7 +52,6 @@ public class CouponControllerTest {
     CouponPoMapper couponPoMapper;
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(CouponController.class);
 
     private final String creatTestToken(Long userId, Long departId, int expireTime) {
@@ -263,6 +262,7 @@ public class CouponControllerTest {
 
     /**
      * 查看优惠活动中的商品
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -281,6 +281,7 @@ public class CouponControllerTest {
 
     /**
      * 查看优惠活动中的商品-返回列表为空
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -316,6 +317,7 @@ public class CouponControllerTest {
 
     /**
      * 买家查看优惠券列表
+     *
      * @return Object
      * by 菜鸡骞
      */
@@ -333,7 +335,6 @@ public class CouponControllerTest {
 
 
     /*   公开测试用例   */
-
 
 
 }

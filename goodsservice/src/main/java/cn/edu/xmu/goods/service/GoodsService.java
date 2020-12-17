@@ -214,7 +214,7 @@ public class GoodsService implements Ingoodservice {
             goodsSpuPo.setGmtModified(LocalDateTime.now());
             goodsSpuPo.setSpec(spuInputVo.getSpecs());
             goodsSpuPo.setName(spuInputVo.getName());
-            goodsSpuPo.setDetail(spuInputVo.getDescription());
+            goodsSpuPo.setDetail(spuInputVo.getDecription());
             returnObject = goodsDao.modifySpuBySpuPoId(goodsSpuPo);
         }
         return returnObject;
