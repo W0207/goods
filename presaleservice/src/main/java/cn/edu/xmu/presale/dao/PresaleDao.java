@@ -85,14 +85,22 @@ public class PresaleDao {
                 //判断sku在不在shop里
                 if (!goodservice.skuInShopOrNot(shopId, id)) {
                     //不在商店里
-                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 } else {
+                    //查看sku是否参加预售
+                    PresaleActivityPoExample example = new PresaleActivityPoExample();
+                    PresaleActivityPoExample.Criteria  criteria= example.createCriteria();
+                    criteria.andGoodsSkuIdEqualTo(id);
+                    List<PresaleActivityPo> pos = presaleActivityPoMapper.selectByExample(example);
+                    if(!pos.isEmpty()){
+                        return new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
+                    }
                     PresaleActivityPo presaleActivityPo = presaleActivityVo.creatPo();
                     presaleActivityPo.setState((byte) 0);
                     presaleActivityPo.setGmtCreate(LocalDateTime.now());
-                    int retId = presaleActivityPoMapper.insert(presaleActivityPo);
+                    presaleActivityPoMapper.insert(presaleActivityPo);
                     PresaleActivityRetVo vo = new PresaleActivityRetVo(presaleActivityPo);
-                    vo.setId((long) retId);
+                    vo.setId(presaleActivityPo.getId());
                     vo.setShop(shopToAllVo);
                     vo.setGoodsSku(skuToPresaleVo);
                     returnObject = new ReturnObject(vo);
@@ -121,6 +129,7 @@ public class PresaleDao {
                 if (timeLine == 1) {
                     //timeLine等于1明天开始的活动
                     criteria.andBeginTimeGreaterThan(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0));
+                    criteria.andEndTimeLessThan(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 2, 0, 0, 0));
                 } else {
                     if (timeLine == 2) {
                         //timeLine等于2正在进行的活动
@@ -167,23 +176,32 @@ public class PresaleDao {
 
     public ReturnObject modifyPresale(Long shopId, Long id, PresaleActivityVo vo) {
         ReturnObject returnObject = null;
+        if(vo.getBeginTime()==null){
+            return new ReturnObject(ResponseCode.Log_BEGIN_NULL);
+        }
+        if(vo.getEndTime()==null){
+            return new ReturnObject(ResponseCode.Log_END_NULL);
+        }
         //判断开始时间是不是在结束时间之前
         if (vo.getEndTime().isBefore(vo.getBeginTime())) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject(ResponseCode.Log_Bigger);
         }
         if (vo.getPayTime().isBefore(vo.getBeginTime())) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        if (vo.getEndTime().isBefore(LocalDateTime.now())){
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         PresaleActivityPo presaleActivityPo = presaleActivityPoMapper.selectByPrimaryKey(id);
         if (presaleActivityPo == null) {
             //预售活动的id不存在
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("修改预售信息的时候，预售活动的id不存在"));
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!shopId.equals(presaleActivityPo.getShopId())) {
                 //预售活动的shopId与路径上的不同
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("修改预售信息的时候，预售活动的shopId与路径上的不同"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             } else {
-                if (presaleActivityPo.getState() == 2) {
+                if (presaleActivityPo.getState() == 2||presaleActivityPo.getState()==1) {
                     //预售活动已经关闭
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
@@ -215,7 +233,7 @@ public class PresaleDao {
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!presaleActivityPo.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             } else {
                 if (presaleActivityPo.getState().equals((byte) 1)) {
                     //处在上线拒绝操作
@@ -281,13 +299,13 @@ public class PresaleDao {
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!po.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             } else {
                 if (po.getState().equals((byte) 2)) {
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
                     if (po.getState().equals((byte) 1)) {
-                        return new ReturnObject();
+                        return new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                     }
                     po.setState((byte) 1);
                     po.setGmtModified(LocalDateTime.now());
@@ -306,13 +324,13 @@ public class PresaleDao {
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!po.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             } else {
                 if (po.getState().equals((byte) 2)) {
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
                     if (po.getState().equals((byte) 0)) {
-                        return new ReturnObject();
+                        return new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                     }
                     po.setState((byte) 0);
                     po.setGmtModified(LocalDateTime.now());
