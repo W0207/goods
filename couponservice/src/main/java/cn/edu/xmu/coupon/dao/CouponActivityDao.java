@@ -57,6 +57,9 @@ public class CouponActivityDao implements InitializingBean {
         if (!couponActivityPo.getShopId().equals(shopId) && shopId != 0) {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
         }
+        if(couponActivityPo.getState()!=0) {
+            return new ReturnObject<>(ResponseCode.COUPONACT_STATENOTALLOW);
+        }
         CouponActivity couponActivity = new CouponActivity(couponActivityPo);
         CouponActivityPo po = couponActivity.createModifyPo(couponActivityModifyVo);
         couponActivityPoMapper.updateByPrimaryKeySelective(po);

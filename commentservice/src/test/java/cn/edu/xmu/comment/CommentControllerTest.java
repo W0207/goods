@@ -98,7 +98,7 @@ public class CommentControllerTest {
     @Test
     public void show() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comment/skus/1/comments?pageSize=10"))
+        String responseString = this.mvc.perform(get("/comment/skus/185/comments?pageSize=10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -113,10 +113,10 @@ public class CommentControllerTest {
     @Test
     public void auditComment() throws Exception {
         String requireJson = "{\n" +
-                "  \"state\":\"0\"\n" +
+                "  \"state\":\"true\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(put("/comments/shops/0/confirm/5/confirm")
+        String responseString = this.mvc.perform(put("/comment/shops/0/confirm/2/confirm")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
@@ -166,7 +166,7 @@ public class CommentControllerTest {
     public void showUnAuditCommentsByCommentid() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/comments/shops/0/comments/all").header("authorization", token))
+        String responseString = this.mvc.perform(get("/comment/shops/0/comments/all").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
