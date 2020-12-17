@@ -201,7 +201,7 @@ public class GoodsService implements Ingoodservice {
             logger.debug("修改spu信息中，spuId不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (goodsSpuPo.getDisabled() == 0) {
+        if (goodsSpuPo.getDisabled() != 0) {
             logger.debug("修改spu信息中，禁止访问");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }

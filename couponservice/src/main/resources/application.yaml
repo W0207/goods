@@ -101,8 +101,9 @@ pagehelper:
 
 
 dubbo:
+
   scan:
-    base-packages: cn.edu.xmu.groupon
+    base-packages: cn.edu.xmu.coupon
   registry:
     address: nacos://47.113.100.78:8848
   cloud:

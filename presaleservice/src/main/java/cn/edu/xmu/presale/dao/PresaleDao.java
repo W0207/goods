@@ -70,6 +70,9 @@ public class PresaleDao {
             returnObject = new ReturnObject(ResponseCode.Log_Bigger);
             return returnObject;
         }
+        if(presaleActivityVo.getEndTime().isBefore(LocalDateTime.now())||presaleActivityVo.getBeginTime().isBefore(LocalDateTime.now())){
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         if (shopToAllVo == null) {
             //店铺id不存在
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -239,14 +242,15 @@ public class PresaleDao {
         PresaleActivityPoExample presaleActivityPoExample = new PresaleActivityPoExample();
         PresaleActivityPoExample.Criteria criteria = presaleActivityPoExample.createCriteria();
         criteria.andShopIdEqualTo(shopId);
-        if(state>3||state<0)
-        {
-            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
-        }
+
         if (id != null) {
             criteria.andGoodsSkuIdEqualTo(id);
         }
-        if (state != null) {
+        if (state !=null) {
+            if(state>3||state<0)
+            {
+                return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            }
             criteria.andStateEqualTo((byte) (int) state);
         } else {
             List<Byte> states = new ArrayList<>();
