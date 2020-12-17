@@ -398,7 +398,6 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while addCategory CategoryId = ", id);
