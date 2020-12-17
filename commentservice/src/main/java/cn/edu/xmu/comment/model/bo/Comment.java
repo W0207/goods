@@ -3,7 +3,9 @@ package cn.edu.xmu.comment.model.bo;
 import cn.edu.xmu.comment.model.po.CommentPo;
 import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.comment.model.vo.CommentRetVo;
+import cn.edu.xmu.comment.model.vo.CommentUserVo;
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.otherinterface.bo.UserInfo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,15 @@ public class Comment implements VoObject {
 
     private LocalDateTime gmtModified;
 
+    private UserInfo userInfo;
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
 
     public Comment(CommentPo po) {
         this.id = po.getId();
@@ -47,7 +58,13 @@ public class Comment implements VoObject {
     public CommentPo createAuditPo(CommentAuditVo commentAuditVo) {
         CommentPo commentPo = new CommentPo();
         commentPo.setId(id);
-        commentPo.setState(commentAuditVo.getState());
+        if(commentAuditVo.getState()==true) {
+            commentPo.setState((byte)1);
+        }
+        else {
+            commentPo.setState((byte)2);
+        }
+
         return commentPo;
 
     }

@@ -1,6 +1,7 @@
 package cn.edu.xmu.comment.model.vo;
 
 import cn.edu.xmu.comment.model.bo.Comment;
+import cn.edu.xmu.otherinterface.bo.UserInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -22,10 +23,11 @@ public class CommentRetVo {
 
     private String content;
 
-
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
+
+    private UserInfo userInfo;
 
 
     public CommentRetVo(Comment comment) {
@@ -37,5 +39,6 @@ public class CommentRetVo {
         this.gmtCreate = comment.getGmtCreate();
         this.gmtModified = comment.getGmtModified();
         this.orderitem_id = comment.getOrderitem_id();
+        this.userInfo = comment.getUserInfo();
     }
 }

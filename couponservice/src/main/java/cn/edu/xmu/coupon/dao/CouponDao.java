@@ -110,7 +110,7 @@ public class CouponDao {
     public ReturnObject<PageInfo<VoObject>> showOwnInvalidcouponacitvitiesByid(Integer page, Integer pageSize, Long id) {
         CouponActivityPoExample example = new CouponActivityPoExample();
         CouponActivityPoExample.Criteria criteria = example.createCriteria();
-        criteria.andStateEqualTo((byte) 1);
+        criteria.andStateEqualTo((byte) 0);
         criteria.andShopIdEqualTo(id);
         PageHelper.startPage(page, pageSize);
         List<CouponActivityPo> couponActivityPos = null;
@@ -185,7 +185,7 @@ public class CouponDao {
                 } else {
                     AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
                     vo.setShop(shopToAllVo);
-                    vo.setId(Long.parseLong(String.valueOf(retId)));
+                    vo.setId(po.getId());
                     returnObject = new ReturnObject(vo);
                 }
             }

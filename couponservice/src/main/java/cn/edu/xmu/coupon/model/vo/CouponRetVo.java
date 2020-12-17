@@ -43,7 +43,7 @@ public class CouponRetVo {
     private LocalDateTime coupon_time;
 
     @ApiModelProperty("优惠活动优惠券数目")
-    private int quantity;
+    private Integer quantity;
 
     public CouponRetVo(CouponRet couponRet) {
         this.quantity=couponRet.getQuantity();
@@ -132,7 +132,7 @@ public class CouponRetVo {
         return couponSn;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 

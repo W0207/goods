@@ -507,3 +507,395 @@ org.apache.dubbo.remoting.RemotingException: client(url: dubbo://192.168.58.1:20
 	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelBucket.expireTimeouts(HashedWheelTimer.java:727)
 	at org.apache.dubbo.common.timer.HashedWheelTimer$Worker.run(HashedWheelTimer.java:449)
 	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-17 19:36:17.526 [dubbo-client-idleCheck-thread-1] ERROR o.a.d.r.exchange.support.header.ReconnectTimerTask -  [DUBBO] Fail to connect to HeaderExchangeClient [channel=org.apache.dubbo.remoting.transport.netty4.NettyClient [192.168.0.11:0 -> /192.168.58.1:20880]], dubbo version: 2.7.8, current host: 192.168.0.11
+org.apache.dubbo.remoting.RemotingException: client(url: dubbo://192.168.58.1:20880/cn.edu.xmu.ininterface.service.Ingoodservice?anyhost=true&application=presale&category=providers&check=false&codec=dubbo&deprecated=false&dubbo=2.0.2&dynamic=true&generic=false&heartbeat=60000&init=false&interface=cn.edu.xmu.ininterface.service.Ingoodservice&metadata-type=remote&methods=presaleFindSku,skuExitOrNot,couponActivityFindSku,spuInShopOrNot,flashFindSku,skuInShopOrNot,grouponFindSpu&path=cn.edu.xmu.ininterface.service.Ingoodservice&pid=22660&protocol=dubbo&qos.enable=false&register.ip=192.168.0.11&release=2.7.8&remote.application=goodsservice&revision=0.0.1&side=consumer&sticky=false&timestamp=1608192868960&version=0.0.1) failed to connect to server /192.168.58.1:20880 client-side timeout 3000ms (elapsed: 3003ms) from netty client 192.168.0.11 using dubbo version 2.7.8
+	at org.apache.dubbo.remoting.transport.netty4.NettyClient.doConnect(NettyClient.java:174)
+	at org.apache.dubbo.remoting.transport.AbstractClient.connect(AbstractClient.java:191)
+	at org.apache.dubbo.remoting.transport.AbstractClient.reconnect(AbstractClient.java:247)
+	at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeClient.reconnect(HeaderExchangeClient.java:166)
+	at org.apache.dubbo.remoting.exchange.support.header.ReconnectTimerTask.doTask(ReconnectTimerTask.java:49)
+	at org.apache.dubbo.remoting.exchange.support.header.AbstractTimerTask.run(AbstractTimerTask.java:87)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelTimeout.expire(HashedWheelTimer.java:648)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelBucket.expireTimeouts(HashedWheelTimer.java:727)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$Worker.run(HashedWheelTimer.java:449)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-17 19:52:04.621 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 19:52:04.690 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 19:52:04.700 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 19:53:13.475 [DubboServerHandler-192.168.0.11:20880-thread-114] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=333
+2020-12-17 19:53:13.553 [DubboServerHandler-192.168.0.11:20880-thread-115] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=444
+2020-12-17 19:53:13.625 [DubboServerHandler-192.168.0.11:20880-thread-116] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=555
+2020-12-17 19:54:12.809 [DubboServerHandler-192.168.0.11:20880-thread-121] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:05.449 [DubboServerHandler-192.168.0.11:20880-thread-122] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:06.153 [DubboServerHandler-192.168.0.11:20880-thread-123] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:16.552 [DubboServerHandler-192.168.0.11:20880-thread-124] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:17.173 [DubboServerHandler-192.168.0.11:20880-thread-125] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:19.961 [DubboServerHandler-192.168.0.11:20880-thread-126] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:20.174 [DubboServerHandler-192.168.0.11:20880-thread-127] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:20.386 [DubboServerHandler-192.168.0.11:20880-thread-128] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:20.573 [DubboServerHandler-192.168.0.11:20880-thread-129] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:20.781 [DubboServerHandler-192.168.0.11:20880-thread-130] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:20.975 [DubboServerHandler-192.168.0.11:20880-thread-131] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:21.224 [DubboServerHandler-192.168.0.11:20880-thread-132] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:55:21.651 [DubboServerHandler-192.168.0.11:20880-thread-133] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:07.320 [DubboServerHandler-192.168.0.11:20880-thread-136] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=333
+2020-12-17 19:56:07.386 [DubboServerHandler-192.168.0.11:20880-thread-137] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=444
+2020-12-17 19:56:07.436 [DubboServerHandler-192.168.0.11:20880-thread-138] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=555
+2020-12-17 19:56:24.130 [DubboServerHandler-192.168.0.11:20880-thread-139] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:24.357 [DubboServerHandler-192.168.0.11:20880-thread-140] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:24.576 [DubboServerHandler-192.168.0.11:20880-thread-141] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:24.773 [DubboServerHandler-192.168.0.11:20880-thread-142] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:43.578 [DubboServerHandler-192.168.0.11:20880-thread-143] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:43.824 [DubboServerHandler-192.168.0.11:20880-thread-144] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:44.054 [DubboServerHandler-192.168.0.11:20880-thread-145] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:46.226 [DubboServerHandler-192.168.0.11:20880-thread-146] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:46.460 [DubboServerHandler-192.168.0.11:20880-thread-147] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:46.650 [DubboServerHandler-192.168.0.11:20880-thread-148] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:46.839 [DubboServerHandler-192.168.0.11:20880-thread-149] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:56:47.036 [DubboServerHandler-192.168.0.11:20880-thread-150] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:29.042 [DubboServerHandler-192.168.0.11:20880-thread-151] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:29.714 [DubboServerHandler-192.168.0.11:20880-thread-152] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:29.915 [DubboServerHandler-192.168.0.11:20880-thread-153] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:43.766 [DubboServerHandler-192.168.0.11:20880-thread-154] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:46.762 [DubboServerHandler-192.168.0.11:20880-thread-155] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:46.999 [DubboServerHandler-192.168.0.11:20880-thread-156] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:47.220 [DubboServerHandler-192.168.0.11:20880-thread-157] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:47.461 [DubboServerHandler-192.168.0.11:20880-thread-158] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:47.679 [DubboServerHandler-192.168.0.11:20880-thread-159] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:47.893 [DubboServerHandler-192.168.0.11:20880-thread-160] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 19:59:48.107 [DubboServerHandler-192.168.0.11:20880-thread-161] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 20:17:03.576 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:17:03.577 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:17:03.578 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:17:03.582 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:17:03.617 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:17:03.618 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:18:06.013 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:18:06.013 [http-nio-8087-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:18:06.013 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:18:06.018 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=98765
+2020-12-17 20:19:31.179 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:19:31.180 [http-nio-8087-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:19:31.180 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:19:31.184 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:19:31.197 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:19:31.198 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:21:29.310 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:21:29.325 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:21:29.326 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:21:29.390 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:21:29.397 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:21:29.398 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:23:22.270 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:23:22.272 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:23:22.272 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:23:22.278 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=98765
+2020-12-17 20:25:05.861 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:25:05.861 [http-nio-8087-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:25:05.862 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:25:05.866 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:25:05.871 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:25:05.872 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:30:01.908 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:30:01.920 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:30:01.922 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:30:02.000 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:30:02.004 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:30:02.005 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:47:59.300 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.addPresaleActivity(Long,Long,PresaleActivityVo))
+2020-12-17 20:47:59.314 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:47:59.316 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:47:59.339 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:47:59.345 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSkuById : skuId=3311
+2020-12-17 20:47:59.346 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3311
+2020-12-17 20:50:45.391 [http-nio-8087-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 20:50:45.392 [http-nio-8087-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:50:45.393 [http-nio-8087-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:54:44.340 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 20:54:44.352 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:54:44.354 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:57:16.471 [http-nio-8087-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 20:57:16.473 [http-nio-8087-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:57:16.474 [http-nio-8087-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:59:00.443 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=1
+2020-12-17 20:59:04.047 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=1
+2020-12-17 20:59:06.138 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 20:59:06.151 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 20:59:06.152 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 20:59:37.454 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=1
+2020-12-17 21:00:57.034 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:00:57.036 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:00:57.036 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:01:19.827 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:01:19.827 [http-nio-8087-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:01:19.828 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:02:39.486 [http-nio-8087-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:02:39.487 [http-nio-8087-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:02:39.488 [http-nio-8087-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:02:59.320 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:02:59.320 [http-nio-8087-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:02:59.321 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:07:00.796 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:07:00.810 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:07:00.812 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:07:10.660 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:07:18.344 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:07:18.585 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:07:18.777 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:07:18.962 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:08:08.827 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:08:08.907 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:09:06.333 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:09:06.334 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:09:06.334 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:09:11.187 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:09:22.503 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=273
+2020-12-17 21:11:30.484 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =2
+2020-12-17 21:11:30.484 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =2
+2020-12-17 21:11:58.431 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-17 21:11:58.431 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-17 21:13:00.077 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3
+2020-12-17 21:13:08.321 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3
+2020-12-17 21:13:16.645 [DubboServerHandler-192.168.0.11:20880-thread-200] DEBUG cn.edu.xmu.goods.dao.GoodsDao - findGoodsSpuById : spuId=3
+2020-12-17 21:14:43.461 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:14:43.477 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:14:43.479 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:14:43.480 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:15:02.439 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:15:02.441 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:15:02.441 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:15:02.442 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:15:02.460 [http-nio-8084-exec-4] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-17 21:17:17.541 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:17:17.541 [http-nio-8084-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:17:17.541 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:17:17.541 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:17:22.632 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.modifyPresale(Long,Long,PresaleActivityVo))
+2020-12-17 21:17:22.646 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:17:22.647 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:18:09.331 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:18:09.333 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:18:09.333 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:18:43.927 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:18:43.928 [http-nio-8087-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:18:43.928 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:19:22.934 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:19:22.935 [http-nio-8084-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:19:22.935 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:19:22.936 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:22:50.500 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:22:50.503 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:22:50.503 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:22:50.503 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:22:50.524 [http-nio-8084-exec-1] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-17 21:23:38.187 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:23:38.188 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:23:38.188 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:23:38.188 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:23:38.198 [http-nio-8084-exec-2] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-17 21:25:04.558 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:04.572 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:04.574 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:07.773 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:07.775 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:07.775 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:08.398 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:08.398 [http-nio-8087-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:08.398 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:08.943 [http-nio-8087-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:08.943 [http-nio-8087-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:08.943 [http-nio-8087-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:11.417 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:11.417 [http-nio-8087-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:11.417 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:11.748 [http-nio-8087-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:11.749 [http-nio-8087-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:11.749 [http-nio-8087-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:13.871 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:13.872 [http-nio-8087-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:13.872 [http-nio-8087-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:25:14.222 [http-nio-8087-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:25:14.222 [http-nio-8087-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:25:14.222 [http-nio-8087-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:28:04.036 [http-nio-8087-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:28:04.037 [http-nio-8087-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:28:04.037 [http-nio-8087-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:28:06.212 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:28:06.213 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:28:06.213 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:29:13.332 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.deletePresale(Long,Long))
+2020-12-17 21:29:13.346 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:29:13.348 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:29:49.759 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:29:49.761 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:29:49.761 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:29:55.494 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:29:55.494 [http-nio-8087-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:29:55.495 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:29:57.644 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,BindingResult))
+2020-12-17 21:29:57.645 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:29:57.645 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:29:57.645 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-17 21:29:57.651 [http-nio-8084-exec-4] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-17 21:31:07.044 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.addShop(ShopVo,Long))
+2020-12-17 21:31:07.045 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:31:07.045 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:32:48.234 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult))
+2020-12-17 21:32:48.236 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:32:48.237 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:32:48.237 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 1111 vo = BrandInputVo(name=test678, detail=test4)
+2020-12-17 21:32:48.240 [http-nio-8084-exec-2] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 1111 不存在
+2020-12-17 21:33:36.890 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult))
+2020-12-17 21:33:36.902 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:33:36.905 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:33:36.909 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=黄卖九, detail=test4)
+2020-12-17 21:34:28.125 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:34:28.137 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:34:28.139 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:38:42.655 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:38:42.656 [http-nio-8087-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:38:42.657 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:38:44.999 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:38:45.000 [http-nio-8087-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:38:45.000 [http-nio-8087-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:39:48.053 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:39:48.066 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:39:48.068 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:41:32.697 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOnShelves(Long,Long))
+2020-12-17 21:41:32.709 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:41:32.711 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:42:38.571 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOffShelves(Long,Long))
+2020-12-17 21:42:38.573 [http-nio-8087-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:42:38.573 [http-nio-8087-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:43:12.856 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOffShelves(Long,Long))
+2020-12-17 21:43:12.856 [http-nio-8087-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:43:12.857 [http-nio-8087-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:44:05.026 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.presale.controller.PresaleController.presaleOffShelves(Long,Long))
+2020-12-17 21:44:05.039 [http-nio-8087-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:44:05.041 [http-nio-8087-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:05.968 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:05.970 [http-nio-8084-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:05.970 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:05.970 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 1 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:25.090 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:25.092 [http-nio-8084-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:25.092 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:25.092 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:27.176 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:27.178 [http-nio-8084-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:27.178 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:27.178 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:27.392 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:27.394 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:27.394 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:27.394 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:27.559 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:27.560 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:27.560 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:27.560 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:32.825 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:32.826 [http-nio-8084-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:32.827 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:32.827 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:34.871 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:34.872 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:34.872 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:34.872 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:35.074 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:35.074 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:35.074 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:35.074 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:35.264 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:35.266 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:35.266 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:35.266 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:55.508 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:55.510 [http-nio-8084-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:55.511 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:55.511 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:53:55.943 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:53:55.945 [http-nio-8084-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:53:55.945 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:53:55.946 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:04.660 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:04.660 [http-nio-8084-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:04.661 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:04.661 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:04.870 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:04.871 [http-nio-8084-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:04.871 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:04.872 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:05.074 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:05.074 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:05.074 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:05.074 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:05.322 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:05.323 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:05.323 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:05.324 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:42.456 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:42.458 [http-nio-8084-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:42.458 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:42.459 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:42.650 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:42.652 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:42.652 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:42.652 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:42.859 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:42.861 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:42.862 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:42.862 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:43.034 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:43.035 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:43.036 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:43.036 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:54:43.216 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:54:43.218 [http-nio-8084-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:54:43.218 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:54:43.218 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 2 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:55:13.857 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.auditShop(Long,ShopAuditVo,BindingResult))
+2020-12-17 21:55:13.858 [http-nio-8084-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:55:13.858 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:55:13.858 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.ShopController - auditShop : Id = 10 vo = ShopAuditVo(conclusion=true)
+2020-12-17 21:55:43.255 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:55:43.256 [http-nio-8084-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:55:43.256 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:55:54.873 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:55:54.874 [http-nio-8084-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:55:54.874 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:56:09.788 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:56:09.790 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:56:09.790 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:56:15.509 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:56:15.509 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:56:15.509 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:56:15.745 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:56:15.745 [http-nio-8084-exec-3] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:56:15.745 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 21:56:15.940 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.ShopController.shopOnShelves(Long))
+2020-12-17 21:56:15.941 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-17 21:56:15.942 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-17 22:13:27.678 [dubbo-client-idleCheck-thread-1] ERROR o.a.d.r.exchange.support.header.ReconnectTimerTask -  [DUBBO] Fail to connect to HeaderExchangeClient [channel=org.apache.dubbo.remoting.transport.netty4.NettyClient [0.0.0.0/0.0.0.0:63840 -> null]], dubbo version: 2.7.8, current host: 192.168.0.11
+org.apache.dubbo.remoting.RemotingException: client(url: dubbo://192.168.0.11:20880/cn.edu.xmu.ininterface.service.Ingoodservice?anyhost=true&application=presale&category=providers&check=false&codec=dubbo&deprecated=false&dubbo=2.0.2&dynamic=true&generic=false&heartbeat=60000&init=false&interface=cn.edu.xmu.ininterface.service.Ingoodservice&metadata-type=remote&methods=presaleFindSku,skuExitOrNot,couponActivityFindSku,spuInShopOrNot,flashFindSku,skuInShopOrNot,grouponFindSpu&path=cn.edu.xmu.ininterface.service.Ingoodservice&pid=24000&protocol=dubbo&qos.enable=false&register.ip=192.168.0.11&release=2.7.8&remote.application=goodsservice&revision=0.0.1&side=consumer&sticky=false&timestamp=1608212027953&version=0.0.1) failed to connect to server null client-side timeout 3000ms (elapsed: 3028ms) from netty client 192.168.0.11 using dubbo version 2.7.8
+	at org.apache.dubbo.remoting.transport.netty4.NettyClient.doConnect(NettyClient.java:174)
+	at org.apache.dubbo.remoting.transport.AbstractClient.connect(AbstractClient.java:191)
+	at org.apache.dubbo.remoting.transport.AbstractClient.reconnect(AbstractClient.java:247)
+	at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeClient.reconnect(HeaderExchangeClient.java:166)
+	at org.apache.dubbo.remoting.exchange.support.header.ReconnectTimerTask.doTask(ReconnectTimerTask.java:49)
+	at org.apache.dubbo.remoting.exchange.support.header.AbstractTimerTask.run(AbstractTimerTask.java:87)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelTimeout.expire(HashedWheelTimer.java:648)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelBucket.expireTimeouts(HashedWheelTimer.java:727)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$Worker.run(HashedWheelTimer.java:449)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-17 22:14:31.415 [dubbo-client-idleCheck-thread-1] ERROR o.a.d.r.exchange.support.header.ReconnectTimerTask -  [DUBBO] Fail to connect to HeaderExchangeClient [channel=org.apache.dubbo.remoting.transport.netty4.NettyClient [0.0.0.0/0.0.0.0:63840 -> null]], dubbo version: 2.7.8, current host: 192.168.0.11
+org.apache.dubbo.remoting.RemotingException: client(url: dubbo://192.168.0.11:20880/cn.edu.xmu.ininterface.service.Ingoodservice?anyhost=true&application=presale&category=providers&check=false&codec=dubbo&deprecated=false&dubbo=2.0.2&dynamic=true&generic=false&heartbeat=60000&init=false&interface=cn.edu.xmu.ininterface.service.Ingoodservice&metadata-type=remote&methods=presaleFindSku,skuExitOrNot,couponActivityFindSku,spuInShopOrNot,flashFindSku,skuInShopOrNot,grouponFindSpu&path=cn.edu.xmu.ininterface.service.Ingoodservice&pid=24000&protocol=dubbo&qos.enable=false&register.ip=192.168.0.11&release=2.7.8&remote.application=goodsservice&revision=0.0.1&side=consumer&sticky=false&timestamp=1608212027953&version=0.0.1) failed to connect to server null client-side timeout 3000ms (elapsed: 3001ms) from netty client 192.168.0.11 using dubbo version 2.7.8
+	at org.apache.dubbo.remoting.transport.netty4.NettyClient.doConnect(NettyClient.java:174)
+	at org.apache.dubbo.remoting.transport.AbstractClient.connect(AbstractClient.java:191)
+	at org.apache.dubbo.remoting.transport.AbstractClient.reconnect(AbstractClient.java:247)
+	at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeClient.reconnect(HeaderExchangeClient.java:166)
+	at org.apache.dubbo.remoting.exchange.support.header.ReconnectTimerTask.doTask(ReconnectTimerTask.java:49)
+	at org.apache.dubbo.remoting.exchange.support.header.AbstractTimerTask.run(AbstractTimerTask.java:87)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelTimeout.expire(HashedWheelTimer.java:648)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$HashedWheelBucket.expireTimeouts(HashedWheelTimer.java:727)
+	at org.apache.dubbo.common.timer.HashedWheelTimer$Worker.run(HashedWheelTimer.java:449)
+	at java.base/java.lang.Thread.run(Thread.java:834)

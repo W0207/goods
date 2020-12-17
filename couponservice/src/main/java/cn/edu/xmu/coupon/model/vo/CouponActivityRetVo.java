@@ -2,6 +2,7 @@ package cn.edu.xmu.coupon.model.vo;
 
 import cn.edu.xmu.coupon.model.bo.CouponActivity;
 import cn.edu.xmu.coupon.model.po.CouponActivityPo;
+import io.lettuce.core.StrAlgoArgs;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -26,13 +27,13 @@ public class CouponActivityRetVo {
 
     private LocalDateTime coupon_time;
 
-    private int state;
+    private Byte state;
 
     private Long shop_id;
 
-    private int quantity;
+    private Integer quantity;
 
-    private int valid_term;
+    private Byte valid_term;
 
     private String image_url;
 
@@ -42,7 +43,7 @@ public class CouponActivityRetVo {
 
     private Long modi_by;
 
-    private int quantity_type;
+    private Byte quantity_type;
 
     public CouponActivityRetVo(CouponActivityPo po) {
         this.id=po.getId();
