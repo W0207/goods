@@ -1,9 +1,13 @@
 package cn.edu.xmu.presale.Controller;
 
 import cn.edu.xmu.ooad.util.JacksonUtil;
+import cn.edu.xmu.ooad.util.JwtHelper;
 import cn.edu.xmu.presale.PresaleServiceApplication;
+import cn.edu.xmu.presale.controller.PresaleController;
 import cn.edu.xmu.presale.model.vo.PresaleActivityVo;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +27,15 @@ public class PresaleActivityTest {
     @Autowired
     MockMvc mvc;
 
+    private static final Logger logger = LoggerFactory.getLogger(PresaleController.class);
+
+
+    private final String creatTestToken(Long userId, Long departId, int expireTime) {
+        String token = new JwtHelper().createToken(userId, departId, expireTime);
+        logger.debug("token: " + token);
+        return token;
+    }
+
     @Test
     public void getPresaleState() throws Exception {
         String responseString = this.mvc.perform(get("/presale/presales/states"))
@@ -34,7 +47,7 @@ public class PresaleActivityTest {
 
     @Test
     public void test() throws Exception {
-
+        String token = creatTestToken(1L, 0L, 100*11111111);
         PresaleActivityVo presaleActivityVo=new PresaleActivityVo();
         presaleActivityVo.setName("童振宇");
         presaleActivityVo.setAdvancePayPrice(100L);
@@ -44,9 +57,10 @@ public class PresaleActivityTest {
         presaleActivityVo.setPayTime(LocalDateTime.now());
         presaleActivityVo.setEndTime(LocalDateTime.now());
         String shopJson = JacksonUtil.toJson(presaleActivityVo);
+        System.out.println(shopJson);
         String expectedResponse = "";
 
-        String responseString = this.mvc.perform(post("/presale/shops/1/skus/273/presales").contentType("application/json;charset=UTF-8").content(shopJson))
+        String responseString = this.mvc.perform(post("/presale/shops/1/skus/273/presales").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -80,7 +94,12 @@ public class PresaleActivityTest {
 
     @Test
     public void deletePresale() throws Exception {
-        String responseString = this.mvc.perform(delete("/presale/shops/1/presales/3").contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100*11111111);
+        System.out.println("***********************************\n"
+                +token
+                +"*************************************\n"
+        );
+        String responseString = this.mvc.perform(delete("/presale/shops/1/presales/3").contentType("application/json;charset=UTF-8").header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);

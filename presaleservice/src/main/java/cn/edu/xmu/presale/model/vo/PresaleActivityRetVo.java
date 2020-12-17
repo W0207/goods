@@ -2,13 +2,14 @@ package cn.edu.xmu.presale.model.vo;
 
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
+import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.presale.model.po.PresaleActivityPo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class PresaleActivityRetVo {
+public class PresaleActivityRetVo implements VoObject {
     private Long id;
 
     private String name;
@@ -72,5 +73,31 @@ public class PresaleActivityRetVo {
 
     public void setGoodsSku(SkuToPresaleVo goodsSku) {
         this.goodsSku = goodsSku;
+    }
+
+    public PresaleActivityRetVo(PresaleActivityRetVo vo) {
+        this.endTime= vo.endTime;
+        this.state = vo.state;
+        this.gmtModified = vo.gmtModified;
+        this.gmtCreate = vo.gmtCreate;
+        this.payTime = vo.payTime;
+        this.beginTime = vo.beginTime;
+        this.quantity = vo.quantity;
+        this.restPayPrice = vo.restPayPrice;
+        this.advancePayPrice = vo.advancePayPrice;
+        this.name = vo.name;
+        this.id = vo.id;
+        this.goodsSku = vo.goodsSku;
+        this.shop = vo.shop;
+    }
+
+    @Override
+    public Object createVo() {
+        return new PresaleActivityRetVo(this);
+    }
+
+    @Override
+    public Object createSimpleVo() {
+        return null;
     }
 }

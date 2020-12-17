@@ -100,7 +100,7 @@ dubbo:
     subscribed-services: time-service
   protocols:
     dubbo:
-      port: 20880
+      port: -1
 
 
 #pagehelper分页插件配置
