@@ -93,7 +93,7 @@ public class CommentController {
     public Object show(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable Long id) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   skuId =" + id);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
         }
@@ -172,7 +172,7 @@ public class CommentController {
     public Object showComment(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @LoginUser Long userid) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userid);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
         }
@@ -199,7 +199,7 @@ public class CommentController {
     public Object showUnAuditComments(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @Depart Long id) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         state = (state == null) ? 0 : state;
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showUnAuditCommentsByCommentid(page, pageSize, state);
         return Common.getPageRetObject(returnObject);

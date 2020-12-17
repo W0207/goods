@@ -103,7 +103,7 @@ public class CouponController {
     public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Long shopId, @RequestParam(required = false) Long timeline) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId + "    timeline =" + timeline);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         shopId = (shopId == null) ? null : shopId;
         timeline = (timeline == null) ? 2 : timeline;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId, timeline);
@@ -129,8 +129,8 @@ public class CouponController {
     public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
-        if(!couponActivityPoMapper.selectByPrimaryKey(id).getShopId().equals(ShopId)){
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        if(!id.equals(ShopId)){
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE,"操作的资源id不是自己的对象");
         }
         else {

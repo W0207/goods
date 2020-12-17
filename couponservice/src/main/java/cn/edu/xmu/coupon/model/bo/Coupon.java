@@ -23,7 +23,7 @@ public class Coupon implements VoObject {
 
     private String couponSn;
 
-    private int state;
+    private Byte state;
 
     private LocalDateTime gmtCreate;
 

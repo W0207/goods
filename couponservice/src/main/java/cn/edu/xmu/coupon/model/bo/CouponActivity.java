@@ -31,13 +31,13 @@ public class CouponActivity implements VoObject {
 
     private LocalDateTime coupon_time;
 
-    private int state;
+    private Byte state;
 
     private Long shop_id;
 
-    private int quantity;
+    private Integer quantity;
 
-    private int valid_term;
+    private Byte valid_term;
 
     private String image_url;
 
@@ -47,7 +47,7 @@ public class CouponActivity implements VoObject {
 
     private Long modi_by;
 
-    private int quantity_type;
+    private Byte quantity_type;
 
     public enum State {
         //商-(优惠,团购,预售)活动：0：已下线，1：已上线，2：已删除
@@ -116,7 +116,7 @@ public class CouponActivity implements VoObject {
         return gmtModified;
     }
 
-    public int getState() {
+    public Byte getState() {
         return state;
     }
 
@@ -128,15 +128,15 @@ public class CouponActivity implements VoObject {
         return name;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public int getQuantity_type() {
+    public Byte getQuantity_type() {
         return quantity_type;
     }
 
-    public int getValid_term() {
+    public Byte getValid_term() {
         return valid_term;
     }
 

@@ -7,11 +7,12 @@ import lombok.Data;
 @Data
 @ApiOperation(value = "可修改的评论信息")
 public class CommentAuditVo {
+
     @ApiModelProperty(value = "评论状态")
-    private byte state;
+    private boolean state;
 
 
-    public Byte getState() {
+    public boolean getState() {
         return state;
     }
 }
