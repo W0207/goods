@@ -202,6 +202,11 @@ public class CouponControllerTest {
         System.out.println(responseString);
     }
 
+    /**
+     * 新建优惠活动
+     *
+     * @throws Exception
+     */
     @Test
     public void addCouponActivity() throws Exception {
         byte a = 10;

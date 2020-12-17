@@ -189,7 +189,9 @@ public class GoodsController {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 100 : pageSize;
-
+        if (page <= 0 || pageSize <= 0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findAllBrand(page, pageSize);
         return Common.getPageRetObject(returnObject);
@@ -246,8 +248,8 @@ public class GoodsController {
     @GetMapping("/sku")
     public Object getSkuList(
             @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @RequestParam(required = false) Integer shopId,
+            @RequestParam(required = false, defaultValue = "100") Integer pageSize,
+            @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) String skuSn,
             @RequestParam(required = false) Long spuId,
             @RequestParam(required = false) String spuSn

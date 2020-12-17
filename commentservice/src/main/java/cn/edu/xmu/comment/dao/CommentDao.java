@@ -9,8 +9,11 @@ import cn.edu.xmu.comment.model.vo.CommentAuditVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.UserInfo;
+import cn.edu.xmu.otherinterface.service.OtherModulService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -29,6 +32,9 @@ public class CommentDao implements InitializingBean {
 
     @Autowired
     private CommentPoMapper commentPoMapper;
+
+    @DubboReference(version = "0.0.1", check = false)
+    private OtherModulService otherModulService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentDao.class);
 
