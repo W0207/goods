@@ -102,7 +102,7 @@ public class PresaleController {
     ) {
         logger.debug("selectAllRoles: shopId = " + shopId + "  timeLine =" + timeLine + "  spuId =" + skuId + "  page = " + page + "  pageSize" + pageSize);
         ReturnObject returnObject = presaleService.selectAllPresale(shopId, timeLine, skuId, page, pageSize);
-        return Common.decorateReturnObject(returnObject);
+        return Common.getPageRetObject(returnObject);
     }
 
 

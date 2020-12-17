@@ -93,10 +93,10 @@ public class GoodsSpu implements VoObject {
         GoodsSpuPo goodsSpuPo = new GoodsSpuPo();
         goodsSpuPo.setId(id);
         goodsSpuPo.setName(spuInputVo.getName());
-        goodsSpuPo.setDetail(spuInputVo.getDescription());
+        goodsSpuPo.setDetail(spuInputVo.getDecription());
         goodsSpuPo.setSpec(spuInputVo.getSpecs());
         goodsSpuPo.setShopId(shopId);
-        goodsSpuPo.setDisabled((byte) 4);
+        goodsSpuPo.setDisabled((byte) 1);
         goodsSpuPo.setGmtModified(LocalDateTime.now());
         goodsSpuPo.setGmtCreate(LocalDateTime.now());
         return goodsSpuPo;

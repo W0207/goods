@@ -4,6 +4,7 @@ import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToPresaleVo;
+import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.presale.mapper.PresaleActivityPoMapper;
@@ -59,22 +60,29 @@ public class PresaleDao {
     public ReturnObject inserPresaleActivity(Long shopId, Long id, PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-        if (!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,结束时间小于开始时间");
+        if(presaleActivityVo.getBeginTime()==null){
+            return new ReturnObject(ResponseCode.Log_BEGIN_NULL);
         }
-        if (shopToAllVo.equals(null)) {
+        if(presaleActivityVo.getEndTime()==null){
+            return new ReturnObject(ResponseCode.Log_END_NULL);
+        }
+        if (!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())) {
+            returnObject = new ReturnObject(ResponseCode.Log_Bigger);
+            return returnObject;
+        }
+        if (shopToAllVo == null) {
             //店铺id不存在
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,shopId不存在");
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             SkuToPresaleVo skuToPresaleVo = goodservice.presaleFindSku(id);
-            if (skuToPresaleVo.equals(null)) {
+            if (skuToPresaleVo == null) {
                 //sku不存在
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,skuId不存在");
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 //判断sku在不在shop里
                 if (!goodservice.skuInShopOrNot(shopId, id)) {
                     //不在商店里
-                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "inserPresaleActivity,skuId不在shopId里");
+                    returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
                 } else {
                     PresaleActivityPo presaleActivityPo = presaleActivityVo.creatPo();
                     presaleActivityPo.setState((byte) 0);
@@ -141,12 +149,13 @@ public class PresaleDao {
             vo.setGoodsSku(goodservice.presaleFindSku(po.getGoodsSkuId()));
             presaleActivityRetVos.add(vo);
         }
-        PageInfo<PresaleActivityPo> poPageInfo = new PageInfo<>(presaleActivityPos);
-        PageInfo<PresaleActivityRetVo> voPageInfo = new PageInfo<>(presaleActivityRetVos);
-        voPageInfo.setPages(poPageInfo.getPages());
-        voPageInfo.setPageNum(poPageInfo.getPageNum());
-        voPageInfo.setPageSize(poPageInfo.getPageSize());
-        voPageInfo.setTotal(poPageInfo.getTotal());
+        PageInfo<PresaleActivityPo> poPageInfo = PageInfo.of(presaleActivityPos);
+        PageInfo<PresaleActivityRetVo> voPageInfo = PageInfo.of(presaleActivityRetVos);
+        PageInfo<PresaleActivityRetVo> presalePage = new PageInfo<>(presaleActivityRetVos);
+        presalePage.setPages(poPageInfo.getPages());
+        presalePage.setPageNum(poPageInfo.getPageNum());
+        presalePage.setPageSize(poPageInfo.getPageSize());
+        presalePage.setTotal(poPageInfo.getTotal());
         /**
          * 还缺少关于sku的信息
          */
@@ -200,10 +209,10 @@ public class PresaleDao {
         ReturnObject returnObject = null;
         PresaleActivityPo presaleActivityPo = presaleActivityPoMapper.selectByPrimaryKey(id);
         if (presaleActivityPo == null) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("删除预售活动时，预售活动的id不存在"));
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!presaleActivityPo.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("删除预售活动时，商店的id与活动里是商店id不一致"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 if (presaleActivityPo.getState().equals((byte) 1)) {
                     //处在上线拒绝操作
@@ -230,6 +239,10 @@ public class PresaleDao {
         PresaleActivityPoExample presaleActivityPoExample = new PresaleActivityPoExample();
         PresaleActivityPoExample.Criteria criteria = presaleActivityPoExample.createCriteria();
         criteria.andShopIdEqualTo(shopId);
+        if(state>3||state<0)
+        {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         if (id != null) {
             criteria.andGoodsSkuIdEqualTo(id);
         }
@@ -243,7 +256,7 @@ public class PresaleDao {
         }
         List<PresaleActivityPo> presaleActivityPos = presaleActivityPoMapper.selectByExample(presaleActivityPoExample);
         if (presaleActivityPos == null) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "没有对于shopID和skuID的优惠活动");
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             List<PresaleActivityRetVo> presaleActivityRetVos = new ArrayList<>(presaleActivityPos.size());
             for (PresaleActivityPo po : presaleActivityPos) {
@@ -261,10 +274,10 @@ public class PresaleDao {
         ReturnObject returnObject = null;
         PresaleActivityPo po = presaleActivityPoMapper.selectByPrimaryKey(id);
         if (po == null) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "presaleOnShelves,活动id不存在");
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!po.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "presaleOnShelves,shopID不一致");
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 if (po.getState().equals((byte) 2)) {
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
@@ -286,13 +299,13 @@ public class PresaleDao {
         ReturnObject returnObject = null;
         PresaleActivityPo po = presaleActivityPoMapper.selectByPrimaryKey(id);
         if (po == null) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "presaleOnShelves,活动id不存在");
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
             if (!po.getShopId().equals(shopId)) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "presaleOnShelves,shopID不一致");
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
                 if (po.getState().equals((byte) 2)) {
-                    returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW, "presaleOnShelves,预售状态不允许改变");
+                    returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
                     if (po.getState().equals((byte) 0)) {
                         return new ReturnObject();
