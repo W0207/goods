@@ -110,10 +110,9 @@ public class CouponControllerTest {
 
     @Test
     public void showOwncouponactivities() throws Exception {
-        String requireJson = "{\n  \"page\":\"1\",\n  \"pageSize\": \"2\"\n}";
-        String responseString = this.mvc.perform(get("/coupon/couponactivities")
-                .contentType("application/json;charset=UTF-8")
-                .content(requireJson))
+        String responseString = this.mvc.perform(get("/coupon/couponactivities?shopId=0"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);

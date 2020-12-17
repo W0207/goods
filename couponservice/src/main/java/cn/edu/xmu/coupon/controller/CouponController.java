@@ -103,7 +103,7 @@ public class CouponController {
     public Object showOwncouponactivities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Long shopId, @RequestParam(required = false) Long timeline) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId + "    timeline =" + timeline);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         shopId = (shopId == null) ? null : shopId;
         timeline = (timeline == null) ? 2 : timeline;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId, timeline);
