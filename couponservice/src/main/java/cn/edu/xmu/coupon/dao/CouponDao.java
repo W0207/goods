@@ -110,7 +110,7 @@ public class CouponDao {
     public ReturnObject<PageInfo<VoObject>> showOwnInvalidcouponacitvitiesByid(Integer page, Integer pageSize, Long id) {
         CouponActivityPoExample example = new CouponActivityPoExample();
         CouponActivityPoExample.Criteria criteria = example.createCriteria();
-        criteria.andStateEqualTo((byte) 1);
+        criteria.andStateEqualTo((byte) 0);
         criteria.andShopIdEqualTo(id);
         PageHelper.startPage(page, pageSize);
         List<CouponActivityPo> couponActivityPos = null;

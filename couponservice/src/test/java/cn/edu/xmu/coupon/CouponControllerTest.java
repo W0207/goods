@@ -126,8 +126,8 @@ public class CouponControllerTest {
     @Test
     public void showOwnInvalidcouponacitvitiesByid() throws Exception {
 
-        String token = creatTestToken(1L, 123L, 100);
-        String responseString = this.mvc.perform(get("/coupon/shops/123/couponactivities/invalid").header("authorization", token))
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/coupon/shops/0/couponactivities/invalid").header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";

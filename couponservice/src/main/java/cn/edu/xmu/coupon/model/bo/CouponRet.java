@@ -40,7 +40,7 @@ public class CouponRet implements VoObject {
     private LocalDateTime coupon_time;
 
     @ApiModelProperty("优惠活动优惠券数目")
-    private int quantity;
+    private Integer quantity;
 
 
     public CouponRet(Coupon co) {
@@ -100,7 +100,7 @@ public class CouponRet implements VoObject {
         return id;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 

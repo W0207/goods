@@ -14,7 +14,7 @@ public class CouponActivityModifyVo {
     private String name;
 
     @ApiModelProperty(value = "优惠券数目")
-    private int quantity;
+    private Integer quantity;
 
     @ApiModelProperty(value = "活动开始时间")
     private LocalDateTime begin_time;
@@ -37,7 +37,7 @@ public class CouponActivityModifyVo {
         return begin_time;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 

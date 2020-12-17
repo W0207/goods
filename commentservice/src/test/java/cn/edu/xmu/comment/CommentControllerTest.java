@@ -98,7 +98,7 @@ public class CommentControllerTest {
     @Test
     public void show() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comment/skus/1/comments?pageSize=10"))
+        String responseString = this.mvc.perform(get("/comment/skus/185/comments?pageSize=10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();

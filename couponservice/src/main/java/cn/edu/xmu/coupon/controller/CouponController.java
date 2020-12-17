@@ -129,8 +129,8 @@ public class CouponController {
     public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
-        if(!couponActivityPoMapper.selectByPrimaryKey(id).getShopId().equals(ShopId)){
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        if(!id.equals(ShopId)){
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE,"操作的资源id不是自己的对象");
         }
         else {
