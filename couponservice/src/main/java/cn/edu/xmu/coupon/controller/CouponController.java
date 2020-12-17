@@ -127,7 +127,7 @@ public class CouponController {
     @Audit // 需要认证
     @GetMapping("/shops/{id}/couponactivities/invalid")
     public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
-        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
+        logger.debug("showOwnInvalidcouponacitvities: page = " + page + "  pageSize =" + pageSize + " id=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         if(!id.equals(ShopId)){
