@@ -185,7 +185,7 @@ public class CouponDao {
                 } else {
                     AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
                     vo.setShop(shopToAllVo);
-                    vo.setId(Long.parseLong(String.valueOf(retId)));
+                    vo.setId(po.getId());
                     returnObject = new ReturnObject(vo);
                 }
             }

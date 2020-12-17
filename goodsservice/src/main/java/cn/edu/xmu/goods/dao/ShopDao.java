@@ -264,6 +264,9 @@ public class ShopDao {
             }
             shopPoMapper.updateByPrimaryKeySelective(shopPo);
         }
+        else {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         logger.info("新店id = " + id + " 的信息已审核");
         return new ReturnObject<>();
     }
