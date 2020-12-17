@@ -16,11 +16,11 @@ public class SpuRetVo implements VoObject {
 
     private String name;
 
-    private SimpleBrandVo Brand;
+    private SimpleBrandVo brand;
 
-    private SimpleCategoryVo Category;
+    private SimpleCategoryVo category;
 
-    private SimpleShopVo Shop;
+    private SimpleShopVo shop;
 
     private String goodsSn;
 

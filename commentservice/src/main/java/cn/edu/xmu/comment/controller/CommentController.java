@@ -17,6 +17,7 @@ import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.otherinterface.bo.UserInfo;
 import cn.edu.xmu.otherinterface.service.OtherModulService;
 //import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
@@ -53,7 +54,6 @@ public class CommentController {
 
     @Autowired
     private HttpServletResponse httpServletResponse;
-
 
     @ApiOperation(value = "查看sku的评价列表（已通过审核）")
     @GetMapping("/test")
@@ -94,6 +94,9 @@ public class CommentController {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   skuId =" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
+        if (page <= 0 || pageSize <= 0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentBySkuid(page, pageSize, id);
         return Common.getPageRetObject(returnObject);
     }
@@ -170,6 +173,9 @@ public class CommentController {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userid);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 60 : pageSize;
+        if (page <= 0 || pageSize <= 0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentByUserid(page, pageSize, userid);
         return Common.getPageRetObject(returnObject);
     }

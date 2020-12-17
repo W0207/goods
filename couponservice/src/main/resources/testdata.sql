@@ -20,7 +20,7 @@
 --
 
 LOCK
-TABLES `brand` WRITE;
+    TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand`
     DISABLE KEYS */;
 INSERT INTO `brand`
@@ -84,32 +84,43 @@ values (20120, 'cpz1', NULL, NULL, '2020-12-10 22:36:01', '2020-12-10 22:36:01')
 /*!40000 ALTER TABLE `brand`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `comment`
 --
 
 LOCK
-TABLES `comment` WRITE;
+    TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment`
     DISABLE KEYS */;
 /*XiangSuXianTest*/
 INSERT INTO `comment`
-VALUES (1, 1, 273, 0, 1, '还不错', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
-       (2, 1, 273, 0, 2, '挺好的', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
-       (3, 1, 273, 0, 3, '哇偶', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01');
+VALUES (1, 1, 185, 1, 1, '还不错', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
+       (2, 1, 185, 2, 2, '挺好的', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
+       (3, 1, 185, 3, 1, '哇偶', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
+       (4, 1, 185, 4, 1, 'f**k', 2, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (6, 1, 185, 6, 0, '真不错', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (7, 1, 185, 7, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (8, 1, 185, 8, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (9, 1, 185, 9, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (10, 1, 185, 11, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (13, 1, 185, 15, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (14, 1, 185, 16, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (15, 1, 185, 17, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (16, 1, 185, 18, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (17, 1, 185, 19, 1, 'f**k', 2, '2020-12-13 13:48:44', '2020-12-13 13:48:44');
 /*!40000 ALTER TABLE `comment`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon`
 --
 
 LOCK
-TABLES `coupon` WRITE;
+    TABLES `coupon` WRITE;
 /*!40000 ALTER TABLE `coupon`
     DISABLE KEYS */;
 /*ChenPinzhenTest*/
@@ -132,14 +143,14 @@ values (20001, NULL, 'cpz1', 1, 1, '2020-11-30 19:22:52', '2021-11-30 19:31:44',
 /*!40000 ALTER TABLE `coupon`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon_activity`
 --
 LOCK
-TABLES `coupon_activity` WRITE;
-/*BaiHaoyueTest*/
+    TABLES `coupon_activity` WRITE;
+select '/*BaiHaoyueTest*/';
 /*!40000 ALTER TABLE `coupon_activity`
     DISABLE KEYS */;
 INSERT INTO `coupon_activity`
@@ -162,7 +173,7 @@ VALUES (1, 'string', '2022-12-13 08:02:14', '2024-12-13 08:02:14', '2022-12-13 0
        (9, 'string', '2020-12-13 16:33:50', '2021-12-29 08:28:50', '2020-12-14 08:28:50', 0, 0, 0, 0, NULL, 'string', 1,
         NULL, '2020-12-14 00:33:31', NULL, 0);
 
-/*ChenPinzhenTest*/
+select '/*ChenPinzhenTest*/';
 insert into `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
                               `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
                               `gmt_modified`, `quantitiy_type`)
@@ -179,17 +190,42 @@ values (20001, 'cpz1', '2020-11-01 03:22:30', '2021-01-31 03:22:39', '2020-12-01
        (20006, 'cpz6', '2020-12-01 06:20:49', '2020-12-03 06:20:52', '2020-12-02 06:20:57', 1, 1, 100, NULL, NULL, NULL,
         NULL, NULL, '2020-12-16 06:21:15', NULL, 1);
 
+select '/*LiuFeiYanTest*/';
+INSERT
+INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
+                       `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`, `gmt_modified`,
+                       `quantitiy_type`)
+VALUES (2158, '双十一', '2021-01-20 22:46:38', '2021-01-30 22:46:55', '2021-01-10 22:47:01', 0, 0, 0, 0, NULL, NULL, NULL,
+        NULL, '2020-12-15 22:47:50', NULL, NULL);
+INSERT INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
+                              `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
+                              `gmt_modified`, `quantitiy_type`)
+VALUES (1582, '年终大促', '2020-12-15 23:08:24', '2020-12-16 23:08:29', '2020-12-15 23:08:33', 1, 0, 0, 0, NULL, '', NULL,
+        NULL, '2020-12-15 23:07:50', NULL, NULL);
+INSERT INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
+                              `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
+                              `gmt_modified`, `quantitiy_type`)
+VALUES (5821, '开学季', '2020-12-30 23:09:04', '2020-12-31 23:09:09', '2020-12-30 23:09:12', 2, 0, 0, 0, NULL, NULL, NULL,
+        NULL, '2020-12-15 23:52:30', NULL, NULL);
+
+select '/*Ming Qiu*/';
+INSERT INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
+                              `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
+                              `gmt_modified`, `quantitiy_type`)
+VALUES (12158, '满500 - 50', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '2020-01-10 22:47:01', 0, 0, 0, 0, NULL, NULL,
+        NULL, NULL, '2020-12-15 22:47:50', NULL, NULL);
+
 /*!40000 ALTER TABLE `coupon_activity`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `coupon_sku`
 --
 
 LOCK
-TABLES `coupon_sku` WRITE;
+    TABLES `coupon_sku` WRITE;
 /*!40000 ALTER TABLE `coupon_sku`
     DISABLE KEYS */;
 /*BaiHaoyueTest*/
@@ -206,33 +242,37 @@ values (20001, 20001, 20680, '2020-12-16 03:34:55', NULL),
 /*!40000 ALTER TABLE `coupon_sku`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `flash_sale`
 --
 
 LOCK
-TABLES `flash_sale` WRITE;
+    TABLES `flash_sale` WRITE;
 /*!40000 ALTER TABLE `flash_sale`
     DISABLE KEYS */;
-/*SongRunhanTest*/
+select '/*SongRunhanTest*/';
 INSERT INTO `flash_sale`
 VALUES (1, addDate(now(), interval 1 day), 0, '2020-12-11 00:00:00', '2020-12-11 00:00:00', 1),
        (2, addDate(now(), interval 1 day), 1, '2020-12-11 00:00:00', '2020-12-11 00:00:00', 1),
        (3, now(), 0, '2020-12-11 00:00:00', '2020-12-11 00:00:00', 1),
        (4, now(), 1, '2020-12-11 00:00:00', '2020-12-11 00:00:00', 1);
+
+select '/*ShaoLiangYingTest*/';
+-- insert into flash_sale value(10828, "2020-11-14 10:46:32", 8, "2020-10-14 10:46:32",null); --
+
 /*!40000 ALTER TABLE `flash_sale`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `flash_sale_item`
 --
 
 LOCK
-TABLES `flash_sale_item` WRITE;
+    TABLES `flash_sale_item` WRITE;
 /*!40000 ALTER TABLE `flash_sale_item`
     DISABLE KEYS */;
 /*SongRunhanTest*/
@@ -249,17 +289,17 @@ VALUES (1, 1, 290, 305, 30, '2020-12-11 00:00:00', NULL),
 /*!40000 ALTER TABLE `flash_sale_item`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `float_price`
 --
 
 LOCK
-TABLES `float_price` WRITE;
+    TABLES `float_price` WRITE;
 /*!40000 ALTER TABLE `float_price`
     DISABLE KEYS */;
-/*WangYiFeiTest*/
+select '/*WangYiFeiTest*/';
 INSERT INTO `float_price`
 VALUES (9000, 8990, 12, '2020-12-15 22:55:00', '2020-12-20 22:55:00', 10, 1, NULL, 1, '2020-12-15 17:04:58',
         '2020-12-15 17:04:58');
@@ -267,7 +307,7 @@ INSERT INTO `float_price`
 VALUES (9001, 8991, 4, '2020-12-15 22:55:00', '2020-12-20 22:55:00', 10, 1, NULL, 1, '2020-12-15 17:04:58',
         '2020-12-15 17:04:58');
 
-/*ChenPinzhenTest*/
+select '/*ChenPinzhenTest*/';
 insert into `float_price`(`id`, `goods_sku_id`, `activity_price`, `begin_time`, `end_time`, `quantity`, `created_by`,
                           `invalid_by`, `valid`, `gmt_create`, `gmt_modified`)
 values (20001, 20680, 78, '2020-12-01 01:41:22', '2020-12-10 01:41:28', 32, 0, 0, 0, '2020-12-14 01:41:52',
@@ -275,17 +315,21 @@ values (20001, 20680, 78, '2020-12-01 01:41:22', '2020-12-10 01:41:28', 32, 0, 0
        (20002, 20680, 10, '2021-12-13 22:02:50', '2021-12-14 22:02:50', 80, 0, 0, 1, '2020-12-14 14:04:33',
         '0000-00-00 00:00:00');
 
+select '/*ShaoLiangYing*/';
+insert into float_price
+values (828, 626, 166, '2020-12-27 00:00:00', '2021-1-07 00:00:00', 1000, 130880, null, 0, CURDATE(), null);
+
 /*!40000 ALTER TABLE `float_price`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_category`
 --
 
 LOCK
-TABLES `goods_category` WRITE;
+    TABLES `goods_category` WRITE;
 /*!40000 ALTER TABLE `goods_category`
     DISABLE KEYS */;
 INSERT INTO `goods_category`
@@ -315,14 +359,14 @@ values (20140, 'cpz1', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
 /*!40000 ALTER TABLE `goods_category`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_sku`
 --
 
 LOCK
-TABLES `goods_sku` WRITE;
+    TABLES `goods_sku` WRITE;
 /*!40000 ALTER TABLE `goods_sku`
     DISABLE KEYS */;
 INSERT INTO `goods_sku`
@@ -1135,6 +1179,20 @@ INSERT INTO `goods_sku`
 VALUES (8991, 9001, NULL, '拖鞋', 12, NULL, 2, 'http://47.52.88.176/file/images/201612/file_1132asdew26.jpg', 50, NULL, 0,
         '2020-12-15 22:55:00', '2020-12-10 22:55:00', 4);
 
+/*CaiXinlu*/
+INSERT INTO `goods_sku`(`id`, `goods_spu_id`, `sku_sn`, `name`, `original_price`, `configuration`, `weight`,
+                        `image_url`, `inventory`, `detail`, `disabled`, `gmt_create`, `gmt_modified`, `state`)
+VALUES (10000, 10000, NULL, '+', 1298, NULL, 11000, 'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg',
+        1000, NULL, 4, '2020-12-16 18:27:49', '2020-12-16 18:28:45', 4);
+INSERT INTO `goods_sku`(`id`, `goods_spu_id`, `sku_sn`, `name`, `original_price`, `configuration`, `weight`,
+                        `image_url`, `inventory`, `detail`, `disabled`, `gmt_create`, `gmt_modified`, `state`)
+VALUES (10001, 10001, NULL, '+', 1298, NULL, 12000, 'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg',
+        1000, NULL, 4, '2020-12-16 18:29:41', '2020-12-16 18:29:58', 4);
+INSERT INTO `goods_sku`(`id`, `goods_spu_id`, `sku_sn`, `name`, `original_price`, `configuration`, `weight`,
+                        `image_url`, `inventory`, `detail`, `disabled`, `gmt_create`, `gmt_modified`, `state`)
+VALUES (10002, 10002, NULL, '+', 1298, NULL, 10000, 'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg',
+        1000, NULL, 4, '2020-12-16 18:30:14', '2020-12-16 18:30:46', 4);
+
 /*YuanShenyangTest*/
 INSERT INTO `goods_sku`
 VALUES (6800, 6800, NULL, '+', 6698, NULL, 12, 'http://47.52.88.176/file/images/201912/file_5df048b5be111.jpg', 1000,
@@ -1169,18 +1227,22 @@ values (20680, 20680, NULL, 'cpz1', 980000, NULL, 10, 'http://47.52.88.176/file/
         1, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (20681, 20681, NULL, 'cpz2', 32323, NULL, 90, 'http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg', 1,
         NULL, 0, '2020-12-16 03:34:10', NULL, 4);
+/*YangMingTest*/
+INSERT INTO `goods_sku`
+VALUES (3311, 3311, NULL, '+', 3344, NULL, 23, 'http://47.52.88.176/file/images/201612/file_5862230d20162.jpg', 1, NULL,
+        0, '2020-12-16 10:24:57', NULL, 4);
 
 /*!40000 ALTER TABLE `goods_sku`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `goods_spu`
 --
 
 LOCK
-TABLES `goods_spu` WRITE;
+    TABLES `goods_spu` WRITE;
 /*!40000 ALTER TABLE `goods_spu`
     DISABLE KEYS */;
 INSERT INTO `goods_spu`
@@ -1898,13 +1960,13 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (516, '金和汇景-法门寺开光香灰瓷珠（男宝石蓝）', 105, 138, NULL, 0, 'jhhj-l0005', NULL,
         'http://47.52.88.176/file/images/201807/file_5b513b7e9c0fd.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (517, '金和汇景-法门寺开光香灰瓷车挂（宝石蓝）', 105, 138, NULL, 0, 'jhhj-l0007', NULL,
+       (517, '金和汇景-法门寺开光香灰瓷车挂（宝石蓝）', 105, 138, 23, 0, 'jhhj-l0007', NULL,
         'http://47.52.88.176/file/images/201711/file_5a0057e5d5ac9.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (518, '金和汇景-法门寺开光香灰瓷念珠（银河蓝）', 105, 138, NULL, 0, 'jhhj-l0008', NULL,
+       (518, '金和汇景-法门寺开光香灰瓷念珠（银河蓝）', 105, 138, 22, 1, 'jhhj-l0008', NULL,
         'http://47.52.88.176/file/images/201807/file_5b51380538633.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (519, '金和汇景-法门寺开光香灰瓷念珠（贵妃红）', 105, 138, NULL, 0, 'jhhj-l0009', NULL,
+       (519, '金和汇景-法门寺开光香灰瓷念珠（贵妃红）', 105, 138, 23, 1, 'jhhj-l0009', NULL,
         'http://47.52.88.176/file/images/201711/file_5a00545f9a1e5.png', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (520, '金和汇景-法门寺开光香灰瓷念珠（菩提）', 105, 138, NULL, 0, 'jhhj-l0010', NULL,
@@ -2381,12 +2443,12 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (679, '猴鸡狗猪鼠年套组', 104, 126, NULL, 0, 'zgjyzgs-8060002', NULL,
         'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01');
-/*LanZhibinTest*/
+select '/*LanZhibinTest*/';
 INSERT INTO `goods_spu`
 VALUES (1000, '联想Y7000', 71, 123, 11, 1, 'drh-d0001', NULL,
         'http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01');
-/*WangYiFeiTest*/
+select '/*WangYiFeiTest*/';
 INSERT INTO `goods_spu`
 VALUES (9000, '阿瓦隆', 71, 123, 11, 1, 'drh-d0001', NULL,
         'http://47.52.88.176/file/images/201612/file_file_1132asdew26.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -2397,6 +2459,22 @@ VALUES (9001, 'ysl', 71, 123, 11, 22, 'ys-12245', NULL,
         'http://47.52.88.176/file/images/201412/file_file_1132asdew26.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01');
 
+/*CaiXinluTest*/
+INSERT INTO `goods_spu`(`id`, `name`, `brand_id`, `category_id`, `freight_id`, `shop_id`, `goods_sn`, `detail`,
+                        `image_url`, `spec`, `disabled`, `gmt_create`, `gmt_modified`)
+VALUES (10000, '测试商品123', 104, 126, 10001, 3, 'zgjyzgs-8060012', NULL,
+        'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg', 'default', 4, '2020-12-16 18:23:10',
+        '2020-12-16 18:23:10');
+INSERT INTO `goods_spu`(`id`, `name`, `brand_id`, `category_id`, `freight_id`, `shop_id`, `goods_sn`, `detail`,
+                        `image_url`, `spec`, `disabled`, `gmt_create`, `gmt_modified`)
+VALUES (10001, '测试商品1234', 104, 126, NULL, 3, 'zgjyzgs-8060112', NULL,
+        'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg', 'default', 4, '2020-12-16 18:24:16',
+        '2020-12-16 18:24:16');
+INSERT INTO `goods_spu`(`id`, `name`, `brand_id`, `category_id`, `freight_id`, `shop_id`, `goods_sn`, `detail`,
+                        `image_url`, `spec`, `disabled`, `gmt_create`, `gmt_modified`)
+VALUES (10002, '测试商品12345', 104, 126, 10003, 4, 'zgjyzgs-8060212', NULL,
+        'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg', 'default', 4, '2020-12-16 18:25:28',
+        '2020-12-16 18:25:28');
 
 /*YuanShenyangTest*/
 INSERT INTO `goods_spu`
@@ -2426,17 +2504,46 @@ values (20680, 'cpz1', 20120, 20140, NULL, 0, 'drh-d0001', NULL,
         'http://47.52.88.176/file/images/201612/file_5861cd259e57a.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01');
 
+/*YangMingTest*/
+INSERT INTO `goods_spu`
+VALUES (3311, 'testgoods', 1, 1, 1, 1, 'abc', NULL, 'http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg',
+        'default', 0, '2020-12-14 10:46:32', '2020-12-25 20:44:55');
+
+/*ZhangYueTest*/;
+INSERT INTO `goods_spu`
+VALUES (11273, '金和汇景•古彩洛神赋瓷瓶', 71, 128, NULL, 0, 'drh-d0001', NULL,
+        'http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg', 'default', 0, '2020-12-10 22:36:01',
+        '2020-12-10 22:36:01'),
+       (11274, '金和汇景•宝瓷林色茶具', 73, 124, NULL, 0, 'bcl-b0001', NULL,
+        'http://47.52.88.176/file/images/201612/file_5861cd259e57a.jpg', 'default', 0, '2020-12-10 22:36:01',
+        '2020-12-10 22:36:01');
+/*!40000 ALTER TABLE `goods_spu`
+    ENABLE KEYS */;
+
+
+select '/*Ming Qiu*/';
+SET
+    SQL_SAFE_UPDATES = 0;
+UPDATE goods_spu
+SET disabled = 0
+WHERE disabled = 4;
+UPDATE goods_spu
+SET shop_id = 1
+WHERE shop_id IS NULL
+   or shop_id = 0;
+SET
+    SQL_SAFE_UPDATES = 0;
 /*!40000 ALTER TABLE `goods_spu`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `groupon_activity`
 --
 
 LOCK
-TABLES `groupon_activity` WRITE;
+    TABLES `groupon_activity` WRITE;
 /*!40000 ALTER TABLE `groupon_activity`
     DISABLE KEYS */;
 /*LiDiHanTest*/
@@ -2461,18 +2568,20 @@ VALUES (5, '劳动节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273,
         '2020-12-09 11:57:39');
 /*!40000 ALTER TABLE `groupon_activity`
     ENABLE KEYS */;
+
+
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `presale_activity`
 --
 
 LOCK
-TABLES `presale_activity` WRITE;
+    TABLES `presale_activity` WRITE;
 /*!40000 ALTER TABLE `presale_activity`
     DISABLE KEYS */;
-/*XiangSuXianTest*/
+select '/*XiangSuXianTest*/';
 INSERT INTO `presale_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_sku_id`, `quantity`,
                                 `advance_pay_price`, `rest_pay_price`, `gmt_create`, `gmt_modified`)
 VALUES (1, '双十一', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, 0, 0, 0, '2020-12-09 11:57:39',
@@ -2493,42 +2602,88 @@ INSERT INTO `presale_activity` (`id`, `name`, `begin_time`, `end_time`, `state`,
                                 `advance_pay_price`, `rest_pay_price`, `gmt_create`, `gmt_modified`)
 VALUES (5, '女生节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273, 0, 0, 0, '2020-12-09 11:57:39',
         '2020-12-09 11:57:39');
+
+select '/*YangMingTest*/';
+INSERT INTO `presale_activity`
+VALUES (3100, NULL, '2021-1-4 00:39:21', '2023-8-2 00:39:16', '2021-1-30 00:39:25', 1, 1, 3311, 43, 3, 432,
+        '2020-12-16 00:39:46', NULL);
+INSERT INTO `presale_activity`
+VALUES (3101, NULL, '2023-1-1 00:40:30', '2023-12-31 00:40:36', '2020-12-26 00:40:39', 0, 1, 3311, 534, 4, 534,
+        '2020-12-16 00:40:48', NULL);
+INSERT INTO `presale_activity`
+VALUES (3102, NULL, '2020-12-2 00:41:34', '2020-12-24 00:41:30', '2021-1-3 00:41:26', 2, 1, 3311, 7657, 5, 435,
+        '2020-12-16 00:41:37', NULL);
+INSERT INTO `presale_activity`
+VALUES (3103, NULL, '2024-12-17 00:42:36', '2024-12-18 00:42:33', '2020-12-26 00:42:28', 0, 1, 3311, 534, 6, 564,
+        '2020-12-16 00:42:39', NULL);
+INSERT INTO `presale_activity`
+VALUES (3104, NULL, '2019-3-8 00:42:54', '2019-12-24 00:42:59', '2020-12-25 00:43:02', 0, 1, 3311, 7, 6, 543,
+        '2020-12-16 00:43:10', NULL);
+INSERT INTO `presale_activity`
+VALUES (3105, NULL, '2025-12-14 00:43:58', '2025-12-10 00:43:55', '2020-12-26 00:43:51', 1, 1, 3311, NULL, 7, 867,
+        '2020-12-16 00:44:02', NULL);
+INSERT INTO `presale_activity`
+VALUES (3106, NULL, '2026-10-26 00:44:33', '2026-1-2 00:44:29', '2021-2-7 00:44:24', 0, 1, 3311, 645, 2, 8,
+        '2020-12-16 00:44:37', NULL);
+INSERT INTO `presale_activity`
+VALUES (3107, NULL, '2027-12-17 00:45:21', '2027-12-8 00:45:16', '2020-12-26 00:45:12', 1, 1, 3311, 876, 5, 876,
+        '2020-12-16 00:45:24', NULL);
+INSERT INTO `presale_activity`
+VALUES (3108, NULL, '2027-11-30 00:45:51', '2028-12-26 00:45:48', '2021-1-10 00:45:44', 0, 1, 3311, 53, 4, 765,
+        '2020-12-16 00:45:54', NULL);
+INSERT INTO `presale_activity`
+VALUES (3109, NULL, '2029-10-27 00:46:40', '2029-12-7 00:46:36', '2020-12-18 00:46:30', 2, 1, 3311, 423, 75, 564,
+        '2020-12-16 00:46:45', NULL);
+INSERT INTO `presale_activity`
+VALUES (3110, NULL, '2020-12-1 00:47:26', '2020-12-9 00:47:22', '2021-1-2 00:47:19', 0, 1, 3311, NULL, NULL, NULL,
+        '2020-12-16 00:47:30', NULL);
+
 /*!40000 ALTER TABLE `presale_activity`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 
 --
 -- Dumping data for table `shop`
 --
 
 LOCK
-TABLES `shop` WRITE;
+    TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop`
     DISABLE KEYS */;
-/*LiDiHanTest*/
+select '/*LiDiHanTest*/';
 INSERT INTO `shop`
 VALUES (1, 'Nike', 0, '2020-12-05 11:57:39', '2020-12-05 11:57:39'),
        (2, 'Adidas', 1, '2020-12-05 11:57:39', '2020-12-05 11:57:39'),
        (3, 'Apple', 1, '2020-12-05 11:57:39', '2020-12-05 11:57:39'),
        (4, '华为', 2, '2020-12-05 11:57:39', '2020-12-05 11:57:39');
+INSERT INTO `shop` (`id`, `name`, `state`, `gmt_create`, `gmt_modified`)
+VALUES (5, '联想', 4, '2020-12-05 11:57:39', '2020-12-05 11:57:39');
 
-/*YangLeiTest*/
+select '/*HuangJianhengTest*/';
 INSERT INTO `shop`
-VALUES (5, '未审核商铺', '0', '2020-12-03 11:02:50', '2020-12-03 11:02:50');
+VALUES (4567, 'super shop', NULL, '2020-12-10 19:29:33', '2020-12-10 19:29:33');
+
+select '/*ChenPinzhenTest*/';
+insert into `shop`(`id`, `name`, `state`, `gmt_create`, `gmt_modified`)
+values (20001, 'cpz1', 0, '2020-12-15 20:14:21', NULL);
+
+select '/*ShaoLiangYingTest*/';
+insert into shop
+values (828, '早早鸟旗舰店', 0, CURDATE(), null);
+
+select '/*YangLeiTest*/';
 INSERT INTO `shop`
 VALUES (6, '审核未通过商铺', '4', '2020-12-03 11:02:50', '2020-12-03 11:02:50');
 INSERT INTO `shop`
 VALUES (7, '好好的店铺', '2', '2020-12-03 11:02:50', '2020-12-03 11:02:50');
-
-/*ChenPinzhenTest*/
-insert into `shop`(`id`, `name`, `state`, `gmt_create`, `gmt_modified`)
-values (20001, 'cpz1', 0, '2020-12-15 20:14:21', NULL);
+INSERT INTO `shop`
+VALUES (8, '未审核商铺', '0', '2020-12-03 11:02:50', '2020-12-03 11:02:50');
 
 /*!40000 ALTER TABLE `shop`
     ENABLE KEYS */;
 UNLOCK
-TABLES;
+    TABLES;
 /*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE = @OLD_SQL_MODE */;

@@ -61,6 +61,11 @@ public class GoodsControllerTest {
         return token;
     }
 
+    @Test
+    public void create() {
+        logger.debug("************************" + creatTestToken(1L, 0L, 1000 * 60 * 60 * 24) + "*****************");
+    }
+
     /**
      * 获得商品sku所有状态
      */

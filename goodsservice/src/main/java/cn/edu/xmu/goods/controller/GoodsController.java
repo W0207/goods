@@ -82,7 +82,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/spus/{id}")
     public Object deleteGoodsSpu(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -189,7 +189,9 @@ public class GoodsController {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 100 : pageSize;
-
+        if (page <= 0 || pageSize <= 0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = goodsService.findAllBrand(page, pageSize);
         return Common.getPageRetObject(returnObject);
@@ -246,8 +248,8 @@ public class GoodsController {
     @GetMapping("/sku")
     public Object getSkuList(
             @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @RequestParam(required = false) Integer shopId,
+            @RequestParam(required = false, defaultValue = "100") Integer pageSize,
+            @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) String skuSn,
             @RequestParam(required = false) Long spuId,
             @RequestParam(required = false) String spuSn
@@ -822,13 +824,12 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/spus/{id}")
     public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
@@ -855,13 +856,12 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/spus")
     public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSpu : shopId = " + shopId + " vo = " + spuInputVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId);

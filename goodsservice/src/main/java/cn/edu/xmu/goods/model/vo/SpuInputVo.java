@@ -12,7 +12,7 @@ public class SpuInputVo {
 
     private String name;
 
-    private String description;
+    private String decription;
 
     private String specs;
 }
