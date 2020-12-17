@@ -34,8 +34,8 @@ public class PresaleActivity {
 
     public enum State {
         //商-(优惠,团购,预售)活动：0：已新建，1：被取消
-        NEW(0, "已下架"),
-        ONSHELVES(1,"已上架"),
+        NEW(0, "已下线"),
+        ONSHELVES(1,"已上线"),
         CLOSE(2, "已取消");
 
         private static final Map<Integer, PresaleActivity.State> stateMap;
