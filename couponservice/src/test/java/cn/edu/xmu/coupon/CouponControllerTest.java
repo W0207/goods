@@ -84,6 +84,11 @@ public class CouponControllerTest {
     }
 
     @Test
+    public void create(){
+        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    }
+
+    @Test
     public void CouponActivityOffShelves() throws Exception {
         String responseString = this.mvc.perform(put("/coupon/shops/1/couponactivities/2/offshelves").contentType("application/json;charset=UTF-8"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
