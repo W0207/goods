@@ -1,2 +1,0 @@
-2020-12-14 22:50:32.036 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE0MjI1MDMxOVhVIiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2MDc5NTc1MzEsInVzZXJJZCI6MSwiaWF0IjoxNjA3OTU3NDMxfQ.yFjKCtRw1eUVdLoBoqHlCsC6DVSloMRM2CVBldLYV6w
-2020-12-14 22:50:32.154 [main] DEBUG cn.edu.xmu.comment.controller.CommentController - show: page = null  pageSize =null userid=1
