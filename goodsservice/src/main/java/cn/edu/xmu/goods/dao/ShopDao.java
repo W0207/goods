@@ -162,7 +162,7 @@ public class ShopDao {
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
                 Shop shopSelect = new Shop(shopPoSelect);
-                if (shopPo.getState().equals((byte)3) || shopPo.getState().equals((byte)5) || shopPo.getState().equals((byte)0)) {
+                if (shopPo.getState().equals((byte)3) || shopPo.getState().equals((byte)4) || shopPo.getState().equals((byte)0)) {
                     logger.info(shopSelect.getState().getDescription() + "当前状态无法进行变迁");
                     returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不允许转换" + shopPo.getId()));
                 } else {
@@ -204,7 +204,7 @@ public class ShopDao {
             } else {
                 System.out.println(shopPoSelect.toString());
                 Shop shopSelect = new Shop(shopPoSelect);
-                if (shopPo.getState().equals((byte)0) || shopPo.getState().equals((byte)5)) {
+                if (shopPo.getState().equals((byte)0) || shopPo.getState().equals((byte)4)) {
                     logger.info(shopSelect.getState().getDescription() + "对店家id进行了物理删除");
                     int ret = shopPoMapper.deleteByPrimaryKey(shopPo.getId());
                 } else {

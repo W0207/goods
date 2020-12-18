@@ -2,10 +2,7 @@ package cn.edu.xmu.goods.service;
 
 import cn.edu.xmu.goods.dao.OutDao;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.otherinterface.bo.GoodInfo;
-import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
-import cn.edu.xmu.otherinterface.bo.MyReturn;
-import cn.edu.xmu.otherinterface.bo.ShopInfo;
+import cn.edu.xmu.otherinterface.bo.*;
 import cn.edu.xmu.otherinterface.service.GoodsModuleService;
 import cn.edu.xmu.otherinterface.service.IGoodsService;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -16,24 +13,11 @@ import java.util.List;
 
 @Service
 @DubboService(version = "0.0.1")
-public class OutGoodsService implements IGoodsService, GoodsModuleService {
+public class OutGoodsService implements IGoodsService {
     @Autowired
     OutDao outDao;
 
-    @Override
-    public Boolean deleteFreightModelId(Long freightModelId, Long ShopId) {
-        return outDao.deleteFreightModelId(freightModelId, ShopId);
-    }
 
-    @Override
-    public MyReturn<ShopInfo> getShopInfo(Long shopId) {
-        return outDao.getShopInfo(shopId);
-    }
-    
-    @Override
-    public MyReturn<GoodInfo> getFreightModelIdBySkuId(Long goodSkuId) {
-        return outDao.getFreightModelIdBySkuId(goodSkuId);
-    }
 
     @Override
     public MyReturn<List<Long>> getShopSkuId(Long shopId) {
@@ -48,5 +32,10 @@ public class OutGoodsService implements IGoodsService, GoodsModuleService {
     @Override
     public MyReturn<List<Long>> getSkuIdList(Long spuId) {
         return outDao.getSkuIdList(spuId);
+    }
+
+    @Override
+    public MyReturn<Boolean> inSameSpu(Long sku1, Long sku2) {
+        return outDao.inSameSpu(sku1,sku2);
     }
 }
