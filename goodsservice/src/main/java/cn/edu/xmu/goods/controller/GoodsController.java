@@ -12,6 +12,7 @@ import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
+import feign.Response;
 import io.swagger.annotations.*;
 import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
@@ -372,7 +373,6 @@ public class GoodsController {
      *
      * @param id
      * @param categoryInputVo
-     * @param bindingResult
      * @param shopId
      * @return
      * @author shangzhao zhai
@@ -394,21 +394,14 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, HttpServletResponse response) {
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, @PathVariable Long shopId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
-        }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addCategory CategoryId = ", id);
-            return returnObject;
         }
         if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
             if (goodsCategory.getCode() == ResponseCode.OK) {
                 response.setStatus(201);
-            } else if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
-                response.setStatus(404);
             } else if (goodsCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
                 response.setStatus(400);
             }
@@ -746,17 +739,17 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{id}/brands")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addBrand shopid = ", id);
-            return returnObject;
-        }
         if (id == 0) {
             ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
+            if (brandCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (brandCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
             return Common.decorateReturnObject(brandCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));

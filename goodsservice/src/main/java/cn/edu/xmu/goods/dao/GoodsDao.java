@@ -395,12 +395,7 @@ public class GoodsDao {
             }
             GoodsCategory goodsCategory = new GoodsCategory();
             GoodsCategoryPo goodsCategoryPo = goodsCategory.createAddPo(id, categoryInputVo);
-            int ret = goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
-            if (ret == 0) {
-                goodsCategoryPo = null;
-            } else {
-                logger.info("categoryId = " + id + " 的信息已新增成功");
-            }
+            goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
             return goodsCategoryPo;
         } else {
             GoodsCategory goodsCategory = new GoodsCategory();
@@ -474,7 +469,22 @@ public class GoodsDao {
             logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-
+            GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
+            GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
+            criteria.andCategoryIdEqualTo(id);
+            List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
+            for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
+                goodsSpuPo.setCategoryId(0L);
+                goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+            }
+            GoodsCategoryPoExample goodsCategoryPoExample = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria1 = goodsCategoryPoExample.createCriteria();
+            criteria1.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPoExample);
+            for (GoodsCategoryPo goodsCategoryPo : goodsCategoryPos) {
+                Long categoryId = goodsCategoryPo.getId();
+                deleteCategoryById(categoryId);
+            }
             returnObject = new ReturnObject<>();
         }
         return returnObject;
@@ -527,19 +537,31 @@ public class GoodsDao {
      */
     public ReturnObject<List> getCategoryByPid(Long id) {
         //查看是否有此分类
-        GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
-        if (categoryPo == null) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        if (id != 0) {
+            GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
+            if (categoryPo == null) {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+            criteria.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
+            List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
+            for (GoodsCategoryPo po : goodsCategoryPos) {
+                goodsCategories.add(new GoodsCategory(po));
+            }
+            return new ReturnObject<>(goodsCategories);
+        } else {
+            GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+            criteria.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
+            List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
+            for (GoodsCategoryPo po : goodsCategoryPos) {
+                goodsCategories.add(new GoodsCategory(po));
+            }
+            return new ReturnObject<>(goodsCategories);
         }
-        GoodsCategoryPoExample example = new GoodsCategoryPoExample();
-        GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
-        criteria.andPidEqualTo(id);
-        List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
-        List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
-        for (GoodsCategoryPo po : goodsCategoryPos) {
-            goodsCategories.add(new GoodsCategory(po));
-        }
-        return new ReturnObject<>(goodsCategories);
     }
 
     /**
@@ -588,32 +610,26 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject<Object> deleteBrandById(Long id) {
-        try {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-            if (brandPo == null) {
-                logger.info("品牌不存在");
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            ReturnObject<Object> returnObject;
-            int ret = brandPoMapper.deleteByPrimaryKey(id);
-            if (ret == 0) {
-                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
-            } else {
-                GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
-                GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
-                criteria.andBrandIdEqualTo(id);
-                List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
-                for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
-                    goodsSpuPo.setBrandId(null);
-                    goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
-                }
-                returnObject = new ReturnObject<>(ResponseCode.OK);
-            }
-            return returnObject;
-        } catch (Exception e) {
-            logger.error("exception:" + e.getMessage());
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.deleteByPrimaryKey(id);
+        if (ret == 0) {
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } else {
+            GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
+            GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
+            criteria.andBrandIdEqualTo(id);
+            List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
+            for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
+                goodsSpuPo.setBrandId(0L);
+                goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+            }
+            returnObject = new ReturnObject<>(ResponseCode.OK);
+        }
+        return returnObject;
     }
 
     /**
@@ -1018,25 +1034,37 @@ public class GoodsDao {
         //记录品牌信息
         Long brandId = goodsSpuPo.getBrandId();
         if (brandId != null) {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(brandId);
-            if (brandPo != null) {
-                SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
-                simpleBrandVo.setId(brandPo.getId());
-                simpleBrandVo.setName(brandPo.getName());
-                if (brandPo.getImageUrl() != null) {
-                    simpleBrandVo.setImageUrl(brandPo.getImageUrl());
+            if (brandId != 0) {
+                BrandPo brandPo = brandPoMapper.selectByPrimaryKey(brandId);
+                if (brandPo != null) {
+                    SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
+                    simpleBrandVo.setId(brandPo.getId());
+                    simpleBrandVo.setName(brandPo.getName());
+                    if (brandPo.getImageUrl() != null) {
+                        simpleBrandVo.setImageUrl(brandPo.getImageUrl());
+                    }
+                    spuRetVo.setBrand(simpleBrandVo);
                 }
+            } else {
+                SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
+                simpleBrandVo.setId(0L);
                 spuRetVo.setBrand(simpleBrandVo);
             }
         }
         //记录分类信息
         Long categoryId = goodsSpuPo.getCategoryId();
         if (categoryId != null) {
-            GoodsCategoryPo goodsCategoryPo = goodsCategoryPoMapper.selectByPrimaryKey(categoryId);
-            if (goodsCategoryPo != null) {
+            if (categoryId != 0) {
+                GoodsCategoryPo goodsCategoryPo = goodsCategoryPoMapper.selectByPrimaryKey(categoryId);
+                if (goodsCategoryPo != null) {
+                    SimpleCategoryVo simpleCategoryVo = new SimpleCategoryVo();
+                    simpleCategoryVo.setId(goodsCategoryPo.getId());
+                    simpleCategoryVo.setName(goodsCategoryPo.getName());
+                    spuRetVo.setCategory(simpleCategoryVo);
+                }
+            } else {
                 SimpleCategoryVo simpleCategoryVo = new SimpleCategoryVo();
-                simpleCategoryVo.setId(goodsCategoryPo.getId());
-                simpleCategoryVo.setName(goodsCategoryPo.getName());
+                simpleCategoryVo.setId(0L);
                 spuRetVo.setCategory(simpleCategoryVo);
             }
         }
