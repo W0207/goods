@@ -293,7 +293,7 @@ public class GoodsService implements Ingoodservice {
         criteria.andNameEqualTo(categoryInputVo.getName());
         List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPo);
         if (!goodsCategoryPos.isEmpty()) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能重复");
+            return new ReturnObject<>(ResponseCode.CATEGORY_NAME_SAME);
         }
 
         ReturnObject returnObject;
