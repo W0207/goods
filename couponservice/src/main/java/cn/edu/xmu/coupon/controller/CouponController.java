@@ -97,7 +97,7 @@ public class CouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/states")
+    @GetMapping("/coupon/states")
     public Object getCouponState() {
         logger.debug("getCouponState");
         Coupon.State[] states = Coupon.State.class.getEnumConstants();
@@ -143,20 +143,20 @@ public class CouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit // 需要认证
+    @Audit
     @GetMapping("/shops/{id}/couponactivities/invalid")
-    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id, @Depart Long ShopId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        if(!id.equals(ShopId)){
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE,"操作的资源id不是自己的对象");
-        }
-        else {
+        if (!ShopId.equals(id)) {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
+        } else {
             ReturnObject<PageInfo<VoObject>> returnObject = couponService.showOwnInvalidcouponacitvitiesByid(page, pageSize, id);
             return Common.getPageRetObject(returnObject);
         }
     }
+
 
     /**
      * 管理员修改己方某优惠活动
@@ -325,7 +325,7 @@ public class CouponController {
         }
         logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
         return Common.getPageRetObject(returnObject);
     }

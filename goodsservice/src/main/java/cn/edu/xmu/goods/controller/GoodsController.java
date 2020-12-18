@@ -109,7 +109,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/skus/{id}/onshelves")
     public Object putGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -136,7 +136,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/skus/{id}/offshelves")
     public Object putOffGoodsOnSales(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -163,7 +163,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
+    @Audit
     @DeleteMapping("/shops/{shopId}/skus/{id}")
     public Object deleteGoodsSku(@PathVariable Long shopId, @PathVariable Long id) {
         if (logger.isDebugEnabled()) {
@@ -212,7 +212,7 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "SkuInputVo", name = "skuInputVo", value = "可修改的sku信息", required = true)
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/skus/{id}")
     public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
@@ -245,10 +245,10 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/sku")
+    @GetMapping("/skus")
     public Object getSkuList(
             @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "100") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) String skuSn,
             @RequestParam(required = false) Long spuId,
@@ -398,7 +398,6 @@ public class GoodsController {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while addCategory CategoryId = ", id);
@@ -930,13 +929,12 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 901, message = "商品规格重复")
     })
-    @Audit //需要认证
+    @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
     public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
-        // 校验前端数据
         Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObject != null) {
             logger.info("incorrect data received while creatSKU shopId = " + shopId + " skuId = " + id);
