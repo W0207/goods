@@ -78,7 +78,7 @@ public class CouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/states")
+    @GetMapping("/coupon/states")
     public Object getCouponState() {
         logger.debug("getCouponState");
         Coupon.State[] states = Coupon.State.class.getEnumConstants();

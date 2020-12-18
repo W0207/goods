@@ -57,7 +57,7 @@ public class CommentController {
 
     @ApiOperation(value = "查看sku的评价列表（已通过审核）")
     @GetMapping("/test")
-    public Object test(){
+    public Object test() {
         System.out.println("123");
         try {
             MyReturn<TimeSegInfo> returnObject = iTimeService.getTimeSeg(10L);
@@ -68,17 +68,10 @@ public class CommentController {
             }
 
             return Common.decorateReturnObject(new ReturnObject(returnObject.getCode()));
-        } catch (Exception e){
+        } catch (Exception e) {
             return Common.decorateReturnObject(new ReturnObject(e.getMessage()));
         }
     }
-
-//    @GetMapping("test2")
-//    public Object test2(){
-//        MyReturn returnObject = iGoodsService.getTimeSegInfo(10L);
-//        return Common.decorateReturnObject(returnObject);
-//    }
-//    IUserService iUserService;
 
     /**
      * 查看sku的评价列表（已通过审核）
@@ -95,7 +88,7 @@ public class CommentController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentBySkuid(page, pageSize, id);
         return Common.getPageRetObject(returnObject);
@@ -110,7 +103,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/states")
+    @GetMapping("/comments/states")
     public Object getCommentState() {
         logger.debug("getCommentState");
         Comment.State[] states = Comment.State.class.getEnumConstants();
@@ -174,7 +167,7 @@ public class CommentController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentByUserid(page, pageSize, userid);
         return Common.getPageRetObject(returnObject);
