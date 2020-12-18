@@ -309,22 +309,30 @@ public class CouponDao {
         }
     }
 
-    public PageInfo<CouponRetVo> showCouponsById(Integer state, Long userId) {
+    public ReturnObject<PageInfo<VoObject>> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
         CouponPoExample couponPoExample = new CouponPoExample();
         CouponPoExample.Criteria couponPoCriteria = couponPoExample.createCriteria();
         couponPoCriteria.andCustomerIdEqualTo(userId);
-        couponPoCriteria.andStateEqualTo((byte) state.intValue());
+        if(state!=null) {
+            couponPoCriteria.andStateEqualTo((byte) state.intValue());
+        }
         List<CouponPo> couponPos = null;
+        PageHelper.startPage(pageNum, pageSize);
         couponPos = couponPoMapper.selectByExample(couponPoExample);
-        List<CouponRetVo> vo = new ArrayList<>(couponPos.size());
+        List<VoObject> vo = new ArrayList<>(couponPos.size());
         for (CouponPo couponPo : couponPos) {
             Coupon co = new Coupon(couponPo);
-            CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(co.getId());
+            CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(co.getActivityId());
             CouponRet couponRet = new CouponRet(co);
             couponRet.SetByActivity(couponActivityPo);
             CouponRetVo couponRetVo = new CouponRetVo(couponRet);
             vo.add(couponRetVo);
         }
-        return new PageInfo<>(vo);
+        PageInfo<VoObject> CouponPage = PageInfo.of(vo);
+        CouponPage.setTotal((PageInfo.of(couponPos).getTotal()));
+        CouponPage.setPages((PageInfo.of(couponPos).getPages()));
+        CouponPage.setPageNum(pageNum);
+        CouponPage.setPageSize(pageSize);
+        return new ReturnObject<>(CouponPage);
     }
 }

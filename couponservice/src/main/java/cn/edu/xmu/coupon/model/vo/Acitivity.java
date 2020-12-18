@@ -29,6 +29,12 @@ public class Acitivity {
     @ApiModelProperty("优惠活动优惠券数目")
     private Integer quantity;
 
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Acitivity(Acitivity acitivity) {
         this.activityName= acitivity.getActivityName();
         this.begin_time= acitivity.getBegin_time();
