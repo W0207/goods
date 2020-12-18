@@ -57,14 +57,14 @@ spring:
         #goods模块
         #包含不需要token的
         - id: goods-nonAuth
-          uri: http://192.168.0.11:8084/
+          uri: http://localhost:8084/
           predicates:
             - Path=/skus/states, /skus, /skus/{id}, /categories/**, /spus/{id}, /brands
           filters:
             - PrefixPath=/goods
         #包含需要token的路径
         - id: goods
-          uri: http://192.168.0.11:8084/
+          uri: http://localhost:8084/
           predicates:
             - Path=/shops/{shopId}/skus/{id}/uploadImg, /shops/{shopId}/skus/{id}, /shops/{shopId}/skus/{id}/onshelves, /shops/{shopId}/skus/{id}/offshelves, /shops/{shopId}/skus/{id}/floatPrices, /shops/{shopId}/spus/{spuId}/categories/{id}/**, /shops/{shopId}/spus/{spuId}/brands/{id}/**, /shops/{shopId}/spus/{id}/skus, /shops/{shopId}/categories/**, /share/**, /shops/{shopId}/floatPrice/**, /shops/{shopId}/brands/**, /categories/{id}/subcategories
           filters:
