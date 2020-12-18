@@ -387,7 +387,7 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
-            @ApiResponse(code = 503, message = "商品类目名字不能为空"),
+            @ApiResponse(code = 991, message = "商品类目已存在"),
             @ApiResponse(code = 503, message = "商品类目名字不能重复"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
@@ -437,7 +437,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "商品类目名称不能为空"),
-            @ApiResponse(code = 900, message = "商品类目名称已存在"),
+            @ApiResponse(code = 991, message = "商品类目名称已存在"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
@@ -741,7 +741,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "品牌名字不能为空"),
-            @ApiResponse(code = 503, message = "品牌名字不能重复"),
+            @ApiResponse(code = 990, message = "品牌名称已存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
     @Audit

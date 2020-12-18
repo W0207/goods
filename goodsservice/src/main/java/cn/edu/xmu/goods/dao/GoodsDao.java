@@ -1127,7 +1127,7 @@ public class GoodsDao {
         criteria.andNameEqualTo(name);
         List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
         if (!brandPos.isEmpty()) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
+            return new ReturnObject<>(ResponseCode.BRAND_NAME_SAME);
         }
         Brand brand = new Brand();
         BrandPo brandPo = brand.createAddPo(brandInputVo);
