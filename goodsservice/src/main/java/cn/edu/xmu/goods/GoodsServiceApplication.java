@@ -12,7 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @MapperScan("cn.edu.xmu.goods.mapper")
 @EnableDiscoveryClient
 public class GoodsServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(GoodsServiceApplication.class, args);
     }

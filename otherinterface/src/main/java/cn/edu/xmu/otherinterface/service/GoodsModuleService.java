@@ -3,8 +3,11 @@ package cn.edu.xmu.otherinterface.service;
 
 import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.GoodInfo;
+import cn.edu.xmu.otherinterface.bo.GoodsFreightInfo;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.ShopInfo;
+
+import java.util.List;
 
 /**
  * @author issyu 30320182200070
@@ -35,5 +38,14 @@ public interface GoodsModuleService {
      * 根据SKUID获取商品信息。
      */
     MyReturn<GoodInfo> getFreightModelIdBySkuId(Long goodSkuId);
+
+    /**
+            * 通过skuId获得相应信息
+     * @param skuIds
+     * @return
+             */
+    MyReturn<List<GoodsFreightInfo>>  getGoodsInfoBySkuId(List<Long> skuIds);
+
+
 }
 
