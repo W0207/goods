@@ -311,7 +311,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "品牌名称不能为空"),
-            @ApiResponse(code = 503, message = "品牌名称不能重复"),
+            @ApiResponse(code = 900, message = "品牌名称已存在"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
@@ -394,7 +394,7 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
         }
@@ -405,6 +405,13 @@ public class GoodsController {
         }
         if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+            if (goodsCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+                response.setStatus(404);
+            } else if (goodsCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
             return Common.decorateReturnObject(goodsCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
@@ -430,7 +437,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "商品类目名称不能为空"),
-            @ApiResponse(code = 503, message = "商品类目名称不能重复"),
+            @ApiResponse(code = 900, message = "商品类目名称已存在"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })

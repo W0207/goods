@@ -390,7 +390,7 @@ public class GoodsDao {
         if (id != 0) {
             GoodsCategoryPo po = goodsCategoryPoMapper.selectByPrimaryKey(id);
             if (po == null) {
-                logger.debug("categoryId = " + id + "不存在");
+                logger.info("categoryId = " + id + "不存在");
                 return null;
             }
             GoodsCategory goodsCategory = new GoodsCategory();
@@ -437,7 +437,7 @@ public class GoodsDao {
         criteria.andNameEqualTo(categoryInputVo.getName());
         List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPoExample);
         if (!goodsCategoryPos.isEmpty()) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能重复");
+            return new ReturnObject<>(ResponseCode.CATEGORY_NAME_SAME);
         }
 
         GoodsCategory goodsCategory = new GoodsCategory(po);
@@ -640,7 +640,7 @@ public class GoodsDao {
         criteria.andNameEqualTo(brandInputVo.getName());
         List<BrandPo> brandPos = brandPoMapper.selectByExample(brandPoExample);
         if (!brandPos.isEmpty()) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "品牌名称不能重复");
+            return new ReturnObject<>(ResponseCode.BRAND_NAME_SAME);
         }
         Brand brand = new Brand(brandPo);
         BrandPo po = brand.createUpdatePo(brandInputVo);
