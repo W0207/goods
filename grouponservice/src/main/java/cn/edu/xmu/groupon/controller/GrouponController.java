@@ -112,9 +112,6 @@ public class GrouponController {
     ) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        if(page<=0||pageSize<=0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
-        }
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findgrouponActivity(timeline, spuId, shopId, page, pageSize);
         logger.debug("findGrouponActivity = " + returnObject);
         return Common.getPageRetObject(returnObject);
@@ -155,9 +152,6 @@ public class GrouponController {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         boolean bool= inShopService.shopExitOrNot(id);
-        if(page<=0||pageSize<=0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
-        }
         if(!bool){
             logger.info("该店铺不存在");
             return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
