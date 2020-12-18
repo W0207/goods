@@ -28,6 +28,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,24 @@ public class CouponController {
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
 
+    private int getStatue(ReturnObject returnObject)
+    {
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
+        {
+            return HttpStatus.UNAUTHORIZED.value();
+        }
+        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.COUPONACT_STATENOTALLOW){
+            return HttpStatus.FORBIDDEN.value();
+        }
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+            return HttpStatus.NOT_FOUND.value();
+        }
+        return HttpStatus.OK.value();
+    }
+
     /**
      * 获得优惠券的所有状态
      *
@@ -104,8 +123,9 @@ public class CouponController {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + "   shopId =" + shopId + "    timeline =" + timeline);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        shopId = (shopId == null) ? null : shopId;
-        timeline = (timeline == null) ? 2 : timeline;
+        if(page<=0||pageSize<=0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponactivities(page, pageSize, shopId, timeline);
         return Common.getPageRetObject(returnObject);
     }
@@ -126,10 +146,13 @@ public class CouponController {
     })
     @Audit
     @GetMapping("/shops/{id}/couponactivities/invalid")
-    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id, @Depart Long ShopId) {
-        logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
+    public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id , @Depart Long ShopId) {
+        logger.debug("showOwnInvalidcouponacitvities: page = " + page + "  pageSize =" + pageSize + " id=" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
+        if(page<=0||pageSize<=0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         if (!ShopId.equals(id)) {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
         } else {
@@ -307,6 +330,9 @@ public class CouponController {
         logger.debug("showCoupons: page = " + page + "  pageSize =" + pageSize + "   activity_id =" + id);
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
+        if(page<=0||pageSize<=0) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        }
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.viewGoodsInCouponById(page, pageSize, skuToCouponVos);
         return Common.getPageRetObject(returnObject);
     }
@@ -431,11 +457,12 @@ public class CouponController {
     public Object showCoupons(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer state, @LoginUser Long userId) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + userId);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 60 : pageSize;
-        state = (state == null) ? 1 : state;
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        if(page<=0||pageSize<=0||(state!=null&&state!=0&&state!=1&&state!=2&&state!=3)) {
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"传入参数错误");
+        }
         Object object = null;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
-        object = Common.getPageRetObject(returnObject);
-        return object;
+        return Common.getPageRetObject(returnObject);
     }
 }

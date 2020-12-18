@@ -79,8 +79,8 @@ public class CouponActivityDao implements InitializingBean {
                 //shopId不一致
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("上线活动的时候，路径shopId和活动的id不一致"));
             } else {
-                if (po.getState().equals((byte) 2)) {
-                    //优惠活动被删除了
+                if (po.getState().equals((byte) 2)||po.getState().equals((byte) 1)) {
+                    //优惠活动被删除了或者已在上线
                     returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
                 } else {
                     //更新数据库
@@ -130,12 +130,8 @@ public class CouponActivityDao implements InitializingBean {
                         returnObject = new ReturnObject();
                     }
                 } else {
-                    if (po.getState().equals((byte) 0)) {
-                        //本身处在下线的状态,不进行操作
-                        returnObject = new ReturnObject();
-                    } else {
-                        returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("下线活动的时候，状态转换失败"));
-                    }
+                        returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
+
                 }
             }
         }

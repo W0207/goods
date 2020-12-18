@@ -17,9 +17,9 @@ public class CommentRetVo {
 
     private Long orderitem_id;
 
-    private long goodsSkuId;
+    private Long goodsSkuId;
 
-    private int type;
+    private Byte type;
 
     private String content;
 

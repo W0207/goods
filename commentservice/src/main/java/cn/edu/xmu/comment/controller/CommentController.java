@@ -20,6 +20,8 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.UserInfo;
 import cn.edu.xmu.otherinterface.service.OtherModulService;
 //import cn.edu.xmu.privilegeservice.client.IUserService;
+import cn.edu.xmu.outer.service.IFreightService;
+import cn.edu.xmu.outer.service.IOrderService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -54,6 +56,25 @@ public class CommentController {
 
     @Autowired
     private HttpServletResponse httpServletResponse;
+
+    @DubboReference(version = "0.0.1",check = false)
+    private IOrderService iOrderService;
+
+    @DubboReference(version = "0.0.1",check = false)
+    private IFreightService iFreightService;
+
+    @GetMapping("/test3")
+    public Object test3(){
+
+        return iOrderService.confirmBought(1L,1L);
+
+    }
+    @GetMapping("/test4")
+    public Object test4(){
+
+        return iFreightService.getFreightById(9L);
+
+    }
 
     @ApiOperation(value = "查看sku的评价列表（已通过审核）")
     @GetMapping("/test")
