@@ -1,0 +1,2 @@
+2020-12-18 21:42:05.903 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 21:42:19.102 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 18.602 seconds (JVM running for 19.475)
