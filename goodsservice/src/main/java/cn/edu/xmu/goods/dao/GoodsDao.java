@@ -221,10 +221,10 @@ public class GoodsDao {
             // 检查更新有否成功
             if (ret == 0) {
                 logger.info("商品不存在或已被删除：skuId = " + skuId);
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
             } else {
                 logger.info("skuId = " + skuId + "已删除");
-                returnObject = new ReturnObject<>();
+                returnObject = new ReturnObject<>(ResponseCode.OK);
             }
             return returnObject;
         } catch (Exception e) {

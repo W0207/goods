@@ -28,6 +28,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,24 @@ public class CouponController {
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
 
+    private int getStatue(ReturnObject returnObject)
+    {
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
+        {
+            return HttpStatus.UNAUTHORIZED.value();
+        }
+        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.COUPONACT_STATENOTALLOW){
+            return HttpStatus.FORBIDDEN.value();
+        }
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+            return HttpStatus.NOT_FOUND.value();
+        }
+        return HttpStatus.OK.value();
+    }
+
     /**
      * 获得优惠券的所有状态
      *
@@ -78,7 +97,7 @@ public class CouponController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @GetMapping("/states")
+    @GetMapping("/coupon/states")
     public Object getCouponState() {
         logger.debug("getCouponState");
         Coupon.State[] states = Coupon.State.class.getEnumConstants();
