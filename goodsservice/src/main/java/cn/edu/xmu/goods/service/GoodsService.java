@@ -285,7 +285,7 @@ public class GoodsService implements Ingoodservice {
      * @author shangzhao zhai
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
-        if (categoryInputVo.getName() == null) {
+        if (categoryInputVo.getName() == null || categoryInputVo.getName().length() == 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能为空");
         }
         GoodsCategoryPoExample goodsCategoryPo = new GoodsCategoryPoExample();
@@ -293,7 +293,7 @@ public class GoodsService implements Ingoodservice {
         criteria.andNameEqualTo(categoryInputVo.getName());
         List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPo);
         if (!goodsCategoryPos.isEmpty()) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能重复");
+            return new ReturnObject<>(ResponseCode.CATEGORY_NAME_SAME);
         }
 
         ReturnObject returnObject;

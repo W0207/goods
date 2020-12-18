@@ -61,13 +61,13 @@ public class PresaleDao {
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
         if(presaleActivityVo.getBeginTime()==null){
-            return new ReturnObject(ResponseCode.Log_BEGIN_NULL);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if(presaleActivityVo.getEndTime()==null){
-            return new ReturnObject(ResponseCode.Log_END_NULL);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())) {
-            returnObject = new ReturnObject(ResponseCode.Log_Bigger);
+            returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
             return returnObject;
         }
         if(presaleActivityVo.getEndTime().isBefore(LocalDateTime.now())||presaleActivityVo.getBeginTime().isBefore(LocalDateTime.now())){
@@ -177,14 +177,14 @@ public class PresaleDao {
     public ReturnObject modifyPresale(Long shopId, Long id, PresaleActivityVo vo) {
         ReturnObject returnObject = null;
         if(vo.getBeginTime()==null){
-            return new ReturnObject(ResponseCode.Log_BEGIN_NULL);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if(vo.getEndTime()==null){
-            return new ReturnObject(ResponseCode.Log_END_NULL);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         //判断开始时间是不是在结束时间之前
         if (vo.getEndTime().isBefore(vo.getBeginTime())) {
-            return new ReturnObject(ResponseCode.Log_Bigger);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getPayTime().isBefore(vo.getBeginTime())) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);

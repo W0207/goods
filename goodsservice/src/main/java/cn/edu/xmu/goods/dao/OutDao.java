@@ -6,10 +6,7 @@ import cn.edu.xmu.goods.mapper.ShopPoMapper;
 import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.otherinterface.bo.GoodInfo;
-import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
-import cn.edu.xmu.otherinterface.bo.MyReturn;
-import cn.edu.xmu.otherinterface.bo.ShopInfo;
+import cn.edu.xmu.otherinterface.bo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +68,7 @@ public class OutDao {
 
     public MyReturn<ShopInfo> getShopInfo(Long shopId) {
         try {
+            System.out.println("cuieb");
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
             if (shopPo == null) {
                 return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -149,5 +147,32 @@ public class OutDao {
             return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR,String.format("数据库错误%S",e.getMessage()));
         }
     }
+
+    public MyReturn<Boolean> inSameSpu(Long sku1, Long sku2) {
+        try {
+            GoodsSkuPo skuPo1 = skuPoMapper.selectByPrimaryKey(sku1);
+            GoodsSkuPo skuPo2 = skuPoMapper.selectByPrimaryKey(sku2);
+            if (skuPo1 == null) {
+                return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            if (skuPo2 == null) {
+                return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            if (skuPo1.getGoodsSpuId().equals(skuPo2.getGoodsSpuId())) {
+                return new MyReturn<>(true);
+            }
+            return new MyReturn<>(false);
+        } catch (Exception e){
+            return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+    }
+    public MyReturn<List<GoodsFreightInfo>> getGoodsInfoBySkuId(List<Long> skuIds) {
+        List<GoodsFreightInfo> infos = new ArrayList<>(skuIds.size());
+        for(Long skuId:skuIds){
+
+        }
+        return null;
+    }
+
 
 }

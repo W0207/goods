@@ -1,0 +1,294 @@
+2020-12-18 15:08:19.179 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:08:25.069 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Binding to target org.springframework.boot.context.properties.bind.BindException: Failed to bind properties under 'spring.cloud.gateway' to org.springframework.cloud.gateway.config.GatewayProperties failed:
+
+    Property: spring.cloud.gateway.routes[2].predicates
+    Value: []
+    Reason: 不能为空
+
+
+Action:
+
+Update your application's configuration
+
+2020-12-18 15:11:02.712 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:11:19.293 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 22.496 seconds (JVM running for 23.763)
+2020-12-18 15:12:27.915 [reactor-http-nio-2] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [223835c2-3]  500 Server Error for HTTP GET "/shops/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8080
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/shops/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:13:22.072 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:13:37.265 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8090 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8090 or configure this application to listen on another port.
+
+2020-12-18 15:15:11.165 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:15:28.381 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 22.585 seconds (JVM running for 23.571)
+2020-12-18 15:17:43.881 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:17:58.912 [reactor-http-nio-4] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [aa03b64c-1]  500 Server Error for HTTP GET "/comments/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8088
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/comments/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:18:01.144 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 22.53 seconds (JVM running for 23.693)
+2020-12-18 15:19:08.876 [reactor-http-nio-5] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [f3192a58-2]  500 Server Error for HTTP GET "/comments/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8088
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/comments/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:20:25.785 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:20:42.768 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 21.789 seconds (JVM running for 22.606)
+2020-12-18 15:25:53.340 [reactor-http-nio-5] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [bde706e5-4]  500 Server Error for HTTP GET "/comments/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8088
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/comments/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:26:55.988 [reactor-http-nio-7] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [7ffdf62b-5]  500 Server Error for HTTP GET "/comments/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8088
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/comments/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:30:04.765 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:30:19.753 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 20.057 seconds (JVM running for 21.194)
+2020-12-18 15:34:01.669 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:34:16.000 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8090 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8090 or configure this application to listen on another port.
+
+2020-12-18 15:34:21.699 [reactor-http-nio-5] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = null
+2020-12-18 15:35:32.726 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:35:48.186 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 20.211 seconds (JVM running for 21.416)
+2020-12-18 15:36:41.595 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:36:55.510 [reactor-http-nio-5] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [c0448675-1]  500 Server Error for HTTP GET "/groupons/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8084
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/groupons/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:36:57.056 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 20.848 seconds (JVM running for 22.175)
+2020-12-18 15:38:26.692 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:38:40.992 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 18.959 seconds (JVM running for 19.983)
+2020-12-18 15:38:50.047 [reactor-http-nio-4] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [4c716d02-1]  500 Server Error for HTTP GET "/groupons/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8084
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/groupons/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:40:03.904 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:40:18.135 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 19.212 seconds (JVM running for 20.292)
+2020-12-18 15:40:27.396 [reactor-http-nio-4] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [663690de-1]  500 Server Error for HTTP GET "/groupons/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8084
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/groupons/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:42:29.399 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:42:44.210 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 22.029 seconds (JVM running for 23.042)
+2020-12-18 15:43:05.355 [reactor-http-nio-4] ERROR o.s.b.a.w.r.error.AbstractErrorWebExceptionHandler - [6c094388-1]  500 Server Error for HTTP GET "/presales/states"
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:8087
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	|_ checkpoint ⇢ HTTP GET "/presales/states" [ExceptionHandlingWebHandler]
+Stack trace:
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:779)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:330)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:334)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:702)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:576)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:493)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+2020-12-18 15:43:49.593 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:44:05.010 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 20.471 seconds (JVM running for 21.689)
+2020-12-18 15:48:01.738 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:48:36.271 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 43.89 seconds (JVM running for 46.786)
+2020-12-18 15:50:41.495 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:50:57.833 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 21.175 seconds (JVM running for 22.341)
+2020-12-18 15:51:30.303 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 15:51:49.790 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 25.883 seconds (JVM running for 26.719)
+2020-12-18 16:05:55.077 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 16:06:11.308 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 21.611 seconds (JVM running for 22.652)
+2020-12-18 16:11:10.153 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 16:11:27.393 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 23.035 seconds (JVM running for 24.325)
+2020-12-18 16:28:39.621 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 16:28:48.367 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 11.964 seconds (JVM running for 12.454)
+2020-12-18 16:44:57.084 [main] INFO  cn.edu.xmu.gateway.Application - No active profile set, falling back to default profiles: default
+2020-12-18 16:45:05.955 [main] INFO  cn.edu.xmu.gateway.Application - Started Application in 12.191 seconds (JVM running for 12.703)
+2020-12-18 16:45:19.138 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:45:19.197 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:45:19.197 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/spus/{id}/skus
+2020-12-18 16:46:33.599 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:46:33.601 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:46:33.601 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/spus/{id}/skus
+2020-12-18 16:47:31.624 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:47:31.625 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:47:31.626 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:47:40.271 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:47:40.273 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:47:40.273 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:48:02.578 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:48:02.580 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:48:02.580 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:48:36.764 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:48:36.766 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:48:36.766 [reactor-http-nio-2] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:50:20.387 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:50:20.393 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:50:20.394 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:50:26.467 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:50:26.468 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:50:26.469 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
+2020-12-18 16:50:36.137 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - filter: token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGlzIGlzIGEgdG9rZW4iLCJhdWQiOiJNSU5JQVBQIiwidG9rZW5JZCI6IjIwMjAxMjE3MjAxNzI5Nlo5IiwiaXNzIjoiT09BRCIsImRlcGFydElkIjowLCJleHAiOjE2OTQ2MDc0NDksInVzZXJJZCI6MSwiaWF0IjoxNjA4MjA3NDQ5fQ.u4NQAkw04DM4cG0mM97wPVn9i__U7prIfZzt6pbhL_g
+2020-12-18 16:50:36.139 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - did匹配
+2020-12-18 16:50:36.139 [reactor-http-nio-4] DEBUG cn.edu.xmu.gateway.localfilter.AuthFilter - 获取通用请求路径:/skus/{id}
