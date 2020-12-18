@@ -285,6 +285,9 @@ public class GoodsService implements Ingoodservice {
      * @author shangzhao zhai
      */
     public ReturnObject<Object> addCategory(Long id, CategoryInputVo categoryInputVo) {
+        if (goodsCategoryPoMapper.selectByPrimaryKey(id) == null && id != 0) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         if (categoryInputVo.getName() == null || categoryInputVo.getName().length() == 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "商品类目名称不能为空");
         }
@@ -296,15 +299,12 @@ public class GoodsService implements Ingoodservice {
             return new ReturnObject<>(ResponseCode.CATEGORY_NAME_SAME);
         }
 
-        ReturnObject returnObject;
         GoodsCategoryPo goodsCategoryPo1 = goodsDao.addCategoryById(id, categoryInputVo);
-        if (goodsCategoryPo != null) {
-            returnObject = new ReturnObject(new GoodsCategory(goodsCategoryPo1));
+        if (goodsCategoryPo1 != null) {
+            return new ReturnObject(new GoodsCategory(goodsCategoryPo1));
         } else {
-            logger.debug("addCategory : Not Found!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        return returnObject;
     }
 
     /**
