@@ -7,10 +7,7 @@ import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.Common;
-import cn.edu.xmu.ooad.util.ResponseCode;
-import cn.edu.xmu.ooad.util.ResponseUtil;
-import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.ooad.util.*;
 import com.github.pagehelper.PageInfo;
 import feign.Response;
 import io.swagger.annotations.*;
@@ -867,7 +864,7 @@ public class GoodsController {
     }
 
     /**
-     * 获得sku的详细信息(登陆)
+     * 获得sku的详细信息
      *
      * @param `id`
      * @return Object
@@ -880,11 +877,18 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit
     @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id, @Validated @LoginUser Long userId) {
+    public Object getSku(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         if (logger.isDebugEnabled()) {
-            logger.debug("getSku");
+            logger.debug("getSku : skuId = " + id);
+        }
+        Long userId;
+        if (token != null) {
+            JwtHelper jwtHelper = new JwtHelper();
+            JwtHelper.UserAndDepart userAndDepart = jwtHelper.verifyTokenAndGetClaims(token);
+            userId = userAndDepart.getUserId();
+        } else {
+            userId = null;
         }
         ReturnObject returnObj = goodsService.getSku(id, userId);
         return Common.decorateReturnObject(returnObj);

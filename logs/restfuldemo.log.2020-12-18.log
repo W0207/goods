@@ -678,3 +678,99 @@
 2020-12-18 23:15:52.622 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
 2020-12-18 23:15:52.622 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 128
 2020-12-18 23:15:53.535 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-18 23:26:22.816 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =2
+2020-12-18 23:26:22.816 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 1  pageSize =2
+2020-12-18 23:26:22.869 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-18 23:26:22.870 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-18 23:26:23.226 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,Long,HttpServletResponse))
+2020-12-18 23:26:23.245 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.249 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.250 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 131
+2020-12-18 23:26:23.322 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,Long,HttpServletResponse))
+2020-12-18 23:26:23.323 [http-nio-8084-exec-7] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.323 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.324 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 9
+2020-12-18 23:26:23.355 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,Long,HttpServletResponse))
+2020-12-18 23:26:23.356 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.356 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.356 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 0
+2020-12-18 23:26:23.371 [http-nio-8084-exec-8] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 0 的信息已新增成功
+2020-12-18 23:26:23.420 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,Long,HttpServletResponse))
+2020-12-18 23:26:23.422 [http-nio-8084-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.422 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.422 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 122
+2020-12-18 23:26:23.476 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addCategory(Long,CategoryInputVo,Long,HttpServletResponse))
+2020-12-18 23:26:23.477 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.477 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.478 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - addCategory: CategoryId = 122
+2020-12-18 23:26:23.597 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,HttpServletResponse))
+2020-12-18 23:26:23.598 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.598 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.598 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-18 23:26:23.611 [http-nio-8084-exec-2] INFO  cn.edu.xmu.goods.dao.GoodsDao - 品牌已新建成功
+2020-12-18 23:26:23.632 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 54  pageSize =1
+2020-12-18 23:26:23.632 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 54  pageSize =1
+2020-12-18 23:26:23.668 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,HttpServletResponse))
+2020-12-18 23:26:23.669 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.670 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.670 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-18 23:26:23.715 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.addBrand(Long,BrandInputVo,HttpServletResponse))
+2020-12-18 23:26:23.717 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.717 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.718 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.GoodsController - addBrands: BrandId = 0
+2020-12-18 23:26:23.805 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult))
+2020-12-18 23:26:23.806 [http-nio-8084-exec-6] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.807 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.807 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 72 vo = BrandInputVo(name=test41, detail=test4)
+2020-12-18 23:26:23.823 [http-nio-8084-exec-6] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 72 的信息已更新
+2020-12-18 23:26:23.841 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-18 23:26:23.841 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 2  pageSize =1
+2020-12-18 23:26:23.873 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult))
+2020-12-18 23:26:23.874 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.875 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.875 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 11111 vo = BrandInputVo(name=test678, detail=test4)
+2020-12-18 23:26:23.877 [http-nio-8084-exec-8] INFO  cn.edu.xmu.goods.dao.GoodsDao - brandId = 11111 不存在
+2020-12-18 23:26:23.901 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyBrand(Long,Long,BrandInputVo,BindingResult))
+2020-12-18 23:26:23.902 [http-nio-8084-exec-9] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.902 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.903 [http-nio-8084-exec-9] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyBrand : shopId = 0 brandId = 71 vo = BrandInputVo(name=黄卖九, detail=test4)
+2020-12-18 23:26:23.975 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-18 23:26:23.977 [http-nio-8084-exec-10] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:23.977 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:23.977 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 99
+2020-12-18 23:26:23.980 [http-nio-8084-exec-10] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品类目不存在或已被删除：categoryId = 99
+2020-12-18 23:26:24.022 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-18 23:26:24.023 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:24.023 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:24.024 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 123
+2020-12-18 23:26:24.091 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.modifyGoodsType(Long,CategoryInputVo,BindingResult,Long,Long))
+2020-12-18 23:26:24.093 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:24.093 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:24.093 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - modifyGoodsType: CategoryId = 126
+2020-12-18 23:26:24.106 [http-nio-8084-exec-2] INFO  cn.edu.xmu.goods.dao.GoodsDao - categoryId = 126 的信息已更新
+2020-12-18 23:26:24.150 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteBrand(Long,Long))
+2020-12-18 23:26:24.151 [http-nio-8084-exec-4] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:24.151 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:24.152 [http-nio-8084-exec-4] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 1
+2020-12-18 23:26:24.198 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.deleteBrand(Long,Long))
+2020-12-18 23:26:24.201 [http-nio-8084-exec-5] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:24.201 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:24.202 [http-nio-8084-exec-5] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteBrand : shopId = 0 brandId = 73
+2020-12-18 23:26:24.259 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 3  pageSize =1
+2020-12-18 23:26:24.259 [http-nio-8084-exec-6] DEBUG cn.edu.xmu.goods.controller.GoodsController - getAllBrand: page = 3  pageSize =1
+2020-12-18 23:26:24.289 [http-nio-8084-exec-7] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-18 23:26:24.338 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-18 23:26:24.339 [http-nio-8084-exec-8] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:24.339 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:24.339 [http-nio-8084-exec-8] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 122
+2020-12-18 23:26:25.076 [http-nio-8084-exec-10] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
+2020-12-18 23:26:25.097 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-18 23:26:25.099 [http-nio-8084-exec-1] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:25.099 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:25.099 [http-nio-8084-exec-1] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 1
+2020-12-18 23:26:25.100 [http-nio-8084-exec-1] INFO  cn.edu.xmu.goods.dao.GoodsDao - 商品类目不存在或已被删除：categoryId = 1
+2020-12-18 23:26:25.128 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: begin joinPoint = execution(Object cn.edu.xmu.goods.controller.GoodsController.delCategory(Long,Long,Long))
+2020-12-18 23:26:25.129 [http-nio-8084-exec-2] ERROR cn.edu.xmu.ooad.annotation.AuditAspect - the api path is null
+2020-12-18 23:26:25.129 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.ooad.annotation.AuditAspect - around: userId =1 departId=0
+2020-12-18 23:26:25.129 [http-nio-8084-exec-2] DEBUG cn.edu.xmu.goods.controller.GoodsController - deleteCategory: CategoryId = 128
+2020-12-18 23:26:26.123 [http-nio-8084-exec-3] DEBUG cn.edu.xmu.goods.controller.GoodsController - getSku
