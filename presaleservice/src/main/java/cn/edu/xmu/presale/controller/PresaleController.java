@@ -49,18 +49,15 @@ public class PresaleController {
     @Autowired
     private PresaleService presaleService;
 
-    private int getStatue(ReturnObject returnObject)
-    {
-        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
-        {
+    private int getStatue(ReturnObject returnObject) {
+        if (returnObject.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             return HttpStatus.UNAUTHORIZED.value();
         }
-        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+        if (returnObject.getCode() == ResponseCode.FIELD_NOTVALID || returnObject.getCode() == ResponseCode.Log_Bigger || returnObject.getCode() == ResponseCode.Log_BEGIN_NULL || returnObject.getCode() == ResponseCode.Log_END_NULL) {
             return HttpStatus.BAD_REQUEST.value();
         }
         return HttpStatus.OK.value();
     }
-
 
     @ApiOperation(value = "获得商品spu的所有状态")
     @ApiResponses({
@@ -85,7 +82,7 @@ public class PresaleController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/skus/{id}/presales")
-    public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo,HttpServletResponse response) {
+    public Object addPresaleActivity(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo presaleActivityVo, HttpServletResponse response) {
         ReturnObject returnObject = null;
         returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         response.setStatus(getStatue(returnObject));
@@ -112,8 +109,8 @@ public class PresaleController {
             @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) Integer timeLine,
             @RequestParam(required = false) Long skuId,
-            @RequestParam(required = false,defaultValue = "1") Integer page,
-            @RequestParam(required = false,defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             HttpServletResponse response
 
     ) {
@@ -138,8 +135,8 @@ public class PresaleController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/presales/{id}")
-    public Object modifyPresale(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo vo,HttpServletResponse response) {
-        logger.debug("shopId:"+shopId+"   skuId:"+id);
+    public Object modifyPresale(@PathVariable Long shopId, @PathVariable Long id, @RequestBody PresaleActivityVo vo, HttpServletResponse response) {
+        logger.debug("shopId:" + shopId + "   skuId:" + id);
         ReturnObject returnObject = presaleService.modifyPresale(shopId, id, vo);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
@@ -159,7 +156,7 @@ public class PresaleController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/presales/{id}")
-    public Object deletePresale(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response) {
+    public Object deletePresale(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response) {
         ReturnObject returnObject = presaleService.deletePresale(shopId, id);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
@@ -179,8 +176,8 @@ public class PresaleController {
     })
     @Audit //需要认证
     @GetMapping("/shops/{shopId}/presales")
-    public Object queryPresaleofSPU(@PathVariable Long shopId, @RequestParam(required = false) Long skuId, @RequestParam(required = false) Integer state,HttpServletResponse response) {
-        logger.debug("shopId:"+shopId+"   skuId:"+skuId);
+    public Object queryPresaleofSPU(@PathVariable Long shopId, @RequestParam(required = false) Long skuId, @RequestParam(required = false) Integer state, HttpServletResponse response) {
+        logger.debug("shopId:" + shopId + "   skuId:" + skuId);
         ReturnObject returnObject = presaleService.queryPresaleofSKU(shopId, skuId, state);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
@@ -194,7 +191,7 @@ public class PresaleController {
     })
     @Audit //需要认证
     @PutMapping("/shops/{shopId}/presales/{id}/onshelves")
-    public Object presaleOnShelves(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response) {
+    public Object presaleOnShelves(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response) {
         ReturnObject returnObject = presaleService.presaleOnShelves(shopId, id);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
