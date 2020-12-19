@@ -32,7 +32,3 @@ build/
 ### VS Code ###
 .vscode/
 logs/restfuldemo.log.2020-12-09.log
-*.log
-*.log
-*.log
-gateway/logs/gateway.log.2020-12-19.log

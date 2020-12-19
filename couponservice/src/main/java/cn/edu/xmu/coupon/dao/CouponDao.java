@@ -63,6 +63,7 @@ public class CouponDao {
             //shopId不为空
             criteria.andShopIdEqualTo(shopId);
         }
+        criteria.andStateEqualTo((byte) 1);
         //时间：0 还未开始的， 1 明天开始的，2 正在进行中的，3 已经结束的
         if (timeline != null) {
             if (timeline == 0) {
