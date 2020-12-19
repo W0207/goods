@@ -75,9 +75,9 @@ public class FlashSaleService implements DisableFlashActivityService {
      * @return
      * @author zhai
      */
-    public FlashSaleItem addFlashSaleItem(Long id, SkuInputVo skuInputVo) {
-        FlashSaleItem flashSaleItem = flashSaleDao.addItem(id, skuInputVo);
-        return flashSaleItem;
+    public ReturnObject addFlashSaleItem(Long id, SkuInputVo skuInputVo) {
+        ReturnObject returnObject = flashSaleDao.addItem(id, skuInputVo);
+        return returnObject;
     }
 
 
