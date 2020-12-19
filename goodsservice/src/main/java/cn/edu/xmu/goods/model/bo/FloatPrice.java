@@ -43,7 +43,7 @@ public class FloatPrice implements VoObject {
         this.quantity = floatPricePo.getQuantity();
         this.createdBy = floatPricePo.getCreatedBy();
         this.invalidBy = floatPricePo.getInvalidBy();
-        this.valid = floatPricePo.getValid() == 1 ? true : false;
+        this.valid = floatPricePo.getValid() == 1;
         this.gmtCreate = floatPricePo.getGmtCreate();
         this.gmtModified = floatPricePo.getGmtModified();
     }
@@ -60,20 +60,5 @@ public class FloatPrice implements VoObject {
     @Override
     public Object createSimpleVo() {
         return null;
-    }
-
-    /**
-     * 失效商品价格浮动
-     *
-     * @param loginUserId
-     * @return
-     */
-    public FloatPricePo createUpdateStatePo(Long loginUserId) {
-        FloatPricePo floatPricePo = new FloatPricePo();
-        floatPricePo.setId(id);
-        floatPricePo.setValid((byte) 0);
-        floatPricePo.setInvalidBy(loginUserId);
-        floatPricePo.setGmtModified(LocalDateTime.now());
-        return floatPricePo;
     }
 }
