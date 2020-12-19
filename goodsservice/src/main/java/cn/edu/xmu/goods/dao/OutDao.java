@@ -166,12 +166,16 @@ public class OutDao {
             return new MyReturn<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
     }
+
     public MyReturn<List<GoodsFreightInfo>> getGoodsInfoBySkuId(List<Long> skuIds) {
         List<GoodsFreightInfo> infos = new ArrayList<>(skuIds.size());
         for(Long skuId:skuIds){
-
+            GoodsSkuPo po = skuPoMapper.selectByPrimaryKey(skuId);
+            GoodsSpuPo spuPo = spuPoMapper.selectByPrimaryKey(po.getGoodsSpuId());
+            GoodsFreightInfo info = new GoodsFreightInfo(skuId,spuPo.getFreightId());
+            infos.add(info);
         }
-        return null;
+        return new MyReturn<>(infos);
     }
 
 
