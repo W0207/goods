@@ -225,7 +225,7 @@ public class GoodsSku implements VoObject, Serializable {
     public GoodsSkuPo createPo(SkuCreatVo skuCreatVo, Long spuId) {
         GoodsSkuPo goodsSkuPo = new GoodsSkuPo();
         String nameEnc = skuCreatVo.getName() == null ? null : skuCreatVo.getName();
-        String skusnEnc = skuCreatVo.getSn() == null ? null : skuCreatVo.getName();
+        String skusnEnc = skuCreatVo.getSn() == null ? null : skuCreatVo.getSn();
         Long originalPriceEnc = skuCreatVo.getOriginalPrice() == null ? null : skuCreatVo.getOriginalPrice();
         String configurationEnc = skuCreatVo.getConfiguration() == null ? null : skuCreatVo.getConfiguration();
         Integer inventoryEnc = skuCreatVo.getInventory() == null ? null : skuCreatVo.getInventory();

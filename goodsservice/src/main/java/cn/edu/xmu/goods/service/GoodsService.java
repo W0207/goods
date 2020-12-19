@@ -693,13 +693,13 @@ public class GoodsService implements Ingoodservice {
      * @return
      */
     public ReturnObject getSku(Long id, Long userId, Long departId) {
-        if (userId != null) {
-            System.out.println(userId);
-            MessageVo messageVo = new MessageVo();
-            messageVo.setGoodsSkuId(id);
-            messageVo.setCustomerId(userId);
-            sendMessage(messageVo);
-        }
+//        if (userId != null) {
+//            System.out.println(userId);
+//            MessageVo messageVo = new MessageVo();
+//            messageVo.setGoodsSkuId(id);
+//            messageVo.setCustomerId(userId);
+//            sendMessage(messageVo);
+//        }
         return goodsDao.getSku(id, departId);
     }
 
@@ -735,15 +735,6 @@ public class GoodsService implements Ingoodservice {
      * @author zhai
      */
     public ReturnObject<Object> creatSku(Long id, Long shopId, SkuCreatVo skuCreatVo) {
-        ReturnObject returnObject;
-        SkuOutputVo skuOutputVo = goodsDao.creatSku(id, shopId, skuCreatVo);
-        if (skuOutputVo != null) {
-            returnObject = new ReturnObject(skuOutputVo);
-            logger.debug("addSKU : " + returnObject);
-        } else {
-            logger.debug("addSKU : Failed!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        return returnObject;
+        return goodsDao.creatSku(id, shopId, skuCreatVo);
     }
 }
