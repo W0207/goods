@@ -6,6 +6,7 @@ import cn.edu.xmu.groupon.model.vo.*;
 import io.swagger.annotations.Api;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.groupon.service.GrouponServer;
@@ -58,7 +59,41 @@ public class GrouponController {
     @Autowired
     private HttpServletResponse httpServletResponse;
 
+    private int getStatue(ReturnObject returnObject)
+    {
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
+        {
+            return HttpStatus.FORBIDDEN.value();
+        }
+        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.ACTIVITYALTER_INVALID){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+            return HttpStatus.NOT_FOUND.value();
+        }
+        return HttpStatus.OK.value();
+    }
 
+    private int createStatue(ReturnObject returnObject)
+    {
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
+        {
+            return HttpStatus.FORBIDDEN.value();
+        }
+        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.ACTIVITYALTER_INVALID){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+            return HttpStatus.NOT_FOUND.value();
+        }
+        return HttpStatus.CREATED.value();
+    }
     /**
      * 获得团购活动的所有状态
      *
@@ -96,7 +131,8 @@ public class GrouponController {
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "spuId", value = "spuId", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Long", name = "shopId", value = "商店id", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
-            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false)
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false),
+
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
@@ -108,15 +144,21 @@ public class GrouponController {
             @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) Integer timeline,
-            @RequestParam(required = false) Long spuId
+            @RequestParam(required = false) Long spuId,
+            HttpServletResponse response
     ) {
+
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        if(page<=0||pageSize<=0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        if(page<0||pageSize<0){
+            ReturnObject returnObject=new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            response.setStatus(getStatue(returnObject));
+            return Common.decorateReturnObject( new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("店铺不存在")));
+
         }
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findgrouponActivity(timeline, spuId, shopId, page, pageSize);
         logger.debug("findGrouponActivity = " + returnObject);
+        response.setStatus(getStatue(returnObject));
         return Common.getPageRetObject(returnObject);
 
     }
@@ -150,20 +192,28 @@ public class GrouponController {
                                @RequestParam(required = false) String beginTime,
                                @RequestParam(required = false) String endTime,
                                @RequestParam(required = false) Integer state,
-                               @RequestParam(required = false) Long spuId
+                               @RequestParam(required = false) Long spuId,
+                               HttpServletResponse response
     ) {
+
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        boolean bool= inShopService.shopExitOrNot(id);
-        if(page<=0||pageSize<=0) {
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID,"页数或页大小必须大于0");
+        if(page<0||pageSize<0){
+            ReturnObject returnObject=new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            response.setStatus(getStatue(returnObject));
+            return Common.decorateReturnObject( new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("店铺不存在")));
+
         }
+        boolean bool= inShopService.shopExitOrNot(id);
         if(!bool){
             logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+            ReturnObject returnObject=new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+            response.setStatus(getStatue(returnObject));
+            return Common.decorateReturnObject( new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在")));
         }
         ReturnObject<PageInfo<VoObject>> returnObject = grouponServer.findShopGroupon(state, spuId, id, page, pageSize, beginTime, endTime);
         logger.debug("findGrouponActivity = " + returnObject);
+        //response.setStatus(getStatue(returnObject));
         return Common.getPageRetObject(returnObject);
     }
 
@@ -186,62 +236,22 @@ public class GrouponController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 100, message = "esfae"),
     })
-    @Audit
+    //@Audit
     @PostMapping("/shops/{shopId}/spus/{id}/groupons")
-    public Object createGrouponofSPU(@PathVariable @NotNull Long id, @NotNull @Validated @RequestBody GrouponInputVo grouponInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
+    public Object createGrouponofSPU(@PathVariable @NotNull Long id, @NotNull @Validated @RequestBody GrouponInputVo grouponInputVo, BindingResult bindingResult, @PathVariable Long shopId,HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("createGrouponofSPU: SpuId = " + id);
         }
-        // 校验前端数据
+        //校验前端数据
         Object returnObj = Common.processFieldErrors(bindingResult, httpServletResponse);
         if (returnObj != null) {
             logger.info("incorrect data received while createGrouponofSPU: spuId = ", id);
             return returnObj;
         }
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-        }
-        ReturnObject returnObject;
-        SpuToGrouponVo spuToGrouponVo = goodservice.grouponFindSpu(id);
-        if(grouponInputVo.getBeginTime().isAfter(grouponInputVo.getEndTime())){
-            logger.info("团购活动开始时间晚于结束时间");
-            return  new ReturnObject<>(ResponseCode.Log_Bigger);
-        }
-        if(grouponInputVo.getBeginTime().isBefore(LocalDateTime.now())){
-            logger.info("团购活动开始时间早于当前时间");
-            return  new ReturnObject<>(ResponseCode.FIELD_NOTVALID,String.format("开始时间早于当前时间"));
-        }
-        if (spuToGrouponVo == null) {
-            logger.info("该商品不存在");
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("该商品不存在"));
-        } else {
-            ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-            if (shopToAllVo == null) {
-                logger.info("该店铺不存在");
-               return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-            } else {
-                if(!goodservice.spuInShopOrNot(shopId,id)){
-                    logger.info("该商品不属于该店铺");
-                    return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("该商品不属于该店铺"));
-                }
-                GrouponActivityPo groupon = grouponServer.addGroupon(id, grouponInputVo, shopId);
-                if (groupon == null) {
 
-                    return new ReturnObject<>(ResponseCode.GROUPON_STATENOTALLOW);
-                }
-                GrouponActivity grouponActivity = new GrouponActivity(groupon);
-                returnObject = new ReturnObject<>(grouponActivity);
-                GrouponOutputVo grouponOutputVo = new GrouponOutputVo(groupon);
-                grouponOutputVo.setShopToAllVo(shopToAllVo);
-                grouponOutputVo.setGoodsSpu(spuToGrouponVo);
-
-                returnObject = new ReturnObject<>(grouponOutputVo);
-            }
-        }
+        ReturnObject returnObject = grouponServer.addGroupon(id, grouponInputVo, shopId);
+        response.setStatus(createStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -266,15 +276,10 @@ public class GrouponController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}")
-    public Object changeGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, @PathVariable Long shopId) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-        }
-
-        ReturnObject returnObj = grouponServer.changeGroupon(id, grouponInputVo, shopId);
-        return Common.decorateReturnObject(returnObj);
+    public Object changeGrouponofSPU(@PathVariable Long id, @Validated @RequestBody GrouponInputVo grouponInputVo, @PathVariable Long shopId,HttpServletResponse response) {
+        ReturnObject returnObject = grouponServer.changeGroupon(id, grouponInputVo, shopId);
+        response.setStatus(getStatue(returnObject));
+        return Common.decorateReturnObject(returnObject);
 
 
     }
@@ -300,13 +305,9 @@ public class GrouponController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/groupons/{id}")
-    public Object cancelGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-        }
+    public Object cancelGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId,HttpServletResponse response) {
         ReturnObject returnObj = grouponServer.deleteGrouponState(shopId, id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }
@@ -331,13 +332,9 @@ public class GrouponController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}/offshelves")
-    public Object offGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-        }
+    public Object offGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId,HttpServletResponse response) {
         ReturnObject returnObj = grouponServer.offGrouponState(shopId, id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }
@@ -362,13 +359,9 @@ public class GrouponController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/groupons/{id}/onshelves")
-    public Object onGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
-        }
+    public Object onGrouponofSPU(@PathVariable Long id, @PathVariable Long shopId,HttpServletResponse response) {
         ReturnObject returnObj = grouponServer.onGrouponState(shopId, id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }

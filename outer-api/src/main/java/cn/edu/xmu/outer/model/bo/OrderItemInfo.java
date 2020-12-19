@@ -25,6 +25,4 @@ public class OrderItemInfo implements Serializable {
 
     private Long price;
     //orderItem实际支付价格
-
-
 }
