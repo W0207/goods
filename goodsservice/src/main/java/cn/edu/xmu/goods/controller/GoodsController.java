@@ -54,7 +54,6 @@ public class GoodsController {
     })
     @GetMapping("/skus/states")
     public Object getGoodsSkuState() {
-        logger.debug("getGoodsSkuState");
         GoodsSku.State[] states = GoodsSku.State.class.getEnumConstants();
         List<SkuStateVo> skuStateVos = new ArrayList<>();
         for (GoodsSku.State state : states) {
@@ -168,6 +167,7 @@ public class GoodsController {
             logger.debug("deleteGoodsSku : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.deleteSkuById(shopId, id);
+        httpServletResponse.setContentType("application/json;charset=utf-8");
         return Common.decorateReturnObject(returnObj);
     }
 
