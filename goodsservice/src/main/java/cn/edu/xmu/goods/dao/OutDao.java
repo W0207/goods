@@ -15,6 +15,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 宇
+ */
 @Repository
 public class OutDao {
 
@@ -177,6 +180,5 @@ public class OutDao {
         }
         return new MyReturn<>(infos);
     }
-
 
 }

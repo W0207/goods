@@ -60,17 +60,26 @@ public class PresaleDao {
     public ReturnObject inserPresaleActivity(Long shopId, Long id, PresaleActivityVo presaleActivityVo) {
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
-        if(presaleActivityVo.getBeginTime()==null){
+        if (presaleActivityVo.getName() == null || presaleActivityVo.getName().length() == 0) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        if(presaleActivityVo.getEndTime()==null){
+        if (presaleActivityVo.getBeginTime() == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (presaleActivityVo.getEndTime() == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (presaleActivityVo.getPayTime().isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (!presaleActivityVo.getEndTime().isAfter(presaleActivityVo.getBeginTime())) {
             returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
             return returnObject;
         }
-        if(presaleActivityVo.getEndTime().isBefore(LocalDateTime.now())||presaleActivityVo.getBeginTime().isBefore(LocalDateTime.now())){
+        if (presaleActivityVo.getRestPayPrice() < 0) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (presaleActivityVo.getEndTime().isBefore(LocalDateTime.now()) || presaleActivityVo.getBeginTime().isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (shopToAllVo == null) {
@@ -89,10 +98,10 @@ public class PresaleDao {
                 } else {
                     //查看sku是否参加预售
                     PresaleActivityPoExample example = new PresaleActivityPoExample();
-                    PresaleActivityPoExample.Criteria  criteria= example.createCriteria();
+                    PresaleActivityPoExample.Criteria criteria = example.createCriteria();
                     criteria.andGoodsSkuIdEqualTo(id);
                     List<PresaleActivityPo> pos = presaleActivityPoMapper.selectByExample(example);
-                    if(!pos.isEmpty()){
+                    if (!pos.isEmpty()) {
                         return new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                     }
                     PresaleActivityPo presaleActivityPo = presaleActivityVo.creatPo();
@@ -176,10 +185,22 @@ public class PresaleDao {
 
     public ReturnObject modifyPresale(Long shopId, Long id, PresaleActivityVo vo) {
         ReturnObject returnObject = null;
-        if(vo.getBeginTime()==null){
+        if (vo.getName() == null || vo.getName().length() == 0) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        if(vo.getEndTime()==null){
+        if (vo.getRestPayPrice() < 0) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (vo.getBeginTime().isBefore(LocalDateTime.now())) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (vo.getPayTime().isBefore(LocalDateTime.now())) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (vo.getBeginTime() == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (vo.getEndTime() == null) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         //判断开始时间是不是在结束时间之前
@@ -189,7 +210,7 @@ public class PresaleDao {
         if (vo.getPayTime().isBefore(vo.getBeginTime())) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if (vo.getEndTime().isBefore(LocalDateTime.now())){
+        if (vo.getEndTime().isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         PresaleActivityPo presaleActivityPo = presaleActivityPoMapper.selectByPrimaryKey(id);
@@ -201,7 +222,7 @@ public class PresaleDao {
                 //预售活动的shopId与路径上的不同
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             } else {
-                if (presaleActivityPo.getState() == 2||presaleActivityPo.getState()==1) {
+                if (presaleActivityPo.getState() == 2 || presaleActivityPo.getState() == 1) {
                     //预售活动已经关闭
                     returnObject = new ReturnObject(ResponseCode.PRESALE_STATENOTALLOW);
                 } else {
@@ -264,9 +285,8 @@ public class PresaleDao {
         if (id != null) {
             criteria.andGoodsSkuIdEqualTo(id);
         }
-        if (state !=null) {
-            if(state>3||state<0)
-            {
+        if (state != null) {
+            if (state > 3 || state < 0) {
                 return new ReturnObject(ResponseCode.FIELD_NOTVALID);
             }
             criteria.andStateEqualTo((byte) (int) state);
