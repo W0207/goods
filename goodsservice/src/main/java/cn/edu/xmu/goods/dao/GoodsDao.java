@@ -258,7 +258,7 @@ public class GoodsDao {
             spuCriteria.andGoodsSnEqualTo(spuSn);
         }
         List<GoodsSpuPo> goodsSpuPos;
-
+        PageHelper.startPage(page, pageSize);
         if (spuSn != null || shopId != null) {
             goodsSpuPos = goodsSpuPoMapper.selectByExample(spuPoExample);
         } else {
@@ -276,23 +276,22 @@ public class GoodsDao {
             }
             criteria.andGoodsSpuIdEqualTo(spuId);
         }
-
-        PageHelper.startPage(page, pageSize);
         List<GoodsSkuPo> goodsSkuPos;
         try {
             goodsSkuPos = goodsSkuPoMapper.selectByExample(example);
             List<VoObject> ret = new ArrayList<>(goodsSkuPos.size());
             for (GoodsSkuPo po : goodsSkuPos) {
                 GoodsSku sku = new GoodsSku(po);
-                ret.add(sku);
+                FindSkuRet skuRet = new FindSkuRet(sku);
+                skuRet.setPrice(getPrice(skuRet.getId()));
+                FindSkuRetVo skuRetVo = new FindSkuRetVo(skuRet);
+                ret.add(skuRetVo);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<GoodsSkuPo> goodsSkuPoPage = PageInfo.of(goodsSkuPos);
-            PageInfo<VoObject> goodsSkuPage = new PageInfo<>(ret);
-            goodsSkuPage.setPages(goodsSkuPoPage.getPages());
-            goodsSkuPage.setPageNum(goodsSkuPoPage.getPageNum());
-            goodsSkuPage.setPageSize(goodsSkuPoPage.getPageSize());
-            goodsSkuPage.setTotal(goodsSkuPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(goodsSkuPos).getPages()));
+            rolePage.setTotal((PageInfo.of(goodsSkuPos).getTotal()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("findSkuSimple: DataAccessException:" + e.getMessage());
