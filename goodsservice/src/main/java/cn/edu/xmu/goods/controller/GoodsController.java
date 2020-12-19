@@ -948,7 +948,25 @@ public class GoodsController {
             httpServletResponse.setStatus(201);
         } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             httpServletResponse.setStatus(403);
+        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+            httpServletResponse.setStatus(404);
         }
         return Common.decorateReturnObject(returnObj);
+    }
+
+    /**
+     *
+     */
+    @ApiOperation(value = "查看一条分享sku的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "sid", value = "分享id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
+    })
+    @Audit
+    @GetMapping("/share/{sid}/skus/{id}")
+    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+        ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
+        return Common.decorateReturnObject(returnObject);
     }
 }

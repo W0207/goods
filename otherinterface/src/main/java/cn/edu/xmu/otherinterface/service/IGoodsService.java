@@ -1,6 +1,5 @@
 package cn.edu.xmu.otherinterface.service;
 
-import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.GoodsSkuInfo;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 
@@ -29,11 +28,12 @@ public interface IGoodsService {
 
     /**
      * 两个sku是不是在同一个spu下
+     *
      * @param sku1
      * @param sku2
      * @return
      */
-    MyReturn<Boolean> inSameSpu(Long sku1 ,Long sku2);
+    MyReturn<Boolean> inSameSpu(Long sku1, Long sku2);
 
 }
 

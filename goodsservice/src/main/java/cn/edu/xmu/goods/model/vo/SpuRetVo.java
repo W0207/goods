@@ -1,6 +1,7 @@
 package cn.edu.xmu.goods.model.vo;
 
 import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.outer.model.bo.Freight;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,8 @@ public class SpuRetVo implements VoObject {
     private SimpleCategoryVo category;
 
     private SimpleShopVo shop;
+
+    private Freight freight;
 
     private String goodsSn;
 
