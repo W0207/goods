@@ -692,7 +692,7 @@ public class GoodsService implements Ingoodservice {
      * @param id
      * @return
      */
-    public ReturnObject getSku(Long id, Long userId) {
+    public ReturnObject getSku(Long id, Long userId, Long departId) {
         if (userId != null) {
             System.out.println(userId);
             MessageVo messageVo = new MessageVo();
@@ -700,7 +700,7 @@ public class GoodsService implements Ingoodservice {
             messageVo.setCustomerId(userId);
             sendMessage(messageVo);
         }
-        return goodsDao.getSku(id);
+        return goodsDao.getSku(id, departId);
     }
 
     /**

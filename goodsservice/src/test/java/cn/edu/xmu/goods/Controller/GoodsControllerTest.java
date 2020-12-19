@@ -131,10 +131,8 @@ public class GoodsControllerTest {
      */
     @Test
     public void deleteGoodsSpu() throws Exception {
-        String token = creatTestToken(1L, 1L, 100);
         System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
         String responseString = this.mvc.perform(delete("/goods/shops/0/spus/273")
-                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -579,16 +577,16 @@ public class GoodsControllerTest {
     @Test
     public void addFloatingPrice1() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        String requireJson = "{\n" +
-                "  \"activityPrice\": 0,\n" +
-                "  \"beginTime\": \"2020-12-07 11:24:47\",\n" +
-                "  \"endTime\": \"2020-12-07 11:24:46\",\n" +
-                "  \"quantity\": 0\n" +
+        String bodyValue = "{\n" +
+                "  \"activityPrice\": 12,\n" +
+                "  \"beginTime\": \"2022-12-15T22:55:00\",\n" +
+                "  \"endTime\": \"2022-12-20T22:55:00\",\n" +
+                "  \"quantity\": 10\n" +
                 "}";
-        String responseString = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+        String responseString = this.mvc.perform(post("/goods/shops/1/skus/8989/floatPrices")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
-                .content(requireJson))
+                .content(bodyValue))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
@@ -757,21 +755,19 @@ public class GoodsControllerTest {
      */
     @Test
     public void createSku() throws Exception {
-        String token = creatTestToken(1L, 0L, 100);
-        String requireJson = "{\n" +
-                "  \"sn\":\"123\",\n" +
-                "  \"name\":\"123\",\n" +
-                "  \"originalPrice\":\"123\",\n" +
-                "  \"configuration\": \"123\",\n" +
-                "  \"weight\":\"123\",\n" +
-                "  \"imageUrl\":\"http://47.52.88.176/file/images/201612/file_586206d4c7d2f.jpg\",\n" +
-                "  \"inventory\":\"123\",\n" +
-                "  \"detail\":\"123\"\n" +
+        String bodyValue = "{\n" +
+                "  \"sn\": \"string\",\n" +
+                "  \"name\": \"测试商品\",\n" +
+                "  \"originalPrice\": 100,\n" +
+                "  \"configuration\": \"ddddd\",\n" +
+                "  \"weight\": 10,\n" +
+                "  \"imageUrl\": null,\n" +
+                "  \"inventory\": 100,\n" +
+                "  \"detail\": \"aaaaa\"\n" +
                 "}";
         String responseString = this.mvc.perform(post("/goods/shops/0/spus/273/skus")
-                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
-                .content(requireJson))
+                .content(bodyValue))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
