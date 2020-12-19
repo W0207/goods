@@ -61,7 +61,7 @@ public class CommentControllerTest {
      */
     @Test
     public void getCommentState() throws Exception {
-        String responseString = this.mvc.perform(get("/comments/states"))
+        String responseString = this.mvc.perform(get("/comment/comments/states"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未审核\", \"code\": 0 }, { \"name\": \"评论成功\", \"code\": 1 }, { \"name\": \"未通过\", \"code\": 2 }], \"errmsg\": \"成功\" }";
         System.out.println(responseString);

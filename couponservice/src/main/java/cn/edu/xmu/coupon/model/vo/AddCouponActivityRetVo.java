@@ -35,6 +35,10 @@ public class AddCouponActivityRetVo {
 
     private String strategy;
 
+    private UserVo createdBy;
+
+    private UserVo modiBy;
+
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
@@ -51,6 +55,22 @@ public class AddCouponActivityRetVo {
         this.endTime = po.getEndTime();
         this.couponTime = po.getCouponTime();
         this.strategy = po.getStrategy();
+    }
+
+    public UserVo getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserVo createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public UserVo getModiBy() {
+        return modiBy;
+    }
+
+    public void setModiBy(UserVo modiBy) {
+        this.modiBy = modiBy;
     }
 
     public Long getId() {
