@@ -51,8 +51,8 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @DubboReference(version = "0.0.1", check = false)
-    private ITimeService iTimeService;
+    //@DubboReference(version = "0.0.1", check = false)
+    //private ITimeService iTimeService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
@@ -61,23 +61,6 @@ public class CommentController {
 
 
 
-    @ApiOperation(value = "查看sku的评价列表（已通过审核）")
-    @GetMapping("/test")
-    public Object test() {
-        System.out.println("123");
-        try {
-            MyReturn<TimeSegInfo> returnObject = iTimeService.getTimeSeg(10L);
-
-            if (returnObject.getCode() == ResponseCode.OK) {
-                TimeSegInfo timeSegInfo = returnObject.getData();
-                return Common.decorateReturnObject(new ReturnObject(returnObject.getData()));
-            }
-
-            return Common.decorateReturnObject(new ReturnObject(returnObject.getCode()));
-        } catch (Exception e) {
-            return Common.decorateReturnObject(new ReturnObject(e.getMessage()));
-        }
-    }
 
     /**
      * 查看sku的评价列表（已通过审核）

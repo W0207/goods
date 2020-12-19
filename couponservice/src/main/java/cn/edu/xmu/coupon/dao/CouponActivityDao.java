@@ -158,7 +158,7 @@ public class CouponActivityDao implements InitializingBean {
             //2.判断店铺id是否相同
             if (!shopId.equals(po.getShopId())) {
                 //店铺id不相同
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "店铺id和活动里的店铺id不一致");
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, "店铺id和活动里的店铺id不一致");
             } else {
                 //3.判断优惠活动状态是否为下线
                 if (po.getState().equals((byte) 1)) {
@@ -180,8 +180,11 @@ public class CouponActivityDao implements InitializingBean {
                         for (CouponSkuPo couponSkuPo : pos) {
                             couponSkuPoMapper.deleteByPrimaryKey(po.getId());
                         }
+                        returnObject = new ReturnObject();
                     }
-                    returnObject = new ReturnObject();
+                    else{
+                        returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
+                    }
                 }
             }
         }

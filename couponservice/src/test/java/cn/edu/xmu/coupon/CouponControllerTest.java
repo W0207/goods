@@ -114,7 +114,7 @@ public class CouponControllerTest {
 
     @Test
     public void showOwncouponactivities() throws Exception {
-        String responseString = this.mvc.perform(get("/coupon/couponactivities?shopId=0&pageSize=2"))
+        String responseString = this.mvc.perform(get("/coupon/couponactivities?shopId=0&timeline=2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -132,7 +132,7 @@ public class CouponControllerTest {
     public void showOwnInvalidcouponacitvitiesByid() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/coupon/shops/0/couponactivities/invalid?page=2&pageSize=2").header("authorization", token))
+        String responseString = this.mvc.perform(get("/coupon/shops/0/couponactivities/invalid?page=1&pageSize=5").header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -280,7 +280,7 @@ public class CouponControllerTest {
 
         String token = creatTestToken(1L, 123L, 100);
         String responseString = this.mvc.perform(get("/coupon/couponactivities/1/skus").header("authorization", token))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
