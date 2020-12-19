@@ -95,12 +95,10 @@ public class CouponDao {
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CouponActivityPo> commentPoPage = PageInfo.of(couponActivityPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(couponActivityPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(couponActivityPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showCouponactivities: DataAccessException:" + e.getMessage());
@@ -123,12 +121,10 @@ public class CouponDao {
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CouponActivityPo> commentPoPage = PageInfo.of(couponActivityPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(couponActivityPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(couponActivityPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showOwnInvalidcouponacitvitiesByid: DataAccessException:" + e.getMessage());

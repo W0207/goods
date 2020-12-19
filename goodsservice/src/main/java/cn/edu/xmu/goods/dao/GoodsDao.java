@@ -266,6 +266,15 @@ public class GoodsDao {
         PageHelper.startPage(page, pageSize);
         if (spuSn != null || shopId != null) {
             goodsSpuPos = goodsSpuPoMapper.selectByExample(spuPoExample);
+            if(goodsSpuPos.size()==0) {
+                List<VoObject> empty = new ArrayList<>(goodsSpuPos.size());
+                PageInfo<VoObject> rolePage1 = PageInfo.of(empty);
+                rolePage1.setPages((PageInfo.of(goodsSpuPos).getPages()));
+                rolePage1.setTotal((PageInfo.of(goodsSpuPos).getTotal()));
+                rolePage1.setPageNum(page);
+                rolePage1.setPageSize(pageSize);
+                return new ReturnObject<>(rolePage1);
+            }
         } else {
             goodsSpuPos = null;
         }
