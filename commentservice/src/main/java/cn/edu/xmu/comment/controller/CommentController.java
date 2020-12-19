@@ -59,8 +59,6 @@ public class CommentController {
 
 
 
-
-
     @ApiOperation(value = "查看sku的评价列表（已通过审核）")
     @GetMapping("/test")
     public Object test() {
