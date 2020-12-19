@@ -98,12 +98,17 @@ public class ShopDao {
      * by 宇
      */
     public ReturnObject<Shop> updateShop(Shop shop) {
+        if(shop.getName().isEmpty()||shop.getName().trim().isEmpty()){
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+        }
         ShopPo shopPo = shop.getShopPo();
         ReturnObject<Shop> returnObject = null;
         try {
+            ShopPo po = shopPoMapper.selectByPrimaryKey(shopPo.getId());
+            if(po.getState().equals((byte)4)||po.getState().equals((byte)3)){
+                return new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW);
+            }
             int ret = shopPoMapper.updateByPrimaryKeySelective(shopPo);
-            System.out.printf("更新的返回值为：%d", ret);
-            System.out.printf(shopPo.toString());
             if (ret == 0) {
                 //修改失败
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
