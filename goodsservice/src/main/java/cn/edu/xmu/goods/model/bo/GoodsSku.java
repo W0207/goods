@@ -244,6 +244,7 @@ public class GoodsSku implements VoObject, Serializable {
         goodsSkuPo.setGoodsSpuId(spuId);
         goodsSkuPo.setDisabled((byte) 0);
         goodsSkuPo.setSkuSn(skusnEnc);
+        goodsSkuPo.setState((byte) 0);
         return goodsSkuPo;
     }
 
