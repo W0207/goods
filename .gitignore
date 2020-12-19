@@ -36,3 +36,5 @@ logs/restfuldemo.log.2020-12-09.log
 *.log
 *.log
 gateway/logs/gateway.log.2020-12-19.log
+*.log
+

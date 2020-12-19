@@ -115,6 +115,9 @@ public class GoodsController {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -142,6 +145,9 @@ public class GoodsController {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.putOffGoodsOnSaleById(shopId, id);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -170,6 +176,9 @@ public class GoodsController {
         }
         ReturnObject returnObj = goodsService.deleteSkuById(shopId, id);
         httpServletResponse.setContentType("application/json;charset=utf-8");
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -200,8 +209,7 @@ public class GoodsController {
     /**
      * 管理员或店家修改商品sku
      *
-     * @param bindingResult 校验信息
-     * @param skuInputVo    修改信息的SkuInputVo
+     * @param skuInputVo 修改信息的SkuInputVo
      * @return Object
      * @Author shibin zhan
      */
@@ -214,17 +222,14 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/skus/{id}")
-    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
+    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuInputVo skuInputVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSku : shopId = " + shopId + " skuId = " + id + " vo = " + skuInputVo);
         }
-        // 校验前端数据
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsSku shopId = " + shopId + " skuId = " + id);
-            return returnObject;
-        }
         ReturnObject returnObj = goodsService.modifySkuInfo(shopId, id, skuInputVo);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -785,12 +790,22 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/skus/{id}/floatPrices")
-    public Object addFloatingPrice(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody FloatPriceInputVo floatPriceInputVo, @LoginUser Long userId) {
+    public Object addFloatingPrice(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody FloatPriceInputVo floatPriceInputVo, @LoginUser Long userId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addFloatingPrice: shopId = " + shopId + " skuId = " + id);
         }
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject floatPrice = goodsService.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+        if (floatPrice.getCode() == ResponseCode.OK) {
+            response.setStatus(201);
+        } else if (floatPrice.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            response.setStatus(403);
+        } else if (floatPrice.getCode() == ResponseCode.Log_Bigger) {
+            response.setStatus(200);
+        } else if (floatPrice.getCode() == ResponseCode.SKU_NOTENOUGH) {
+            response.setStatus(200);
+        } else if (floatPrice.getCode() == ResponseCode.FIELD_NOTVALID) {
+            response.setStatus(400);
+        }
         return Common.decorateReturnObject(floatPrice);
     }
 
@@ -874,23 +889,11 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id) {
-        String token = httpServletRequest.getHeader("Authorization");
+    public Object getSku(@PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
         if (logger.isDebugEnabled()) {
             logger.debug("getSku : skuId = " + id);
-        }
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
-        Long userId;
-        Long departId;
-        if (token != null) {
-            JwtHelper jwtHelper = new JwtHelper();
-            JwtHelper.UserAndDepart userAndDepart = jwtHelper.verifyTokenAndGetClaims(token);
-            userId = userAndDepart.getUserId();
-            departId = userAndDepart.getDepartId();
-        } else {
-            userId = null;
-            departId = null;
         }
         ReturnObject returnObj = goodsService.getSku(id, userId, departId);
         return Common.decorateReturnObject(returnObj);
@@ -936,11 +939,16 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
         ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
+        if (returnObj.getCode() == ResponseCode.OK) {
+            httpServletResponse.setStatus(201);
+        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 }
