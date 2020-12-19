@@ -33,9 +33,9 @@ public class CommentDao implements InitializingBean {
 
     @Autowired
     private CommentPoMapper commentPoMapper;
-/*
+
     @DubboReference(version = "0.0.1", check = false)
-    private OtherModulService otherModulService;*/
+    private OtherModulService otherModulService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentDao.class);
 
@@ -50,7 +50,7 @@ public class CommentDao implements InitializingBean {
             List<VoObject> ret = new ArrayList<>(commentPos.size());
             for (CommentPo po : commentPos) {
                 Comment com = new Comment(po);
-                //com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
+                com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
                 if (po.getState() == 1) {
                     ret.add(com);
                 }
@@ -101,7 +101,7 @@ public class CommentDao implements InitializingBean {
             List<VoObject> ret = new ArrayList<>(commentPos.size());
             for (CommentPo po : commentPos) {
                 Comment com = new Comment(po);
-                //com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
+                com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
                 if (po.getState() == 1) {
                     ret.add(com);
                 }
@@ -131,7 +131,7 @@ public class CommentDao implements InitializingBean {
             List<VoObject> ret = new ArrayList<>(commentPos.size());
             for (CommentPo po : commentPos) {
                 Comment com = new Comment(po);
-                //com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
+                com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);

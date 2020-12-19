@@ -91,7 +91,7 @@ public class CommentControllerTest {
     @Test
     public void show() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comment/skus/185/comments?pageSize=10"))
+        String responseString = this.mvc.perform(get("/comment/skus/273/comments?pageSize=10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -129,7 +129,7 @@ public class CommentControllerTest {
     public void showComment() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/comments/comments").header("authorization", token))
+        String responseString = this.mvc.perform(get("/comment/comments").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();

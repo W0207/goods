@@ -51,9 +51,6 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    //@DubboReference(version = "0.0.1", check = false)
-    //private ITimeService iTimeService;
-
     @Autowired
     private HttpServletResponse httpServletResponse;
 
