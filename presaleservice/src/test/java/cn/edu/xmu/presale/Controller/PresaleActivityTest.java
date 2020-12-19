@@ -37,6 +37,11 @@ public class PresaleActivityTest {
     }
 
     @Test
+    public void create(){
+        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    }
+
+    @Test
     public void getPresaleState() throws Exception {
         String responseString = this.mvc.perform(get("/presale/presales/states"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))

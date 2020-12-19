@@ -409,6 +409,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
+    @Audit
     @PutMapping("/shops/{shopId}/couponactivities/{id}/onshelves")
     public Object CouponActivityOnShelves(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response) {
         ReturnObject returnObject = couponActivityService.CouponActivityOnShelves(shopId, id);
@@ -429,6 +430,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
+    @Audit
     @PutMapping("/shops/{shopId}/couponactivities/{id}/offshelves")
     public Object CouponActivityOffShelves(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response) {
         ReturnObject returnObject = couponActivityService.CouponActivityOffShelves(shopId, id);
@@ -450,6 +452,7 @@ public class CouponController {
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "shopId", value = "shopId", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "活动id", required = true)
     })
+    @Audit
     @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
     @Audit
     public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response, @Depart Long ShopId) {

@@ -58,10 +58,7 @@ public class CommentController {
     private HttpServletResponse httpServletResponse;
 
 
-
-
-
-
+    
     /**
      * 查看sku的评价列表（已通过审核）
      *
