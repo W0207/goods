@@ -37,8 +37,8 @@ public class CouponService {
         return couponDao.useCouponByCouponId(id, userId);
     }
 
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
-        return couponDao.addCouponActivity(shopId, addCouponActivityVo);
+    public ReturnObject addCouponActivity(Long shopId,Long userId, AddCouponActivityVo addCouponActivityVo) {
+        return couponDao.addCouponActivity(shopId, userId,addCouponActivityVo);
     }
 
 

@@ -6,6 +6,7 @@ import cn.edu.xmu.coupon.model.bo.CouponSku;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.vo.CouponActivityModifyVo;
 import cn.edu.xmu.coupon.model.vo.CouponActivitySkuInputVo;
+import cn.edu.xmu.coupon.model.vo.CouponActivitySkuVo;
 import cn.edu.xmu.ininterface.service.DisableCouponActivityService;
 import cn.edu.xmu.ooad.util.ImgHelper;
 import cn.edu.xmu.ooad.util.ResponseCode;
@@ -50,16 +51,9 @@ public class CouponActivityService implements DisableCouponActivityService {
         return couponActivityDao.modifyCouponActivityByID(id, shopId, couponActivityModifyVo);
     }
 
-    public ReturnObject rangeForCouponActivityById(Long id, Long shopId, CouponActivitySkuInputVo couponActivitySkuInputVo) {
+    public ReturnObject rangeForCouponActivityById(Long id, Long shopId, Long[] skuIds) {
         ReturnObject returnObject;
-        CouponSkuPo couponSkuPo = couponActivityDao.rangeForCouponActivityById(id, shopId, couponActivitySkuInputVo);
-        if (couponSkuPo != null) {
-            returnObject = new ReturnObject(new CouponSku(couponSkuPo));
-            logger.debug("rangeForCouponActivityById : " + returnObject);
-        } else {
-            logger.debug("rangeForCouponActivityById : fail!");
-            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
+        returnObject = couponActivityDao.rangeForCouponActivityById(id, shopId, skuIds);
         return returnObject;
     }
 
@@ -132,6 +126,9 @@ public class CouponActivityService implements DisableCouponActivityService {
 
     public ReturnObject deleteCouponActivity(Long shopId,Long id){
         return couponActivityDao.deleteCouponActivity(shopId, id);
+    }
+    public ReturnObject findCouponActivity(Long shopId,Long id){
+        return couponActivityDao.findCouponActivity(shopId, id);
     }
 
     @Override

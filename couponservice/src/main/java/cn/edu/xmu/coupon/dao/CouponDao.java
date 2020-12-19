@@ -9,11 +9,8 @@ import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.coupon.model.po.CouponPoExample;
-import cn.edu.xmu.coupon.model.vo.AddCouponActivityRetVo;
-import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.coupon.model.vo.*;
 import cn.edu.xmu.coupon.model.bo.SkuToCoupon;
-import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
-import cn.edu.xmu.coupon.model.vo.CouponRetVo;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.InShopService;
@@ -21,6 +18,7 @@ import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -49,6 +47,9 @@ public class CouponDao {
 
     @Autowired
     private CouponPoMapper couponPoMapper;
+
+
+    private IUserService iUserService;
 
 
     private static final Logger logger = LoggerFactory.getLogger(CouponDao.class);
@@ -163,12 +164,15 @@ public class CouponDao {
      * @param addCouponActivityVo
      * @return
      */
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
+    public ReturnObject addCouponActivity(Long shopId,Long userId, AddCouponActivityVo addCouponActivityVo) {
         if (!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,活动结束时间小于开始时间");
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,活动结束时间小于开始时间");
         }
         if (addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime()) || addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,优惠时间不在活动期间");
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
+        }
+        if(addCouponActivityVo.getEndTime().isBefore(LocalDateTime.now())){
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
         }
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
@@ -186,6 +190,10 @@ public class CouponDao {
                     AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
                     vo.setShop(shopToAllVo);
                     vo.setId(po.getId());
+                    UserVo userVo = new UserVo();
+                    userVo.setId(userId);
+                    userVo.setName(iUserService.getUserName(userId));
+                    vo.setCreatedBy(userVo);
                     returnObject = new ReturnObject(vo);
                 }
             }
