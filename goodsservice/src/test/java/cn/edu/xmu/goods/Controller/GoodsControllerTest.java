@@ -298,9 +298,15 @@ public class GoodsControllerTest {
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
+    /**
+     * 获得所有sku
+     *
+     * @throws Exception
+     */
+
     @Test
     public void getSkuList() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/sku?spuId=273"))
+        String responseString = this.mvc.perform(get("/goods/skus"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
