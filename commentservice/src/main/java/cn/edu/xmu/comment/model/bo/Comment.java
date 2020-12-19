@@ -33,14 +33,14 @@ public class Comment implements VoObject {
 
     private LocalDateTime gmtModified;
 
-    private UserInfo userInfo;
+    private UserInfo customer;
 
     public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+        this.customer = userInfo;
     }
 
     public UserInfo getUserInfo() {
-        return userInfo;
+        return customer;
     }
 
     public Comment(CommentPo po) {

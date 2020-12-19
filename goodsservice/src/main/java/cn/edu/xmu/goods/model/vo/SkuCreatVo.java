@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
+/**
+ * @author Abin
+ */
 @Data
 @ApiOperation(value = "新建需要的sku信息")
 public class SkuCreatVo {

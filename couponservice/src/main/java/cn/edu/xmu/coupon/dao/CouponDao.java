@@ -9,11 +9,8 @@ import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponActivityPoExample;
 import cn.edu.xmu.coupon.model.po.CouponPo;
 import cn.edu.xmu.coupon.model.po.CouponPoExample;
-import cn.edu.xmu.coupon.model.vo.AddCouponActivityRetVo;
-import cn.edu.xmu.coupon.model.vo.AddCouponActivityVo;
+import cn.edu.xmu.coupon.model.vo.*;
 import cn.edu.xmu.coupon.model.bo.SkuToCoupon;
-import cn.edu.xmu.coupon.model.vo.CouponAddLimitVo;
-import cn.edu.xmu.coupon.model.vo.CouponRetVo;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.InShopService;
@@ -21,6 +18,7 @@ import cn.edu.xmu.ininterface.service.model.vo.SkuToCouponVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -51,6 +49,9 @@ public class CouponDao {
     private CouponPoMapper couponPoMapper;
 
 
+    private IUserService iUserService;
+
+
     private static final Logger logger = LoggerFactory.getLogger(CouponDao.class);
 
     public ReturnObject<PageInfo<VoObject>> showCouponactivities(Integer page, Integer pageSize, Long shopId, Long timeline) {
@@ -62,6 +63,7 @@ public class CouponDao {
             //shopId不为空
             criteria.andShopIdEqualTo(shopId);
         }
+        criteria.andStateEqualTo((byte) 1);
         //时间：0 还未开始的， 1 明天开始的，2 正在进行中的，3 已经结束的
         if (timeline != null) {
             if (timeline == 0) {
@@ -94,12 +96,10 @@ public class CouponDao {
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CouponActivityPo> commentPoPage = PageInfo.of(couponActivityPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(couponActivityPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(couponActivityPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showCouponactivities: DataAccessException:" + e.getMessage());
@@ -122,12 +122,10 @@ public class CouponDao {
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CouponActivityPo> commentPoPage = PageInfo.of(couponActivityPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(couponActivityPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(couponActivityPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showOwnInvalidcouponacitvitiesByid: DataAccessException:" + e.getMessage());
@@ -163,12 +161,15 @@ public class CouponDao {
      * @param addCouponActivityVo
      * @return
      */
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
+    public ReturnObject addCouponActivity(Long shopId,Long userId, AddCouponActivityVo addCouponActivityVo) {
         if (!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,活动结束时间小于开始时间");
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,活动结束时间小于开始时间");
         }
         if (addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime()) || addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "addCouponActivity,优惠时间不在活动期间");
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
+        }
+        if(addCouponActivityVo.getEndTime().isBefore(LocalDateTime.now())){
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
         }
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
@@ -186,6 +187,10 @@ public class CouponDao {
                     AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
                     vo.setShop(shopToAllVo);
                     vo.setId(po.getId());
+                    UserVo userVo = new UserVo();
+                    userVo.setId(userId);
+                    userVo.setName(iUserService.getUserName(userId));
+                    vo.setCreatedBy(userVo);
                     returnObject = new ReturnObject(vo);
                 }
             }
@@ -309,22 +314,30 @@ public class CouponDao {
         }
     }
 
-    public PageInfo<CouponRetVo> showCouponsById(Integer state, Long userId) {
+    public ReturnObject<PageInfo<VoObject>> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
         CouponPoExample couponPoExample = new CouponPoExample();
         CouponPoExample.Criteria couponPoCriteria = couponPoExample.createCriteria();
         couponPoCriteria.andCustomerIdEqualTo(userId);
-        couponPoCriteria.andStateEqualTo((byte) state.intValue());
+        if(state!=null) {
+            couponPoCriteria.andStateEqualTo((byte) state.intValue());
+        }
         List<CouponPo> couponPos = null;
+        PageHelper.startPage(pageNum, pageSize);
         couponPos = couponPoMapper.selectByExample(couponPoExample);
-        List<CouponRetVo> vo = new ArrayList<>(couponPos.size());
+        List<VoObject> vo = new ArrayList<>(couponPos.size());
         for (CouponPo couponPo : couponPos) {
             Coupon co = new Coupon(couponPo);
-            CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(co.getId());
+            CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(co.getActivityId());
             CouponRet couponRet = new CouponRet(co);
             couponRet.SetByActivity(couponActivityPo);
             CouponRetVo couponRetVo = new CouponRetVo(couponRet);
             vo.add(couponRetVo);
         }
-        return new PageInfo<>(vo);
+        PageInfo<VoObject> CouponPage = PageInfo.of(vo);
+        CouponPage.setTotal((PageInfo.of(couponPos).getTotal()));
+        CouponPage.setPages((PageInfo.of(couponPos).getPages()));
+        CouponPage.setPageNum(pageNum);
+        CouponPage.setPageSize(pageSize);
+        return new ReturnObject<>(CouponPage);
     }
 }

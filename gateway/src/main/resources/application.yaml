@@ -66,7 +66,7 @@ spring:
         - id: goods
           uri: http://localhost:8084/
           predicates:
-            - Path=/shops/{shopId}/skus/{id}/uploadImg, /shops/{shopId}/skus/{id}, /shops/{shopId}/skus/{id}/onshelves, /shops/{shopId}/skus/{id}/offshelves, /shops/{shopId}/skus/{id}/floatPrices, /shops/{shopId}/spus/{spuId}/categories/{id}/**, /shops/{shopId}/spus/{spuId}/brands/{id}/**, /shops/{shopId}/spus/{id}/skus, /shops/{shopId}/categories/**, /share/**, /shops/{shopId}/floatPrice/**, /shops/{shopId}/brands/**, /categories/{id}/subcategories
+            - Path=/shops/{shopId}/skus/{id}/uploadImg, /shops/{shopId}/skus/{id}, /shops/{shopId}/skus/{id}/onshelves, /shops/{shopId}/skus/{id}/offshelves, /shops/{shopId}/skus/{id}/floatPrices, /shops/{shopId}/spus/{spuId}/categories/{id}/**, /shops/{shopId}/spus/{spuId}/brands/{id}/**, /shops/{shopId}/spus/{id}/skus, /shops/{shopId}/categories/**, /share/**, /shops/{shopId}/floatPrices/**, /shops/{shopId}/brands/**, /categories/{id}/subcategories
           filters:
             - PrefixPath=/goods
             - Auth=authorization
@@ -107,7 +107,7 @@ spring:
         - id: coupon-nonAuth
           uri: http://localhost:8091/
           predicates:
-            - Path=/couponactivities, /couponactivities/{id}/skus, /coupon/states
+            - Path=/couponactivities, /couponactivities/{id}/skus, /coupons/states
           filters:
             - PrefixPath=/coupon
         #包含需要token的路径
@@ -137,14 +137,14 @@ spring:
 
         #包含不需要token的路径
         - id: groupon-nonAuth
-          uri: http://localhost:8084/
+          uri: http://localhost:8086/
           predicates:
             - Path=/groupons/states
           filters:
             - PrefixPath=/groupon
         #包含需要token的路径
         - id: groupon
-          uri: http://localhost:8084/
+          uri: http://localhost:8086/
           predicates:
             - Path=/groupons, /shops/{id}/groupon, /shops/{shopId}/groupons/{id}/**, /shops/{shopId}/spus/{id}/groupon
           filters:
@@ -153,14 +153,14 @@ spring:
 
         #包含不需要token的路径
         - id: shop-nonAuth
-          uri: http://192.168.0.11:8084/
+          uri: http://localhost:8084/
           predicates:
             - Path=/shops/states
           filters:
             - PrefixPath=/shop
         #包含需要token的路径
         - id: shop
-          uri: http://192.168.0.11:8084/
+          uri: http://localhost:8084/
           predicates:
             - Path=/shops, /shops/{id}, /shops/{id}/onshelves, /shops/{id}/offshelves, /shops/{shopId}/newshops/{id}/audit
           filters:

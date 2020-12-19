@@ -37,8 +37,8 @@ public class CouponService {
         return couponDao.useCouponByCouponId(id, userId);
     }
 
-    public ReturnObject addCouponActivity(Long shopId, AddCouponActivityVo addCouponActivityVo) {
-        return couponDao.addCouponActivity(shopId, addCouponActivityVo);
+    public ReturnObject addCouponActivity(Long shopId,Long userId, AddCouponActivityVo addCouponActivityVo) {
+        return couponDao.addCouponActivity(shopId, userId,addCouponActivityVo);
     }
 
 
@@ -52,15 +52,7 @@ public class CouponService {
 
 
     public ReturnObject<PageInfo<VoObject>> showCouponsById(Integer pageNum, Integer pageSize, Integer state, Long userId) {
-        PageHelper.startPage(pageNum,pageSize);
-        PageInfo<CouponRetVo> couponRetVos = couponDao.showCouponsById(state,userId);
-        List<VoObject> couponRet = couponRetVos.getList().stream().map(CouponRet::new).collect(Collectors.toList());
 
-        PageInfo<VoObject> returnObject = new PageInfo<>(couponRet);
-        returnObject.setPages(couponRetVos.getPages());
-        returnObject.setPageNum(couponRetVos.getPageNum());
-        returnObject.setPageSize(couponRetVos.getPageSize());
-        returnObject.setTotal(couponRetVos.getTotal());
-        return new ReturnObject<>(returnObject);
+        return couponDao.showCouponsById(pageNum,pageSize,state,userId);
     }
 }

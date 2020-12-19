@@ -7,13 +7,9 @@ import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.Common;
-import cn.edu.xmu.ooad.util.ResponseCode;
-import cn.edu.xmu.ooad.util.ResponseUtil;
-import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.ooad.util.*;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +41,9 @@ public class GoodsController {
     @Autowired
     private HttpServletResponse httpServletResponse;
 
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
     /**
      * 查看商品sku的所有状态
      *
@@ -56,7 +56,6 @@ public class GoodsController {
     })
     @GetMapping("/skus/states")
     public Object getGoodsSkuState() {
-        logger.debug("getGoodsSkuState");
         GoodsSku.State[] states = GoodsSku.State.class.getEnumConstants();
         List<SkuStateVo> skuStateVos = new ArrayList<>();
         for (GoodsSku.State state : states) {
@@ -116,6 +115,9 @@ public class GoodsController {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.putGoodsOnSaleById(shopId, id);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -143,6 +145,9 @@ public class GoodsController {
             logger.debug("putGoodsOnSales : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.putOffGoodsOnSaleById(shopId, id);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -170,6 +175,10 @@ public class GoodsController {
             logger.debug("deleteGoodsSku : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.deleteSkuById(shopId, id);
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -200,8 +209,7 @@ public class GoodsController {
     /**
      * 管理员或店家修改商品sku
      *
-     * @param bindingResult 校验信息
-     * @param skuInputVo    修改信息的SkuInputVo
+     * @param skuInputVo 修改信息的SkuInputVo
      * @return Object
      * @Author shibin zhan
      */
@@ -214,17 +222,14 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/skus/{id}")
-    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
+    public Object modifySku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuInputVo skuInputVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSku : shopId = " + shopId + " skuId = " + id + " vo = " + skuInputVo);
         }
-        // 校验前端数据
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsSku shopId = " + shopId + " skuId = " + id);
-            return returnObject;
-        }
         ReturnObject returnObj = goodsService.modifySkuInfo(shopId, id, skuInputVo);
+        if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -282,12 +287,13 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit //需要认证
-    @DeleteMapping("/shops/{shopId}/floatprice/{id}")
+    @Audit
+    @DeleteMapping("/shops/{shopId}/floatPrices/{id}")
     public Object invalidFloatPrice(@PathVariable Long id, @PathVariable Long shopId, @LoginUser Long loginUserId) {
         if (logger.isDebugEnabled()) {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject returnObj = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
         return Common.decorateReturnObject(returnObj);
     }
@@ -372,7 +378,6 @@ public class GoodsController {
      *
      * @param id
      * @param categoryInputVo
-     * @param bindingResult
      * @param shopId
      * @return
      * @author shangzhao zhai
@@ -394,21 +399,14 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, HttpServletResponse response) {
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, @PathVariable Long shopId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
-        }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addCategory CategoryId = ", id);
-            return returnObject;
         }
         if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
             if (goodsCategory.getCode() == ResponseCode.OK) {
                 response.setStatus(201);
-            } else if (goodsCategory.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
-                response.setStatus(404);
             } else if (goodsCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
                 response.setStatus(400);
             }
@@ -746,17 +744,17 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{id}/brands")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addBrand shopid = ", id);
-            return returnObject;
-        }
         if (id == 0) {
             ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
+            if (brandCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (brandCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
             return Common.decorateReturnObject(brandCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
@@ -770,7 +768,6 @@ public class GoodsController {
      * @param id
      * @param floatPriceInputVo
      * @param userId
-     * @param bindingResult
      * @return
      */
     @ApiOperation(value = "管理员新增商品价格浮动")
@@ -793,17 +790,22 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/skus/{id}/floatPrices")
-    public Object addFloatingPrice(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody FloatPriceInputVo floatPriceInputVo, @LoginUser Long userId, BindingResult bindingResult) {
+    public Object addFloatingPrice(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody FloatPriceInputVo floatPriceInputVo, @LoginUser Long userId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addFloatingPrice: shopId = " + shopId + " skuId = " + id);
         }
-        // 校验前端数据
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addFloatingPrice shopid = ", id);
-            return returnObject;
-        }
         ReturnObject floatPrice = goodsService.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+        if (floatPrice.getCode() == ResponseCode.OK) {
+            response.setStatus(201);
+        } else if (floatPrice.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            response.setStatus(403);
+        } else if (floatPrice.getCode() == ResponseCode.Log_Bigger) {
+            response.setStatus(200);
+        } else if (floatPrice.getCode() == ResponseCode.SKU_NOTENOUGH) {
+            response.setStatus(200);
+        } else if (floatPrice.getCode() == ResponseCode.FIELD_NOTVALID) {
+            response.setStatus(400);
+        }
         return Common.decorateReturnObject(floatPrice);
     }
 
@@ -874,7 +876,7 @@ public class GoodsController {
     }
 
     /**
-     * 获得sku的详细信息(登陆)
+     * 获得sku的详细信息
      *
      * @param `id`
      * @return Object
@@ -889,11 +891,11 @@ public class GoodsController {
     })
     @Audit
     @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id, @Validated @LoginUser Long userId) {
+    public Object getSku(@PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
         if (logger.isDebugEnabled()) {
-            logger.debug("getSku");
+            logger.debug("getSku : skuId = " + id);
         }
-        ReturnObject returnObj = goodsService.getSku(id, userId);
+        ReturnObject returnObj = goodsService.getSku(id, userId, departId);
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -920,8 +922,7 @@ public class GoodsController {
     /**
      * 管理员添加新的SKU到SPU里
      *
-     * @param bindingResult 校验信息
-     * @param skuCreatVo    新建需要的SKU信息
+     * @param skuCreatVo 新建需要的SKU信息
      * @return Object
      * @author zhai
      */
@@ -938,17 +939,16 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SkuCreatVo skuCreatVo, BindingResult bindingResult) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while creatSKU shopId = " + shopId + " skuId = " + id);
-            return returnObject;
-        }
         ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
-        returnObject = ResponseUtil.ok(returnObj.getData());
-        return returnObject;
+        if (returnObj.getCode() == ResponseCode.OK) {
+            httpServletResponse.setStatus(201);
+        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
+        }
+        return Common.decorateReturnObject(returnObj);
     }
 }

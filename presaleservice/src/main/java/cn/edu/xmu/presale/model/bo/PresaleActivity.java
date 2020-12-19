@@ -33,10 +33,9 @@ public class PresaleActivity {
 
 
     public enum State {
-        //商-(优惠,团购,预售)活动：0：已新建，1：被取消
         NEW(0, "已下线"),
-        ONSHELVES(1,"已上线"),
-        CLOSE(2, "已取消");
+        ONSHELVES(1, "已上线"),
+        CLOSE(2, "已删除");
 
         private static final Map<Integer, PresaleActivity.State> stateMap;
 
@@ -54,6 +53,7 @@ public class PresaleActivity {
             this.code = code;
             this.description = description;
         }
+
         public Integer getCode() {
             return code;
         }
@@ -63,14 +63,14 @@ public class PresaleActivity {
         }
     }
 
-    public PresaleActivity(PresaleActivityVo presaleActivityVo){
-        this.advancePayPrice=presaleActivityVo.getAdvancePayPrice();
-        this.beginTime=presaleActivityVo.getBeginTime();
-        this.endTime=presaleActivityVo.getEndTime();
-        this.name=presaleActivityVo.getName();
-        this.payTime=presaleActivityVo.getPayTime();
-        this.quantity=presaleActivityVo.getQuantity();
-        this.restPayPrice=presaleActivityVo.getRestPayPrice();
+    public PresaleActivity(PresaleActivityVo presaleActivityVo) {
+        this.advancePayPrice = presaleActivityVo.getAdvancePayPrice();
+        this.beginTime = presaleActivityVo.getBeginTime();
+        this.endTime = presaleActivityVo.getEndTime();
+        this.name = presaleActivityVo.getName();
+        this.payTime = presaleActivityVo.getPayTime();
+        this.quantity = presaleActivityVo.getQuantity();
+        this.restPayPrice = presaleActivityVo.getRestPayPrice();
     }
 
 }

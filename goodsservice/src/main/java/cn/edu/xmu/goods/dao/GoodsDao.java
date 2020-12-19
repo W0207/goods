@@ -16,7 +16,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +108,7 @@ public class GoodsDao {
         }
         Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
         if (goodsSkuPo.getState() == DELETED) {
             logger.debug("sku已删除");
@@ -117,7 +116,7 @@ public class GoodsDao {
         }
         if (goodsSkuPo.getState() == ONSALE) {
             logger.debug("sku已上架");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject<>(ResponseCode.STATE_NOCHANGE);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
@@ -140,7 +139,7 @@ public class GoodsDao {
     }
 
     /**
-     * 下架商品(下架上架，未删除的商品)
+     * 下架商品
      *
      * @param shopId 店铺id
      * @param skuId  sku id
@@ -151,40 +150,31 @@ public class GoodsDao {
     public ReturnObject<Object> putOffGoodsOnSaleById(Long shopId, Long skuId, Long code) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
-            logger.debug("sku或禁止访问");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
         if (goodsSkuPo.getState() == DELETED) {
-            logger.debug("sku已删除");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         if (goodsSkuPo.getState() == OFFSALE) {
-            logger.debug("sku已下架");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject<>(ResponseCode.STATE_NOCHANGE);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdateStatePo(code);
         ReturnObject<Object> returnObject;
-        try {
-            int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
-            // 检查更新有否成功
-            if (ret == 0) {
-                logger.info("商品不存在或已被删除：skuId = " + skuId);
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            } else {
-                logger.info("skuId = " + skuId + "已下架");
-                returnObject = new ReturnObject<>();
-            }
-            return returnObject;
-        } catch (Exception e) {
-            logger.error("exception:" + e.getMessage());
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        int ret = goodsSkuPoMapper.updateByPrimaryKeySelective(po);
+        // 检查更新有否成功
+        if (ret == 0) {
+            logger.info("商品不存在或已被删除：skuId = " + skuId);
+            returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        } else {
+            logger.info("skuId = " + skuId + "已下架");
+            returnObject = new ReturnObject<>();
         }
-
+        return returnObject;
     }
 
     /**
@@ -203,14 +193,10 @@ public class GoodsDao {
         }
         Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
         if (goodsSkuPo.getState() == DELETED) {
             logger.debug("sku已删除");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        if (goodsSkuPo.getState() == ONSALE) {
-            logger.debug("sku已上架");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
@@ -263,9 +249,18 @@ public class GoodsDao {
             spuCriteria.andGoodsSnEqualTo(spuSn);
         }
         List<GoodsSpuPo> goodsSpuPos;
-
+        PageHelper.startPage(page, pageSize);
         if (spuSn != null || shopId != null) {
             goodsSpuPos = goodsSpuPoMapper.selectByExample(spuPoExample);
+            if (goodsSpuPos.size() == 0) {
+                List<VoObject> empty = new ArrayList<>(goodsSpuPos.size());
+                PageInfo<VoObject> rolePage1 = PageInfo.of(empty);
+                rolePage1.setPages((PageInfo.of(goodsSpuPos).getPages()));
+                rolePage1.setTotal((PageInfo.of(goodsSpuPos).getTotal()));
+                rolePage1.setPageNum(page);
+                rolePage1.setPageSize(pageSize);
+                return new ReturnObject<>(rolePage1);
+            }
         } else {
             goodsSpuPos = null;
         }
@@ -281,23 +276,22 @@ public class GoodsDao {
             }
             criteria.andGoodsSpuIdEqualTo(spuId);
         }
-
-        PageHelper.startPage(page, pageSize);
         List<GoodsSkuPo> goodsSkuPos;
         try {
             goodsSkuPos = goodsSkuPoMapper.selectByExample(example);
             List<VoObject> ret = new ArrayList<>(goodsSkuPos.size());
             for (GoodsSkuPo po : goodsSkuPos) {
                 GoodsSku sku = new GoodsSku(po);
-                ret.add(sku);
+                FindSkuRet skuRet = new FindSkuRet(sku);
+                skuRet.setPrice(getPrice(skuRet.getId()));
+                FindSkuRetVo skuRetVo = new FindSkuRetVo(skuRet);
+                ret.add(skuRetVo);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<GoodsSkuPo> goodsSkuPoPage = PageInfo.of(goodsSkuPos);
-            PageInfo<VoObject> goodsSkuPage = new PageInfo<>(ret);
-            goodsSkuPage.setPages(goodsSkuPoPage.getPages());
-            goodsSkuPage.setPageNum(goodsSkuPoPage.getPageNum());
-            goodsSkuPage.setPageSize(goodsSkuPoPage.getPageSize());
-            goodsSkuPage.setTotal(goodsSkuPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(goodsSkuPos).getPages()));
+            rolePage.setTotal((PageInfo.of(goodsSkuPos).getTotal()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("findSkuSimple: DataAccessException:" + e.getMessage());
@@ -318,29 +312,18 @@ public class GoodsDao {
      */
     public ReturnObject<Object> modifySkuById(Long shopId, Long skuId, SkuInputVo skuInputVo) {
         GoodsSkuPo goodsSkuPo;
-        try {
-            goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
-        } catch (Exception e) {
-            logger.error("exception:" + e.getMessage());
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
-        }
+        goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(skuId);
         if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
             logger.info("skuId = " + skuId + " 不存在");
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         Long shopid = findGoodsSpuById(goodsSkuPo.getGoodsSpuId()).getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
         GoodsSku goodsSku = new GoodsSku(goodsSkuPo);
         GoodsSkuPo po = goodsSku.createUpdatePo(skuInputVo);
-        try {
-            goodsSkuPoMapper.updateByPrimaryKeySelective(po);
-        } catch (Exception e) {
-            logger.error("exception:" + e.getMessage());
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
-        }
-        logger.info("skuId = " + skuId + " 的信息已更新");
+        goodsSkuPoMapper.updateByPrimaryKeySelective(po);
         return new ReturnObject<>();
     }
 
@@ -353,7 +336,7 @@ public class GoodsDao {
      */
     public ReturnObject<Object> invalidFloatPriceById(Long shopId, Long id, Long loginUserId) {
         FloatPricePo floatPricePo = floatPricePoMapper.selectByPrimaryKey(id);
-        if (floatPricePo == null) {
+        if (floatPricePo == null || floatPricePo.getValid() == 0) {
             logger.info("商品价格浮动不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
@@ -363,19 +346,17 @@ public class GoodsDao {
         }
         Long goodsSpuId = goodsSkuPo.getGoodsSpuId();
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(goodsSpuId);
-        if (goodsSpuPo == null) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "商品价格浮动不存在");
-        }
         Long shopid = goodsSpuPo.getShopId();
         if (shopid.equals(shopId)) {
-            FloatPrice floatPrice = new FloatPrice(floatPricePo);
-            FloatPricePo po = floatPrice.createUpdateStatePo(loginUserId);
-            floatPricePoMapper.updateByPrimaryKeySelective(po);
+            floatPricePo.setValid((byte) 0);
+            floatPricePo.setGmtModified(LocalDateTime.now());
+            floatPricePo.setInvalidBy(loginUserId);
+            floatPricePoMapper.updateByPrimaryKeySelective(floatPricePo);
             logger.debug("invalidFloatPriceById : shopId = " + shopId + " floatPriceId = " + id + " invalidBy " + loginUserId);
             return new ReturnObject<>(ResponseCode.OK);
         } else {
             logger.debug("error");
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
     }
 
@@ -395,12 +376,7 @@ public class GoodsDao {
             }
             GoodsCategory goodsCategory = new GoodsCategory();
             GoodsCategoryPo goodsCategoryPo = goodsCategory.createAddPo(id, categoryInputVo);
-            int ret = goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
-            if (ret == 0) {
-                goodsCategoryPo = null;
-            } else {
-                logger.info("categoryId = " + id + " 的信息已新增成功");
-            }
+            goodsCategoryPoMapper.insertSelective(goodsCategoryPo);
             return goodsCategoryPo;
         } else {
             GoodsCategory goodsCategory = new GoodsCategory();
@@ -474,7 +450,22 @@ public class GoodsDao {
             logger.info("商品类目不存在或已被删除：goodsCategoryId = " + id);
             returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-
+            GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
+            GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
+            criteria.andCategoryIdEqualTo(id);
+            List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
+            for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
+                goodsSpuPo.setCategoryId(0L);
+                goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+            }
+            GoodsCategoryPoExample goodsCategoryPoExample = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria1 = goodsCategoryPoExample.createCriteria();
+            criteria1.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(goodsCategoryPoExample);
+            for (GoodsCategoryPo goodsCategoryPo : goodsCategoryPos) {
+                Long categoryId = goodsCategoryPo.getId();
+                deleteCategoryById(categoryId);
+            }
             returnObject = new ReturnObject<>();
         }
         return returnObject;
@@ -527,19 +518,31 @@ public class GoodsDao {
      */
     public ReturnObject<List> getCategoryByPid(Long id) {
         //查看是否有此分类
-        GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
-        if (categoryPo == null) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        if (id != 0) {
+            GoodsCategoryPo categoryPo = goodsCategoryPoMapper.selectByPrimaryKey(id);
+            if (categoryPo == null) {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+            criteria.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
+            List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
+            for (GoodsCategoryPo po : goodsCategoryPos) {
+                goodsCategories.add(new GoodsCategory(po));
+            }
+            return new ReturnObject<>(goodsCategories);
+        } else {
+            GoodsCategoryPoExample example = new GoodsCategoryPoExample();
+            GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
+            criteria.andPidEqualTo(id);
+            List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
+            List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
+            for (GoodsCategoryPo po : goodsCategoryPos) {
+                goodsCategories.add(new GoodsCategory(po));
+            }
+            return new ReturnObject<>(goodsCategories);
         }
-        GoodsCategoryPoExample example = new GoodsCategoryPoExample();
-        GoodsCategoryPoExample.Criteria criteria = example.createCriteria();
-        criteria.andPidEqualTo(id);
-        List<GoodsCategoryPo> goodsCategoryPos = goodsCategoryPoMapper.selectByExample(example);
-        List<GoodsCategory> goodsCategories = new ArrayList<>(goodsCategoryPos.size());
-        for (GoodsCategoryPo po : goodsCategoryPos) {
-            goodsCategories.add(new GoodsCategory(po));
-        }
-        return new ReturnObject<>(goodsCategories);
     }
 
     /**
@@ -588,32 +591,26 @@ public class GoodsDao {
      * @return
      */
     public ReturnObject<Object> deleteBrandById(Long id) {
-        try {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
-            if (brandPo == null) {
-                logger.info("品牌不存在");
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            ReturnObject<Object> returnObject;
-            int ret = brandPoMapper.deleteByPrimaryKey(id);
-            if (ret == 0) {
-                returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
-            } else {
-                GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
-                GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
-                criteria.andBrandIdEqualTo(id);
-                List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
-                for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
-                    goodsSpuPo.setBrandId(null);
-                    goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
-                }
-                returnObject = new ReturnObject<>(ResponseCode.OK);
-            }
-            return returnObject;
-        } catch (Exception e) {
-            logger.error("exception:" + e.getMessage());
-            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误%s", e.getMessage()));
+        BrandPo brandPo = brandPoMapper.selectByPrimaryKey(id);
+        if (brandPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        ReturnObject<Object> returnObject;
+        int ret = brandPoMapper.deleteByPrimaryKey(id);
+        if (ret == 0) {
+            returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        } else {
+            GoodsSpuPoExample goodsSpuPoExample = new GoodsSpuPoExample();
+            GoodsSpuPoExample.Criteria criteria = goodsSpuPoExample.createCriteria();
+            criteria.andBrandIdEqualTo(id);
+            List<GoodsSpuPo> goodsSpuPos = goodsSpuPoMapper.selectByExample(goodsSpuPoExample);
+            for (GoodsSpuPo goodsSpuPo : goodsSpuPos) {
+                goodsSpuPo.setBrandId(0L);
+                goodsSpuPoMapper.updateByPrimaryKeySelective(goodsSpuPo);
+            }
+            returnObject = new ReturnObject<>(ResponseCode.OK);
+        }
+        return returnObject;
     }
 
     /**
@@ -845,17 +842,21 @@ public class GoodsDao {
         }
         Long shopid = goodsSpuPo.getShopId();
         if (!shopid.equals(shopId)) {
-            return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
-        if ("".equals(floatPriceInputVo.getBeginTime())) {
-            return new ReturnObject<>(ResponseCode.Log_BEGIN_NULL);
+        LocalDateTime beginTime = floatPriceInputVo.getBeginTime();
+        LocalDateTime endTime = floatPriceInputVo.getEndTime();
+        if (beginTime.isBefore(LocalDateTime.now())) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        if ("".equals(floatPriceInputVo.getEndTime())) {
-            return new ReturnObject<>(ResponseCode.Log_END_NULL);
+        if (floatPriceInputVo.getQuantity() < 0) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime beginTime = LocalDateTime.parse(floatPriceInputVo.getBeginTime(), df);
-        LocalDateTime endTime = LocalDateTime.parse(floatPriceInputVo.getEndTime(), df);
+        if (beginTime == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        } else if (endTime == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         if (beginTime.isAfter(endTime)) {
             //开始时间不能比结束时间晚
             return new ReturnObject<>(ResponseCode.Log_Bigger);
@@ -874,7 +875,7 @@ public class GoodsDao {
                 criteria.andValidEqualTo((byte) 1);
                 List<FloatPricePo> floatPricePos = floatPricePoMapper.selectByExample(floatPricePoExample);
                 //如果存在，则返回时间段冲突
-                if (floatPricePos.size() != 0) {
+                if (!floatPricePos.isEmpty()) {
                     logger.debug("时间段冲突");
                     return new ReturnObject<>(ResponseCode.SKUPRICE_CONFLICT);
                 } else {
@@ -890,8 +891,7 @@ public class GoodsDao {
                     floatPricePo.setInvalidBy(userId);
                     floatPricePo.setValid((byte) 1);
                     floatPricePoMapper.insertSelective(floatPricePo);
-                    FloatPriceRetVo floatPriceRetVo = new FloatPriceRetVo(floatPricePo);
-                    return new ReturnObject(floatPriceRetVo);
+                    return new ReturnObject(new FloatPriceRetVo(floatPricePo));
                 }
             }
         }
@@ -933,35 +933,66 @@ public class GoodsDao {
      * @param id
      * @return
      */
-    public ReturnObject getSku(Long id) {
+    public ReturnObject getSku(Long id, Long departId) {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
-        if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        SkuReturnVo skuReturnVo = new SkuReturnVo();
-        skuReturnVo.setId(id);
-        skuReturnVo.setName(goodsSkuPo.getName());
-        skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
-        skuReturnVo.setDetail(goodsSkuPo.getDetail());
-        skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
-        skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
-        //获得现价
-        Long price = getPrice(id);
-        if (price == null) {
-            skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+        //只能看到上架的商品
+        if (departId == null || departId < 0) {
+            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0 || goodsSkuPo.getState() != 4) {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            SkuReturnVo skuReturnVo = new SkuReturnVo();
+            skuReturnVo.setId(id);
+            skuReturnVo.setName(goodsSkuPo.getName());
+            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
+            skuReturnVo.setDetail(goodsSkuPo.getDetail());
+            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
+            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
+            //获得现价
+            Long price = getPrice(id);
+            if (price == null) {
+                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+            } else {
+                skuReturnVo.setPrice(price);
+            }
+            skuReturnVo.setInventory(goodsSkuPo.getInventory());
+            skuReturnVo.setState(goodsSkuPo.getState());
+            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
+            skuReturnVo.setWeight(goodsSkuPo.getWeight());
+            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
+            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
+            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
+            SpuRetVo spuRetVo = getSpuRetVo(id);
+            skuReturnVo.setSpu(spuRetVo);
+            return new ReturnObject(skuReturnVo);
         } else {
-            skuReturnVo.setPrice(price);
+            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
+            SkuReturnVo skuReturnVo = new SkuReturnVo();
+            skuReturnVo.setId(id);
+            skuReturnVo.setName(goodsSkuPo.getName());
+            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
+            skuReturnVo.setDetail(goodsSkuPo.getDetail());
+            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
+            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
+            //获得现价
+            Long price = getPrice(id);
+            if (price == null) {
+                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+            } else {
+                skuReturnVo.setPrice(price);
+            }
+            skuReturnVo.setInventory(goodsSkuPo.getInventory());
+            skuReturnVo.setState(goodsSkuPo.getState());
+            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
+            skuReturnVo.setWeight(goodsSkuPo.getWeight());
+            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
+            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
+            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
+            SpuRetVo spuRetVo = getSpuRetVo(id);
+            skuReturnVo.setSpu(spuRetVo);
+            return new ReturnObject(skuReturnVo);
         }
-        skuReturnVo.setInventory(goodsSkuPo.getInventory());
-        skuReturnVo.setState(goodsSkuPo.getState());
-        skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
-        skuReturnVo.setWeight(goodsSkuPo.getWeight());
-        skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
-        skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
-        skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
-        SpuRetVo spuRetVo = getSpuRetVo(id);
-        skuReturnVo.setSpu(spuRetVo);
-        return new ReturnObject(skuReturnVo);
     }
 
 
@@ -1018,25 +1049,37 @@ public class GoodsDao {
         //记录品牌信息
         Long brandId = goodsSpuPo.getBrandId();
         if (brandId != null) {
-            BrandPo brandPo = brandPoMapper.selectByPrimaryKey(brandId);
-            if (brandPo != null) {
-                SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
-                simpleBrandVo.setId(brandPo.getId());
-                simpleBrandVo.setName(brandPo.getName());
-                if (brandPo.getImageUrl() != null) {
-                    simpleBrandVo.setImageUrl(brandPo.getImageUrl());
+            if (brandId != 0) {
+                BrandPo brandPo = brandPoMapper.selectByPrimaryKey(brandId);
+                if (brandPo != null) {
+                    SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
+                    simpleBrandVo.setId(brandPo.getId());
+                    simpleBrandVo.setName(brandPo.getName());
+                    if (brandPo.getImageUrl() != null) {
+                        simpleBrandVo.setImageUrl(brandPo.getImageUrl());
+                    }
+                    spuRetVo.setBrand(simpleBrandVo);
                 }
+            } else {
+                SimpleBrandVo simpleBrandVo = new SimpleBrandVo();
+                simpleBrandVo.setId(0L);
                 spuRetVo.setBrand(simpleBrandVo);
             }
         }
         //记录分类信息
         Long categoryId = goodsSpuPo.getCategoryId();
         if (categoryId != null) {
-            GoodsCategoryPo goodsCategoryPo = goodsCategoryPoMapper.selectByPrimaryKey(categoryId);
-            if (goodsCategoryPo != null) {
+            if (categoryId != 0) {
+                GoodsCategoryPo goodsCategoryPo = goodsCategoryPoMapper.selectByPrimaryKey(categoryId);
+                if (goodsCategoryPo != null) {
+                    SimpleCategoryVo simpleCategoryVo = new SimpleCategoryVo();
+                    simpleCategoryVo.setId(goodsCategoryPo.getId());
+                    simpleCategoryVo.setName(goodsCategoryPo.getName());
+                    spuRetVo.setCategory(simpleCategoryVo);
+                }
+            } else {
                 SimpleCategoryVo simpleCategoryVo = new SimpleCategoryVo();
-                simpleCategoryVo.setId(goodsCategoryPo.getId());
-                simpleCategoryVo.setName(goodsCategoryPo.getName());
+                simpleCategoryVo.setId(0L);
                 spuRetVo.setCategory(simpleCategoryVo);
             }
         }
@@ -1092,23 +1135,26 @@ public class GoodsDao {
      * @return GoodsSkuPo
      * @author zhai
      */
-    public SkuOutputVo creatSku(Long spuId, Long shopId, SkuCreatVo skuCreatVo) {
+    public ReturnObject creatSku(Long spuId, Long shopId, SkuCreatVo skuCreatVo) {
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
-        //商家只能增加自家商品spu中的，shopId=0可以修改任意商品信息
-        if (goodsSpuPo == null || goodsSpuPo.getDisabled() != 0 || !goodsSpuPo.getShopId().equals(shopId)) {
-            return null;
+        if (goodsSpuPo == null || goodsSpuPo.getDisabled() != 0) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
+        if (!goodsSpuPo.getShopId().equals(shopId)) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+        }
+        GoodsSkuPoExample goodsSkuPoExample = new GoodsSkuPoExample();
+        GoodsSkuPoExample.Criteria criteria = goodsSkuPoExample.createCriteria();
+        criteria.andSkuSnEqualTo(skuCreatVo.getSn());
+        List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(goodsSkuPoExample);
+        if (!goodsSkuPos.isEmpty()) {
+            return new ReturnObject(ResponseCode.SKUSN_SAME);
         }
         GoodsSku goodsSku = new GoodsSku();
         GoodsSkuPo po = goodsSku.createPo(skuCreatVo, spuId);
-        int ret = goodsSkuPoMapper.insertSelective(po);
-        // 检查更新有否成功
-        if (ret == 0) {
-            logger.info("spuId :" + spuId + " 插入sku失败");
-        } else {
-            logger.info("spuId = " + spuId + " 插入sku成功");
-        }
+        goodsSkuPoMapper.insertSelective(po);
         SkuOutputVo skuOutputVo = new SkuOutputVo(po);
-        return skuOutputVo;
+        return new ReturnObject(skuOutputVo);
     }
 
     /**

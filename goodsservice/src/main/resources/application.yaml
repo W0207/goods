@@ -44,7 +44,6 @@ spring:
       password: nacos
       discovery:
         server-addr: 47.113.100.78:8848
-
   redis:
     # Redis数据库索引（默认为0）
     database: 0
