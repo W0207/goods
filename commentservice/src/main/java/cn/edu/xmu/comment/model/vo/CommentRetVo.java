@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author BiuBiuBiu
+ */
 @Data
 @ApiModel(description = "评论视图对象")
 public class CommentRetVo {
@@ -17,9 +20,9 @@ public class CommentRetVo {
 
     private Long orderitem_id;
 
-    private long goodsSkuId;
+    private Long goodsSkuId;
 
-    private int type;
+    private Byte type;
 
     private String content;
 
@@ -27,7 +30,7 @@ public class CommentRetVo {
 
     private LocalDateTime gmtModified;
 
-    private UserInfo userInfo;
+    private UserInfo customer;
 
 
     public CommentRetVo(Comment comment) {
@@ -39,6 +42,6 @@ public class CommentRetVo {
         this.gmtCreate = comment.getGmtCreate();
         this.gmtModified = comment.getGmtModified();
         this.orderitem_id = comment.getOrderitem_id();
-        this.userInfo = comment.getUserInfo();
+        this.customer = comment.getUserInfo();
     }
 }

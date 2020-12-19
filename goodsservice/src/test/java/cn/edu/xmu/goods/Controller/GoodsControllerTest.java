@@ -259,7 +259,7 @@ public class GoodsControllerTest {
      */
     @Test
     public void getAllBrand() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/brands"))
+        String responseString = this.mvc.perform(get("/goods/brands?page=2&pageSize=2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();

@@ -23,24 +23,24 @@ public class Comment implements VoObject {
 
     private Long orderitem_id;
 
-    private int type;
+    private Byte type;
 
     private String content;
 
-    private int state;
+    private Byte state;
 
     private LocalDateTime gmtCreate;
 
     private LocalDateTime gmtModified;
 
-    private UserInfo userInfo;
+    private UserInfo customer;
 
     public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+        this.customer = userInfo;
     }
 
     public UserInfo getUserInfo() {
-        return userInfo;
+        return customer;
     }
 
     public Comment(CommentPo po) {
@@ -122,7 +122,7 @@ public class Comment implements VoObject {
         return gmtCreate;
     }
 
-    public int getState() {
+    public Byte getState() {
         return state;
     }
 
@@ -130,7 +130,7 @@ public class Comment implements VoObject {
         return gmtModified;
     }
 
-    public int getType() {
+    public  Byte getType() {
         return type;
     }
 

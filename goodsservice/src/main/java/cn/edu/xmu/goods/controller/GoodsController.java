@@ -7,11 +7,9 @@ import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.util.Common;
-import cn.edu.xmu.ooad.util.ResponseCode;
-import cn.edu.xmu.ooad.util.ResponseUtil;
-import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.ooad.util.*;
 import com.github.pagehelper.PageInfo;
+import feign.Response;
 import io.swagger.annotations.*;
 import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
@@ -56,7 +54,6 @@ public class GoodsController {
     })
     @GetMapping("/skus/states")
     public Object getGoodsSkuState() {
-        logger.debug("getGoodsSkuState");
         GoodsSku.State[] states = GoodsSku.State.class.getEnumConstants();
         List<SkuStateVo> skuStateVos = new ArrayList<>();
         for (GoodsSku.State state : states) {
@@ -170,6 +167,7 @@ public class GoodsController {
             logger.debug("deleteGoodsSku : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = goodsService.deleteSkuById(shopId, id);
+        httpServletResponse.setContentType("application/json;charset=utf-8");
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -188,7 +186,7 @@ public class GoodsController {
     public Object getAllBrand(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
         logger.debug("getAllBrand: page = " + page + "  pageSize =" + pageSize);
         page = (page == null) ? 1 : page;
-        pageSize = (pageSize == null) ? 100 : pageSize;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
@@ -311,7 +309,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "品牌名称不能为空"),
-            @ApiResponse(code = 503, message = "品牌名称不能重复"),
+            @ApiResponse(code = 900, message = "品牌名称已存在"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
@@ -372,7 +370,6 @@ public class GoodsController {
      *
      * @param id
      * @param categoryInputVo
-     * @param bindingResult
      * @param shopId
      * @return
      * @author shangzhao zhai
@@ -387,24 +384,24 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
-            @ApiResponse(code = 503, message = "商品类目名字不能为空"),
+            @ApiResponse(code = 991, message = "商品类目已存在"),
             @ApiResponse(code = 503, message = "商品类目名字不能重复"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
     @Audit
     @PostMapping("/shops/{shopId}/categories/{id}/subcategories")
-    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId) {
+    public Object addCategory(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, @PathVariable Long shopId, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addCategory: CategoryId = " + id);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addCategory CategoryId = ", id);
-            return returnObject;
-        }
         if (shopId == 0) {
             ReturnObject goodsCategory = goodsService.addCategory(id, categoryInputVo);
+            if (goodsCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (goodsCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
             return Common.decorateReturnObject(goodsCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
@@ -430,7 +427,7 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "商品类目名称不能为空"),
-            @ApiResponse(code = 503, message = "商品类目名称不能重复"),
+            @ApiResponse(code = 991, message = "商品类目名称已存在"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
@@ -734,22 +731,22 @@ public class GoodsController {
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 500, message = "服务器内部错误"),
             @ApiResponse(code = 503, message = "品牌名字不能为空"),
-            @ApiResponse(code = 503, message = "品牌名字不能重复"),
+            @ApiResponse(code = 990, message = "品牌名称已存在"),
             @ApiResponse(code = 705, message = "无权限访问")
     })
     @Audit
     @PostMapping("/shops/{id}/brands")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("addBrands: BrandId = " + id);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while addBrand shopid = ", id);
-            return returnObject;
-        }
         if (id == 0) {
             ReturnObject brandCategory = goodsService.addBrand(brandInputVo);
+            if (brandCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (brandCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
             return Common.decorateReturnObject(brandCategory);
         } else {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW));
@@ -867,7 +864,7 @@ public class GoodsController {
     }
 
     /**
-     * 获得sku的详细信息(登陆)
+     * 获得sku的详细信息
      *
      * @param `id`
      * @return Object
@@ -880,11 +877,18 @@ public class GoodsController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
-    @Audit
     @GetMapping("/skus/{id}")
-    public Object getSku(@PathVariable Long id, @Validated @LoginUser Long userId) {
+    public Object getSku(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         if (logger.isDebugEnabled()) {
-            logger.debug("getSku");
+            logger.debug("getSku : skuId = " + id);
+        }
+        Long userId;
+        if (token != null) {
+            JwtHelper jwtHelper = new JwtHelper();
+            JwtHelper.UserAndDepart userAndDepart = jwtHelper.verifyTokenAndGetClaims(token);
+            userId = userAndDepart.getUserId();
+        } else {
+            userId = null;
         }
         ReturnObject returnObj = goodsService.getSku(id, userId);
         return Common.decorateReturnObject(returnObj);
