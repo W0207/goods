@@ -304,7 +304,7 @@ public class GoodsControllerTest {
 
     @Test
     public void getSkuList() throws Exception {
-        String responseString = this.mvc.perform(get("/goods/skus"))
+        String responseString = this.mvc.perform(get("/goods/skus?shopId=100"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
