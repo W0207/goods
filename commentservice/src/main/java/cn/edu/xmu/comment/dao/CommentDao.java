@@ -28,9 +28,8 @@ public class CommentDao implements InitializingBean {
 
     @Autowired
     private CommentPoMapper commentPoMapper;
-/*
-    @DubboReference(version = "0.0.1", check = false)
-    private OtherModulService otherModulService;*/
+
+
 
     private static final Logger logger = LoggerFactory.getLogger(CommentDao.class);
 
