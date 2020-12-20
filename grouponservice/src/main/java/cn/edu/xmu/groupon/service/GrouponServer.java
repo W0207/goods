@@ -52,39 +52,28 @@ public class GrouponServer implements DisableGrouponActivityService {
         return new ReturnObject<>(grouponAcvtivityPage) ;
     }
 
-    public ReturnObject<PageInfo<VoObject>> findShopGroupon(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime){
-        ReturnObject<PageInfo<VoObject>> returnObject = grouponDao.findShopGroupon(state, spuId,id,page, pageSize, beginTime,endTime);
-        return returnObject;
-        }
-    /**
-     * 查询Sku团购活动
-     * @param id
-     * @param state
-     * @param shopId
-     * @return
-     * @author zhai
-     */
-    public ReturnObject<List> findSkuGroupon(Long id,Integer state,Long shopId){
-        ReturnObject<List> returnObject=grouponDao.findSkuGrouponById(id,state,shopId);
-        return  returnObject;
-    }
 
+
+    public ReturnObject<PageInfo<VoObject>> findShopGroupon(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime) {
+        PageHelper.startPage(page, pageSize);
+        PageInfo<GrouponActivityPo> grouponActivityPos =  grouponDao.findShopGroupon1(state, spuId,id,page, pageSize, beginTime,endTime);
+        List<VoObject> groupons=grouponActivityPos.getList().stream().map(GrouponActivity::new).collect(Collectors.toList());
+
+        PageInfo<VoObject> grouponAcvtivityPage = new PageInfo<>(groupons);
+        grouponAcvtivityPage.setPages(grouponActivityPos.getPages());
+        grouponAcvtivityPage.setPageNum(grouponActivityPos.getPageNum());
+        grouponAcvtivityPage.setPageSize(grouponActivityPos.getPageSize());
+        grouponAcvtivityPage.setTotal(grouponActivityPos.getTotal());
+        return new ReturnObject<>(grouponAcvtivityPage) ;
+    }
     /**
      * 新增团购活动
      *  return ReturnObject<Object>
      * @Author zhai
      */
-    public GrouponActivityPo addGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
-        ReturnObject returnObject;
-        GrouponActivityPo grouponActivityPo = grouponDao.addGroupon(id, grouponInputVo,shopId);
-        if (grouponActivityPo != null) {
-            logger.debug("addGroupon : " + grouponActivityPo);
-            return  grouponActivityPo;
-
-        } else {
-            logger.debug("addGroupon : Failed");
-            return grouponActivityPo;
-        }
+    public ReturnObject addGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
+        ReturnObject returnObject=grouponDao.addGroupon(id, grouponInputVo,shopId);
+        return returnObject;
 
     }
 
@@ -96,7 +85,7 @@ public class GrouponServer implements DisableGrouponActivityService {
      * @return 返回对象 ReturnObject<Object>
      * @author zhai
      */
-    public ReturnObject<Object> changeGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
+    public ReturnObject changeGroupon(Long id, GrouponInputVo grouponInputVo,Long shopId) {
         return grouponDao.modifyGrouponById(id, grouponInputVo,shopId);
     }
 
@@ -108,7 +97,7 @@ public class GrouponServer implements DisableGrouponActivityService {
      * @return 返回对象 ReturnObject<Object>
      * @author shangzhao翟
      */
-    public ReturnObject<Object> deleteGrouponState(Long shopId,Long id) {
+    public ReturnObject deleteGrouponState(Long shopId,Long id) {
         return grouponDao.deleteGrouponState(shopId,id);
     }
 
@@ -118,7 +107,7 @@ public class GrouponServer implements DisableGrouponActivityService {
      * @param id
      * @return
      */
-    public ReturnObject<Object> offGrouponState(Long shopId,Long id) {
+    public ReturnObject offGrouponState(Long shopId,Long id) {
         return grouponDao.offGrouponState(shopId,id);
     }
 
@@ -128,7 +117,7 @@ public class GrouponServer implements DisableGrouponActivityService {
      * @param id
      * @return
      */
-    public ReturnObject<Object> onGrouponState(Long shopId,Long id) {
+    public ReturnObject onGrouponState(Long shopId,Long id) {
         return grouponDao.onGrouponState(shopId,id);
     }
 

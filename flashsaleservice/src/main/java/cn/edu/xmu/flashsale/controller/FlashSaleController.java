@@ -1,10 +1,10 @@
 package cn.edu.xmu.flashsale.controller;
 
 import io.swagger.annotations.Api;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.flashsale.model.vo.*;
-import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.service.FlashSaleService;
 import org.slf4j.Logger;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -18,11 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
-
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
-import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import reactor.core.publisher.Flux;
 
@@ -48,6 +46,23 @@ public class FlashSaleController {
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
 
+    private int getStatue(ReturnObject returnObject)
+    {
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
+        {
+            return HttpStatus.FORBIDDEN.value();
+        }
+        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.ACTIVITYALTER_INVALID){
+            return HttpStatus.BAD_REQUEST.value();
+        }
+        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+            return HttpStatus.NOT_FOUND.value();
+        }
+        return HttpStatus.OK.value();
+    }
     /**
      * 查询某一时段秒杀活动详情
      *
@@ -60,10 +75,11 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 504, message = "操作的资源id不存在")
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+
     })
     @GetMapping("/timesegments/{id}/flashsales")
-    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id) {
+    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id, HttpServletResponse response) {
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
     }
 
@@ -79,7 +95,7 @@ public class FlashSaleController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @GetMapping("/flashsales/current")
-    public Object getCurrentFlash(Long id) {
+    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
         LocalDateTime localDateTime = LocalDateTime.now();
         //id调用其他模块获取
         return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
@@ -110,7 +126,8 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
-    public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult) {
+    public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("updateflashsale: id = " + id);
         }
@@ -120,6 +137,7 @@ public class FlashSaleController {
             return returnObject;
         }
         ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -144,15 +162,22 @@ public class FlashSaleController {
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{id}")
-    public Object deleteflashsale(@PathVariable Long id) {
+    public Object deleteflashsale(@PathVariable Long id,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("deleteFlashSale: id = " + id);
         }
         ReturnObject returnObj = flashSaleService.deleteFlashSale(id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }
 
+    /**
+     * 管理员上线秒活动
+     * @param id
+     * @return
+     */
     @ApiOperation(value = "管理员上线秒杀活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
@@ -164,14 +189,21 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}/onshelves")
-    public Object onShelvesflashsale(@PathVariable Long id) {
+    public Object onShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("onShelvesFlashSale: id = " + id);
         }
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject returnObj = flashSaleService.onshelvesFlashSale(id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
+    /**
+     * 管理员下线秒杀活动
+     * @param id
+     * @return
+     */
     @ApiOperation(value = "管理员下线秒杀活动")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "authorization", value = "Token", required = true, dataType = "String", paramType = "header"),
@@ -183,11 +215,13 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
-    public Object offShelvesflashsale(@PathVariable Long id) {
+    public Object offShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("offShelvesFlashSale: id = " + id);
         }
         ReturnObject returnObj = flashSaleService.offshelvesFlashSale(id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }
@@ -212,7 +246,8 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/flashsales/{id}/flashitems")
-    public Object addSkuOfTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult) {
+    public Object addSkuOfTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("addSKUofTopic id = " + id);
         }
@@ -221,20 +256,9 @@ public class FlashSaleController {
             logger.info("incorrect data received while addSKUofTopic flashSaleID = " + id);
             return ret;
         }
-        ReturnObject returnObject = null;
-        SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(skuInputVo.getSkuId());
-        if (skuToFlashSaleVo == null) {
-            logger.info("该商品不存在");
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
-        } else {
-            FlashSaleItem flashSaleItem = flashSaleService.addFlashSaleItem(id, skuInputVo);
-            if (flashSaleItem == null) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("商品添加失败"));
-            } else {
-                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
-                returnObject = new ReturnObject<>(flashSaleOutputVo);
-            }
-        }
+        ReturnObject returnObject = flashSaleService.addFlashSaleItem(id, skuInputVo);
+
+        response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -258,11 +282,10 @@ public class FlashSaleController {
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{fid}/flashitems/{id}")
-    public Object deleteFlashSaleSku(@PathVariable Long id, @PathVariable Long fid) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("deleteFlashSaleSku: id = " + id);
-        }
+    public Object deleteFlashSaleSku(@PathVariable Long id, @PathVariable Long fid,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject returnObj = flashSaleService.deleteFlashSaleSku(fid, id);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -283,12 +306,17 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
-    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo) {
+    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("createFlashSale : id = " + id);
         }
+        if(flashSaleInputVo.getFlashDate().isBefore(LocalDateTime.now())||flashSaleInputVo.getFlashDate().isEqual(LocalDateTime.now())){
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.FIELD_NOTVALID));
+        }
         if (did == 0) {
             ReturnObject returnObject = flashSaleService.createFlash(id, flashSaleInputVo);
+            response.setStatus(getStatue(returnObject));
             return Common.decorateReturnObject(returnObject);
         } else {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);

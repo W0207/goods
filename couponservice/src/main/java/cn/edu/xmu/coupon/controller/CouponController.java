@@ -16,7 +16,6 @@ import cn.edu.xmu.ooad.annotation.Audit;
 import cn.edu.xmu.ooad.annotation.Depart;
 import cn.edu.xmu.ooad.annotation.LoginUser;
 import cn.edu.xmu.ooad.model.VoObject;
-import cn.edu.xmu.ooad.order.bo.Shop;
 import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
@@ -143,7 +142,6 @@ public class CouponController {
     })
     @Audit
     @GetMapping("/shops/{id}/couponactivities/invalid")
-
     public Object showOwnInvalidcouponacitvities(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize, @PathVariable(required = true) Long id, @Depart Long ShopId, HttpServletResponse response) {
         logger.debug("show: page = " + page + "  pageSize =" + pageSize + " userid=" + id);
         page = (page == null) ? 1 : page;
@@ -275,23 +273,23 @@ public class CouponController {
     })
     @Audit // 需要认证
     @PostMapping("/shops/{shopId}/couponactivities")
-    public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo,@LoginUser Long userId,HttpServletResponse response,@Depart Long ShopId) {
+    public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo, @LoginUser Long userId, HttpServletResponse response, @Depart Long ShopId) {
         if (!ShopId.equals(shopId)) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
         }
         CouponActivityPoExample couponActivityPoExample = new CouponActivityPoExample();
-        CouponActivityPoExample.Criteria criteria= couponActivityPoExample.createCriteria();
+        CouponActivityPoExample.Criteria criteria = couponActivityPoExample.createCriteria();
         criteria.andShopIdEqualTo(shopId);
         criteria.andStateEqualTo((byte) 1);
         //重复创建
-        if(couponActivityPoMapper.selectByExample(couponActivityPoExample).size()!=0){
+        if (couponActivityPoMapper.selectByExample(couponActivityPoExample).size() != 0) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
         }
-        ReturnObject returnObject = couponService.addCouponActivity(shopId,userId, vo);
+        ReturnObject returnObject = couponService.addCouponActivity(shopId, userId, vo);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
     }
@@ -339,7 +337,7 @@ public class CouponController {
         CouponSkuPoExample couponSkuPoExample = new CouponSkuPoExample();
         CouponSkuPoExample.Criteria criteria = couponSkuPoExample.createCriteria();
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
-        if(couponActivityPo==null||couponActivityPo.getState()!=1) {
+        if (couponActivityPo == null || couponActivityPo.getState() != 1) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST));
@@ -351,7 +349,6 @@ public class CouponController {
         for (CouponSkuPo po : couponSkuPos) {
             SkuToCouponVo vo = goodservice.couponActivityFindSku(po.getSkuId());
             if (vo == null || vo.getDisable() != 0) {
-
             } else {
                 skuToCouponVos.add(vo);
             }
@@ -451,8 +448,8 @@ public class CouponController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
-    public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id,HttpServletResponse response, @Depart Long ShopId) {
-        if(!ShopId.equals(shopId)) {
+    public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response, @Depart Long ShopId) {
+        if (!ShopId.equals(shopId)) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));

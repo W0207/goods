@@ -3,18 +3,13 @@ package cn.edu.xmu.comment.dao;
 import cn.edu.xmu.comment.model.po.CommentPo;
 import cn.edu.xmu.comment.mapper.CommentPoMapper;
 import cn.edu.xmu.comment.model.bo.Comment;
-import cn.edu.xmu.comment.model.po.CommentPo;
 import cn.edu.xmu.comment.model.po.CommentPoExample;
 import cn.edu.xmu.comment.model.vo.CommentAuditVo;
-import cn.edu.xmu.comment.model.vo.CommentUserVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.otherinterface.bo.UserInfo;
-import cn.edu.xmu.otherinterface.service.OtherModulService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -73,9 +68,8 @@ public class CommentDao implements InitializingBean {
             logger.info("评论id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(commentPo.getState()!=0)
-        {
-            logger.info("评论id= " + id +" 已被审核");
+        if (commentPo.getState() != 0) {
+            logger.info("评论id= " + id + " 已被审核");
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         }
         Comment comment = new Comment(commentPo);

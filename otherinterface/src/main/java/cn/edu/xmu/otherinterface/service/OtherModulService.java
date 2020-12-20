@@ -1,6 +1,5 @@
 package cn.edu.xmu.otherinterface.service;
 
-import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import cn.edu.xmu.otherinterface.bo.TimeSegInfo;
 import cn.edu.xmu.otherinterface.bo.UserInfo;
