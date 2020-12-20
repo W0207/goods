@@ -22,7 +22,6 @@ import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,28 +160,28 @@ public class CouponDao {
      * @param addCouponActivityVo
      * @return
      */
-    public ReturnObject addCouponActivity(Long shopId,Long userId, AddCouponActivityVo addCouponActivityVo) {
+    public ReturnObject addCouponActivity(Long shopId, Long userId, AddCouponActivityVo addCouponActivityVo) {
         if (!addCouponActivityVo.getBeginTime().isBefore(addCouponActivityVo.getEndTime())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,活动结束时间小于开始时间");
         }
         if (addCouponActivityVo.getBeginTime().isAfter(addCouponActivityVo.getCouponTime()) || addCouponActivityVo.getEndTime().isBefore(addCouponActivityVo.getCouponTime())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
         }
-        if(addCouponActivityVo.getEndTime().isBefore(LocalDateTime.now())){
+        if (addCouponActivityVo.getEndTime().isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID, "addCouponActivity,优惠时间不在活动期间");
         }
         ReturnObject returnObject = null;
         ShopToAllVo shopToAllVo = inShopService.presaleFindShop(shopId);
         try {
             if (shopToAllVo == null) {
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("新建优惠活动shopId不存在"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "新建优惠活动shopId不存在");
             } else {
                 CouponActivityPo po = addCouponActivityVo.createPo();
                 po.setGmtCreate(LocalDateTime.now());
                 po.setState((byte) 0);
                 int retId = couponActivityPoMapper.insert(po);
                 if (retId == 0) {
-                    returnObject = new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库发生错误"));
+                    returnObject = new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR, "数据库发生错误");
                 } else {
                     AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
                     vo.setShop(shopToAllVo);
@@ -196,7 +195,7 @@ public class CouponDao {
             }
             return returnObject;
         } catch (Exception e) {
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("新建优惠活动shopId不存在"));
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "新建优惠活动shopId不存在");
             return returnObject;
         }
     }
@@ -242,7 +241,7 @@ public class CouponDao {
                         List<CouponPo> pos = couponPoMapper.selectByExample(example);
                         if (pos.isEmpty()) {
                             //用户没有这个优惠券（每人数量限制)(每人领取quantity张优惠券)
-                            if (po.getQuantitiyType().equals(0)) {
+                            if (po.getQuantitiyType().equals((byte) 0)) {
                                 for (int i = 1; i <= po.getQuantity(); i++) {
                                     CouponPo couponPo = new CouponPo();
                                     couponPo.setState((byte) 1);
@@ -256,7 +255,7 @@ public class CouponDao {
                                     couponPoMapper.insert(couponPo);
                                 }
                                 //总数控制，总共有quantity张优惠券
-                            } else if (po.getQuantitiyType().equals(1)) {
+                            } else if (po.getQuantitiyType().equals((byte) 1)) {
                                 if (po.getQuantity() > 0) {
                                     CouponPo couponPo = new CouponPo();
                                     couponPo.setState((byte) 1);
@@ -318,7 +317,7 @@ public class CouponDao {
         CouponPoExample couponPoExample = new CouponPoExample();
         CouponPoExample.Criteria couponPoCriteria = couponPoExample.createCriteria();
         couponPoCriteria.andCustomerIdEqualTo(userId);
-        if(state!=null) {
+        if (state != null) {
             couponPoCriteria.andStateEqualTo((byte) state.intValue());
         }
         List<CouponPo> couponPos = null;

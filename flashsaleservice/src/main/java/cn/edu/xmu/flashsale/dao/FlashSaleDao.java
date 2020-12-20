@@ -1,6 +1,5 @@
 package cn.edu.xmu.flashsale.dao;
 
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import cn.edu.xmu.flashsale.mapper.*;
@@ -13,11 +12,9 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
