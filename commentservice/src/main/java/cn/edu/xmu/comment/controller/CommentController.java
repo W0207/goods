@@ -12,7 +12,6 @@ import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
-//import cn.edu.xmu.privilegeservice.client.IUserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -40,9 +39,6 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
-
-    //@DubboReference(version = "0.0.1", check = false)
-    //private ITimeService iTimeService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;

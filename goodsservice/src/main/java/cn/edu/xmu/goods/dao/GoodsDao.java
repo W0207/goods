@@ -5,7 +5,6 @@ import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.bo.*;
 import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.goods.model.vo.*;
-import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -279,7 +278,7 @@ public class GoodsDao {
         }
         Long spuFindId = null;
 
-        if (goodsSpuPos != null && !goodsSpuPos.isEmpty()) {
+        if (goodsSpuPos != null) {
             spuFindId = goodsSpuPos.get(0).getId();
             criteria.andGoodsSpuIdEqualTo(spuFindId);
         }
@@ -870,15 +869,15 @@ public class GoodsDao {
         }
         LocalDateTime beginTime = floatPriceInputVo.getBeginTime();
         LocalDateTime endTime = floatPriceInputVo.getEndTime();
+        if (beginTime == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        } else if (endTime == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         if (beginTime.isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (floatPriceInputVo.getQuantity() < 0) {
-            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
-        }
-        if (beginTime == null) {
-            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
-        } else if (endTime == null) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (beginTime.isAfter(endTime)) {
@@ -1217,7 +1216,7 @@ public class GoodsDao {
     public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
         cn.edu.xmu.external.model.MyReturn<Boolean> booleanMyReturn = iShareService.verifyShare(sid);
         Boolean bool = booleanMyReturn.getData();
-        if (bool == false) {
+        if (!bool) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);

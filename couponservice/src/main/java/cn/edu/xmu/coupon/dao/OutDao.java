@@ -6,7 +6,6 @@ import cn.edu.xmu.coupon.model.po.CouponActivityPo;
 import cn.edu.xmu.coupon.model.po.CouponSkuPo;
 import cn.edu.xmu.coupon.model.po.CouponSkuPoExample;
 import cn.edu.xmu.ooad.util.ResponseCode;
-import cn.edu.xmu.ooad.util.ReturnObject;
 import cn.edu.xmu.otherinterface.bo.CouponActivity;
 import cn.edu.xmu.otherinterface.bo.MyReturn;
 import org.slf4j.Logger;

@@ -1,11 +1,6 @@
 package cn.edu.xmu.flashsale.service;
 
-import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
-import cn.edu.xmu.flashsale.model.po.FlashSalePo;
-import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
 import cn.edu.xmu.ininterface.service.DisableFlashActivityService;
-import cn.edu.xmu.ooad.util.ResponseCode;
-import com.sun.el.stream.Stream;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,7 +14,6 @@ import cn.edu.xmu.flashsale.dao.FlashSaleDao;
 import reactor.core.publisher.Flux;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author zhai

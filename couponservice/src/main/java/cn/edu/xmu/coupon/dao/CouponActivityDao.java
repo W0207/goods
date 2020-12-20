@@ -83,11 +83,11 @@ public class CouponActivityDao implements InitializingBean {
         CouponActivityPo po = couponActivityPoMapper.selectByPrimaryKey(id);
         if (po == null) {
             //活动id不存在
-            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("优惠活动的id不存在"));
+            returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, "优惠活动的id不存在");
         } else {
             if (!po.getShopId().equals(shopId)) {
                 //shopId不一致
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("上线活动的时候，路径shopId和活动的id不一致"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, "上线活动的时候，路径shopId和活动的id不一致");
             } else {
                 if (po.getState().equals((byte) 2) || po.getState().equals((byte) 1)) {
                     //优惠活动被删除了或者已在上线
