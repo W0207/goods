@@ -16,9 +16,9 @@ public class CommentRetVo {
 
     private Long id;
 
-    private Long customer_id;
+    private Long customerId;
 
-    private Long orderitem_id;
+    private Long orderitemId;
 
     private Long goodsSkuId;
 
@@ -37,11 +37,11 @@ public class CommentRetVo {
         this.id = comment.getId();
         this.goodsSkuId = comment.getGoods_sku_id();
         this.type = comment.getType();
-        this.customer_id = comment.getCustomer_id();
+        this.customerId = comment.getCustomer_id();
         this.content = comment.getContent();
         this.gmtCreate = comment.getGmtCreate();
         this.gmtModified = comment.getGmtModified();
-        this.orderitem_id = comment.getOrderitem_id();
+        this.orderitemId = comment.getOrderitem_id();
         this.customer = comment.getUserInfo();
     }
 }

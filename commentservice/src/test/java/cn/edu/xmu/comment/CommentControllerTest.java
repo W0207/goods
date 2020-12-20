@@ -64,60 +64,142 @@ public class CommentControllerTest {
         String responseString = this.mvc.perform(get("/comment/comments/states"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{ \"errno\": 0, \"data\": [ { \"name\": \"未审核\", \"code\": 0 }, { \"name\": \"评论成功\", \"code\": 1 }, { \"name\": \"未通过\", \"code\": 2 }], \"errmsg\": \"成功\" }";
-        System.out.println(responseString);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
-    @Test
-    public void getAllStates() throws Exception {
-        byte[] ret = mallClient.get()
-                .uri("/comments/states")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.errno").isEqualTo("0")
-                .jsonPath("$.errmsg").isEqualTo("成功")
-                .returnResult()
-                .getResponseBodyContent();
-        String responseString = new String(ret, "UTF-8");
-        String expectedResponse = "{\"errno\":0,\"data\":[{\"name\":\"未审核\",\"code\":0},{\"name\":\"评论成功\",\"code\":1},{\"name\":\"未通过\",\"code\":2}],\"errmsg\":\"成功\"}\n";
-        JSONAssert.assertEquals(expectedResponse, responseString, true);
-    }
 
     /**
-     * 查看sku的评价列表（已通过审核）
+     * 查看sku的评价列表（已通过审核） 未集成可通过
      */
 
     @Test
-    public void show() throws Exception {
+    public void show1() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comment/skus/185/comments?pageSize=10"))
+        String responseString = this.mvc.perform(get("/comment/skus/273/comments?pageSize=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+        String expectedResponse = "{\n" +
+                "\"errno\": 0,\n" +
+                "\"data\":{\n" +
+                "\"total\": 2,\n" +
+                "\"pages\": 2,\n" +
+                "\"pageSize\": 1,\n" +
+                "\"page\": 1,\n" +
+                "\"list\":[\n" +
+                "{\n" +
+                "\"id\": 2,\n" +
+                "\"customerId\": 1,\n" +
+                "\"orderitemId\": 2,\n" +
+                "\"goodsSkuId\": 273,\n" +
+                "\"type\": 2,\n" +
+                "\"content\": \"挺好的\",\n" +
+                "\"gmtCreate\": \"2020-12-10T22:36:01\",\n" +
+                "\"gmtModified\": \"2020-12-10T22:36:01\",\n" +
+                "\"customer\": null\n" +
+                "}\n" +
+                "]\n" +
+                "},\n" +
+                "\"errmsg\": \"成功\"\n" +
+                "}";
+        JSONAssert.assertEquals(expectedResponse, responseString, false);
+    }
+
+    @Test
+    public void show2() throws Exception {
+
+        String responseString = this.mvc.perform(get("/comment/skus/274/comments"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\n" +
+                "\"errno\": 0,\n" +
+                "\"data\":{\n" +
+                "\"total\": 0,\n" +
+                "\"pages\": 0,\n" +
+                "\"pageSize\": 10,\n" +
+                "\"page\": 1,\n" +
+                "\"list\":[]\n" +
+                "},\n" +
+                "\"errmsg\": \"成功\"\n" +
+                "}";
+        JSONAssert.assertEquals(expectedResponse, responseString, false);
+    }
+
+    @Test
+    public void show3() throws Exception {
+
+        String responseString = this.mvc.perform(get("/comment/skus/185/comments?pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\n" +
+                "\"errno\": 0,\n" +
+                "\"data\":{\n" +
+                "\"total\": 5,\n" +
+                "\"pages\": 3,\n" +
+                "\"pageSize\": 2,\n" +
+                "\"page\": 1,\n" +
+                "\"list\":[\n" +
+                "{\n" +
+                "\"id\": 6,\n" +
+                "\"customerId\": 1,\n" +
+                "\"orderitemId\": 6,\n" +
+                "\"goodsSkuId\": 185,\n" +
+                "\"type\": 0,\n" +
+                "\"content\": \"真不错\",\n" +
+                "\"gmtCreate\": \"2020-12-13T13:48:44\",\n" +
+                "\"gmtModified\": \"2020-12-13T13:48:44\",\n" +
+                "\"customer\": null\n" +
+                "},\n" +
+                "{\n" +
+                "\"id\": 13,\n" +
+                "\"customerId\": 1,\n" +
+                "\"orderitemId\": 15,\n" +
+                "\"goodsSkuId\": 185,\n" +
+                "\"type\": 0,\n" +
+                "\"content\": \"还行\",\n" +
+                "\"gmtCreate\": \"2020-12-13T13:48:44\",\n" +
+                "\"gmtModified\": \"2020-12-13T13:48:44\",\n" +
+                "\"customer\": null\n" +
+                "}\n" +
+                "]\n" +
+                "},\n" +
+                "\"errmsg\": \"成功\"\n" +
+                "}";
+        JSONAssert.assertEquals(expectedResponse, responseString, false);
     }
 
     /**
      * 管理员审核评论
      */
     @Test
-    public void auditComment() throws Exception {
+    public void auditComment1() throws Exception {
         String requireJson = "{\n" +
                 "  \"state\":\"true\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(put("/comment/shops/0/confirm/2/confirm")
+        String responseString = this.mvc.perform(put("/comment/shops/0/comments/1/confirm")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        CommentPo commentPo = commentPoMapper.selectByPrimaryKey(1L);
-        System.out.println(commentPo.getState());
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void auditComment2() throws Exception {
+        String requireJson = "{\n" +
+                "  \"state\":\"false\"\n" +
+                "}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/comment/shops/0/comments/1/confirm")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
@@ -129,26 +211,24 @@ public class CommentControllerTest {
     public void showComment() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/comments/comments").header("authorization", token))
+        String responseString = this.mvc.perform(get("/comment/comments").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+        String expectedResponse = "{\"errno\":0,\"data\":{\"total\":7,\"pages\":1,\"pageSize\":10,\"page\":1,\"list\":[{\"id\":2,\"customerId\":1,\"orderitemId\":2,\"goodsSkuId\":273,\"type\":2,\"content\":\"挺好的\",\"gmtCreate\":\"2020-12-10T22:36:01\",\"gmtModified\":\"2020-12-10T22:36:01\",\"customer\":null},{\"id\":3,\"customerId\":1,\"orderitemId\":3,\"goodsSkuId\":273,\"type\":1,\"content\":\"哇偶\",\"gmtCreate\":\"2020-12-10T22:36:01\",\"gmtModified\":\"2020-12-10T22:36:01\",\"customer\":null},{\"id\":6,\"customerId\":1,\"orderitemId\":6,\"goodsSkuId\":185,\"type\":0,\"content\":\"真不错\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null},{\"id\":13,\"customerId\":1,\"orderitemId\":15,\"goodsSkuId\":185,\"type\":0,\"content\":\"还行\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null},{\"id\":14,\"customerId\":1,\"orderitemId\":16,\"goodsSkuId\":185,\"type\":0,\"content\":\"还行\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null},{\"id\":15,\"customerId\":1,\"orderitemId\":17,\"goodsSkuId\":185,\"type\":0,\"content\":\"还行\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null},{\"id\":16,\"customerId\":1,\"orderitemId\":18,\"goodsSkuId\":185,\"type\":0,\"content\":\"还行\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null}]},\"errmsg\":\"成功\"}";
+        JSONAssert.assertEquals(expectedResponse, responseString, false);
     }
 
     @Test
     public void showComment1() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/comments/comments?page=1&pageSize=2").header("authorization", token))
+        String responseString = this.mvc.perform(get("/comment/comments?page=1&pageSize=2").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+        String expectedResponse = "{\"errno\":0,\"data\":{\"total\":7,\"pages\":4,\"pageSize\":2,\"page\":1,\"list\":[{\"id\":2,\"customerId\":1,\"orderitemId\":2,\"goodsSkuId\":273,\"type\":2,\"content\":\"挺好的\",\"gmtCreate\":\"2020-12-10T22:36:01\",\"gmtModified\":\"2020-12-10T22:36:01\",\"customer\":null},{\"id\":3,\"customerId\":1,\"orderitemId\":3,\"goodsSkuId\":273,\"type\":1,\"content\":\"哇偶\",\"gmtCreate\":\"2020-12-10T22:36:01\",\"gmtModified\":\"2020-12-10T22:36:01\",\"customer\":null}]},\"errmsg\":\"成功\"}";
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 
     /**
@@ -159,12 +239,15 @@ public class CommentControllerTest {
     public void showUnAuditCommentsByCommentid() throws Exception {
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/comment/shops/0/comments/all").header("authorization", token))
+        String responseString = this.mvc.perform(get("/comment/shops/0/comments/all?page=2&pageSize=2").header("authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        String expectedResponse = "{\"errno\":0,\"data\":{\"total\":5,\"pages\":3,\"pageSize\":2,\"page\":2,\"list\":[{\"id\":8,\"customerId\":1,\"orderitemId\":8,\"goodsSkuId\":185,\"type\":0,\"content\":\"不好吃\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null},{\"id\":9,\"customerId\":1,\"orderitemId\":9,\"goodsSkuId\":185,\"type\":0,\"content\":\"不好吃\",\"gmtCreate\":\"2020-12-13T13:48:44\",\"gmtModified\":\"2020-12-13T13:48:44\",\"customer\":null}]},\"errmsg\":\"成功\"}";
         System.out.println(responseString);
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+        JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+
+
 }

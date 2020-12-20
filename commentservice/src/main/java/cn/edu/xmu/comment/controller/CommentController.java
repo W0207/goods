@@ -1,6 +1,7 @@
 package cn.edu.xmu.comment.controller;
 
 import cn.edu.xmu.comment.model.vo.CommentAuditVo;
+import cn.edu.xmu.comment.model.vo.CommentInputVo;
 import cn.edu.xmu.comment.service.CommentService;
 import cn.edu.xmu.comment.model.bo.Comment;
 import cn.edu.xmu.comment.model.vo.CommentStateVo;
@@ -12,8 +13,10 @@ import cn.edu.xmu.ooad.util.Common;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ResponseUtil;
 import cn.edu.xmu.ooad.util.ReturnObject;
+import cn.edu.xmu.outer.service.IOrderService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +46,8 @@ public class CommentController {
     @Autowired
     private HttpServletResponse httpServletResponse;
 
-
+    @DubboReference(version = "0.0.1", check = false)
+    private IOrderService iOrderService;
     /**
      * 查看sku的评价列表（已通过审核）
      *
@@ -102,7 +106,7 @@ public class CommentController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit // 需要认证
-    @PutMapping("/shops/{did}/confirm/{id}/confirm")
+    @PutMapping("/shops/{did}/comments/{id}/confirm")
     public Object auditComment(@PathVariable Long id, @Validated @RequestBody CommentAuditVo commentAuditVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("auditComment : Id = " + id + " vo = " + commentAuditVo);
@@ -168,6 +172,45 @@ public class CommentController {
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showUnAuditCommentsByCommentid(page, pageSize, state);
         return Common.getPageRetObject(returnObject);
     }
+
+    /**
+     * 买家新增sku的评论
+     *
+     * @param id:          订单id
+     * @return Object
+     */
+    @ApiOperation(value = "买家新增sku的评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "订单明细id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "CommentInputVo", name = "commentInputVo", value = "评价信息", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true)
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器内部错误"),
+            @ApiResponse(code = 503, message = "评论内容不能为空"),
+            @ApiResponse(code = 903, message = "用户没有购买此商品"),
+            @ApiResponse(code = 705, message = "无权限访问")
+    })
+    @Audit
+    @PostMapping("/orderitems/{id}/comments")
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody CommentInputVo commentInputVo, HttpServletResponse response,@LoginUser Long userId) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("addComment: orderId = " + id);
+        }
+        if (iOrderService.confirmBought(userId,id).getData()) {
+            ReturnObject brandCategory = commentService.addComment(commentInputVo,id,userId);
+            if (brandCategory.getCode() == ResponseCode.OK) {
+                response.setStatus(201);
+            } else if (brandCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
+                response.setStatus(400);
+            }
+            return Common.decorateReturnObject(brandCategory);
+        } else {
+            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.USER_NOTBUY));
+        }
+    }
+
 
 
 }
