@@ -12,9 +12,11 @@ import java.io.Serializable;
 public class GoodInfo implements Serializable {
     private Long freightModelId;
     private Long weight;
+    private Long shopId;
 
-    public GoodInfo(Long freightModelId, Long weight) {
+    public GoodInfo(Long freightModelId, Long weight, Long shopId) {
         this.freightModelId = freightModelId;
         this.weight = weight;
+        this.shopId = shopId;
     }
 }
