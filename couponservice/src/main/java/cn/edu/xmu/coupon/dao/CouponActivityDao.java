@@ -181,8 +181,7 @@ public class CouponActivityDao implements InitializingBean {
                             couponSkuPoMapper.deleteByPrimaryKey(po.getId());
                         }
                         returnObject = new ReturnObject();
-                    }
-                    else{
+                    } else {
                         returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
                     }
                 }
@@ -196,13 +195,13 @@ public class CouponActivityDao implements InitializingBean {
 
     }
 
-    private void skuDeleteNotExit(List<CouponSkuPo> skuPos){
-        for(CouponSkuPo po:skuPos){
+    private void skuDeleteNotExit(List<CouponSkuPo> skuPos) {
+        for (CouponSkuPo po : skuPos) {
             couponSkuPoMapper.deleteByPrimaryKey(po.getId());
         }
     }
 
-    public ReturnObject rangeForCouponActivityById(Long id, Long shopId,  Long[] skuIds) {
+    public ReturnObject rangeForCouponActivityById(Long id, Long shopId, Long[] skuIds) {
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
         if (couponActivityPo == null) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -210,15 +209,15 @@ public class CouponActivityDao implements InitializingBean {
         if (!couponActivityPo.getShopId().equals(shopId)) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
-        if(couponActivityPo.getState().equals((byte)2)){
+        if (couponActivityPo.getState().equals((byte) 2)) {
             return new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
         }
         List<CouponSkuPo> skuPos = new ArrayList<>();
         for (Long aId : skuIds) {
-            if(!ingoodservice.skuExitOrNot(aId)){
+            if (!ingoodservice.skuExitOrNot(aId)) {
                 return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
-            if(!ingoodservice.skuInShopOrNot(shopId,aId)){
+            if (!ingoodservice.skuInShopOrNot(shopId, aId)) {
                 return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             }
             CouponSkuPo couponSkuPo = new CouponSkuPo();

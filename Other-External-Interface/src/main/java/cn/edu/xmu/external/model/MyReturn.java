@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @Data
 public class MyReturn<T> extends ReturnObject<T> implements Serializable {
+
     public MyReturn() {
     }
 

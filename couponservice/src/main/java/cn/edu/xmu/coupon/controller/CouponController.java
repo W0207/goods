@@ -479,9 +479,10 @@ public class CouponController {
     public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId, HttpServletResponse response) {
         ReturnObject returnObject = couponService.userGetCoupon(id, userId);
         response.setStatus(getStatue(returnObject));
-        if(returnObject.getCode()==ResponseCode.OK){
+        if (returnObject.getCode() == ResponseCode.OK) {
             response.setStatus(HttpStatus.CREATED.value());
         }
+        System.out.println(returnObject.getData());
         return Common.decorateReturnObject(returnObject);
     }
 
