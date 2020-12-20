@@ -34,24 +34,20 @@ import java.util.List;
 public class ShopController {
     private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
 
-
-
     @Autowired
     private ShopService shopService;
 
-    private int getStatue(ReturnObject returnObject)
-    {
-        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
-        {
+    private int getStatue(ReturnObject returnObject) {
+        if (returnObject.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             return HttpStatus.FORBIDDEN.value();
         }
-        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+        if (returnObject.getCode() == ResponseCode.FIELD_NOTVALID || returnObject.getCode() == ResponseCode.Log_Bigger || returnObject.getCode() == ResponseCode.Log_BEGIN_NULL || returnObject.getCode() == ResponseCode.Log_END_NULL) {
             return HttpStatus.BAD_REQUEST.value();
         }
-        if(returnObject.getCode()==ResponseCode.COUPONACT_STATENOTALLOW){
+        if (returnObject.getCode() == ResponseCode.COUPONACT_STATENOTALLOW) {
             return HttpStatus.FORBIDDEN.value();
         }
-        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+        if (returnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
             return HttpStatus.NOT_FOUND.value();
         }
         return HttpStatus.OK.value();
@@ -74,7 +70,7 @@ public class ShopController {
     })
     @Audit
     @RequestMapping(value = "/shops", method = RequestMethod.POST)
-    public Object addShop(@Validated @RequestBody ShopVo vo, @Depart Long departId,HttpServletResponse response) {
+    public Object addShop(@Validated @RequestBody ShopVo vo, @Depart Long departId, HttpServletResponse response) {
         if (departId != -1) {
             return Common.decorateReturnObject(new ReturnObject(ResponseCode.USER_HASSHOP));
         }
@@ -82,7 +78,7 @@ public class ShopController {
         shop.setGmtCreate(LocalDateTime.now());
         ReturnObject returnObject = shopService.insertShop(shop);
         response.setStatus(getStatue(returnObject));
-        if(returnObject.getCode()==ResponseCode.OK){
+        if (returnObject.getCode() == ResponseCode.OK) {
             response.setStatus(201);
         }
         return Common.decorateReturnObject(returnObject);
@@ -122,10 +118,10 @@ public class ShopController {
     @Audit
     @PutMapping("/shops/{id}")
 //    @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
-    public Object modifyShop(@PathVariable("id") Long id,@Depart Long departId,  @RequestBody ShopVo shopVo, HttpServletResponse response) {
+    public Object modifyShop(@PathVariable("id") Long id, @Depart Long departId, @RequestBody ShopVo shopVo, HttpServletResponse response) {
         System.out.println("sadasd");
-        if(!departId.equals(0L)){
-            if(!departId.equals(id)){
+        if (!departId.equals(0L)) {
+            if (!departId.equals(id)) {
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
                 return Common.decorateReturnObject(returnObject);
@@ -154,9 +150,9 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{id}/onshelves")
-    public Object shopOnShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        if(!departId.equals(0L)){
-            if(!departId.equals(id)){
+    public Object shopOnShelves(@PathVariable Long id, @Depart Long departId, HttpServletResponse response) {
+        if (!departId.equals(0L)) {
+            if (!departId.equals(id)) {
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
                 return Common.decorateReturnObject(returnObject);
@@ -188,9 +184,9 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{id}/offshelves")
-    public Object shopOffShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        if(!departId.equals(0L)){
-            if(!departId.equals(id)){
+    public Object shopOffShelves(@PathVariable Long id, @Depart Long departId, HttpServletResponse response) {
+        if (!departId.equals(0L)) {
+            if (!departId.equals(id)) {
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
                 return Common.decorateReturnObject(returnObject);
@@ -220,10 +216,10 @@ public class ShopController {
     })
     @Audit
     @DeleteMapping("/shops/{id}")
-    public Object deleteShop(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        System.out.println("departId = "+ departId + "   id = "+id);
-        if(!departId.equals(0L)){
-            if(!departId.equals(id)){
+    public Object deleteShop(@PathVariable Long id, @Depart Long departId, HttpServletResponse response) {
+        System.out.println("departId = " + departId + "   id = " + id);
+        if (!departId.equals(0L)) {
+            if (!departId.equals(id)) {
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
                 return Common.decorateReturnObject(returnObject);
@@ -256,8 +252,8 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/newshops/{id}/audit")
-    public Object auditShop(@PathVariable Long id,@PathVariable Long shopId, @Validated @RequestBody ShopAuditVo shopAuditVo, HttpServletResponse response) {
-        if(shopId!=0){
+    public Object auditShop(@PathVariable Long id, @PathVariable Long shopId, @Validated @RequestBody ShopAuditVo shopAuditVo, HttpServletResponse response) {
+        if (shopId != 0) {
             logger.debug("error");
             ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObject));

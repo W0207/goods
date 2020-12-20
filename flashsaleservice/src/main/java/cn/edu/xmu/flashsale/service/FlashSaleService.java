@@ -40,7 +40,7 @@ public class FlashSaleService implements DisableFlashActivityService {
     private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
 
     public ReturnObject<PageInfo<VoObject>> findFlashSale(Long id, Integer page, Integer pageSize) {
-        return  flashSaleDao.findFlashSale(id, page, pageSize);
+       return  flashSaleDao.findFlashSale(id, page, pageSize);
 
     }
 
