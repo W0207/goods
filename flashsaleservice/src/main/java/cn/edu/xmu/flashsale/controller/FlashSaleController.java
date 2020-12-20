@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
@@ -87,6 +88,14 @@ public class FlashSaleController {
 //        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
 //    }
 
+    /**
+     * 查询某一时段秒杀活动详情
+     * @param id
+     * @param response
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @ApiOperation(value = "查询某一时段秒杀活动详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", required = true, dataType = "Long", paramType = "path", value = "时间段id"),
@@ -99,6 +108,7 @@ public class FlashSaleController {
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
 
     })
+    @Audit
     @GetMapping("/timesegments/{id}/flashsales")
     public Object queryTopicsByTime(@PathVariable Long id, HttpServletResponse response,
                                     @RequestParam(required = false) Integer page,
@@ -115,24 +125,51 @@ public class FlashSaleController {
         return Common.getPageRetObject(returnObject);
     }
 
-
     /**
-     * 获取当前时段秒杀列表
-     *
-     * @param id
+     * 查询当前时段秒杀活动详情
+     * @param page
+     * @param pageSize
      * @return
-     * @author Abin
      */
-    @ApiOperation(value = "获取当前时段秒杀列表")
+    @ApiOperation(value = "查询当前时段秒杀活动详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false),
+
+    })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+
     })
     @GetMapping("/flashsales/current")
-    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        //id调用其他模块获取
-        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+    public List queryCurrentTopics(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize) {
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        //Long id=Long.valueOf(4);
+        return flashSaleService.findCurrentFlashSale(page, pageSize);
+
     }
+
+//    /**
+//     * 获取当前时段秒杀列表
+//     *
+//     * @param id
+//     * @return
+//     * @author Abin
+//     */
+//    @ApiOperation(value = "获取当前时段秒杀列表")
+//    @ApiResponses({
+//            @ApiResponse(code = 0, message = "成功"),
+//    })
+//    @GetMapping("/flashsales/current")
+//    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        //id调用其他模块获取
+//        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+//    }
 
     /**
      * 管理员修改秒杀活动

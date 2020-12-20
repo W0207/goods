@@ -1,6 +1,14 @@
 package cn.edu.xmu.flashsale.service;
 
+import cn.edu.xmu.flashsale.mapper.FlashSalePoMapper;
+import cn.edu.xmu.flashsale.model.po.FlashSalePo;
+import cn.edu.xmu.flashsale.model.po.FlashSalePoExample;
 import cn.edu.xmu.ininterface.service.DisableFlashActivityService;
+import cn.edu.xmu.ooad.model.VoObject;
+import cn.edu.xmu.ooad.util.ResponseCode;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.sun.el.stream.Stream;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,6 +22,8 @@ import cn.edu.xmu.flashsale.dao.FlashSaleDao;
 import reactor.core.publisher.Flux;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zhai
@@ -29,7 +39,15 @@ public class FlashSaleService implements DisableFlashActivityService {
     @Autowired
     private ReactiveRedisTemplate<String, Serializable> reactiveRedisTemplate;
 
+    public ReturnObject<PageInfo<VoObject>> findFlashSale(Long id, Integer page, Integer pageSize) {
+        return  flashSaleDao.findFlashSale(id, page, pageSize);
 
+    }
+
+    public List findCurrentFlashSale(Integer page, Integer pageSize) {
+        return  flashSaleDao.findCurrentFlashSale(page, pageSize);
+
+    }
     /**
      * 修改秒杀活动信息
      *
