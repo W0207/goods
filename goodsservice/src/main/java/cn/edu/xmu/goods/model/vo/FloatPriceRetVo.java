@@ -30,10 +30,10 @@ public class FloatPriceRetVo {
         this.quantity = floatPricePo.getQuantity();
         this.beginTime = floatPricePo.getBeginTime();
         this.endTime = floatPricePo.getEndTime();
-//        SimpleAdminUser simpleAdminUser = new SimpleAdminUser();
-//        simpleAdminUser.setId(floatPricePo.getCreatedBy());
+        SimpleAdminUser simpleAdminUser = new SimpleAdminUser();
+        simpleAdminUser.setId(floatPricePo.getCreatedBy());
 //        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
-//        this.createdBy = simpleAdminUser;
+        this.createdBy = simpleAdminUser;
         this.valid = floatPricePo.getValid() == 1;
         this.gmtCreate = floatPricePo.getGmtCreate();
     }
