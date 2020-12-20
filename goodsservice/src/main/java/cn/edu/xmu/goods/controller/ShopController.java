@@ -124,7 +124,7 @@ public class ShopController {
 //    @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
     public Object modifyShop(@PathVariable("id") Long id,@Depart Long departId,  @RequestBody ShopVo shopVo, HttpServletResponse response) {
         System.out.println("sadasd");
-        if(!departId.equals(0)){
+        if(!departId.equals(0L)){
             if(!departId.equals(id)){
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
@@ -155,7 +155,7 @@ public class ShopController {
     @Audit
     @PutMapping("/shops/{id}/onshelves")
     public Object shopOnShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        if(!departId.equals(0)){
+        if(!departId.equals(0L)){
             if(!departId.equals(id)){
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
@@ -186,9 +186,10 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @PutMapping("/shops/{id}/offshelves")
     public Object shopOffShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        if(!departId.equals(0)){
+        if(!departId.equals(0L)){
             if(!departId.equals(id)){
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));
@@ -217,9 +218,11 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @DeleteMapping("/shops/{id}")
     public Object deleteShop(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
-        if(!departId.equals(0)){
+        System.out.println("departId = "+ departId + "   id = "+id);
+        if(!departId.equals(0L)){
             if(!departId.equals(id)){
                 ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
                 response.setStatus(getStatue(returnObject));

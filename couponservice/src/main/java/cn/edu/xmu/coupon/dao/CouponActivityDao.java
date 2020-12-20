@@ -365,6 +365,7 @@ public class CouponActivityDao implements InitializingBean {
             userVo1.setName(iUserService.getUserName(po.getModiBy()));
             vo.setModiBy(userVo1);
         }
+        vo.setShop(inShopService.presaleFindShop(shopId));
         return new ReturnObject(vo);
 
     }
