@@ -32,7 +32,7 @@ public class FloatPriceRetVo {
         this.endTime = floatPricePo.getEndTime();
         SimpleAdminUser simpleAdminUser = new SimpleAdminUser();
         simpleAdminUser.setId(floatPricePo.getCreatedBy());
-//        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
         this.createdBy = simpleAdminUser;
         this.valid = floatPricePo.getValid() == 1;
         this.gmtCreate = floatPricePo.getGmtCreate();

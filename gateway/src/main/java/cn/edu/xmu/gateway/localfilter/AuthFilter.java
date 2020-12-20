@@ -1,14 +1,14 @@
 package cn.edu.xmu.gateway.localfilter;
 
-import cn.edu.xmu.gateway.util.GatewayUtil;
-import cn.edu.xmu.gateway.util.JwtHelper;
+import cn.edu.xmu.gateway.util.*;
 import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.RequestPath;
@@ -18,20 +18,17 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Ming Qiu
  * @date Created in 2020/11/13 22:31
  **/
 public class AuthFilter implements GatewayFilter, Ordered {
-    private  static  final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
     private String tokenName;
 
-    public AuthFilter(Config config){
+    public AuthFilter(Config config) {
         this.tokenName = config.getTokenName();
     }
 
@@ -41,6 +38,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
      * 2. 判断用户的shopid是否与路径上的shopid一致（0可以不做这一检查）
      * 3. 在redis中判断用户是否有权限访问url,如果不在redis中需要通过dubbo接口load用户权限
      * 4. 需要以dubbo接口访问privilegeservice
+     *
      * @param exchange
      * @param chain
      * @return
@@ -57,67 +55,63 @@ public class AuthFilter implements GatewayFilter, Ordered {
         HttpMethod method = request.getMethod();
         // 判断token是否为空，无需token的url在配置文件中设置
         logger.debug("filter: token = " + token);
-        if (StringUtil.isNullOrEmpty(token)){
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return response.writeWith(Mono.empty());
+        if (StringUtil.isNullOrEmpty(token)) {
+            return getErrorResponse(HttpStatus.UNAUTHORIZED, ResponseCode.AUTH_INVALID_JWT, response, "token为空");
         }
         // 判断token是否合法
         JwtHelper.UserAndDepart userAndDepart = new JwtHelper().verifyTokenAndGetClaims(token);
         if (userAndDepart == null) {
             // 若token解析不合法
+            return getErrorResponse(HttpStatus.UNAUTHORIZED, ResponseCode.AUTH_INVALID_JWT, response, "token解析不合法");
+        }
+        Long userId = userAndDepart.getUserId();
+        Long departId = userAndDepart.getDepartId();
+        if (departId != -2) {
+            return getErrorResponse(HttpStatus.UNAUTHORIZED, ResponseCode.AUTH_INVALID_JWT, response, "管理员无法访问普通用户URL");
+        }
+        // 若token合法
+        // 获取redis工具
+        RedisTemplate redisTemplate = GatewayUtil.redis;
+        // 判断该token是否被ban
+        logger.debug("判断token是否被ban");
+        if (redisTemplate.hasKey(token)) {
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.writeWith(Mono.empty());
-        } else {
-            // 若token合法
-            // 解析userid和departid和有效期
-            Long userId = userAndDepart.getUserId();
-            Long departId = userAndDepart.getDepartId();
-            Date expireTime = userAndDepart.getExpTime();
-            // 检验api中传入token是否和departId一致
-            if (url != null) {
-                // 获取路径中的shopId
-                Map<String, String> uriVariables = exchange.getAttribute(ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-                String pathId = uriVariables.get("shopid");
-                if (pathId != null && !departId.equals(0L)) {
-                    // 若非空且解析出的部门id非0则检查是否匹配
-                    if (!pathId.equals(departId.toString())) {
-                        // 若id不匹配
-                        logger.debug("did不匹配:" + pathId);
-                        response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                        return response.writeWith(Mono.empty());
-                    }
-                }
-                logger.debug("did匹配");
-            } else {
-                logger.debug("请求url为空");
-                response.setStatusCode(HttpStatus.BAD_REQUEST);
-                return response.writeWith(Mono.empty());
-            }
-            String jwt = token;
-
-            // 判断该token有效期是否还长
-            Long sec = expireTime.getTime() - System.currentTimeMillis();
-            if (sec < GatewayUtil.getRefreshJwtTime() * 1000) {
-                // 若快要过期了则重新换发token
-                // 创建新的token
-                JwtHelper jwtHelper = new JwtHelper();
-                jwt = jwtHelper.createToken(userId, departId, GatewayUtil.getJwtExpireTime());
-                logger.debug("重新换发token:" + jwt);
-            }
-
-            // 将token放在返回消息头中
-            response.getHeaders().set(tokenName, jwt);
-            // 将url中的数字替换成{id}
-            Pattern p = Pattern.compile("/(0|[1-9][0-9]*)");
-            Matcher matcher = p.matcher(url.toString());
-            String commonUrl = matcher.replaceAll("/{id}");
-            // 去除开头的/shops/{id}
-            p = Pattern.compile("\\/shops\\/\\{id\\}");
-            matcher = p.matcher(commonUrl);
-            commonUrl = matcher.replaceFirst("");
-            logger.debug("获取通用请求路径:" + commonUrl);
-            return chain.filter(exchange);
         }
+        // 检测完了则该token有效
+        // 解析有效期
+        Date expireTime = userAndDepart.getExpTime();
+        String jwt = token;
+
+        // 判断该token有效期是否还长
+        Long sec = expireTime.getTime() - System.currentTimeMillis();
+        if (sec < GatewayUtil.getRefreshJwtTime() * 1000) {
+            // 若快要过期了则重新换发token
+            // 创建新的token
+            JwtHelper jwtHelper = new JwtHelper();
+            jwt = jwtHelper.createToken(userId, departId, GatewayUtil.getJwtExpireTime());
+            logger.debug("重新换发token:" + jwt);
+        }
+
+        // 将token放在返回消息头中
+        response.getHeaders().set(tokenName, jwt);
+        return chain.filter(exchange);
+    }
+
+    public Mono<Void> getErrorResponse(HttpStatus status, ResponseCode code, ServerHttpResponse response) {
+        response.setStatusCode(status);
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        Object returnObj = ResponseUtil.fail(code, code.getMessage());
+        DataBuffer db = response.bufferFactory().wrap(JacksonUtil.toJson(returnObj).getBytes());
+        return response.writeWith(Mono.just(db));
+    }
+
+    public Mono<Void> getErrorResponse(HttpStatus status, ResponseCode code, ServerHttpResponse response, String message) {
+        response.setStatusCode(status);
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        Object returnObj = ResponseUtil.fail(code, message);
+        DataBuffer db = response.bufferFactory().wrap(JacksonUtil.toJson(returnObj).getBytes());
+        return response.writeWith(Mono.just(db));
     }
 
     @Override
@@ -128,7 +122,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
     public static class Config {
         private String tokenName;
 
-        public Config(){
+        public Config() {
 
         }
 

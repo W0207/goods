@@ -881,7 +881,7 @@ public class GoodsDao {
         }
         if (beginTime.isAfter(endTime)) {
             //开始时间不能比结束时间晚
-            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return new ReturnObject<>(ResponseCode.Log_Bigger);
         } else {
             //设置的库存不能大于总库存
             if (goodsSkuPo.getInventory() < floatPriceInputVo.getQuantity()) {

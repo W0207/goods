@@ -104,7 +104,6 @@ public class ShopDao {
             if (ret == 0) {
                 //修改失败
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "店铺id不存在：" + shopPo.getId());
-
             } else {
                 //修改成功
                 returnObject = new ReturnObject<>();

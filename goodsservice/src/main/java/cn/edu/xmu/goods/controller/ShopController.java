@@ -29,7 +29,7 @@ import java.util.List;
  * @author 宇
  */
 @Api(value = "商品服务", tags = "shop")
-@RestController
+@RestController /*Restful的Controller对象*/
 @RequestMapping(value = "/shop", produces = "application/json;charset=UTF-8")
 public class ShopController {
     private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
