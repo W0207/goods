@@ -82,6 +82,9 @@ public class ShopController {
         shop.setGmtCreate(LocalDateTime.now());
         ReturnObject returnObject = shopService.insertShop(shop);
         response.setStatus(getStatue(returnObject));
+        if(returnObject.getCode()==ResponseCode.OK){
+            response.setStatus(201);
+        }
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -120,10 +123,13 @@ public class ShopController {
     @PutMapping("/shops/{id}")
 //    @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
     public Object modifyShop(@PathVariable("id") Long id,@Depart Long departId,  @RequestBody ShopVo shopVo, HttpServletResponse response) {
-        if(!departId.equals(id)){
-            ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
-            response.setStatus(getStatue(returnObject));
-            return Common.decorateReturnObject(returnObject);
+        System.out.println("sadasd");
+        if(!departId.equals(0L)){
+            if(!departId.equals(id)){
+                ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+                response.setStatus(getStatue(returnObject));
+                return Common.decorateReturnObject(returnObject);
+            }
         }
         Shop shop = shopVo.createShop();
         shop.setId(id);
@@ -148,7 +154,15 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{id}/onshelves")
-    public Object shopOnShelves(@PathVariable Long id,HttpServletResponse response) {
+    public Object shopOnShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
+        if(!departId.equals(0L)){
+            if(!departId.equals(id)){
+                ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+                response.setStatus(getStatue(returnObject));
+                return Common.decorateReturnObject(returnObject);
+            }
+        }
+
         Shop shop = new Shop();
         shop.setId(id);
         shop.setState(Shop.State.UP);
@@ -172,8 +186,16 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @PutMapping("/shops/{id}/offshelves")
-    public Object shopOffShelves(@PathVariable Long id,HttpServletResponse response) {
+    public Object shopOffShelves(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
+        if(!departId.equals(0L)){
+            if(!departId.equals(id)){
+                ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+                response.setStatus(getStatue(returnObject));
+                return Common.decorateReturnObject(returnObject);
+            }
+        }
         Shop shop = new Shop();
         shop.setId(id);
         shop.setState(Shop.State.DOWN);
@@ -196,8 +218,17 @@ public class ShopController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功")
     })
+    @Audit
     @DeleteMapping("/shops/{id}")
-    public Object deleteShop(@PathVariable Long id,HttpServletResponse response) {
+    public Object deleteShop(@PathVariable Long id,@Depart Long departId,HttpServletResponse response) {
+        System.out.println("departId = "+ departId + "   id = "+id);
+        if(!departId.equals(0L)){
+            if(!departId.equals(id)){
+                ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+                response.setStatus(getStatue(returnObject));
+                return Common.decorateReturnObject(returnObject);
+            }
+        }
         Shop shop = new Shop();
         shop.setId(id);
         shop.setState(Shop.State.CLOSE);
@@ -225,7 +256,13 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/newshops/{id}/audit")
-    public Object auditShop(@PathVariable Long id, @Validated @RequestBody ShopAuditVo shopAuditVo, HttpServletResponse response) {
+    public Object auditShop(@PathVariable Long id,@PathVariable Long shopId, @Validated @RequestBody ShopAuditVo shopAuditVo, HttpServletResponse response) {
+        if(shopId!=0){
+            logger.debug("error");
+            ReturnObject returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
+            response.setStatus(getStatue(returnObject));
+            return Common.decorateReturnObject(returnObject);
+        }
         if (logger.isDebugEnabled()) {
             logger.debug("auditShop : Id = " + id + " vo = " + shopAuditVo);
         }
