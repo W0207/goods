@@ -198,7 +198,7 @@ public class GrouponControllerTest {
                 "  \"begintime\":\"2021-11-28T17:42:20\",\n" +
                 "  \"endtime\": \"2021-12-28T17:42:20\"\n" +
                 "}";
-        String responseString = this.mvc.perform(post("/groupon/shops/1/spus/1/groupons")
+        String responseString = this.mvc.perform(post("/groupon/shops/1/spus/273/groupons")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
