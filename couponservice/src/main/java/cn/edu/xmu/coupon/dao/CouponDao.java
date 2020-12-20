@@ -244,7 +244,7 @@ public class CouponDao {
                         if (pos.isEmpty()) {
                             //用户没有这个优惠券（每人数量限制)(每人领取quantity张优惠券)
                             if (po.getQuantitiyType().equals((byte) 0)) {
-                                for (int i = 0; i <= po.getQuantity(); i++) {
+                                for (int i = 1; i <= po.getQuantity(); i++) {
                                     CouponPo couponPo = new CouponPo();
                                     couponPo.setState((byte) 1);
                                     couponPo.setGmtCreate(LocalDateTime.now());

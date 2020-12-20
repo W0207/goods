@@ -57,14 +57,14 @@ public class PresaleActivityTest {
         presaleActivityVo.setAdvancePayPrice(100L);
         presaleActivityVo.setRestPayPrice(100L);
         presaleActivityVo.setQuantity(100);
-        presaleActivityVo.setBeginTime(LocalDateTime.now());
-        presaleActivityVo.setPayTime(LocalDateTime.now());
-        presaleActivityVo.setEndTime(LocalDateTime.now());
+        presaleActivityVo.setBeginTime(LocalDateTime.of(2021,1,20,0,0,0));
+        presaleActivityVo.setPayTime(LocalDateTime.of(2022,1,20,0,0,0));
+        presaleActivityVo.setEndTime(LocalDateTime.of(2023,1,20,0,0,0));
         String shopJson = JacksonUtil.toJson(presaleActivityVo);
         System.out.println(shopJson);
         String expectedResponse = "";
 
-        String responseString = this.mvc.perform(post("/presale/shops/1/skus/273/presales").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
+        String responseString = this.mvc.perform(post("/presale/shops/1/skus/293/presales").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -72,7 +72,8 @@ public class PresaleActivityTest {
 
     @Test
     public void selectAllPresale() throws Exception {
-        String responseString = this.mvc.perform(get("/presale/presales?shopId=2&timeLine=1").contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100*11111111);
+        String responseString = this.mvc.perform(get("/presale/presales?shopId=2&timeLine=1").contentType("application/json;charset=UTF-8").header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -80,6 +81,7 @@ public class PresaleActivityTest {
 
     @Test
     public void modifyPresale() throws Exception {
+        String token = creatTestToken(1L, 0L, 100*11111111);
         PresaleActivityVo presaleActivityVo=new PresaleActivityVo();
         presaleActivityVo.setName("童振宇");
         presaleActivityVo.setAdvancePayPrice(100L);
@@ -90,7 +92,7 @@ public class PresaleActivityTest {
         presaleActivityVo.setEndTime(LocalDateTime.of(2020,12,25,0,0));
         String shopJson = JacksonUtil.toJson(presaleActivityVo);
         String expectedResponse = "";
-        String responseString = this.mvc.perform(put("/presale/shops/5/presales/1").contentType("application/json;charset=UTF-8").content(shopJson))
+        String responseString = this.mvc.perform(put("/presale/shops/5/presales/1").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -111,7 +113,8 @@ public class PresaleActivityTest {
 
     @Test
     public void presaleOnShelves() throws Exception {
-        String responseString = this.mvc.perform(put("/presale/shops/1/presales/1/onshelves").contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100*11111111);
+        String responseString = this.mvc.perform(put("/presale/shops/1/presales/1/onshelves").contentType("application/json;charset=UTF-8").header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -119,7 +122,8 @@ public class PresaleActivityTest {
 
     @Test
     public void presaleOffShelves() throws Exception {
-        String responseString = this.mvc.perform(put("/presale/shops/1/presales/2/offshelves").contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100*11111111);
+        String responseString = this.mvc.perform(put("/presale/shops/1/presales/2/offshelves").contentType("application/json;charset=UTF-8").header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -127,7 +131,8 @@ public class PresaleActivityTest {
 
     @Test
     public void queryPresaleofSPU() throws Exception {
-        String responseString = this.mvc.perform(get("/presale/shops/1/presales?state=0").contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100*11111111);
+        String responseString = this.mvc.perform(get("/presale/shops/1/presales?state=0").contentType("application/json;charset=UTF-8").header("authorization",token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
