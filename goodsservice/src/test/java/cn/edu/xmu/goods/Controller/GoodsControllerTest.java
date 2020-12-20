@@ -4,6 +4,9 @@ import cn.edu.xmu.goods.GoodsServiceApplication;
 import cn.edu.xmu.goods.controller.GoodsController;
 import cn.edu.xmu.goods.mapper.*;
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
+import cn.edu.xmu.goods.model.po.ShopPo;
+import cn.edu.xmu.goods.model.vo.ShopVo;
+import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -79,23 +81,23 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 获得商品sku的详细信息
+     * 获得商品sku的详细信息(登录)
      */
     @Test
-    public void findGoodsSkuById() throws Exception {
-//        String token1 = creatTestToken(1L, 0L, 100);
-//        String requireJson1 = "{\n" +
-//                "  \"activityPrice\": 222,\n" +
-//                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
-//                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
-//                "  \"quantity\": 1\n" +
-//                "}";
-//        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
-//                .header("authorization", token1)
-//                .contentType("application/json;charset=UTF-8")
-//                .content(requireJson1))
-//                .andReturn().getResponse().getContentAsString();
-//        System.out.println(responseString1);
+    public void findGoodsSkuById1() throws Exception {
+        String token1 = creatTestToken(1L, 0L, 100);
+        String requireJson1 = "{\n" +
+                "  \"activityPrice\": 222,\n" +
+                "  \"beginTime\": \"2020-12-04 11:24:47\",\n" +
+                "  \"endTime\": \"2020-12-22 11:24:49\",\n" +
+                "  \"quantity\": 1\n" +
+                "}";
+        String responseString1 = this.mvc.perform(post("/goods/shops/0/skus/273/floatPrices")
+                .header("authorization", token1)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString1);
 
         //登陆
         String token = creatTestToken(1L, 0L, 100);
@@ -104,16 +106,18 @@ public class GoodsControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
+    }
 
-        //不登陆
-//        String responseString = this.mvc.perform(get("/goods/skus/273"))
-//                .andExpect(content().contentType("application/json;charset=UTF-8"))
-//                .andReturn().getResponse().getContentAsString();
-//        System.out.println(responseString);
+    @Test
+    public void findGoodsSkuById2() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/skus/273"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
 
     /**
-     * 获得一条商品spu的详细信息
+     * 获得一条商品spu的详细信息(不登录)
      */
     @Test
     public void findGoodsSpuById() throws Exception {
@@ -125,21 +129,59 @@ public class GoodsControllerTest {
     }
 
     /**
-     * 删除商品spu
+     * 删除商品spu(未登录)
      *
      * @throws Exception
      */
     @Test
-    public void deleteGoodsSpu() throws Exception {
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(273L));
-        String responseString = this.mvc.perform(delete("/goods/shops/0/spus/273")
+    public void deleteGoodsSpu1() throws Exception {
+        String responseString = this.mvc.perform(delete("/goods/shops/1/spus/273")
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        System.out.println(goodsSpuPoMapper.selectByPrimaryKey(291L));
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
+
+    /**
+     * 删除商品spu(登录)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteGoodsSpu2() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/goods/shops/1/spus/273")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+    }
+
+    /**
+     * 删除商品spu(spu不存在)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteGoodsSpu3() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/goods/shops/1/spus/0")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+    }
+
+    /**
+     * 删除商品spu(操作的资源不是自己的对象)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteGoodsSpu4() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/goods/shops/2/spus/273")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+    }
+
 
     //下架商品测试开始
 
@@ -239,10 +281,29 @@ public class GoodsControllerTest {
      * @throws Exception
      */
     @Test
-    public void deleteGoodsSku() throws Exception {
+    public void deleteGoodsSku1() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
         System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
-        String responseString = this.mvc.perform(delete("/goods/shops/0/skus/273")
+        String responseString = this.mvc.perform(delete("/goods/shops/1/skus/273")
+                .header("authorization", token))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 店家或管理员删除sku(sku不存在)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteGoodsSku2() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        System.out.println(goodsSkuPoMapper.selectByPrimaryKey(273L).getState());
+        String responseString = this.mvc.perform(delete("/goods/shops/1/skus/0")
                 .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -272,7 +333,7 @@ public class GoodsControllerTest {
      * @throws Exception
      */
     @Test
-    public void changeSkuInfoById() throws Exception {
+    public void changeSkuInfoById1() throws Exception {
         GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
         System.out.println(goodsSkuPo.getInventory());
         String requireJson = "{\n" +
@@ -297,14 +358,57 @@ public class GoodsControllerTest {
     }
 
     /**
+     * 修改商品sku信息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void changeSkuInfoById2() throws Exception {
+        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getInventory());
+        String requireJson = "{\n" +
+                "  \"name\":\"\",\n" +
+                "  \"originalPrice\":\"123\",\n" +
+                "  \"configuration\": \"123\",\n" +
+                "  \"weight\":\"123\",\n" +
+                "  \"inventory\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/goods/shops/0/skus/273")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(273L);
+        System.out.println(goodsSkuPo.getInventory());
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
      * 获得所有sku
      *
      * @throws Exception
      */
-
     @Test
-    public void getSkuList() throws Exception {
+    public void getSkuList1() throws Exception {
         String responseString = this.mvc.perform(get("/goods/skus?shopId=100"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 获得所有sku
+     *
+     * @throws Exception
+     */
+    @Test
+    public void getSkuList2() throws Exception {
+        String responseString = this.mvc.perform(get("/goods/skus?pageSize=14"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -317,26 +421,33 @@ public class GoodsControllerTest {
      * @throws Exception
      */
     @Test
-    public void invalidFloatPrice() throws Exception {
+    public void invalidFloatPrice1() throws Exception {
         String token = creatTestToken(9999L, 0L, 100);
-        //System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getValid());
-        String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/1")
+        String responseString = this.mvc.perform(delete("/goods/shops/0/floatprice/828")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
-        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
-        System.out.println(responseString);
-        System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getInvalidBy());
-        System.out.println(floatPricePoMapper.selectByPrimaryKey(1L).getValid());
+    }
 
-        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    /**
+     * 管理员失效商品价格浮动
+     *
+     * @throws Exception
+     */
+    @Test
+    public void invalidFloatPrice2() throws Exception {
+        String token = creatTestToken(9999L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/goods/shops/1/floatprice/827")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
     }
 
     /**
      * 修改品牌信息
      */
     @Test
-    public void modifyBrand() throws Exception {
+    public void modifyBrand1() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
         System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
@@ -355,14 +466,54 @@ public class GoodsControllerTest {
     }
 
     /**
+     * 修改品牌信息
+     */
+    @Test
+    public void modifyBrand2() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
+        String requireJson = "{\n" +
+                "  \"name\":\"123\",\n" +
+                "  \"detail\":\"123\"\n" +
+                "}";
+        String responseString = this.mvc.perform(put("/goods/shops/1/brands/71")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getName());
+        System.out.println(brandPoMapper.selectByPrimaryKey(71L).getDetail());
+    }
+
+    /**
      * 管理员删除品牌
      *
      * @throws Exception
      */
     @Test
-    public void deleteBrand() throws Exception {
+    public void deleteBrand1() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(delete("/goods/shops/0/brands/71")
+                .header("authorization", token))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        getAllBrand();
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员删除品牌
+     *
+     * @throws Exception
+     */
+    @Test
+    public void deleteBrand2() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/goods/shops/0/brands/70")
                 .header("authorization", token))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -378,10 +529,28 @@ public class GoodsControllerTest {
      * @throws Exception
      */
     @Test
-    public void addCategory() throws Exception {
+    public void addCategory1() throws Exception {
         String requireJson = "{\n  \"name\":\"家电\"}";
         String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(post("/goods/shops/0/categories/139/subcategories")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        // JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    /**
+     * 管理员新增商品类目
+     *
+     * @throws Exception
+     */
+    @Test
+    public void addCategory2() throws Exception {
+        String requireJson = "{\n  \"name\":\"家电\"}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(post("/goods/shops/0/categories/119/subcategories")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
@@ -777,6 +946,128 @@ public class GoodsControllerTest {
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Autowired
+    ShopPoMapper shopPoMapper;
+
+    @Test
+    public void insertShopTest() {
+        String token = creatTestToken(1L, -1L, 100);
+
+        ShopVo vo = new ShopVo();
+        vo.setName("test");
+        String shopJson = JacksonUtil.toJson(vo);
+        String expectedResponse = "";
+        String responseString = null;
+
+        try {
+            responseString = this.mvc.perform(post("/shop/shops").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization", token))
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn().getResponse().getContentAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //expectedResponse = "{\"errno\":0,\"data\":{\"id\":1,\"name\":\"test\",\"gmtModified\":null},\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        /*try {
+            JSONAssert.assertEquals(expectedResponse, responseString, false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(responseString);*/
+    }
+
+    @Test
+    public void getAllShopState() throws Exception {
+        String responseString = this.mvc.perform(get("/shop/shops/states"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void updateShop() throws Exception {
+        ShopVo vo = new ShopVo();
+        vo.setName("test");
+        String shopJson = JacksonUtil.toJson(vo);
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(
+                put("/shop/shops/1")
+                        .contentType("application/json;charset=UTF-8").content(shopJson).header("authorization", token)
+        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        System.out.println(shopPoMapper.selectByPrimaryKey((long) 1).getName());
+    }
+
+    @Test
+    public void shopOnShelves() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(
+                put("/shop/shops/1/onshelves")
+                        .contentType("application/json;charset=UTF-8")
+        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void shopOffShelves() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(
+                put("/shop/shops/2/offshelves")
+                        .contentType("application/json;charset=UTF-8").header("authorization", token)
+        ).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    @Test
+    public void deleteShop() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(
+                delete("/shop/shops/1")
+                        .contentType("application/json;charset=UTF-8").header("authorization", token)
+        ).andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+    }
+
+    /**
+     * 管理员审核店铺
+     */
+    @Test
+    public void auditShop() throws Exception {
+        String requireJson = "{\n" +
+                "  \"state\":\"2\"\n" +
+                "}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/shop/shops/0/newshops/2/audit")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        ShopPo shopPo = shopPoMapper.selectByPrimaryKey(2L);
+        System.out.println(shopPo.getState());
+        //JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    @Test
+    public void auditShopPass() throws Exception {
+        String requireJson = "{\n" +
+                "  \"state\":\"2\"\n" +
+                "}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/shop/shops/0/newshops/1/audit")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+        ShopPo shopPo = shopPoMapper.selectByPrimaryKey(1L);
+        System.out.println(shopPo.getState());
         //JSONAssert.assertEquals(expectedResponse, responseString, true);
     }
 }

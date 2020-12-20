@@ -441,14 +441,9 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/categories/{id}")
-    public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
+    public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsType: CategoryId = " + id);
-        }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsType id = ", id);
-            return returnObject;
         }
         if (shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
@@ -843,7 +838,6 @@ public class GoodsController {
      * @param shopId
      * @param spuInputVo
      * @return
-     *
      */
     @ApiOperation(value = "店家新建商品spu")
     @ApiImplicitParams({
@@ -936,32 +930,41 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo, @RequestHeader(value = "Authorization") String token) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo, @LoginUser Long userId) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
-        ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
-        if (returnObj.getCode() == ResponseCode.OK) {
-            httpServletResponse.setStatus(201);
-        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
-            httpServletResponse.setStatus(403);
+        if (userId == null) {
+            ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
+            if (returnObj.getCode() == ResponseCode.OK) {
+                httpServletResponse.setStatus(201);
+            } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+                httpServletResponse.setStatus(403);
+            }
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            return new ReturnObject<>(ResponseCode.AUTH_NEED_LOGIN);
         }
-        return Common.decorateReturnObject(returnObj);
+
     }
 
-//    /**
-//     *
-//     */
-//    @ApiOperation(value = "查看一条分享sku的详细信息")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
-//            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "sid", value = "分享id", required = true),
-//            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
-//    })
-//    @Audit
-//    @GetMapping("/share/{sid}/skus/{id}")
-//    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
-//        ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
-//        return Common.decorateReturnObject(returnObject);
-//    }
+    /**
+     * @param sid
+     * @param id
+     * @param userId
+     * @param departId
+     * @return
+     */
+    @ApiOperation(value = "查看一条分享sku的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "sid", value = "分享id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
+    })
+    @Audit
+    @GetMapping("/share/{sid}/skus/{id}")
+    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+        ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
+        return Common.decorateReturnObject(returnObject);
+    }
 }

@@ -45,7 +45,7 @@ public class OutDao {
             if (goodsSpuPo == null) {
                 return new MyReturn<>(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
-            GoodInfo goodInfo = new GoodInfo(goodsSpuPo.getFreightId(), po.getWeight());
+            GoodInfo goodInfo = new GoodInfo(goodsSpuPo.getFreightId(), po.getWeight(),goodsSpuPo.getShopId());
             return new MyReturn<>(goodInfo);
         }
 

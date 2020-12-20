@@ -1,10 +1,14 @@
 package cn.edu.xmu.gateway.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +23,10 @@ import java.util.Map;
 @Slf4j
 public class GatewayUtil {
 
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
+
+    public static RedisTemplate<String, Serializable> redis;
 
     @Value("${gateway.jwtExpire:3600}")
     private static Integer jwtExpireTime = 3600;
@@ -26,7 +34,11 @@ public class GatewayUtil {
     @Value("${gateway.refreshJwtTime:60}")
     private static Integer refreshJwtTime = 60;
 
-
+    @PostConstruct
+    public void getRedisTemplate(){
+        redis = this.redisTemplate;
+        log.info("初始化-------redisTemplate----");
+    }
 
     public static Integer getJwtExpireTime() {
         return jwtExpireTime;

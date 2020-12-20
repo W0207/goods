@@ -23,6 +23,26 @@ server:
 spring:
   application:
     name: other-gateway
+  redis:
+    # Redis服务器地址
+    host: localhost
+    # Redis服务器连接端口
+    port: 6379
+    # Redis数据库索引（默认为0）
+    database: 0
+    #连接池最大连接数（使用负值表示没有限制）
+    lettuce:
+      pool:
+        max-active: 100
+        # 连接池中的最大空闲连接
+        max-idle: 100
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+    # 连接超时时间（毫秒）
+    timeout: 5000
+
   cloud:
     gateway:
       globalcors:
@@ -37,135 +57,262 @@ spring:
               - HEAD
               - OPTIONS
       routes:
+        #####################
+        # 其他模块 #
+        #####################
 
+        #time
+        #包含需要token的路径
+        - id: time
+          uri: http://192.168.0.13:8080/
+          predicates:
+            - Path=/shops/{did}/advertisement/timesegments, /shops/{did}/flashsale/timesegments, /shops/{did}/advertisement/timesegments/{id}, /shops/{did}/flashsale/timesegments/{id}
+          filters:
+            - PrefixPath=/time
+            - Auth=authorization
+        #favorites
+        #包含需要token的路径
+        - id: favorites
+          uri: http://192.168.0.13:8088/
+          predicates:
+            - Path=/favorites, /favorites/goods/{skuId}, /favorites/{id}
+          filters:
+            - PrefixPath=/favorite
+            - Auth=authorization
+
+        #advertisement
+        #包含需要token的路径
+        - id: ad
+          uri: http://192.168.0.13:8081/
+          predicates:
+            - Path=/shops/{did}/advertisement/{id}, /shops/{did}/advertisement/{id}/**,/shops/{did}/timesegments/{id}/advertisement,/shops/{did}/timesegments/{id}/advertisement/**
+          filters:
+            - PrefixPath=/advertise
+            - Auth=authorization
+        #包含不需要token的路径
+        - id: ad-nonAuth
+          uri: http://192.168.0.13:8081/
+          predicates:
+            - Path=/advertisement/states, /advertisement/current
+          filters:
+            - PrefixPath=/advertise
+
+        #user
         #包含不需要token的路径
         - id: users-nonAuth
-          uri: http://localhost:8080/
+          uri: http://192.168.0.17:8080/
           predicates:
-            - Path=/users, /users/login, /users/password/**
+            - Path=/users/states, /users/login, /users/password/**
+          filters:
+            - PrefixPath=/user
+
+        - id: users-nonAuth2
+          uri: http://192.168.0.17:8080/
+          predicates:
+            - Path=/users
+            - Method=POST
           filters:
             - PrefixPath=/user
         #包含需要token的路径
         - id: users
-          uri: http://localhost:8080/
+          uri: http://192.168.0.17:8080/
           predicates:
-            - Path=/users/states, /users/all, users/logout, /users/{id}/**
+            - Path=/users/all, users/logout, /users/{id}, /users
           filters:
             - PrefixPath=/user
             - Auth=authorization
 
-        #goods模块
+        #shoppingCart
+        #包含需要token的路径
+        - id: shoppingCart
+          uri: http://192.168.0.17:8088/
+          predicates:
+            - Path=/carts,/carts/{id}
+          filters:
+            - PrefixPath=/cart
+            - Auth=authorization
+
+        #AfterSale
+        #包含不需要token的路径
+        - id: aftersale-nonAuth
+          uri: http://192.168.0.20:8081/
+          predicates:
+            - Path=/aftersales/states
+          filters:
+            - PrefixPath=/aftersale
+        #包含需要token的路径
+        - id: aftersale
+          uri: http://192.168.0.20:8081/
+          predicates:
+            - Path=/aftersales/{id}/**,/orderitems/{id}/aftersales,/aftersales
+          filters:
+            - PrefixPath=/aftersale
+            - Auth=authorization
+
+        #Address
+        #包含需要token的路径
+        - id: address
+          uri: http://192.168.0.20:8083/
+          predicates:
+            - Path=/addresses/**,/addresses,/region/{id}/ancestor,/shops/{did}/regions/**
+          filters:
+            - PrefixPath=/address
+            - Auth=authorization
+
+        #share
+        #包含不需要token的路径
+        - id: share-nonAuth
+          uri: http://192.168.0.16:8080/
+          predicates:
+            - Path=/shareactivities
+          filters:
+            - PrefixPath=/share
+        #包含需要token的路径
+        - id: share
+          uri: http://192.168.0.16:8080/
+          predicates:
+            - Path=/skus/{id}/shares, /shares, /shops/{did}/skus/{id}/shares, /beshared, /shops/{did}/skus/{id}/beshared, /shops/{shopId}/skus/{id}/shareactivities, /shops/{shopId}/shareactivities/{id}, /shops/{shopId}/shareactivities/{id}/online
+          filters:
+            - PrefixPath=/share
+            - Auth=authorization
+
+        #footprint
+        #包含需要token的路径
+        - id: footprint
+          uri: http://192.168.0.16:8081/
+          predicates:
+            - Path=/shops/{did}/footprints
+          filters:
+            - PrefixPath=/footprint
+            - Auth=authorization
+
+
+            #####################
+            # 订单模块 #
+        #####################
+
+        - id: order
+          uri: http://localhost:8086/
+          predicates:
+            - Path=/orders,/orders/states,/orders/{id},/orders/{id}/confirm,/shops/{shopId}/orders,/shops/{shopId}/orders/{id},/shops/{shopId}/orders/{id}/deliver
+          filters:
+            - PrefixPath=/order
+            - Auth=authorization
+        - id: freight
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/region/{rid}/price,/shops/{id}/freightmodels,/shops/{shopId}/freightmodels/{id}/**,/shops/{shopId}/weightItems/**,/shops/{shopId}/pieceItems/**
+          filters:
+            - PrefixPath=/freight
+            - Auth=authorization
+        - id: payment
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/payments/**,/orders/{id}/payments,/shops/{shopId}/orders/{id}/payments,/aftersales/{id}/**,/shops/{shopId}/aftersales/{id}/**,/shops/{shopId}/payments/{id}/**,/shops/{shopId}/orders/{id}/refunds,/orders/{id}/refunds,/aftersales/{id}/refunds
+          filters:
+            - PrefixPath=/payment
+            - Auth=authorization
+
+            #####################
+            # 商品模块 #
+            #####################
         #包含不需要token的
         - id: goods-nonAuth
-          uri: http://localhost:8084/
+          uri: http://192.168.0.19:8084/
           predicates:
             - Path=/skus/states, /skus, /skus/{id}, /categories/**, /spus/{id}, /brands
           filters:
             - PrefixPath=/goods
         #包含需要token的路径
         - id: goods
-          uri: http://localhost:8084/
+          uri: http://192.168.0.19:8084/
           predicates:
-            - Path=/shops/{shopId}/skus/{id}/uploadImg, /shops/{shopId}/spus, /shops/{shopId}/skus/{id}, /shops/{shopId}/skus/{id}/onshelves, /shops/{shopId}/skus/{id}/offshelves, /shops/{shopId}/skus/{id}/floatPrices, /shops/{shopId}/spus/{spuId}/categories/{id}/**, /shops/{shopId}/spus/{spuId}/brands/{id}/**, /shops/{shopId}/spus/{id}/skus, /shops/{shopId}/categories/**, /share/**, /shops/{shopId}/floatPrices/**, /shops/{shopId}/brands/**, /categories/{id}/subcategories
+            - Path=/categories/{id}/subcategories, /share/**
           filters:
             - PrefixPath=/goods
             - Auth=authorization
 
         #包含不需要token的路径
         - id: flashsale-nonAuth
-          uri: http://localhost:8080/
+          uri: http://192.168.0.12:8090/
           predicates:
-            - Path=/timesegments/{id}/flashsale, /flashsale/current
+            - Path=/timesegments/{id}/flashsales, /flashsales/current
           filters:
             - PrefixPath=/flashsale
-        #包含需要token的路径
-        - id: flashsale
-          uri: http://localhost:8080/
-          predicates:
-            - Path=/shop/{did}/timesegments/{id}/flashsales, /shops/{did}/flashsales/**
-          filters:
-            - PrefixPath=/flashsale
-            - Auth=authorization
 
         #包含不需要token的路径
         - id: comment-nonAuth
-          uri: http://localhost:8088/
+          uri: http://192.168.0.11:8088/
           predicates:
             - Path=/comments/states, /skus/{id}/comments
           filters:
             - PrefixPath=/comment
         #包含需要token的路径
         - id: comment
-          uri: http://localhost:8088/
+          uri: http://192.168.0.11:8088/
           predicates:
-            - Path=/comments, /shop/{did}/comments/**, /orderitems/{id}/comments, /shops/{id}/comments/all
+            - Path=/comments, /orderitems/{id}/comments
           filters:
             - PrefixPath=/comment
             - Auth=authorization
 
         #包含不需要token的路径
         - id: coupon-nonAuth
-          uri: http://localhost:8091/
+          uri: http://192.168.0.12:8091/
           predicates:
             - Path=/couponactivities, /couponactivities/{id}/skus, /coupons/states
           filters:
             - PrefixPath=/coupon
         #包含需要token的路径
         - id: coupon
-          uri: http://localhost:8091/
+          uri: http://192.168.0.12:8091/
           predicates:
-            - Path=/coupons, /shopId/{shopId}/couponactivities/**, /couponactivities/{id}/usercoupons, /shops/{shopId}/couponskus/{id}
+            - Path=/coupons, /couponactivities/{id}/usercoupons
           filters:
             - PrefixPath=/coupon
             - Auth=authorization
 
         #包含不需要token的路径
         - id: presale-nonAuth
-          uri: http://localhost:8087/
+          uri: http://192.168.0.11:8087/
           predicates:
             - Path=/presales/**,
           filters:
             - PrefixPath=/presale
-        #包含需要token的路径
-        - id: presale
-          uri: http://localhost:8087/
-          predicates:
-            - Path=/shops/{shopId}/presales/**, /shops/{shopId}/skus/{id}/presales
-          filters:
-            - PrefixPath=/presale
-            - Auth=authorization
 
         #包含不需要token的路径
         - id: groupon-nonAuth
-          uri: http://localhost:8086/
+          uri: http://192.168.0.19:8086/
           predicates:
             - Path=/groupons/states
           filters:
             - PrefixPath=/groupon
         #包含需要token的路径
         - id: groupon
-          uri: http://localhost:8086/
+          uri: http://192.168.0.19:8086/
           predicates:
-            - Path=/groupons, /shops/{id}/groupon, /shops/{shopId}/groupons/{id}/**, /shops/{shopId}/spus/{id}/groupon
+            - Path=/groupons
           filters:
             - PrefixPath=/groupon
             - Auth=authorization
 
         #包含不需要token的路径
         - id: shop-nonAuth
-          uri: http://localhost:8084/
+          uri: http://192.168.0.19:8084/
           predicates:
             - Path=/shops/states
           filters:
             - PrefixPath=/shop
         #包含需要token的路径
         - id: shop
-          uri: http://localhost:8084/
+          uri: http://192.168.0.19:8084/
           predicates:
             - Path=/shops, /shops/{id}, /shops/{id}/onshelves, /shops/{id}/offshelves, /shops/{shopId}/newshops/{id}/audit
           filters:
             - PrefixPath=/shop
             - Auth=authorization
+
+
 management:
   endpoint:
     gateway:
@@ -189,3 +336,4 @@ management:
 gateway:
   jwtExpire: 3600
   refreshJwtTime: 60
+

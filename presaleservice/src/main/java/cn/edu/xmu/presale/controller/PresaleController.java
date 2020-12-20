@@ -43,7 +43,6 @@ public class PresaleController {
     @DubboReference(version = "0.0.1", check = false)
     private InShopService inShopService;
 
-
     private static final Logger logger = LoggerFactory.getLogger(PresaleController.class);
 
     @Autowired
@@ -86,7 +85,7 @@ public class PresaleController {
         ReturnObject returnObject = null;
         returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         response.setStatus(getStatue(returnObject));
-        if(returnObject.getCode()==ResponseCode.OK){
+        if (returnObject.getCode() == ResponseCode.OK) {
             response.setStatus(201);
         }
         return Common.decorateReturnObject(returnObject);
@@ -179,7 +178,7 @@ public class PresaleController {
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
     })
-    @Audit //需要认证
+    @Audit
     @GetMapping("/shops/{shopId}/presales")
     public Object queryPresaleofSPU(@PathVariable Long shopId, @RequestParam(required = false) Long skuId, @RequestParam(required = false) Integer state, HttpServletResponse response) {
         logger.debug("shopId:" + shopId + "   skuId:" + skuId);
@@ -194,7 +193,7 @@ public class PresaleController {
             @ApiImplicitParam(name = "shopId", required = true, dataType = "Integer", paramType = "path", value = "shopId"),
             @ApiImplicitParam(name = "id", required = true, dataType = "Integer", paramType = "path", value = "skuId")
     })
-    @Audit //需要认证
+    @Audit
     @PutMapping("/shops/{shopId}/presales/{id}/onshelves")
     public Object presaleOnShelves(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response) {
         ReturnObject returnObject = presaleService.presaleOnShelves(shopId, id);
