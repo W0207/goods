@@ -35,7 +35,7 @@ public class CommentDao implements InitializingBean {
 
     @Autowired
     private CommentPoMapper commentPoMapper;
-    
+
     @DubboReference(version = "0.0.1", check = false)
     private OtherModulService otherModulService;
 
@@ -48,6 +48,7 @@ public class CommentDao implements InitializingBean {
         CommentPoExample example = new CommentPoExample();
         CommentPoExample.Criteria criteria = example.createCriteria();
         criteria.andGoodsSkuIdEqualTo(id);
+        criteria.andStateEqualTo((byte) 1);
         PageHelper.startPage(page, pageSize);
         List<CommentPo> commentPos = null;
         try {
@@ -56,9 +57,7 @@ public class CommentDao implements InitializingBean {
             for (CommentPo po : commentPos) {
                 Comment com = new Comment(po);
                 //com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
-                if (po.getState() == 1) {
-                    ret.add(com);
-                }
+                ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
             rolePage.setPages((PageInfo.of(commentPos).getPages()));
@@ -98,6 +97,7 @@ public class CommentDao implements InitializingBean {
         CommentPoExample example = new CommentPoExample();
         CommentPoExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(userid);
+        criteria.andStateEqualTo((byte) 1);
         PageHelper.startPage(page, pageSize);
         List<CommentPo> commentPos = null;
         try {
@@ -106,17 +106,13 @@ public class CommentDao implements InitializingBean {
             for (CommentPo po : commentPos) {
                 Comment com = new Comment(po);
                 //com.setUserInfo(otherModulService.getUserInfo(po.getCustomerId()).getData());
-                if (po.getState() == 1) {
-                    ret.add(com);
-                }
+                ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CommentPo> commentPoPage = PageInfo.of(commentPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(commentPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(commentPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showCommentByUserid: DataAccessException:" + e.getMessage());
@@ -139,12 +135,10 @@ public class CommentDao implements InitializingBean {
                 ret.add(com);
             }
             PageInfo<VoObject> rolePage = PageInfo.of(ret);
-            PageInfo<CommentPo> commentPoPage = PageInfo.of(commentPos);
-            PageInfo<VoObject> commentPage = new PageInfo<>(ret);
-            commentPage.setPages(commentPoPage.getPages());
-            commentPage.setPageNum(commentPoPage.getPageNum());
-            commentPage.setPageSize(commentPoPage.getPageSize());
-            commentPage.setTotal(commentPoPage.getTotal());
+            rolePage.setPages((PageInfo.of(commentPos).getPages()));
+            rolePage.setPageNum(page);
+            rolePage.setPageSize(pageSize);
+            rolePage.setTotal((PageInfo.of(commentPos).getTotal()));
             return new ReturnObject<>(rolePage);
         } catch (DataAccessException e) {
             logger.error("showUnAuditCommentsByCommentid: DataAccessException:" + e.getMessage());

@@ -17,11 +17,11 @@ public class Comment implements VoObject {
 
     private Long id;
 
-    private Long customer_id;
+    private Long customerId;
 
-    private Long goods_sku_id;
+    private Long goodsSkuId;
 
-    private Long orderitem_id;
+    private Long orderitemId;
 
     private Byte type;
 
@@ -48,11 +48,11 @@ public class Comment implements VoObject {
     }
 
     public void setOrderitem_id(Long orderitem_id) {
-        this.orderitem_id = orderitem_id;
+        this.orderitemId = orderitem_id;
     }
 
-    public void setGoods_sku_id(Long goods_sku_id) {
-        this.goods_sku_id = goods_sku_id;
+    public void setGoodsSkuId(Long goods_sku_id) {
+        this.goodsSkuId = goods_sku_id;
     }
 
     public void setGmtModified(LocalDateTime gmtModified) {
@@ -63,9 +63,6 @@ public class Comment implements VoObject {
         this.gmtCreate = gmtCreate;
     }
 
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
-    }
 
     public void setContent(String content) {
         this.content = content;
@@ -90,11 +87,11 @@ public class Comment implements VoObject {
     public Comment(CommentPo po) {
         this.id = po.getId();
         this.content = po.getContent();
-        this.customer_id = po.getCustomerId();
+        this.customerId = po.getCustomerId();
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
-        this.goods_sku_id = po.getGoodsSkuId();
-        this.orderitem_id = po.getOrderitemId();
+        this.goodsSkuId = po.getGoodsSkuId();
+        this.orderitemId = po.getOrderitemId();
         this.state = po.getState();
         this.type = po.getType();
     }
@@ -179,15 +176,15 @@ public class Comment implements VoObject {
     }
 
     public Long getCustomer_id() {
-        return customer_id;
+        return customerId;
     }
 
     public Long getGoods_sku_id() {
-        return goods_sku_id;
+        return goodsSkuId;
     }
 
     public Long getOrderitem_id() {
-        return orderitem_id;
+        return orderitemId;
     }
 
     public String getContent() {
