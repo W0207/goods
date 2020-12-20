@@ -1,10 +1,13 @@
 package cn.edu.xmu.flashsale.controller;
 
+import cn.edu.xmu.ooad.model.VoObject;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.flashsale.model.vo.*;
+import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.service.FlashSaleService;
 import org.slf4j.Logger;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import reactor.core.publisher.Flux;
 
@@ -69,37 +74,102 @@ public class FlashSaleController {
      * @param id
      * @author Abin
      */
+//    @ApiOperation(value = "查询某一时段秒杀活动详情")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "id", required = true, dataType = "Long", paramType = "path", value = "时间段id"),
+//    })
+//    @ApiResponses({
+//            @ApiResponse(code = 0, message = "成功"),
+//            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+//
+//    })
+//    @GetMapping("/timesegments/{id}/flashsales")
+//    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id, HttpServletResponse response) {
+//        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+//    }
+
+    /**
+     * 查询某一时段秒杀活动详情
+     * @param id
+     * @param response
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @ApiOperation(value = "查询某一时段秒杀活动详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", required = true, dataType = "Long", paramType = "path", value = "时间段id"),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false),
+
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
             @ApiResponse(code = 504, message = "操作的资源id不存在"),
 
     })
+    @Audit
     @GetMapping("/timesegments/{id}/flashsales")
-    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id, HttpServletResponse response) {
-        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+    public Object queryTopicsByTime(@PathVariable Long id, HttpServletResponse response,
+                                    @RequestParam(required = false) Integer page,
+                                    @RequestParam(required = false) Integer pageSize) {
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        if(page<0||pageSize<0){
+            ReturnObject returnObject=new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            response.setStatus(getStatue(returnObject));
+            return Common.decorateReturnObject( new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("店铺不存在")));
+
+        }
+        ReturnObject<PageInfo<VoObject>> returnObject = flashSaleService.findFlashSale(id, page, pageSize);
+        return Common.getPageRetObject(returnObject);
     }
 
     /**
-     * 获取当前时段秒杀列表
-     *
-     * @param id
+     * 查询当前时段秒杀活动详情
+     * @param page
+     * @param pageSize
      * @return
-     * @author Abin
      */
-    @ApiOperation(value = "获取当前时段秒杀列表")
+    @ApiOperation(value = "查询当前时段秒杀活动详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "page", value = "页码", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "Integer", name = "pageSize", value = "每页数目", required = false),
+
+    })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
+            @ApiResponse(code = 504, message = "操作的资源id不存在"),
+
     })
     @GetMapping("/flashsales/current")
-    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        //id调用其他模块获取
-        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+    public List queryCurrentTopics(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize) {
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 10 : pageSize;
+        //Long id=Long.valueOf(4);
+        return flashSaleService.findCurrentFlashSale(page, pageSize);
+
     }
+
+//    /**
+//     * 获取当前时段秒杀列表
+//     *
+//     * @param id
+//     * @return
+//     * @author Abin
+//     */
+//    @ApiOperation(value = "获取当前时段秒杀列表")
+//    @ApiResponses({
+//            @ApiResponse(code = 0, message = "成功"),
+//    })
+//    @GetMapping("/flashsales/current")
+//    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        //id调用其他模块获取
+//        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
+//    }
 
     /**
      * 管理员修改秒杀活动
@@ -137,7 +207,6 @@ public class FlashSaleController {
             return returnObject;
         }
         ReturnObject returnObj = flashSaleService.updateFlashSale(id, flashSaleInputVo);
-        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -195,7 +264,6 @@ public class FlashSaleController {
         }
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject returnObj = flashSaleService.onshelvesFlashSale(id);
-        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -217,11 +285,11 @@ public class FlashSaleController {
     @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
     public Object offShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
+        System.out.println("111");
         if (logger.isDebugEnabled()) {
             logger.debug("offShelvesFlashSale: id = " + id);
         }
         ReturnObject returnObj = flashSaleService.offshelvesFlashSale(id);
-        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
 
     }
@@ -307,16 +375,15 @@ public class FlashSaleController {
     @Audit
     @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
     public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        //httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("createFlashSale : id = " + id);
-        }
-        if(flashSaleInputVo.getFlashDate().isBefore(LocalDateTime.now())||flashSaleInputVo.getFlashDate().isEqual(LocalDateTime.now())){
-            return Common.decorateReturnObject(new ReturnObject(ResponseCode.FIELD_NOTVALID));
         }
         if (did == 0) {
             ReturnObject returnObject = flashSaleService.createFlash(id, flashSaleInputVo);
             response.setStatus(getStatue(returnObject));
+            response.setContentType("application/json;charset=UTF-8");
             return Common.decorateReturnObject(returnObject);
         } else {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);

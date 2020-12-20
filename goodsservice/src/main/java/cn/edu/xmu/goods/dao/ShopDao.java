@@ -105,6 +105,9 @@ public class ShopDao {
         ReturnObject<Shop> returnObject = null;
         try {
             ShopPo po = shopPoMapper.selectByPrimaryKey(shopPo.getId());
+            if(po==null){
+                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+            }
             if(po.getState().equals((byte)4)||po.getState().equals((byte)3)){
                 return new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW);
             }
@@ -117,13 +120,15 @@ public class ShopDao {
                 //修改成功
                 returnObject = new ReturnObject<>();
             }
+            return returnObject;
         } catch (DataAccessException e) {
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("数据库错误：%s", e.getMessage()));
+            return returnObject;
         } catch (Exception e) {
             // 其他Exception错误
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
+            return returnObject;
         }
-        return returnObject;
 
     }
 
@@ -167,14 +172,14 @@ public class ShopDao {
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
                 Shop shopSelect = new Shop(shopPoSelect);
-                if (shopPo.getState().equals((byte)3) || shopPo.getState().equals((byte)4) || shopPo.getState().equals((byte)0)) {
+                if (shopPoSelect.getState().equals((byte)3) || shopPoSelect.getState().equals((byte)4) || shopPoSelect.getState().equals((byte)0)) {
                     logger.info(shopSelect.getState().getDescription() + "当前状态无法进行变迁");
-                    returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不允许转换" + shopPo.getId()));
+                    returnObject = new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW, String.format("店铺不允许转换" + shopPo.getId()));
                 } else {
                     //可以修改状态
                     //状态一样不予操作，直接返回
                     if(shopPo.getState().equals(shopPoSelect.getState())){
-                        return new ReturnObject<>();
+                        return new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW);
                     }
                     if(shopPo.getState().equals((byte)1)){
                         //上架状态转为下架需要将活动进行删除
@@ -255,12 +260,15 @@ public class ShopDao {
 
     public ReturnObject<Object> auditShopByID(Long id, ShopAuditVo shopAuditVo) {
         ShopPo shopPo = shopPoMapper.selectByPrimaryKey(id);
-        if (shopPo == null) {
+        if (null == shopPo) {
             logger.info("新店id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
+        logger.debug("state"+shopPo.getState());
+        System.out.println("state"+shopPo.getState());
         //shopPo的状态不是为0，为0才审核
-        if(!shopPo.getState().equals((byte)0)){
+        if(shopPo.getState().equals((byte)0)){
+            logger.debug("state"+shopPo.getState());
             shopPo.setGmtModified(LocalDateTime.now());
             if(shopAuditVo.getConclusion()){
                 shopPo.setState((byte) 1);
@@ -270,7 +278,7 @@ public class ShopDao {
             shopPoMapper.updateByPrimaryKeySelective(shopPo);
         }
         else {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+            return new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW);
         }
         logger.info("新店id = " + id + " 的信息已审核");
         return new ReturnObject<>();

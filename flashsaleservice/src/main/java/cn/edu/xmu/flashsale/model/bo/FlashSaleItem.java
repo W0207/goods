@@ -29,7 +29,7 @@ public class FlashSaleItem implements VoObject, Serializable {
 
     private LocalDateTime gmtModified;
 
-    private Product product;
+    private Product goodsSku;
 
     public FlashSaleItem() {
         super();
@@ -47,7 +47,7 @@ public class FlashSaleItem implements VoObject, Serializable {
     public FlashSaleItem(FlashSaleItemPo itemPo, SkuToFlashSaleVo skuPo) {
         this.id = itemPo.getId();
         this.goodsSkuId = itemPo.getGoodsSkuId();
-        this.product = new Product(skuPo);
+        this.goodsSku = new Product(skuPo);
         this.price = itemPo.getPrice();
         this.saleId = itemPo.getSaleId();
         this.quantity = itemPo.getQuantity();
@@ -81,7 +81,7 @@ public class FlashSaleItem implements VoObject, Serializable {
         FlashSaleItemRetVo retVo = new FlashSaleItemRetVo();
         retVo.setId(this.id);
 
-        ProductRetVo productRetVo = (ProductRetVo) product.createVo();
+        ProductRetVo productRetVo = (ProductRetVo) goodsSku.createVo();
         productRetVo.setPrice(this.price);
         productRetVo.setInventory(this.quantity);
         retVo.setGoodsSku(productRetVo);

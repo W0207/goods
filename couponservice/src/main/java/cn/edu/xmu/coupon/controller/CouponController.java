@@ -291,6 +291,9 @@ public class CouponController {
         }
         ReturnObject returnObject = couponService.addCouponActivity(shopId, userId, vo);
         response.setStatus(getStatue(returnObject));
+        if (returnObject.getCode() == ResponseCode.OK) {
+            response.setStatus(201);
+        }
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -462,7 +465,6 @@ public class CouponController {
     /**
      * 买家领取优惠券
      *
-     * @param id
      * @param userId
      * @return
      * @author 宇
@@ -477,6 +479,9 @@ public class CouponController {
     public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId, HttpServletResponse response) {
         ReturnObject returnObject = couponService.userGetCoupon(id, userId);
         response.setStatus(getStatue(returnObject));
+        if(returnObject.getCode()==ResponseCode.OK){
+            response.setStatus(HttpStatus.CREATED.value());
+        }
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -507,6 +512,7 @@ public class CouponController {
         Object object = null;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
         response.setStatus(getStatue(returnObject));
+        System.out.println(returnObject.getData());
         object = Common.getPageRetObject(returnObject);
         return object;
     }

@@ -51,7 +51,7 @@ public class PresaleController {
 
     private int getStatue(ReturnObject returnObject) {
         if (returnObject.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
-            return HttpStatus.UNAUTHORIZED.value();
+            return HttpStatus.FORBIDDEN.value();
         }
         if (returnObject.getCode() == ResponseCode.FIELD_NOTVALID || returnObject.getCode() == ResponseCode.Log_Bigger || returnObject.getCode() == ResponseCode.Log_BEGIN_NULL || returnObject.getCode() == ResponseCode.Log_END_NULL) {
             return HttpStatus.BAD_REQUEST.value();
@@ -86,6 +86,9 @@ public class PresaleController {
         ReturnObject returnObject = null;
         returnObject = presaleService.AddPresaleActivity(shopId, id, presaleActivityVo);
         response.setStatus(getStatue(returnObject));
+        if(returnObject.getCode()==ResponseCode.OK){
+            response.setStatus(201);
+        }
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -109,11 +112,13 @@ public class PresaleController {
             @RequestParam(required = false) Long shopId,
             @RequestParam(required = false) Integer timeLine,
             @RequestParam(required = false) Long skuId,
-            @RequestParam(required = false, defaultValue = "1") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize,
             HttpServletResponse response
 
     ) {
+        page = (page == null) ? 1 : page;
+        pageSize = (pageSize == null) ? 10 : pageSize;
         logger.debug("selectAllRoles: shopId = " + shopId + "  timeLine =" + timeLine + "  spuId =" + skuId + "  page = " + page + "  pageSize" + pageSize);
         ReturnObject returnObject = presaleService.selectAllPresale(shopId, timeLine, skuId, page, pageSize);
         response.setStatus(getStatue(returnObject));
