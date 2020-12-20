@@ -239,10 +239,12 @@ public class CouponDao {
                         criteria.andActivityIdEqualTo(id);
                         criteria.andCustomerIdEqualTo(userId);
                         List<CouponPo> pos = couponPoMapper.selectByExample(example);
+                        String[] couponSn;
+                        ArrayList<String> couponSnArray= new ArrayList<>();
                         if (pos.isEmpty()) {
                             //用户没有这个优惠券（每人数量限制)(每人领取quantity张优惠券)
                             if (po.getQuantitiyType().equals((byte) 0)) {
-                                for (int i = 1; i <= po.getQuantity(); i++) {
+                                for (int i = 0; i <= po.getQuantity(); i++) {
                                     CouponPo couponPo = new CouponPo();
                                     couponPo.setState((byte) 1);
                                     couponPo.setGmtCreate(LocalDateTime.now());
@@ -251,11 +253,17 @@ public class CouponDao {
                                     couponPo.setEndTime(po.getEndTime());
                                     couponPo.setCustomerId(userId);
                                     couponPo.setName(po.getName());
+                                    String a =String.format("coupon%d_%d",userId,i);
+                                    couponSnArray.add(a);
+                                    couponPo.setCouponSn(a);
                                     //缺少了sn的放置
 
                                     couponPoMapper.insert(couponPo);
                                 }
                                 //总数控制，总共有quantity张优惠券
+                                couponSn =  couponSnArray.toArray(new String[couponSnArray.size()]);
+                                System.out.println(couponSn);
+                                return new ReturnObject(couponSn);
                             } else if (po.getQuantitiyType().equals((byte) 1)) {
                                 if (po.getQuantity() > 0) {
                                     CouponPo couponPo = new CouponPo();
@@ -266,23 +274,32 @@ public class CouponDao {
                                     couponPo.setEndTime(po.getEndTime());
                                     couponPo.setCustomerId(userId);
                                     couponPo.setName(po.getName());
+                                    String a =String.format("coupon%d",userId);
+                                    couponSnArray.add(a);
+                                    couponPo.setCouponSn(a);
                                     //缺少了sn的放置
                                     couponPoMapper.insert(couponPo);
                                     //取一张优惠券数量减1，当为0时直接设为-1
                                     CouponActivityPo couponActivityPo = new CouponActivityPo();
                                     if (po.getQuantity() - 1 > 0) {
+                                        couponActivityPo.setId(po.getId());
                                         couponActivityPo.setQuantity(po.getQuantity() - 1);
                                     } else {
+                                        couponActivityPo.setId(po.getId());
                                         couponActivityPo.setQuantity(-1);
                                     }
                                     couponActivityPoMapper.updateByPrimaryKeySelective(couponActivityPo);
+                                    couponSn =  couponSnArray.toArray(new String[couponSnArray.size()]);
+                                    System.out.println(couponSn.length);
+                                    return new ReturnObject(couponSn);
                                 }
+
                             } else {
                                 return new ReturnObject(ResponseCode.COUPON_FINISH);
                             }
                         } else {
                             //用户有该优惠券
-                            returnObject = new ReturnObject();
+                            returnObject = new ReturnObject(ResponseCode.COUPON_FINISH);
                         }
                     }
                 }

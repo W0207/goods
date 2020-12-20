@@ -479,6 +479,9 @@ public class CouponController {
     public Object userGetCoupon(@PathVariable Long id, @LoginUser Long userId, HttpServletResponse response) {
         ReturnObject returnObject = couponService.userGetCoupon(id, userId);
         response.setStatus(getStatue(returnObject));
+        if(returnObject.getCode()==ResponseCode.OK){
+            response.setStatus(HttpStatus.CREATED.value());
+        }
         return Common.decorateReturnObject(returnObject);
     }
 
@@ -509,6 +512,7 @@ public class CouponController {
         Object object = null;
         ReturnObject<PageInfo<VoObject>> returnObject = couponService.showCouponsById(page, pageSize, state, userId);
         response.setStatus(getStatue(returnObject));
+        System.out.println(returnObject.getData());
         object = Common.getPageRetObject(returnObject);
         return object;
     }
