@@ -69,6 +69,10 @@ public class PresaleDao {
         if (presaleActivityVo.getEndTime() == null) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
+        if (presaleActivityVo.getBeginTime().isBefore(LocalDateTime.now())) {
+            System.out.println(3);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        }
         if (presaleActivityVo.getPayTime().isBefore(LocalDateTime.now())) {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
@@ -183,21 +187,23 @@ public class PresaleDao {
     public ReturnObject modifyPresale(Long shopId, Long id, PresaleActivityVo vo) {
         ReturnObject returnObject = null;
         if (vo.getName() == null || vo.getName().length() == 0) {
+            System.out.println(1);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getRestPayPrice() < 0) {
-            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
-        }
-        if (vo.getBeginTime().isBefore(LocalDateTime.now())) {
+            System.out.println(2);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getPayTime().isBefore(LocalDateTime.now())) {
+            System.out.println(4);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getBeginTime() == null) {
+            System.out.println(5);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getEndTime() == null) {
+            System.out.println(6);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         //判断开始时间是不是在结束时间之前
@@ -215,6 +221,10 @@ public class PresaleDao {
             //预售活动的id不存在
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
+            if(!presaleActivityPo.getBeginTime().equals(vo.getBeginTime())){
+                return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            }
+
             if (!shopId.equals(presaleActivityPo.getShopId())) {
                 //预售活动的shopId与路径上的不同
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
@@ -283,7 +293,7 @@ public class PresaleDao {
             criteria.andGoodsSkuIdEqualTo(id);
         }
         if (state != null) {
-            if (state > 3 || state < 0) {
+            if (state > 4    || state < 0) {
                 return new ReturnObject(ResponseCode.FIELD_NOTVALID);
             }
             criteria.andStateEqualTo((byte) (int) state);

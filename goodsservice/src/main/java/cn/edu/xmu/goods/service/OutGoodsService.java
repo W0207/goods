@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @DubboService(version = "0.0.1")
 public class OutGoodsService implements IGoodsService {
+
     @Autowired
     OutDao outDao;
 

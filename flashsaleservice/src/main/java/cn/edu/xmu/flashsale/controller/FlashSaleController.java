@@ -104,8 +104,7 @@ public class FlashSaleController {
     })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 504, message = "操作的资源id不存在"),
-
+            @ApiResponse(code = 504, message = "操作的资源id不存在")
     })
     @Audit
     @GetMapping("/timesegments/{id}/flashsales")
