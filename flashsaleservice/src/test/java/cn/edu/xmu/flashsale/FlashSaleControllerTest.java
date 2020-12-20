@@ -44,20 +44,34 @@ public class FlashSaleControllerTest {
         logger.debug("token: " + token);
         return token;
     }
-
+    @Test
+    public void create(){
+        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    }
     @Test
     void updateflashsale() throws Exception {
         String requireJson = "{\n" +
-                "  \"flashData\": \"2020-11-28 17:42:20\"\n" +
+                "  \"flashData\": \"2021-11-28T17:42:20\"\n" +
                 "}";
-        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/0")
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/1")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
         System.out.println(responseString);
     }
-
+    @Test
+    void test()throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/flashsale/timesegments/9/flashsales")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
+        System.out.println(responseString);
+    }
     /**
      * 删除秒杀活动
      *
@@ -65,7 +79,9 @@ public class FlashSaleControllerTest {
      */
     @Test
     public void deleteFlashSale() throws Exception {
-        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/71")
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/4")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -76,7 +92,9 @@ public class FlashSaleControllerTest {
 
     @Test
     public void queryTopicsByTime() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(get("/flashsale/timesegments/1/flashsales")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
@@ -89,12 +107,14 @@ public class FlashSaleControllerTest {
      */
     @Test
     public void addSKUofTopic() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
         String requireJson = "{\n" +
                 "  \"skuId\": 273,\n" +
                 "  \"price\":\"1000\",\n" +
                 "  \"quantity\": \"1000\"\n" +
                 "}";
-        String responseString = this.mvc.perform(post("/flashsale/shops/0/flashsales/0/flashitems")
+        String responseString = this.mvc.perform(post("/flashsale/shops/0/flashsales/4/flashitems")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
@@ -109,7 +129,9 @@ public class FlashSaleControllerTest {
      */
     @Test
     public void deleteFlashSaleSku() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/0/flashitems/0")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -120,7 +142,9 @@ public class FlashSaleControllerTest {
 
     @Test
     public void offshelvesFlashSale() throws Exception {
-        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/1/onshelves")
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(put("/flashsale/shops/0/flashsales/2/offnshelves")
+                .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
@@ -131,7 +155,7 @@ public class FlashSaleControllerTest {
 
 
     /**
-     * 平台管理员在某个时间段下新建秒杀活动
+     * 平台管理员在某个时间段下新建秒杀活动f
      */
     @Test
     public void createFlash() throws Exception {
@@ -140,11 +164,11 @@ public class FlashSaleControllerTest {
 //                "}";
 
         FlashSaleInputVo flashSaleInputVo = new FlashSaleInputVo();
-        flashSaleInputVo.setFlashDate(LocalDateTime.now());
+        flashSaleInputVo.setFlashDate(LocalDateTime.now().plusDays(3));
         String requireJson = JacksonUtil.toJson(flashSaleInputVo);
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(post("/flashsale/shops/0/timesegments/3/flashsales")
+        String responseString = this.mvc.perform(post("/flashsale/shops/0/timesegments/100/flashsales")
                 .contentType("application/json;charset=UTF-8")
                 .header("authorization", token)
                 .content(requireJson))

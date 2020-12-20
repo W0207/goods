@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @ApiOperation(value = "可修改的秒杀活动信息")
 public class FlashSaleInputVo {
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime flashDate;
 
 }

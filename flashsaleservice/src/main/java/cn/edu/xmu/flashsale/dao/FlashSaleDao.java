@@ -94,7 +94,7 @@ public class FlashSaleDao {
             SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po.getGoodsSkuId());
             FlashSaleItem flashSaleItem=new FlashSaleItem(po,skuToFlashSaleVo);
             flashSaleItems.add(flashSaleItem);
-        }
+            }
 //        PageHelper.startPage(page,PageSize);
 //        PageInfo<VoObject> flashPage=PageInfo.of(flashSaleItems);
 //        flashPage.setPages((PageInfo.of(flashSaleItemPos).getPages()));
@@ -352,7 +352,7 @@ public class FlashSaleDao {
         criteria.andStateNotEqualTo(Byte.valueOf((byte) 2));
         List<FlashSalePo> po=flashSalePoMapper.selectByExample(example);
         if(po.size()!=0){
-            return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
+                return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
         }
         FlashSalePo flashSalePo = new FlashSalePo();
         flashSalePo.setFlashDate(flashSaleInputVo.getFlashDate());
