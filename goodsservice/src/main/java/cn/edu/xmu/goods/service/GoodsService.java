@@ -134,7 +134,7 @@ public class GoodsService implements Ingoodservice {
     @Override
     public boolean spuInShopOrNot(Long shopId, Long id) {
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
-        if(goodsSpuPo==null){
+        if (goodsSpuPo == null) {
             return false;
         }
         return shopId.equals(goodsSpuPo.getShopId());
@@ -276,7 +276,13 @@ public class GoodsService implements Ingoodservice {
      * @return
      */
     public ReturnObject invalidFloatPriceById(Long shopId, Long id, Long loginUserId) {
-        return goodsDao.invalidFloatPriceById(shopId, id, loginUserId);
+        ReturnObject returnObject = goodsDao.invalidFloatPriceById(shopId, id, loginUserId);
+        if (returnObject.getCode() == ResponseCode.OK) {
+            return new ReturnObject();
+        } else if (returnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        return returnObject;
     }
 
     /**
@@ -331,7 +337,11 @@ public class GoodsService implements Ingoodservice {
      * @author shangzhao翟
      */
     public ReturnObject<Object> deleteCategoryById(Long id) {
-        return goodsDao.deleteCategoryById(id);
+        ReturnObject returnObject = goodsDao.deleteCategoryById(id);
+        if (returnObject.getCode() == ResponseCode.OK) {
+            return new ReturnObject<>();
+        }
+        return returnObject;
     }
 
     /**
@@ -675,7 +685,11 @@ public class GoodsService implements Ingoodservice {
      * @author shibin zhan
      */
     public ReturnObject<Object> addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
-        return goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+        ReturnObject returnObject = goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
+        if (returnObject.getCode() == ResponseCode.OK) {
+            return new ReturnObject<>();
+        }
+        return returnObject;
     }
 
     /**
@@ -741,7 +755,15 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.creatSku(id, shopId, skuCreatVo);
     }
 
-//    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
-//        return goodsDao.getShare(sid, id, userId, departId);
-//    }
+    /**
+     * @param sid
+     * @param id
+     * @param userId
+     * @param departId
+     * @return
+     */
+    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
+        ReturnObject returnObject = goodsDao.getShare(sid, id, userId, departId);
+        return returnObject;
+    }
 }

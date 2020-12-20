@@ -146,7 +146,7 @@ public class CommentDao implements InitializingBean {
         }
     }
 
-    public ReturnObject addComment(CommentInputVo commentInputVo, Long id,Long userId) {
+    public ReturnObject addComment(CommentInputVo commentInputVo, Long id, Long userId) {
 
         CommentPo commentPo = new CommentPo();
         commentPo.setState((byte) 0);
@@ -175,8 +175,6 @@ public class CommentDao implements InitializingBean {
             returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR, String.format("发生了严重的数据库错误：%s", e.getMessage()));
         }
         return returnObject;
-
-
 
 
     }
