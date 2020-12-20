@@ -9,10 +9,10 @@ import lombok.Data;
 public class CommentAuditVo {
 
     @ApiModelProperty(value = "评论状态")
-    private boolean state;
+    private Boolean conclusion;
 
 
-    public boolean getState() {
-        return state;
+    public Boolean getState() {
+        return conclusion;
     }
 }

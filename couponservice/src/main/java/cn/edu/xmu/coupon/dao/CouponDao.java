@@ -240,7 +240,7 @@ public class CouponDao {
                         criteria.andCustomerIdEqualTo(userId);
                         List<CouponPo> pos = couponPoMapper.selectByExample(example);
                         String[] couponSn;
-                        ArrayList<String> couponSnArray= new ArrayList<>();
+                        ArrayList<String> couponSnArray = new ArrayList<>();
                         if (pos.isEmpty()) {
                             //用户没有这个优惠券（每人数量限制)(每人领取quantity张优惠券)
                             if (po.getQuantitiyType().equals((byte) 0)) {
@@ -253,14 +253,13 @@ public class CouponDao {
                                     couponPo.setEndTime(po.getEndTime());
                                     couponPo.setCustomerId(userId);
                                     couponPo.setName(po.getName());
-                                    String a =String.format("coupon%d_%d",userId,i);
+                                    String a = String.format("coupon%d_%d", userId, i);
                                     couponSnArray.add(a);
                                     couponPo.setCouponSn(a);
-                                    //缺少了sn的放置
                                     couponPoMapper.insert(couponPo);
                                 }
                                 //总数控制，总共有quantity张优惠券
-                                couponSn =  couponSnArray.toArray(new String[couponSnArray.size()]);
+                                couponSn = couponSnArray.toArray(new String[couponSnArray.size()]);
                                 System.out.println(couponSn);
                                 return new ReturnObject(couponSn);
                             } else if (po.getQuantitiyType().equals((byte) 1)) {
@@ -273,10 +272,9 @@ public class CouponDao {
                                     couponPo.setEndTime(po.getEndTime());
                                     couponPo.setCustomerId(userId);
                                     couponPo.setName(po.getName());
-                                    String a =String.format("coupon%d",userId);
+                                    String a = String.format("coupon%d", userId);
                                     couponSnArray.add(a);
                                     couponPo.setCouponSn(a);
-                                    //缺少了sn的放置
                                     couponPoMapper.insert(couponPo);
                                     //取一张优惠券数量减1，当为0时直接设为-1
                                     CouponActivityPo couponActivityPo = new CouponActivityPo();
@@ -288,8 +286,7 @@ public class CouponDao {
                                         couponActivityPo.setQuantity(-1);
                                     }
                                     couponActivityPoMapper.updateByPrimaryKeySelective(couponActivityPo);
-                                    couponSn =  couponSnArray.toArray(new String[couponSnArray.size()]);
-                                    System.out.println(couponSn.length);
+                                    couponSn = couponSnArray.toArray(new String[couponSnArray.size()]);
                                     return new ReturnObject(couponSn);
                                 }
 

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class SimpleShopVo {
-    private Long shopId;
+    private Long id;
     private String name;
 }

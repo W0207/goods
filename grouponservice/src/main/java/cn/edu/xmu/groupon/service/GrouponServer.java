@@ -52,9 +52,12 @@ public class GrouponServer implements DisableGrouponActivityService {
         return new ReturnObject<>(grouponAcvtivityPage) ;
     }
 
+    public ReturnObject<PageInfo<VoObject>> findShopGroupon(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime){
+        ReturnObject<PageInfo<VoObject>> returnObject = grouponDao.findShopGroupon(state, spuId,id,page, pageSize, beginTime,endTime);
+        return returnObject;
+        }
 
-
-    public ReturnObject<PageInfo<VoObject>> findShopGroupon(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime) {
+    public ReturnObject<PageInfo<VoObject>> findShopGroupon1(Integer state, Long spuId,Long id,Integer page, Integer pageSize, String beginTime,String endTime) {
         PageHelper.startPage(page, pageSize);
         PageInfo<GrouponActivityPo> grouponActivityPos =  grouponDao.findShopGroupon1(state, spuId,id,page, pageSize, beginTime,endTime);
         List<VoObject> groupons=grouponActivityPos.getList().stream().map(GrouponActivity::new).collect(Collectors.toList());

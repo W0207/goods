@@ -1,9 +1,8 @@
-package cn.edu.xmu.presale.Controller;
+package cn.edu.xmu.presale.controller;
 
 import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
 import cn.edu.xmu.presale.PresaleServiceApplication;
-import cn.edu.xmu.presale.controller.PresaleController;
 import cn.edu.xmu.presale.model.vo.PresaleActivityVo;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

@@ -7,7 +7,6 @@ import cn.edu.xmu.goods.model.po.ShopPo;
 import cn.edu.xmu.goods.model.vo.ShopVo;
 import cn.edu.xmu.ooad.util.JacksonUtil;
 import cn.edu.xmu.ooad.util.JwtHelper;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
@@ -24,8 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = GoodsServiceApplication.class)   //标识本类是一个SpringBootTest
-@AutoConfigureMockMvc    //配置模拟的MVC，这样可以不启动服务器测试
+@SpringBootTest(classes = GoodsServiceApplication.class)
+@AutoConfigureMockMvc
 @Transactional
 public class ShopTest {
 
@@ -40,15 +39,14 @@ public class ShopTest {
     private WebTestClient mallClient;
 
     @Test
-    public void create(){
-        logger.debug("************************"+creatTestToken(1L,8L,1000*60*60*24)+"*****************");
+    public void create() {
+        logger.debug("************************" + creatTestToken(1L, 8L, 1000 * 60 * 60 * 24) + "*****************");
     }
-
 
 
     public ShopTest() {
         this.mallClient = WebTestClient.bindToServer()
-                .baseUrl("http://localhost:8083")
+                .baseUrl("http://localhost:8084")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8")
                 .build();
     }
@@ -70,7 +68,7 @@ public class ShopTest {
         String responseString = null;
 
         try {
-            responseString = this.mvc.perform(post("/shop/shops").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization",token))
+            responseString = this.mvc.perform(post("/shop/shops").contentType("application/json;charset=UTF-8").content(shopJson).header("authorization", token))
                     .andExpect(content().contentType("application/json;charset=UTF-8"))
                     .andReturn().getResponse().getContentAsString();
         } catch (Exception e) {

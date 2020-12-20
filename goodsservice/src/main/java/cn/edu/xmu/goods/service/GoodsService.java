@@ -134,6 +134,9 @@ public class GoodsService implements Ingoodservice {
     @Override
     public boolean spuInShopOrNot(Long shopId, Long id) {
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
+        if(goodsSpuPo==null){
+            return false;
+        }
         return shopId.equals(goodsSpuPo.getShopId());
     }
 
@@ -208,7 +211,7 @@ public class GoodsService implements Ingoodservice {
         ReturnObject returnObject;
         if (!shopId.equals(goodsSpuPo.getShopId())) {
             logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
-            returnObject = new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            returnObject = new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         } else {
             goodsSpuPo.setId(spuId);
             goodsSpuPo.setGmtModified(LocalDateTime.now());
@@ -738,7 +741,7 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.creatSku(id, shopId, skuCreatVo);
     }
 
-    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
-        return goodsDao.getShare(sid, id, userId, departId);
-    }
+//    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
+//        return goodsDao.getShare(sid, id, userId, departId);
+//    }
 }

@@ -81,6 +81,29 @@ public class FlashSaleDao {
         return new ReturnObject<>(flashPage) ;
 
     }
+
+    public  List findCurrentFlashSale(Integer page,Integer PageSize){
+
+        FlashSaleItemPoExample example=new FlashSaleItemPoExample();
+        FlashSaleItemPoExample.Criteria criteria1=example.createCriteria();
+        criteria1.andSaleIdEqualTo(Long.valueOf(4));
+
+        List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example);
+        List<VoObject> flashSaleItems=new ArrayList<>(flashSaleItemPos.size());
+        for(FlashSaleItemPo po:flashSaleItemPos){
+            SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po.getGoodsSkuId());
+            FlashSaleItem flashSaleItem=new FlashSaleItem(po,skuToFlashSaleVo);
+            flashSaleItems.add(flashSaleItem);
+            }
+//        PageHelper.startPage(page,PageSize);
+//        PageInfo<VoObject> flashPage=PageInfo.of(flashSaleItems);
+//        flashPage.setPages((PageInfo.of(flashSaleItemPos).getPages()));
+//        flashPage.setPages(page);
+//        flashPage.setPageSize(PageSize);
+//        flashPage.setTotal((PageInfo.of(flashSaleItemPos).getTotal()));
+        return flashSaleItems ;
+
+    }
     /**
      * 修改秒杀活动
      *
@@ -248,7 +271,8 @@ public class FlashSaleDao {
                 logger.info("该商品不存在");
                 return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             } else {
-                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem, skuToFlashSaleVo);
+                FlashSaleItem flashSaleItem1=new FlashSaleItem(flashSaleItemPo);
+                FlashSaleOutputVo flashSaleOutputVo = new FlashSaleOutputVo(flashSaleItem1, skuToFlashSaleVo);
                 returnObject= new ReturnObject(flashSaleOutputVo);
 
             }
@@ -325,9 +349,10 @@ public class FlashSaleDao {
         }
         criteria.andTimeSegIdEqualTo(id);
         criteria.andFlashDateEqualTo(flashSaleInputVo.getFlashDate());
+        criteria.andStateNotEqualTo(Byte.valueOf((byte) 2));
         List<FlashSalePo> po=flashSalePoMapper.selectByExample(example);
         if(po.size()!=0){
-            return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
+                return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
         }
         FlashSalePo flashSalePo = new FlashSalePo();
         flashSalePo.setFlashDate(flashSaleInputVo.getFlashDate());

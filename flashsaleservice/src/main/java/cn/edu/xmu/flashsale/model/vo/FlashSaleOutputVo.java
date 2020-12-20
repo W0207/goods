@@ -1,10 +1,10 @@
 package cn.edu.xmu.flashsale.model.vo;
 import cn.edu.xmu.flashsale.model.bo.FlashSaleItem;
 import cn.edu.xmu.ininterface.service.model.vo.SkuToFlashSaleVo;
-
+import cn.edu.xmu.ooad.model.VoObject;
 import java.time.LocalDateTime;
 
-public class FlashSaleOutputVo {
+public class FlashSaleOutputVo implements VoObject{
 
     Long id;
 
@@ -45,5 +45,14 @@ public class FlashSaleOutputVo {
 
     public Long getPrice() {
         return price;
+    }
+    @Override
+    public Object createVo() {
+        return null;
+    }
+
+    @Override
+    public Object createSimpleVo() {
+        return null;
     }
 }
