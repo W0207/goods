@@ -35,6 +35,50 @@ public class Comment implements VoObject {
 
     private UserInfo customer;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public void setOrderitem_id(Long orderitem_id) {
+        this.orderitem_id = orderitem_id;
+    }
+
+    public void setGoods_sku_id(Long goods_sku_id) {
+        this.goods_sku_id = goods_sku_id;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setCustomer_id(Long customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setCustomer(UserInfo customer) {
+        this.customer = customer;
+    }
+
+    public Comment() {
+
+    }
+
     public void setUserInfo(UserInfo userInfo) {
         this.customer = userInfo;
     }

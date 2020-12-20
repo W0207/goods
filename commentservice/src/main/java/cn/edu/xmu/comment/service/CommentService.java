@@ -2,6 +2,7 @@ package cn.edu.xmu.comment.service;
 
 import cn.edu.xmu.comment.dao.CommentDao;
 import cn.edu.xmu.comment.model.vo.CommentAuditVo;
+import cn.edu.xmu.comment.model.vo.CommentInputVo;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
@@ -29,5 +30,10 @@ public class CommentService {
 
     public ReturnObject<PageInfo<VoObject>> showUnAuditCommentsByCommentid(Integer page, Integer pageSize, Integer state) {
         return commentDao.showUnAuditCommentsByCommentid(page, pageSize, state);
+    }
+
+    public ReturnObject addComment(CommentInputVo commentInputVo, Long id,Long userId) {
+
+        return commentDao.addComment(commentInputVo,id,userId);
     }
 }

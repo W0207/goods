@@ -274,7 +274,7 @@ public class CouponController {
     @Audit // 需要认证
     @PostMapping("/shops/{shopId}/couponactivities")
     public Object addCouponActivity(@PathVariable Long shopId, @RequestBody AddCouponActivityVo vo, @LoginUser Long userId, HttpServletResponse response, @Depart Long ShopId) {
-        if (!ShopId.equals(shopId)) {
+        if (!ShopId.equals(shopId)&&ShopId!=0) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));

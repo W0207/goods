@@ -43,10 +43,20 @@ public interface IOrderService {
      * 判断该订单是否存在
      *
      * @param userId
-     * @param skuId
+     * @param orderItemId
      * @return
      * @author issyu 30320182200070
      * @date 2020/12/17 19:39
      */
-    MyReturn<Boolean> confirmBought(Long userId, Long skuId);
+    MyReturn<Boolean> confirmBought(Long userId, Long orderItemId);
+
+    /**
+     * 通过订单明细id获得skuId
+     *
+     * @param orderItemId
+     * @return
+     * @author issyu 30320182200070
+     * @date 2020/12/17 19:39
+     */
+    MyReturn<Long> getSkuIdByOderItem(Long orderItemId);
 }

@@ -342,6 +342,22 @@ public class CouponControllerTest {
         //String expectedResponse = "{\"errno\":0,\"errmsg\":\"成功\"}";
     }
 
+    /**
+     * 买家查看优惠活动详情
+     *
+     * @return Object
+     * by 菜鸡骞
+     */
+    @Test
+    public void findCouponActivity() throws Exception {
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(get("/coupon/shops/0/couponactivities/6").header("authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+
+    }
 
     /*   公开测试用例   */
 

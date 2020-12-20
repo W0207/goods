@@ -357,12 +357,12 @@ public class CouponActivityDao implements InitializingBean {
         AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
         UserVo userVo = new UserVo();
         userVo.setId(po.getCreatedBy());
-        userVo.setName(iUserService.getUserName(po.getCreatedBy()));
+        //userVo.setName(iUserService.getUserName(po.getCreatedBy()));
         vo.setCreatedBy(userVo);
         if (po.getModiBy() != null) {
             UserVo userVo1 = new UserVo();
             userVo1.setId(po.getModiBy());
-            userVo1.setName(iUserService.getUserName(po.getModiBy()));
+            //userVo1.setName(iUserService.getUserName(po.getModiBy()));
             vo.setModiBy(userVo1);
         }
         return new ReturnObject(vo);
