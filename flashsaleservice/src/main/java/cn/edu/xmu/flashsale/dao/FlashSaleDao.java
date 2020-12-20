@@ -17,12 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-
+import cn.edu.xmu.external.model.MyReturn;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import cn.edu.xmu.external.service.ITimeService;
+import cn.edu.xmu.external.bo.TimeSegInfo;
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -43,6 +44,10 @@ public class FlashSaleDao {
     @Autowired
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
+
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private ITimeService timeService;
 
     @Autowired
     @DubboReference(version = "0.0.1", check = false)
@@ -82,12 +87,31 @@ public class FlashSaleDao {
 
     }
 
-    public  List findCurrentFlashSale(Integer page,Integer PageSize){
+    public  List findCurrentFlashSale(Long id,Integer page,Integer PageSize){
 
+
+//        FlashSalePoExample example1=new FlashSalePoExample();
+//        FlashSalePoExample.Criteria criteria1=example1.createCriteria();
+//        criteria1.andTimeSegIdEqualTo(id);
+//        List<FlashSalePo> flashSalePos=flashSalePoMapper.selectByExample(example1);
+//        List<VoObject> flash=new ArrayList<>();
+//        for(FlashSalePo po:flashSalePos){
+//            FlashSaleItemPoExample example2=new FlashSaleItemPoExample();
+//            FlashSaleItemPoExample.Criteria criteria2=example2.createCriteria();
+//            criteria2.andSaleIdEqualTo(po.getId());
+//            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example2);
+//            flash=new ArrayList<>(flashSaleItemPos.size());
+//            for(FlashSaleItemPo po1:flashSaleItemPos){
+//                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po1.getGoodsSkuId());
+//                FlashSaleItem flashSaleItem=new FlashSaleItem(po1,skuToFlashSaleVo);
+//                flash.add(flashSaleItem);
+//            }
+//
+//        }
+//        return flash;
         FlashSaleItemPoExample example=new FlashSaleItemPoExample();
-        FlashSaleItemPoExample.Criteria criteria1=example.createCriteria();
-        criteria1.andSaleIdEqualTo(Long.valueOf(4));
-
+        FlashSaleItemPoExample.Criteria criteria=example.createCriteria();
+        criteria.andSaleIdEqualTo(Long.valueOf(4));
         List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example);
         List<VoObject> flashSaleItems=new ArrayList<>(flashSaleItemPos.size());
         for(FlashSaleItemPo po:flashSaleItemPos){
@@ -160,7 +184,7 @@ public class FlashSaleDao {
         }
         if (po.getState() == 1) {
             logger.info("秒杀活动已上线，无法删除 ");
-            return new ReturnObject(ResponseCode.DELETE_ONLINE_NOTALLOW);
+            return new ReturnObject(ResponseCode.ACTIVITYALTER_INVALID);
         }
         po.setState(Byte.valueOf("2"));
         int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
@@ -339,9 +363,15 @@ public class FlashSaleDao {
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
 
-        if(id<0){
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        if(!timeService.isSegExist(id)){
+            logger.debug("时间段不存在");
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"时间段不存在");
+
         }
+        MyReturn<TimeSegInfo> timeSegInfo=timeService.getTimeSeg(id);
+//        if(id<0){
+//            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+//        }
         FlashSalePoExample example=new FlashSalePoExample();
         FlashSalePoExample.Criteria criteria=example.createCriteria();
         if(flashSaleInputVo.getFlashDate()==null||flashSaleInputVo.getFlashDate().isBefore(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0))){
@@ -368,6 +398,8 @@ public class FlashSaleDao {
                 flashSaleRetVo.setId(flashSalePo.getId());
                 flashSaleRetVo.setGmtCreate(flashSalePo.getGmtCreate());
                 flashSaleRetVo.setFlashData(flashSalePo.getFlashDate());
+                TimeSegVo timeSegVo=new TimeSegVo(timeSegInfo.getData());
+                flashSaleRetVo.setTimeSeq(timeSegVo);
                 return new ReturnObject(flashSaleRetVo);
             }
         } catch (Exception e) {

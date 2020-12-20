@@ -141,7 +141,7 @@ public class FlashSaleControllerTest {
     @Test
     public void deleteFlashSale() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/4")
+        String responseString = this.mvc.perform(delete("/flashsale/shops/0/flashsales/10828")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -374,7 +374,7 @@ public class FlashSaleControllerTest {
         String requireJson = JacksonUtil.toJson(flashSaleInputVo);
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(post("/flashsale/shops/0/timesegments/100/flashsales")
+        String responseString = this.mvc.perform(post("/flashsale/shops/0/timesegments/10/flashsales")
                 .contentType("application/json;charset=UTF-8")
                 .header("authorization", token)
                 .content(requireJson))
@@ -394,7 +394,7 @@ public class FlashSaleControllerTest {
         String requireJson = JacksonUtil.toJson(flashSaleInputVo);
 
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(post("/flashsale/shops/1/timesegments/100/flashsales")
+        String responseString = this.mvc.perform(post("/flashsale/shops/1/timesegments/10/flashsales")
                 .contentType("application/json;charset=UTF-8")
                 .header("authorization", token)
                 .content(requireJson))

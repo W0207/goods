@@ -44,8 +44,8 @@ public class FlashSaleService implements DisableFlashActivityService {
 
     }
 
-    public List findCurrentFlashSale(Integer page, Integer pageSize) {
-        return  flashSaleDao.findCurrentFlashSale(page, pageSize);
+    public List findCurrentFlashSale(Long id,Integer page, Integer pageSize) {
+        return  flashSaleDao.findCurrentFlashSale(id,page, pageSize);
 
     }
     /**
@@ -112,7 +112,12 @@ public class FlashSaleService implements DisableFlashActivityService {
      * @return
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
-        return flashSaleDao.createFlash(id, flashSaleInputVo);
+        ReturnObject returnObject= flashSaleDao.createFlash(id, flashSaleInputVo);
+        if(returnObject.getCode()==ResponseCode.OK){
+            return new ReturnObject(returnObject);
+        }else{
+            return  returnObject;
+        }
     }
 
     public Flux<FlashSaleItem> getFlashSale(Long id) {

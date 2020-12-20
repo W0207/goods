@@ -5,7 +5,7 @@ management:
         include: "*"
 
 server:
-  port: 8086
+  port: 8096
   tomcat:
     threads:
       max: 1000
