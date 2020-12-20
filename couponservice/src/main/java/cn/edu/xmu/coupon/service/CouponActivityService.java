@@ -47,8 +47,8 @@ public class CouponActivityService implements DisableCouponActivityService {
         return couponActivityDao.deleteCouponSkuById(id, shopId);
     }
 
-    public ReturnObject modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo) {
-        return couponActivityDao.modifyCouponActivityByID(id, shopId, couponActivityModifyVo);
+    public ReturnObject modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo,Long ShopId) {
+        return couponActivityDao.modifyCouponActivityByID(id, shopId, couponActivityModifyVo,ShopId);
     }
 
     public ReturnObject rangeForCouponActivityById(Long id, Long shopId, Long[] skuIds) {

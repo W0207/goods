@@ -149,7 +149,7 @@ public class CouponController {
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
-        if (!ShopId.equals(id)) {
+        if (!ShopId.equals(id)&&ShopId!=0) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
@@ -189,7 +189,7 @@ public class CouponController {
             logger.info("incorrect data received while modifyCouponActivity : shopId = " + shopId + " vo = " + couponActivityModifyVo + "id = " + id);
             return returnObject;
         }
-        ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id, shopid, couponActivityModifyVo);
+        ReturnObject returnObj = couponActivityService.modifyCouponActivityByID(id, shopid, couponActivityModifyVo,shopId);
         response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
@@ -452,7 +452,7 @@ public class CouponController {
     @Audit
     @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
     public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response, @Depart Long ShopId) {
-        if (!ShopId.equals(shopId)) {
+        if (!ShopId.equals(shopId)&&ShopId!=0) {
             ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
             response.setStatus(getStatue(returnObj));
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));

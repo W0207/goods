@@ -51,10 +51,6 @@ public class Comment implements VoObject {
         this.orderitemId = orderitem_id;
     }
 
-    public void setGoodsSkuId(Long goods_sku_id) {
-        this.goodsSkuId = goods_sku_id;
-    }
-
     public void setGmtModified(LocalDateTime gmtModified) {
         this.gmtModified = gmtModified;
     }
