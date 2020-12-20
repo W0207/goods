@@ -330,11 +330,13 @@ public class GoodsDao {
         if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
+
         GoodsSkuPoExample skuPoExample = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria = skuPoExample.createCriteria();
         criteria.andNameEqualTo(skuInputVo.getName());
         criteria.andOriginalPriceEqualTo(skuInputVo.getOriginalPrice());
         criteria.andConfigurationEqualTo(skuInputVo.getConfiguration());
+        criteria.andInventoryEqualTo(skuInputVo.getInventory());
         criteria.andWeightEqualTo(skuInputVo.getWeight());
         criteria.andDetailEqualTo(skuInputVo.getDetail());
         List<GoodsSkuPo> goodsSkuPos = goodsSkuPoMapper.selectByExample(skuPoExample);
@@ -879,7 +881,7 @@ public class GoodsDao {
         }
         if (beginTime.isAfter(endTime)) {
             //开始时间不能比结束时间晚
-            return new ReturnObject<>(ResponseCode.Log_Bigger);
+            return new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         } else {
             //设置的库存不能大于总库存
             if (goodsSkuPo.getInventory() < floatPriceInputVo.getQuantity()) {
@@ -940,10 +942,11 @@ public class GoodsDao {
         spuRetVo.setDisable(false);
         SimpleShopVo simpleShopVo = new SimpleShopVo();
         if (shopPoMapper.selectByPrimaryKey(shopId) != null) {
-            simpleShopVo.setShopId(shopId);
+            simpleShopVo.setId(shopId);
             simpleShopVo.setName(shopPoMapper.selectByPrimaryKey(shopId).getName());
             spuRetVo.setShop(simpleShopVo);
         }
+        spuRetVo.setSkuList(new ArrayList<>());
         return new ReturnObject(spuRetVo);
     }
 
@@ -1113,8 +1116,9 @@ public class GoodsDao {
             ShopPo shopPo = shopPoMapper.selectByPrimaryKey(shopId);
             if (shopPo != null) {
                 SimpleShopVo simpleShopVo = new SimpleShopVo();
-                simpleShopVo.setShopId(id);
+                simpleShopVo.setId(shopId);
                 simpleShopVo.setName(shopPo.getName());
+                spuRetVo.setShop(simpleShopVo);
             }
         }
         spuRetVo.setGoodsSn(goodsSpuPo.getGoodsSn());
@@ -1123,7 +1127,7 @@ public class GoodsDao {
         spuRetVo.setSpec(goodsSpuPo.getSpec());
         spuRetVo.setGmtCreate(goodsSpuPo.getGmtCreate());
         spuRetVo.setGmtModified(goodsSpuPo.getGmtModified());
-        spuRetVo.setDisable(goodsSpuPo.getDisabled() == 0);
+        spuRetVo.setDisable(goodsSpuPo.getDisabled() != 0);
         //记录skuList信息
         GoodsSkuPoExample goodsSkuPoExample = new GoodsSkuPoExample();
         GoodsSkuPoExample.Criteria criteria1 = goodsSkuPoExample.createCriteria();
@@ -1144,6 +1148,7 @@ public class GoodsDao {
             } else {
                 simpleSkuVo.setPrice(price);
             }
+            simpleSkuVo.setDisable(goodsSkuPo1.getDisabled() != 0);
             simpleSkuVos.add(simpleSkuVo);
         }
         spuRetVo.setSkuList(simpleSkuVos);

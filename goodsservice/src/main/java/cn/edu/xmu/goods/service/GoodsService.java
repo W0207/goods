@@ -211,7 +211,7 @@ public class GoodsService implements Ingoodservice {
         ReturnObject returnObject;
         if (!shopId.equals(goodsSpuPo.getShopId())) {
             logger.debug("修改spu信息中，spu里shopId和路径上的shopId不一致");
-            returnObject = new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);
+            returnObject = new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
         } else {
             goodsSpuPo.setId(spuId);
             goodsSpuPo.setGmtModified(LocalDateTime.now());

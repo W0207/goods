@@ -8,5 +8,7 @@ public interface IShareService {
 
     MyReturn<Boolean> verifyShare(Long shareId);
 
+    MyReturn<Boolean> verifyInfoByShareId(Long shareId, Long sharerId, Long skuId);
+
     void startGiveRebate();
 }

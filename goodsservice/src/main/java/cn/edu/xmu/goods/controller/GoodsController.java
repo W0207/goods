@@ -800,7 +800,7 @@ public class GoodsController {
         } else if (floatPrice.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             response.setStatus(403);
         } else if (floatPrice.getCode() == ResponseCode.Log_Bigger) {
-            response.setStatus(200);
+            response.setStatus(400);
         } else if (floatPrice.getCode() == ResponseCode.SKU_NOTENOUGH) {
             response.setStatus(200);
         } else if (floatPrice.getCode() == ResponseCode.FIELD_NOTVALID) {
@@ -812,8 +812,7 @@ public class GoodsController {
     /**
      * 店家或管理员修改商品spu
      *
-     * @param bindingResult 校验信息
-     * @param spuInputVo    修改信息的SpuInputVo
+     * @param spuInputVo 修改信息的SpuInputVo
      * @return Object
      * @Author shibin zhan
      */
@@ -830,14 +829,9 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/spus/{id}")
-    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
+    public Object modifyGoodsSpu(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody SpuInputVo spuInputVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsSpu : shopId = " + shopId + " spuId = " + id + " vo = " + spuInputVo);
-        }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId + " spuId = " + id);
-            return returnObject;
         }
         ReturnObject returnObj = goodsService.modifySpuInfo(shopId, id, spuInputVo);
         return Common.decorateReturnObject(returnObj);
@@ -848,8 +842,8 @@ public class GoodsController {
      *
      * @param shopId
      * @param spuInputVo
-     * @param bindingResult
      * @return
+     *
      */
     @ApiOperation(value = "店家新建商品spu")
     @ApiImplicitParams({
@@ -862,17 +856,20 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus")
-    public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, BindingResult bindingResult) {
+    public Object addSpu(@PathVariable Long shopId, @Validated @RequestBody SpuInputVo spuInputVo, @Depart Long departId) {
         if (logger.isDebugEnabled()) {
             logger.debug("addSpu : shopId = " + shopId + " vo = " + spuInputVo);
         }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsSpu shopId = " + shopId);
-            return returnObject;
+        if (shopId.equals(departId) || departId == 0) {
+            ReturnObject returnObj = goodsService.addSpu(shopId, spuInputVo);
+            if (returnObj.getCode() == ResponseCode.OK) {
+                httpServletResponse.setStatus(201);
+            }
+            return Common.decorateReturnObject(returnObj);
+        } else {
+            httpServletResponse.setStatus(403);
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE));
         }
-        ReturnObject returnObj = goodsService.addSpu(shopId, spuInputVo);
-        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -939,13 +936,15 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo, @RequestHeader(value = "Authorization") String token) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
         ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
         if (returnObj.getCode() == ResponseCode.OK) {
             httpServletResponse.setStatus(201);
+        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
         }
         return Common.decorateReturnObject(returnObj);
     }
