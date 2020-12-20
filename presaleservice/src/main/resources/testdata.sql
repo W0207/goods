@@ -95,7 +95,18 @@ LOCK TABLES `comment` WRITE;
 INSERT INTO `comment`
 VALUES (1, 1, 273, 1, 1, '还不错', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
        (2, 1, 273, 2, 2, '挺好的', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
-       (3, 1, 273, 3, 1, '哇偶', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01');
+       (3, 1, 273, 3, 1, '哇偶', 1, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
+       (4, 1, 185, 4, 1, 'f**k', 2, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (6, 1, 185, 6, 0, '真不错', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (7, 1, 185, 7, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (8, 1, 185, 8, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (9, 1, 185, 9, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (10, 1, 185, 11, 0, '不好吃', 0, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (13, 1, 185, 15, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (14, 1, 185, 16, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (15, 1, 185, 17, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (16, 1, 185, 18, 0, '还行', 1, '2020-12-13 13:48:44', '2020-12-13 13:48:44'),
+       (17, 1, 185, 19, 1, 'f**k', 2, '2020-12-13 13:48:44', '2020-12-13 13:48:44');
 /*!40000 ALTER TABLE `comment`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -199,7 +210,7 @@ VALUES (12158, '满500 - 50', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '202
 INSERT INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
                               `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
                               `gmt_modified`, `quantitiy_type`)
-VALUES (12159, '满500 - 10%', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '2020-01-10 22:47:01', 1, 1, 2, 0, NULL,
+VALUES (12159, '满500 - 10%', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '2020-01-10 22:47:01', 1, 1, 1, 0, NULL,
         '{"value":90,"className":"cn.edu.xmu.ooad.order.discount.impl.PercentageCouponDiscount","couponLimitation":{"value":50000,"className":"cn.edu.xmu.ooad.order.discount.impl.PriceCouponLimitation"}}',
         1, 1, '2020-12-15 22:47:50', NULL, 0);
 
@@ -224,6 +235,10 @@ select '/*ChenPinzhenTest*/';
 insert into `coupon_sku`(`id`, `activity_id`, `sku_id`, `gmt_create`, `gmt_modified`)
 values (20001, 20001, 20680, '2020-12-16 03:34:55', NULL),
        (20002, 20002, 20681, '2020-12-16 03:35:10', NULL);
+
+select '/*LiuFeiyanTest*/';
+INSERT INTO `coupon_sku`(`id`, `activity_id`, `sku_id`, `gmt_create`, `gmt_modified`)
+VALUES (1234, 2158, 273, '2020-12-17 14:26:03', NULL);
 
 select '/*Ming Qiu*/';
 insert into `coupon_sku`(`id`, `activity_id`, `sku_id`, `gmt_create`, `gmt_modified`)
@@ -297,14 +312,12 @@ select '/*ChenPinzhenTest*/';
 select '/*ShaoLiangYingTest*/';
 insert into `float_price`
 values (828, 626, 166, '2020-12-27 00:00:00', '2021-1-07 00:00:00', 1000, 1, null, 0, CURDATE(), null);
-insert into `float_price`
-values (829, 273, 10, '2021-12-12 02:23:01', '2021-12-16 02:23:01', 10, 1, null, 0, CURDATE(), null);
 
 select '/*Ming Qiu*/';
 insert into `float_price`(`id`, `goods_sku_id`, `activity_price`, `begin_time`,
                           `end_time`, `quantity`, `created_by`, `invalid_by`, `valid`,
                           `gmt_create`, `gmt_modified`)
-values (1828, 517, 200, '2020-11-27 00:00:00', '2021-11-07 00:00:00', 1000, 1, NULL, 0,
+values (1828, 517, 200, '2020-11-27 00:00:00', '2021-11-07 00:00:00', 1000, 1, NULL, 1,
         '2020-12-17 00:00:00', NULL);
 /*!40000 ALTER TABLE `float_price`
     ENABLE KEYS */;
@@ -487,7 +500,7 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (340, 340, NULL, '+', 1999, NULL, 20, 'http://47.52.88.176/file/images/201610/file_580cf32b5eb1f.jpg', 72, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (341, 341, NULL, '+', 11, NULL, 1, '', 16, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (341, 341, NULL, '+', 11, NULL, 1, NULL, 16, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (342, 342, NULL, '+', 0, NULL, 1, 'http://47.52.88.176/file/images/201610/file_580ccf1e80279.jpg', 0, NULL, 0,
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (343, 343, NULL, '+', 0, NULL, 0, 'http://47.52.88.176/file/images/201610/file_580cd22dd92ef.jpeg', 2, NULL, 0,
@@ -626,10 +639,10 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (410, 410, NULL, '+', 520, NULL, 3, 'http://47.52.88.176/file/images/201705/file_590d651a1290e.jpg', 0, NULL, 0,
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (411, 411, NULL, '+', 1199, NULL, 0, '', 1, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (411, 411, NULL, '+', 1199, NULL, 0, NULL, 1, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (412, 412, NULL, '+', 1200, NULL, 3, 'http://47.52.88.176/file/images/201705/file_592e23d6e7272.jpg', 2, NULL, 0,
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (413, 413, NULL, '+', 0, NULL, 0, '', 95, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (413, 413, NULL, '+', 0, NULL, 0, NULL, 95, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (414, 414, NULL, '+', 599, NULL, 2, 'http://47.52.88.176/file/images/201707/file_59679a084d7e5.jpg', 500, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (415, 415, NULL, '+', 28888, NULL, 3, 'http://47.52.88.176/file/images/201707/file_59676fc4ecc68.png', 1500,
@@ -788,12 +801,12 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (492, 492, NULL, '+', 888, NULL, 3, 'http://47.52.88.176/file/images/201707/file_5971ae54bdc82.jpg', 10000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (493, 493, NULL, '+', 0, NULL, 0, '', 998, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (494, 494, NULL, '+', 0, NULL, 0, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (493, 493, NULL, '+', 0, NULL, 0, NULL, 998, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (494, 494, NULL, '+', 0, NULL, 0, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (495, 495, NULL, '+', 999, NULL, 0, 'http://47.52.88.176/file/images/201803/file_5ab8a5fe74ceb.png', 100, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (496, 496, NULL, '+', 0, NULL, 1, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (497, 497, NULL, '+', 0, NULL, 3, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (496, 496, NULL, '+', 0, NULL, 1, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (497, 497, NULL, '+', 0, NULL, 3, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (498, 498, NULL, '+', 999, NULL, 3, 'http://47.52.88.176/file/images/201805/file_5b0bb6b9c17c7.jpg', 100, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (499, 499, NULL, '+', 999, NULL, 3, 'http://47.52.88.176/file/images/201805/file_5b0bb60890b8b.jpg', 100, NULL,
@@ -802,17 +815,17 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (501, 501, NULL, '+', 1399, NULL, 3, 'http://47.52.88.176/file/images/201805/file_5b0bb6e946aa2.jpg', 100, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (502, 502, NULL, '+', 0, NULL, 0, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (503, 503, NULL, '+', 0, NULL, 0, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (504, 504, NULL, '+', 0, NULL, 0, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (505, 505, NULL, '+', 0, NULL, 0, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (506, 506, NULL, '+', 78, NULL, 1, '', 100, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (507, 507, NULL, '+', 1, NULL, 1, '', 90000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (502, 502, NULL, '+', 0, NULL, 0, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (503, 503, NULL, '+', 0, NULL, 0, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (504, 504, NULL, '+', 0, NULL, 0, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (505, 505, NULL, '+', 0, NULL, 0, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (506, 506, NULL, '+', 78, NULL, 1, NULL, 100, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (507, 507, NULL, '+', 1, NULL, 1, NULL, 90000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (508, 508, NULL, '+', 999, NULL, 3, 'http://47.52.88.176/file/images/201805/file_5b0bb6965866c.jpg', 100, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (509, 509, NULL, '+', 209, NULL, 1, 'http://47.52.88.176/file/images/201710/file_59daf015034f3.jpg', 1000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (510, 510, NULL, '+', 219, NULL, 0, '', 10000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (510, 510, NULL, '+', 219, NULL, 0, NULL, 10000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (511, 511, NULL, '+', 219, NULL, 0, 'http://47.52.88.176/file/images/201807/file_5b513979e1c01.jpg', 10000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (512, 512, NULL, '+', 219, NULL, 0, 'http://47.52.88.176/file/images/201807/file_5b513af8ab64c.png', 10000, NULL,
@@ -919,11 +932,11 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (563, 563, NULL, '+', 9800, NULL, 5, 'http://47.52.88.176/file/images/201711/file_5a12f2b86b867.jpg', 1, NULL, 0,
         '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (564, 564, NULL, '+', 9999, NULL, 10, '', 999, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (565, 565, NULL, '+', 39999, NULL, 10, '', 999, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (566, 566, NULL, '+', 1300, NULL, 3, '', 990, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (567, 567, NULL, '+', 1200, NULL, 5, '', 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (568, 568, NULL, '+', 78, NULL, 0, '', 200, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (564, 564, NULL, '+', 9999, NULL, 10, NULL, 999, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (565, 565, NULL, '+', 39999, NULL, 10, NULL, 999, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (566, 566, NULL, '+', 1300, NULL, 3, NULL, 990, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (567, 567, NULL, '+', 1200, NULL, 5, NULL, 1000, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (568, 568, NULL, '+', 78, NULL, 0, NULL, 200, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (569, 569, NULL, '+', 5396, NULL, 5, 'http://47.52.88.176/file/images/201801/file_5a55d3b55d55e.png', 2000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (570, 570, NULL, '+', 298, NULL, 3, 'http://47.52.88.176/file/images/201807/file_5b3acaffedc2f.png', 1000, NULL,
@@ -1104,7 +1117,7 @@ VALUES (273, 273, NULL, '+', 980000, NULL, 10, 'http://47.52.88.176/file/images/
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (658, 658, NULL, '+', 299, NULL, 3, 'http://47.52.88.176/file/images/201807/file_5b5bd66aa76b2.jpg', 1000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
-       (659, 659, NULL, '+', 100, NULL, 0, '', 99998, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
+       (659, 659, NULL, '+', 100, NULL, 0, NULL, 99998, NULL, 0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (660, 660, NULL, '+', 299, NULL, 3, 'http://47.52.88.176/file/images/201811/file_5bf17473ba29d.jpg', 3000, NULL,
         0, '2020-12-10 22:36:00', '2020-12-10 22:36:00', 4),
        (661, 661, NULL, '+', 1199, NULL, 2, 'http://47.52.88.176/file/images/201811/file_5bf12117c0815.jpg', 19987,
@@ -1429,7 +1442,7 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (340, '《火树银花》银质纪念章瓷画', 105, 124, NULL, 0, 'hsyh-e0001', NULL,
         'http://47.52.88.176/file/images/201610/file_580cf32b5eb1f.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (341, '测试商品', 105, 126, NULL, 0, 'ECS000341', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (341, '测试商品', 105, 126, NULL, 0, 'ECS000341', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (342, '测试商品1', 105, 123, NULL, 0, 'ECS000342', NULL,
         'http://47.52.88.176/file/images/201610/file_580ccf1e80279.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -1638,12 +1651,13 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (410, '520特价·沐诣堂幸福+福禄套装', 106, 129, NULL, 0, 'myt-b0008', NULL,
         'http://47.52.88.176/file/images/201705/file_590d651a1290e.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (411, '中国书院', 104, 126, NULL, 0, 'zgsy-a001', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (411, '中国书院', 104, 126, NULL, 0, 'zgsy-a001', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (412, '中国书院', 104, 126, NULL, 0, 'zgsy-a0001', NULL,
         'http://47.52.88.176/file/images/201705/file_592e23d6e7272.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (413, '测试', 112, 0, NULL, 0, 'ECS000413', NULL, '', 'default', 0, '2020-12-10 22:36:01', '2020-12-10 22:36:01'),
+       (413, '测试', 112, 0, NULL, 0, 'ECS000413', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
+        '2020-12-10 22:36:01'),
        (414, '《鲤鱼跳龙门》瓷邮文化珍藏册', 104, 126, NULL, 0, 'lytlm-a0001', NULL,
         'http://47.52.88.176/file/images/201707/file_59679a084d7e5.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
@@ -1881,16 +1895,16 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (492, '金和汇景-沐诣堂-手绘青花接福迎春单壶', 106, 0, NULL, 0, 'myt-b0020', NULL,
         'http://47.52.88.176/file/images/201707/file_5971ae54bdc82.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (493, '鱼跃龙门单页', 104, 0, NULL, 0, 'ECS000493', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (493, '鱼跃龙门单页', 104, 0, NULL, 0, 'ECS000493', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (494, '鱼跃龙门折页', 104, 0, NULL, 0, 'ECS000494', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (494, '鱼跃龙门折页', 104, 0, NULL, 0, 'ECS000494', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (495, '金和汇景-高温颜色釉紫金六头茶具', 105, 128, NULL, 0, 'jhhj-b0016', NULL,
         'http://47.52.88.176/file/images/201803/file_5ab8a5fe74ceb.png', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (496, '办公杯单页', 105, 0, NULL, 0, 'ECS000496', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (496, '办公杯单页', 105, 0, NULL, 0, 'ECS000496', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (497, '手表单页（带封套）', 105, 0, NULL, 0, 'ECS000497', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (497, '手表单页（带封套）', 105, 0, NULL, 0, 'ECS000497', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (498, '金和汇景-高温颜色釉天蓝六头茶具', 105, 128, NULL, 0, 'jhhj-b0017', NULL,
         'http://47.52.88.176/file/images/201805/file_5b0bb6b9c17c7.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -1904,17 +1918,17 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (501, '金和汇景-高温颜色釉淡紫六头茶具', 105, 128, NULL, 0, 'jhhj-b0020', NULL,
         'http://47.52.88.176/file/images/201805/file_5b0bb6e946aa2.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (502, '胭脂醉单页', 105, 0, NULL, 0, 'ECS000502', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (502, '胭脂醉单页', 105, 0, NULL, 0, 'ECS000502', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (503, '单杯单页', 105, 0, NULL, 0, 'ECS000503', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (503, '单杯单页', 105, 0, NULL, 0, 'ECS000503', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (504, '颜色釉单页', 105, 0, NULL, 0, 'ECS000504', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (504, '颜色釉单页', 105, 0, NULL, 0, 'ECS000504', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (505, '艺术品单页', 105, 0, NULL, 0, 'ECS000505', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (505, '艺术品单页', 105, 0, NULL, 0, 'ECS000505', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (506, '金和汇景-锦鲤挂坠', 105, 124, NULL, 0, 'ECS000506', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (506, '金和汇景-锦鲤挂坠', 105, 124, NULL, 0, 'ECS000506', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (507, '一元个性化定制专拍链接', 105, 127, NULL, 0, 'ECS000507', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (507, '一元个性化定制专拍链接', 105, 127, NULL, 0, 'ECS000507', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (508, '金和汇景-高温颜色釉祭蓝六头茶具', 105, 128, NULL, 0, 'jhhj-b0021', NULL,
         'http://47.52.88.176/file/images/201805/file_5b0bb6965866c.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -1922,7 +1936,7 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (509, '金和汇景-沐诣堂-梨形壶', 106, 128, NULL, 0, 'myt-b0021', NULL,
         'http://47.52.88.176/file/images/201710/file_59daf015034f3.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (510, '金和汇景-法门寺开光香灰瓷珠（女舍利红）', 105, 0, NULL, 0, 'jhhj-l0001', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (510, '金和汇景-法门寺开光香灰瓷珠（女舍利红）', 105, 0, NULL, 0, 'jhhj-l0001', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (511, '金和汇景-法门寺开光香灰瓷珠（女舍利红）', 105, 138, NULL, 0, 'jhhj-l0001', NULL,
         'http://47.52.88.176/file/images/201807/file_5b513979e1c01.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -1942,10 +1956,10 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (516, '金和汇景-法门寺开光香灰瓷珠（男宝石蓝）', 105, 138, NULL, 0, 'jhhj-l0005', NULL,
         'http://47.52.88.176/file/images/201807/file_5b513b7e9c0fd.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (517, '金和汇景-法门寺开光香灰瓷车挂（宝石蓝）', 105, 138, 23, 0, 'jhhj-l0007', NULL,
+       (517, '金和汇景-法门寺开光香灰瓷车挂（宝石蓝）', 105, 138, 22, 0, 'jhhj-l0007', NULL,
         'http://47.52.88.176/file/images/201711/file_5a0057e5d5ac9.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (518, '金和汇景-法门寺开光香灰瓷念珠（银河蓝）', 105, 138, 22, 1, 'jhhj-l0008', NULL,
+       (518, '金和汇景-法门寺开光香灰瓷念珠（银河蓝）', 105, 138, 23, 1, 'jhhj-l0008', NULL,
         'http://47.52.88.176/file/images/201807/file_5b51380538633.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (519, '金和汇景-法门寺开光香灰瓷念珠（贵妃红）', 105, 138, 23, 1, 'jhhj-l0009', NULL,
@@ -2083,15 +2097,15 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (563, '皇家窑火·仿清乾隆开光四季花卉图纸槌瓶', 119, 124, NULL, 0, 'hjyh-a0003', NULL,
         'http://47.52.88.176/file/images/201711/file_5a12f2b86b867.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (564, '皇家窑火·唐卡瓷画标准款', 119, 124, NULL, 0, 'hjyh-a0004', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (564, '皇家窑火·唐卡瓷画标准款', 119, 124, NULL, 0, 'hjyh-a0004', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (565, '皇家窑火·唐卡瓷画定制款', 119, 124, NULL, 0, 'hjyh-a0005', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (565, '皇家窑火·唐卡瓷画定制款', 119, 124, NULL, 0, 'hjyh-a0005', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (566, '1300元个性化定制', 105, 126, NULL, 0, 'gxh-a0001', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (566, '1300元个性化定制', 105, 126, NULL, 0, 'gxh-a0001', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (567, '1200元个性化定制', 104, 126, NULL, 0, 'gxh-a0002', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (567, '1200元个性化定制', 104, 126, NULL, 0, 'gxh-a0002', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (568, '鱼跃龙门项链', 105, 124, NULL, 0, 'ECS000568', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (568, '鱼跃龙门项链', 105, 124, NULL, 0, 'ECS000568', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (569, '5册装个性化定制', 105, 126, NULL, 0, 'ECS000569', NULL,
         'http://47.52.88.176/file/images/201801/file_5a55d3b55d55e.png', 'default', 0, '2020-12-10 22:36:01',
@@ -2363,7 +2377,7 @@ VALUES (273, '金和汇景•戴荣华•古彩洛神赋瓷瓶', 71, 123, NULL, 
        (658, '金和汇景-鱼跃龙门办公杯1', 105, 128, NULL, 0, 'ECS000658', NULL,
         'http://47.52.88.176/file/images/201807/file_5b5bd66aa76b2.jpg', 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
-       (659, '100元个性化定制（建行外客户）', 105, 127, NULL, 0, 'ECS000659', NULL, '', 'default', 0, '2020-12-10 22:36:01',
+       (659, '100元个性化定制（建行外客户）', 105, 127, NULL, 0, 'ECS000659', NULL, NULL, 'default', 0, '2020-12-10 22:36:01',
         '2020-12-10 22:36:01'),
        (660, '先生瓷·四海升平办公杯', 105, 128, NULL, 0, 'ECS000660', NULL,
         'http://47.52.88.176/file/images/201811/file_5bf17473ba29d.jpg', 'default', 0, '2020-12-10 22:36:01',
@@ -2449,7 +2463,7 @@ VALUES (10000, '测试商品123', 104, 126, 10001, 3, 'zgjyzgs-8060012', NULL,
         '2020-12-16 18:23:10');
 INSERT INTO `goods_spu`(`id`, `name`, `brand_id`, `category_id`, `freight_id`, `shop_id`, `goods_sn`, `detail`,
                         `image_url`, `spec`, `disabled`, `gmt_create`, `gmt_modified`)
-VALUES (10001, '测试商品1234', 104, 126, 10002, 3, 'zgjyzgs-8060112', NULL,
+VALUES (10001, '测试商品1234', 104, 126, NULL, 3, 'zgjyzgs-8060112', NULL,
         'http://47.52.88.176/file/images/201912/file_5df048b5be168.jpg', 'default', 4, '2020-12-16 18:24:16',
         '2020-12-16 18:24:16');
 INSERT INTO `goods_spu`(`id`, `name`, `brand_id`, `category_id`, `freight_id`, `shop_id`, `goods_sn`, `detail`,
@@ -2525,24 +2539,24 @@ LOCK TABLES `groupon_activity` WRITE;
 /*!40000 ALTER TABLE `groupon_activity`
     DISABLE KEYS */;
 /*LiDiHanTest*/
-INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`,
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`,
                                 `gmt_create`, `gmt_modified`)
-VALUES (1, '双十一', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '', '2020-12-09 11:57:39',
+VALUES (1, '双十一', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '2020-12-09 11:57:39',
         '2020-12-09 11:57:39');
-INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`,
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`,
                                 `gmt_create`, `gmt_modified`)
-VALUES (2, '双十二', '2020-12-29 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '', '2020-12-09 11:57:39',
+VALUES (2, '双十二', '2020-12-29 11:57:39', '2020-12-30 11:57:39', 0, 2, 273, '2020-12-09 11:57:39',
         '2020-12-09 11:57:39');
-INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`,
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`,
                                 `gmt_create`, `gmt_modified`)
-VALUES (3, '黑色星期五', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '', '2020-12-09 11:57:39',
+VALUES (3, '黑色星期五', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '2020-12-09 11:57:39',
         '2020-12-09 11:57:39');
-INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`,
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`,
                                 `gmt_create`, `gmt_modified`)
-VALUES (4, '儿童节', '2020-6-1 11:57:39', '2020-6-2 11:57:39', 1, 1, 273, '', '2020-6-1 11:57:39', '2020-6-1 11:57:39');
-INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`, `strategy`,
+VALUES (4, '儿童节', '2020-6-1 11:57:39', '2020-6-2 11:57:39', 1, 2, 273, '2020-6-1 11:57:39', '2020-6-1 11:57:39');
+INSERT INTO `groupon_activity` (`id`, `name`, `begin_time`, `end_time`, `state`, `shop_id`, `goods_spu_id`,
                                 `gmt_create`, `gmt_modified`)
-VALUES (5, '劳动节', '2020-12-05 11:57:39', '2020-12-30 11:57:39', 0, 1, 273, '', '2020-12-09 11:57:39',
+VALUES (5, '劳动节', '2020-12-05 11:57:39', '2020-12-09 11:57:39', 0, 1, 273, '2020-12-09 11:57:39',
         '2020-12-09 11:57:39');
 /*!40000 ALTER TABLE `groupon_activity`
     ENABLE KEYS */;
@@ -2668,119 +2682,3 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-12-10 22:36:56
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
---
--- Host: localhost    Database: oomall_goods
--- ------------------------------------------------------
--- Server version	8.0.22
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE = @@TIME_ZONE */;
-/*!40103 SET TIME_ZONE = '+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
-/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
-
---
--- Dumping data for table `brand`
---
-
-
---
--- Dumping data for table `comment`
---
-
-
---
--- Dumping data for table `coupon`
---
-
-
---
--- Dumping data for table `coupon_activity`
-
-
---
--- Dumping data for table `coupon_sku`
---
-
-LOCK TABLES `coupon_sku` WRITE;
-/*!40000 ALTER TABLE `coupon_sku`
-    DISABLE KEYS */;
-select '/*BaiHaoyueTest*/';
-select '/*ChenPinzhenTest*/';
-select '/*LiuFeiyanTest*/';
-INSERT INTO `coupon_sku`(`id`, `activity_id`, `sku_id`, `gmt_create`, `gmt_modified`)
-VALUES (1234, 2158, 273, '2020-12-17 14:26:03', NULL);
-
-select '/*Ming Qiu*/';
-
-/*!40000 ALTER TABLE `coupon_sku`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `flash_sale`
---
-
-LOCK TABLES `flash_sale` WRITE;
-/*!40000 ALTER TABLE `flash_sale`
-    DISABLE KEYS */;
-select '/*SongRunhanTest*/';
-select '/*ShaoLiangYingTest*/';
-
-/*!40000 ALTER TABLE `flash_sale`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `flash_sale_item`
---
-
-LOCK TABLES `flash_sale_item` WRITE;
-/*!40000 ALTER TABLE `flash_sale_item`
-    DISABLE KEYS */;
-select '/*SongRunhanTest*/';
-
-/*!40000 ALTER TABLE `flash_sale_item`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `float_price`
---
-
-LOCK TABLES `float_price` WRITE;
-/*!40000 ALTER TABLE `float_price`
-    DISABLE KEYS */;
-select '/*WangYiFeiTest*/';
-
-select '/*ChenPinzhenTest*/';
-
-
-select '/*ShaoLiangYingTest*/';
-select '/*Ming Qiu*/';
-
-/*!40000 ALTER TABLE `float_price`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `goods_category`
---
-
-LOCK TABLES `goods_category` WRITE;
-/*!40000 ALTER TABLE `goods_category`
-    DISABLE KEYS */;
-/*!40000 ALTER TABLE `goods_category`
-    ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `goods_sku`
---
-

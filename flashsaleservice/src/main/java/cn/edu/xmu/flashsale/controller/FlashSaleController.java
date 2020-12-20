@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.xmu.flashsale.model.vo.*;
-import cn.edu.xmu.flashsale.model.bo.*;
 import cn.edu.xmu.flashsale.service.FlashSaleService;
 import org.slf4j.Logger;
 import cn.edu.xmu.ooad.annotation.Audit;
@@ -22,7 +21,6 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
-import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import reactor.core.publisher.Flux;
 

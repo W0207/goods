@@ -10,11 +10,13 @@ import cn.edu.xmu.outer.model.bo.MyReturn;
  */
 public interface IFreightService {
     //商品模块集成
+
     /**
-    *获取运费模板信息
-    *@param freightId
-    * @return
-    */
-MyReturn<Freight> getFreightById(Long freightId);
+     * 获取运费模板信息
+     *
+     * @param freightId
+     * @return
+     */
+    MyReturn<Freight> getFreightById(Long freightId);
 
 }

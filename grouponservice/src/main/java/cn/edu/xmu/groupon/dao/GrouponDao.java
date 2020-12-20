@@ -4,24 +4,19 @@ import cn.edu.xmu.ininterface.service.InShopService;
 import cn.edu.xmu.ininterface.service.Ingoodservice;
 import cn.edu.xmu.ininterface.service.model.vo.ShopToAllVo;
 import cn.edu.xmu.ininterface.service.model.vo.SpuToGrouponVo;
-import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import cn.edu.xmu.groupon.mapper.*;
 import cn.edu.xmu.groupon.model.bo.*;
 import cn.edu.xmu.groupon.model.po.*;
 import cn.edu.xmu.groupon.model.vo.*;
-import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +106,7 @@ public class GrouponDao {
      */
 
 
-    public PageInfo<GrouponActivityPo>findShopGroupon(Integer state, Long spuId, Long id, Integer page, Integer pageSize, String beginTime, String endTime) {
+    public PageInfo<GrouponActivityPo> findShopGroupon(Integer state, Long spuId, Long id, Integer page, Integer pageSize, String beginTime, String endTime) {
         GrouponActivityPoExample example = new GrouponActivityPoExample();
         GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andShopIdEqualTo(id);
@@ -132,6 +127,7 @@ public class GrouponDao {
         grouponActivityPos = grouponActivityPoMapper.selectByExample(example);
         return new PageInfo<>(grouponActivityPos);
     }
+
     /**
      * 新增团购活动
      *
@@ -143,7 +139,7 @@ public class GrouponDao {
      */
 
     public ReturnObject addGroupon(Long id, GrouponInputVo grouponInputVo, Long shopId) {
-        ReturnObject returnObject=null;
+        ReturnObject returnObject = null;
         boolean bool = inShopService.shopExitOrNot(shopId);
         if (!bool) {
             logger.info("该店铺不存在");
@@ -168,8 +164,8 @@ public class GrouponDao {
             logger.info("团购活动开始时间早于当前时间");
             return new ReturnObject(ResponseCode.FIELD_NOTVALID, String.format("开始时间早于当前时间"));
         }
-        GrouponActivityPoExample example=new GrouponActivityPoExample();
-        GrouponActivityPoExample.Criteria criteria=example.createCriteria();
+        GrouponActivityPoExample example = new GrouponActivityPoExample();
+        GrouponActivityPoExample.Criteria criteria = example.createCriteria();
         criteria.andGoodsSpuIdEqualTo(id);
 //        List<GrouponActivityPo>grouponActivityPos=grouponActivityPoMapper.selectByExample(example);
 //        if(grouponActivityPos!=null){
@@ -200,7 +196,7 @@ public class GrouponDao {
             GrouponOutputVo grouponOutputVo = new GrouponOutputVo(grouponActivityPo);
             grouponOutputVo.setShopToAllVo(shopToAllVo);
             grouponOutputVo.setGoodsSpu(spuToGrouponVo);
-            returnObject=new ReturnObject(grouponOutputVo);
+            returnObject = new ReturnObject(grouponOutputVo);
         }
 
         return returnObject;
@@ -217,25 +213,25 @@ public class GrouponDao {
     public ReturnObject modifyGrouponById(Long id, GrouponInputVo grouponInputVo, Long shopId) {
         ReturnObject returnObject;
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
+        boolean bool = inShopService.shopExitOrNot(shopId);
+        if (!bool) {
             logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不存在"));
         }
-        if(grouponInputVo.getBeginTime().isAfter(grouponInputVo.getEndTime())){
+        if (grouponInputVo.getBeginTime().isAfter(grouponInputVo.getEndTime())) {
             logger.info("团购活动开始时间晚于结束时间");
-            return  new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        if(grouponInputVo.getEndTime()==null||grouponInputVo.getBeginTime()==null){
-            return  new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        if (grouponInputVo.getEndTime() == null || grouponInputVo.getBeginTime() == null) {
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
-        if(grouponInputVo.getBeginTime().isBefore(LocalDateTime.now())){
+        if (grouponInputVo.getBeginTime().isBefore(LocalDateTime.now())) {
             logger.info("团购活动开始时间早于当前时间时间");
-            return  new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("团购活动开始时间早于当前时间时间"));
+            return new ReturnObject(ResponseCode.FIELD_NOTVALID, String.format("团购活动开始时间早于当前时间时间"));
         }
         if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：Id = " + id);
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动不存在"));
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动不存在"));
         }
         Long shopid = po.getShopId() == null ? null : po.getShopId();
         if (shopId.equals(shopid)) {
@@ -243,17 +239,17 @@ public class GrouponDao {
             GrouponActivityPo grouponActivityPo = grouponActivity.creatUpdatePo(grouponInputVo);
             if (po.getState() == 1) {
                 logger.info("团购活动已上线，无法修改：grouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已上线"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已上线"));
             }
             if (po.getState() == 2) {
                 logger.info("团购活动已删除，无法修改：grouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已删除"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已删除"));
             }
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(grouponActivityPo);
             if (ret == 0) {
                 //检查更新是否成功
                 logger.info("团购活动修改失败：grouponId = " + id);
-                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动修改失败"));
+                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动修改失败"));
             } else {
                 logger.info("grouponId = " + id + " 的信息已更新");
                 returnObject = new ReturnObject();
@@ -279,26 +275,26 @@ public class GrouponDao {
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
         if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动不存在"));
         }
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
-            logger.info("该店铺不存在：shopId ="+shopId);
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+        boolean bool = inShopService.shopExitOrNot(shopId);
+        if (!bool) {
+            logger.info("该店铺不存在：shopId =" + shopId);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不存在"));
         }
 
         if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW,String.format("店铺不存在"));
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW, String.format("店铺不存在"));
         }
 
         if (po.getShopId().equals(shopId)) {
             if (po.getState() == 2) {
                 logger.info("团购活动已删除：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已删除"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已删除"));
             } else if (po.getState() == 1) {
                 logger.info("团购活动已上线，无法修改：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已上线"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已上线"));
             }
 
             po.setState(2);
@@ -306,7 +302,7 @@ public class GrouponDao {
             ReturnObject<Object> returnObject;
             if (ret == 0) {
                 logger.info("团购活动删除失败：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动删除失败"));
+                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动删除失败"));
             } else {
                 logger.info("团购活动删除成功：GrouponId = " + id);
                 returnObject = new ReturnObject();
@@ -314,7 +310,7 @@ public class GrouponDao {
             }
         }
         logger.info("无权限修改团购活动：GrouponId = " + id);
-        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE,String.format("团购活动不属于该店铺"));
+        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("团购活动不属于该店铺"));
     }
 
     /**
@@ -325,37 +321,37 @@ public class GrouponDao {
      * @return
      */
     public ReturnObject onGrouponState(Long shopId, Long id) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
+        boolean bool = inShopService.shopExitOrNot(shopId);
+        if (!bool) {
             logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不存在"));
         }
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
         if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动不存在"));
         }
 
         if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW,String.format("店铺不存在"));
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW, String.format("店铺不存在"));
         }
 
 
         if (po.getShopId().equals(shopId)) {
             if (po.getState() == 2) {
                 logger.info("团购活动已删除：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已删除"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已删除"));
             } else if (po.getState() == 1) {
                 logger.info("团购活动已上线：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已上线"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已上线"));
             }
             po.setState(1);
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(po);
             ReturnObject<Object> returnObject;
             if (ret == 0) {
                 logger.info("团购活动上线失败：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购活动上线失败"));
+                return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购活动上线失败"));
             } else {
                 logger.info("团购活动上线成功：GrouponId = " + id);
                 returnObject = new ReturnObject();
@@ -363,7 +359,7 @@ public class GrouponDao {
             }
         }
         logger.info("无权限修改团购活动：GrouponId = " + id);
-        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE,String.format("活动不属于该店铺"));
+        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("活动不属于该店铺"));
     }
 
 
@@ -375,37 +371,36 @@ public class GrouponDao {
      * @return
      */
     public ReturnObject offGrouponState(Long shopId, Long id) {
-        boolean bool= inShopService.shopExitOrNot(shopId);
-        if(!bool){
+        boolean bool = inShopService.shopExitOrNot(shopId);
+        if (!bool) {
             logger.info("该店铺不存在");
-            return  new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不存在"));
         }
         GrouponActivityPo po = grouponActivityPoMapper.selectByPrimaryKey(id);
         if (po == null || po.getState() == null) {
             logger.info("团购活动不存在或已被删除：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("团购不存在"));
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("团购不存在"));
         }
 
         if (po.getShopId() == null) {
             logger.info("无法修改：GrouponId = " + id);
-            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW,String.format("店铺Id为空"));
+            return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW, String.format("店铺Id为空"));
         }
-
 
         if (po.getShopId().equals(shopId)) {
             if (po.getState() == 2) {
                 logger.info("团购活动已删除：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已删除"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已删除"));
             } else if (po.getState() == 0) {
                 logger.info("团购活动已下线：GrouponId = " + id);
-                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW,String.format("团购活动已下线"));
+                return new ReturnObject(ResponseCode.GROUPON_STATENOTALLOW, String.format("团购活动已下线"));
             }
             po.setState(0);
             int ret = grouponActivityPoMapper.updateByPrimaryKeySelective(po);
             ReturnObject<Object> returnObject;
             if (ret == 0) {
                 logger.info("团购活动下线失败：GrouponId = " + id);
-                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,String.format("店铺不存在"));
+                returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺不存在"));
             } else {
                 logger.info("团购活动下线成功：GrouponId = " + id);
                 returnObject = new ReturnObject();
@@ -413,26 +408,26 @@ public class GrouponDao {
             return returnObject;
         }
         logger.info("无权限修改团购活动：GrouponId = " + id);
-        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE,String.format("活动不属于该店铺"));
+        return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, String.format("活动不属于该店铺"));
     }
 
     public boolean disableActivity(Long shopId) {
-        try{
+        try {
             GrouponActivityPoExample example = new GrouponActivityPoExample();
             GrouponActivityPoExample.Criteria criteria = example.createCriteria();
             criteria.andShopIdEqualTo(shopId);
             List<Byte> states = new ArrayList<>();
             states.add((byte) 0);
-            states.add((byte)1);
+            states.add((byte) 1);
             criteria.andStateIn(states);
             List<GrouponActivityPo> pos = grouponActivityPoMapper.selectByExample(example);
-            for(GrouponActivityPo po: pos){
+            for (GrouponActivityPo po : pos) {
                 po.setGmtModified(LocalDateTime.now());
                 po.setState(2);
                 grouponActivityPoMapper.updateByPrimaryKey(po);
             }
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
