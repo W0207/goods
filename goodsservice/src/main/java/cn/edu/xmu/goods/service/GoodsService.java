@@ -134,7 +134,7 @@ public class GoodsService implements Ingoodservice {
     @Override
     public boolean spuInShopOrNot(Long shopId, Long id) {
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
-        if(goodsSpuPo==null){
+        if (goodsSpuPo == null) {
             return false;
         }
         return shopId.equals(goodsSpuPo.getShopId());
@@ -741,7 +741,7 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.creatSku(id, shopId, skuCreatVo);
     }
 
-//    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
-//        return goodsDao.getShare(sid, id, userId, departId);
-//    }
+    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
+        return goodsDao.getShare(sid, id, userId, departId);
+    }
 }

@@ -441,14 +441,9 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/categories/{id}")
-    public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, BindingResult bindingResult, @PathVariable Long shopId, @Depart Long shopid) {
+    public Object modifyGoodsType(@PathVariable Long id, @Validated @RequestBody CategoryInputVo categoryInputVo, @PathVariable Long shopId, @Depart Long shopid) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyGoodsType: CategoryId = " + id);
-        }
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if (returnObject != null) {
-            logger.info("incorrect data received while modifyGoodsType id = ", id);
-            return returnObject;
         }
         if (shopId == 0) {
             ReturnObject returnObj = goodsService.modifyCategory(id, categoryInputVo);
@@ -953,19 +948,23 @@ public class GoodsController {
 
     }
 
-//    /**
-//     *
-//     */
-//    @ApiOperation(value = "查看一条分享sku的详细信息")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
-//            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "sid", value = "分享id", required = true),
-//            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
-//    })
-//    @Audit
-//    @GetMapping("/share/{sid}/skus/{id}")
-//    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
-//        ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
-//        return Common.decorateReturnObject(returnObject);
-//    }
+    /**
+     * @param sid
+     * @param id
+     * @param userId
+     * @param departId
+     * @return
+     */
+    @ApiOperation(value = "查看一条分享sku的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "sid", value = "分享id", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "Long", name = "id", value = "skuId", required = true),
+    })
+    @Audit
+    @GetMapping("/share/{sid}/skus/{id}")
+    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+        ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
+        return Common.decorateReturnObject(returnObject);
+    }
 }

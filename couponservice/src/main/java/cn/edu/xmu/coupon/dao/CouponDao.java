@@ -260,7 +260,6 @@ public class CouponDao {
                                 }
                                 //总数控制，总共有quantity张优惠券
                                 couponSn = couponSnArray.toArray(new String[couponSnArray.size()]);
-                                System.out.println(couponSn);
                                 return new ReturnObject(couponSn);
                             } else if (po.getQuantitiyType().equals((byte) 1)) {
                                 if (po.getQuantity() > 0) {
@@ -289,7 +288,6 @@ public class CouponDao {
                                     couponSn = couponSnArray.toArray(new String[couponSnArray.size()]);
                                     return new ReturnObject(couponSn);
                                 }
-
                             } else {
                                 return new ReturnObject(ResponseCode.COUPON_FINISH);
                             }

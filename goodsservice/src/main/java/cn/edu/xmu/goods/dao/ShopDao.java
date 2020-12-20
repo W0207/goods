@@ -8,10 +8,6 @@ import cn.edu.xmu.goods.model.bo.Shop;
 import cn.edu.xmu.goods.model.po.*;
 import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.goods.model.vo.ShopRetVo;
-import cn.edu.xmu.ininterface.service.DisableCouponActivityService;
-import cn.edu.xmu.ininterface.service.DisableFlashActivityService;
-import cn.edu.xmu.ininterface.service.DisableGrouponActivityService;
-import cn.edu.xmu.ininterface.service.DisablePresaleActivityService;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -66,13 +62,6 @@ public class ShopDao {
     public ReturnObject insertShop(Shop shop) {
         ShopPo shopPo = shop.getShopPo();
         ReturnObject<Shop> returnObject = null;
-//        ShopPoExample example = new ShopPoExample();
-//        ShopPoExample.Criteria criteria = example.createCriteria();
-//        criteria.andNameEqualTo(shopPo.getName());
-//        List<ShopPo> pos = shopPoMapper.selectByExample(example);
-//        if(pos.size()!=0){
-//            return new ReturnObject<>(ResponseCode.USER_HASSHOP);
-//        }
         try {
             int ret = shopPoMapper.insertSelective(shopPo);
             if (ret == 0) {
@@ -114,7 +103,7 @@ public class ShopDao {
             int ret = shopPoMapper.updateByPrimaryKeySelective(shopPo);
             if (ret == 0) {
                 //修改失败
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "店铺id不存在：" + shopPo.getId());
 
             } else {
                 //修改成功
