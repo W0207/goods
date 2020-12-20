@@ -36,11 +36,11 @@ public class CommentDao implements InitializingBean {
     @Autowired
     private CommentPoMapper commentPoMapper;
 
-    @DubboReference(version = "0.0.1", check = false)
-    private OtherModulService otherModulService;
-
-    @DubboReference(version = "0.0.1", check = false)
-    private IOrderService iOrderService;
+//    @DubboReference(version = "0.0.1", check = false)
+//    private OtherModulService otherModulService;
+//
+//    @DubboReference(version = "0.0.1", check = false)
+//    private IOrderService iOrderService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentDao.class);
 
@@ -152,21 +152,34 @@ public class CommentDao implements InitializingBean {
         commentPo.setState((byte) 0);
         commentPo.setType(commentInputVo.getType());
         commentPo.setOrderitemId(id);
-        commentPo.setGoodsSkuId(iOrderService.getSkuIdByOderItem(id).getData());
+        //commentPo.setGoodsSkuId(iOrderService.getSkuIdByOderItem(id).getData());
         commentPo.setGmtCreate(LocalDateTime.now());
         commentPo.setContent(commentInputVo.getContent());
         commentPo.setOrderitemId(id);
 
+        CommentPoExample example = new CommentPoExample();
+        CommentPoExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(userId);
+        criteria.andOrderitemIdEqualTo(id);
         ReturnObject<Comment> returnObject = null;
+        if(commentInputVo.getType()!=0&&commentInputVo.getType()!=1&&commentInputVo.getType()!=2) {
+            returnObject = new ReturnObject<>(ResponseCode.FIELD_NOTVALID);
+            return returnObject;
+        }
+        if(commentPoMapper.selectByExample(example).size()!=0) {
+            returnObject = new ReturnObject<>(ResponseCode.COMMENT_EXISTED);
+            return returnObject;
+        }
         try {
             int ret = commentPoMapper.insertSelective(commentPo);
             if (ret == 0) {
                 //插入失败
                 returnObject = new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
-            } else {
+            }
+            else {
                 //插入成功
                 CommentInput commentInput = new CommentInput(commentPo);
-                commentInput.setCustomer(otherModulService.getUserInfo(commentPo.getCustomerId()).getData());
+                //commentInput.setCustomer(otherModulService.getUserInfo(commentPo.getCustomerId()).getData());
                 returnObject = new ReturnObject(commentInput);
             }
         } catch (DataAccessException e) {
