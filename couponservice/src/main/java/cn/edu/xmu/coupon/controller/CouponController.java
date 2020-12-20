@@ -291,6 +291,9 @@ public class CouponController {
         }
         ReturnObject returnObject = couponService.addCouponActivity(shopId, userId, vo);
         response.setStatus(getStatue(returnObject));
+        if(returnObject.getCode()==ResponseCode.OK){
+            response.setStatus(201);
+        }
         return Common.decorateReturnObject(returnObject);
     }
 

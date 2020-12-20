@@ -159,7 +159,6 @@ public class PresaleDao {
             criteria.andGoodsSkuIdEqualTo(skuId);
         }
         List<Byte> states = new ArrayList<>();
-        states.add((byte) 0);
         states.add((byte) 1);
         criteria.andStateIn(states);
         List<PresaleActivityPo> presaleActivityPos = presaleActivityPoMapper.selectByExample(presaleActivityPoExample);
@@ -170,13 +169,11 @@ public class PresaleDao {
             vo.setGoodsSku(goodservice.presaleFindSku(po.getGoodsSkuId()));
             presaleActivityRetVos.add(vo);
         }
-        PageInfo<PresaleActivityPo> poPageInfo = PageInfo.of(presaleActivityPos);
         PageInfo<PresaleActivityRetVo> voPageInfo = PageInfo.of(presaleActivityRetVos);
-        PageInfo<PresaleActivityRetVo> presalePage = new PageInfo<>(presaleActivityRetVos);
-        presalePage.setPages(poPageInfo.getPages());
-        presalePage.setPageNum(poPageInfo.getPageNum());
-        presalePage.setPageSize(poPageInfo.getPageSize());
-        presalePage.setTotal(poPageInfo.getTotal());
+        voPageInfo.setPages(PageInfo.of(presaleActivityPos).getPages());
+        voPageInfo.setPageNum(page);
+        voPageInfo.setPageSize(pageSize);
+        voPageInfo.setTotal(PageInfo.of(presaleActivityPos).getTotal());
         /**
          * 还缺少关于sku的信息
          */
