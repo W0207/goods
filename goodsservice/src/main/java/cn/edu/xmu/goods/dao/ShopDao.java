@@ -172,7 +172,7 @@ public class ShopDao {
                 returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
             } else {
                 Shop shopSelect = new Shop(shopPoSelect);
-                if (shopPo.getState().equals((byte)3) || shopPo.getState().equals((byte)4) || shopPo.getState().equals((byte)0)) {
+                if (shopPoSelect.getState().equals((byte)3) || shopPoSelect.getState().equals((byte)4) || shopPoSelect.getState().equals((byte)0)) {
                     logger.info(shopSelect.getState().getDescription() + "当前状态无法进行变迁");
                     returnObject = new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW, String.format("店铺不允许转换" + shopPo.getId()));
                 } else {
