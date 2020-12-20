@@ -57,14 +57,14 @@ public class CouponActivityDao implements InitializingBean {
         return couponActivityPoMapper.selectByPrimaryKey(id);
     }
 
-    public ReturnObject<Object> modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo) {
+    public ReturnObject<Object> modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo,Long ShopId) {
 
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
         if (couponActivityPo == null) {
             logger.info("优惠活动id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(!couponActivityPo.getShopId().equals(shopId)) {
+        if(!couponActivityPo.getShopId().equals(shopId)&&ShopId!=0) {
             logger.debug("商店不对");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }

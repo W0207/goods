@@ -66,8 +66,10 @@ public class CouponControllerTest {
      */
     @Test
     public void deleteCouponActivity() throws Exception {
-        String responseString = this.mvc.perform(delete("/coupon/shops/1/couponactivities/1").contentType("application/json;charset=UTF-8"))
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(delete("/coupon/shops/0/couponactivities/1")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }
@@ -146,7 +148,7 @@ public class CouponControllerTest {
     @Test
     public void modifyCouponActivity() throws Exception {
         String requireJson = "{\n  \"name\":\"啊这\",\n  \"quantity\": \"20\"\n}";
-        String token = creatTestToken(1L, 123L, 100);
+        String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(put("/coupon/shops/123/couponactivities/1")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
@@ -161,7 +163,7 @@ public class CouponControllerTest {
     /**
      * 买家使用自己某优惠券
      */
-    @Test
+   /* @Test
     public void useCoupon1() throws Exception {
         String token = creatTestToken(1L, 123L, 100);
         String responseString = this.mvc.perform(put("/coupon/1")
@@ -185,7 +187,7 @@ public class CouponControllerTest {
         System.out.println(responseString);
         CouponPo couponPo = couponPoMapper.selectByPrimaryKey(1L);
         JSONAssert.assertEquals(expectedResponse, responseString, true);
-    }
+    }*/
 
 
     /**
@@ -225,9 +227,13 @@ public class CouponControllerTest {
         vo.setStrategy("aaaaa");
         String jsonStr = JacksonUtil.toJson(vo);
 
-        String responseString = this.mvc.perform(post("/coupon/shops/8/couponactivities").contentType("application/json;charset=UTF-8").content(jsonStr))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+
+        String token = creatTestToken(1L, 1L, 100);
+        String requireJson = "{\n  \"skuId\":\"123456\"}";
+        String responseString = this.mvc.perform(post("/coupon/shops/1/couponactivities/1/skus")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(responseString);
     }

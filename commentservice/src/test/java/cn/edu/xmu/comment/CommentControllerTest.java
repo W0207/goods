@@ -176,7 +176,7 @@ public class CommentControllerTest {
     @Test
     public void auditComment1() throws Exception {
         String requireJson = "{\n" +
-                "  \"state\":\"true\"\n" +
+                "  \"conclusion\":\"true\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(put("/comment/shops/0/comments/1/confirm")
@@ -191,7 +191,7 @@ public class CommentControllerTest {
     @Test
     public void auditComment2() throws Exception {
         String requireJson = "{\n" +
-                "  \"state\":\"false\"\n" +
+                "  \"conclusion\":\"false\"\n" +
                 "}";
         String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(put("/comment/shops/0/comments/1/confirm")
