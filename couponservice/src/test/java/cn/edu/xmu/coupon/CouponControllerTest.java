@@ -84,8 +84,8 @@ public class CouponControllerTest {
     }
 
     @Test
-    public void create(){
-        logger.debug("************************"+creatTestToken(1L,0L,1000*60*60*24)+"*****************");
+    public void create() {
+        logger.debug("************************" + creatTestToken(1L, 0L, 1000 * 60 * 60 * 24) + "*****************");
     }
 
     @Test
