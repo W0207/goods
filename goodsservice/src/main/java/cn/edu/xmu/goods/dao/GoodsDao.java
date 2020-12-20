@@ -96,9 +96,6 @@ public class GoodsDao {
      * @return GoodsSpuPo
      */
     public GoodsSpuPo findGoodsSpuById(Long id) {
-        GoodsSpuPoExample example = new GoodsSpuPoExample();
-        GoodsSpuPoExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(id);
         logger.debug("findGoodsSpuById : spuId=" + id);
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(id);
         return goodsSpuPo;

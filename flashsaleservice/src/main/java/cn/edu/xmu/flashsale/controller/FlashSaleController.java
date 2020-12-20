@@ -111,8 +111,8 @@ public class FlashSaleController {
     @Audit
     @GetMapping("/timesegments/{id}/flashsales")
     public Object queryTopicsByTime(@PathVariable Long id, HttpServletResponse response,
-                                    @RequestParam(required = false) Integer page,
-                                    @RequestParam(required = false) Integer pageSize) {
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         if(page<0||pageSize<0){
@@ -144,8 +144,8 @@ public class FlashSaleController {
     })
     @GetMapping("/flashsales/current")
     public List queryCurrentTopics(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer pageSize) {
+                                    @RequestParam(required = false) Integer page,
+                                    @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
         //Long id=Long.valueOf(4);

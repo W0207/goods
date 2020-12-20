@@ -134,6 +134,9 @@ public class GoodsService implements Ingoodservice {
     @Override
     public boolean spuInShopOrNot(Long shopId, Long id) {
         GoodsSpuPo goodsSpuPo = goodsDao.findGoodsSpuById(id);
+        if(goodsSpuPo==null){
+            return false;
+        }
         return shopId.equals(goodsSpuPo.getShopId());
     }
 
