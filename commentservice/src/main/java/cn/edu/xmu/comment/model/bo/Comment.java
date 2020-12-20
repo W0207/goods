@@ -17,11 +17,11 @@ public class Comment implements VoObject {
 
     private Long id;
 
-    private Long customer_id;
+    private Long customerId;
 
-    private Long goods_sku_id;
+    private Long goodsSkuId;
 
-    private Long orderitem_id;
+    private Long orderitemId;
 
     private Byte type;
 
@@ -35,6 +35,43 @@ public class Comment implements VoObject {
 
     private UserInfo customer;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public void setOrderitem_id(Long orderitem_id) {
+        this.orderitemId = orderitem_id;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setCustomer(UserInfo customer) {
+        this.customer = customer;
+    }
+
+    public Comment() {
+
+    }
+
     public void setUserInfo(UserInfo userInfo) {
         this.customer = userInfo;
     }
@@ -46,11 +83,11 @@ public class Comment implements VoObject {
     public Comment(CommentPo po) {
         this.id = po.getId();
         this.content = po.getContent();
-        this.customer_id = po.getCustomerId();
+        this.customerId = po.getCustomerId();
         this.gmtCreate = po.getGmtCreate();
         this.gmtModified = po.getGmtModified();
-        this.goods_sku_id = po.getGoodsSkuId();
-        this.orderitem_id = po.getOrderitemId();
+        this.goodsSkuId = po.getGoodsSkuId();
+        this.orderitemId = po.getOrderitemId();
         this.state = po.getState();
         this.type = po.getType();
     }
@@ -135,15 +172,15 @@ public class Comment implements VoObject {
     }
 
     public Long getCustomer_id() {
-        return customer_id;
+        return customerId;
     }
 
     public Long getGoods_sku_id() {
-        return goods_sku_id;
+        return goodsSkuId;
     }
 
     public Long getOrderitem_id() {
-        return orderitem_id;
+        return orderitemId;
     }
 
     public String getContent() {

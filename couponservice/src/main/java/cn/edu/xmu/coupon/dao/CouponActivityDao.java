@@ -57,14 +57,14 @@ public class CouponActivityDao implements InitializingBean {
         return couponActivityPoMapper.selectByPrimaryKey(id);
     }
 
-    public ReturnObject<Object> modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo) {
+    public ReturnObject<Object> modifyCouponActivityByID(Long id, Long shopId, CouponActivityModifyVo couponActivityModifyVo,Long ShopId) {
 
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
         if (couponActivityPo == null) {
             logger.info("优惠活动id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(!couponActivityPo.getShopId().equals(shopId)) {
+        if(!couponActivityPo.getShopId().equals(shopId)&&ShopId!=0) {
             logger.debug("商店不对");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
@@ -181,8 +181,7 @@ public class CouponActivityDao implements InitializingBean {
                             couponSkuPoMapper.deleteByPrimaryKey(po.getId());
                         }
                         returnObject = new ReturnObject();
-                    }
-                    else{
+                    } else {
                         returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
                     }
                 }
@@ -196,13 +195,13 @@ public class CouponActivityDao implements InitializingBean {
 
     }
 
-    private void skuDeleteNotExit(List<CouponSkuPo> skuPos){
-        for(CouponSkuPo po:skuPos){
+    private void skuDeleteNotExit(List<CouponSkuPo> skuPos) {
+        for (CouponSkuPo po : skuPos) {
             couponSkuPoMapper.deleteByPrimaryKey(po.getId());
         }
     }
 
-    public ReturnObject rangeForCouponActivityById(Long id, Long shopId,  Long[] skuIds) {
+    public ReturnObject rangeForCouponActivityById(Long id, Long shopId, Long[] skuIds) {
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
         if (couponActivityPo == null) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
@@ -210,15 +209,15 @@ public class CouponActivityDao implements InitializingBean {
         if (!couponActivityPo.getShopId().equals(shopId)) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
-        if(couponActivityPo.getState().equals((byte)2)){
+        if (couponActivityPo.getState().equals((byte) 2)) {
             return new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
         }
         List<CouponSkuPo> skuPos = new ArrayList<>();
         for (Long aId : skuIds) {
-            if(!ingoodservice.skuExitOrNot(aId)){
+            if (!ingoodservice.skuExitOrNot(aId)) {
                 return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
-            if(!ingoodservice.skuInShopOrNot(shopId,aId)){
+            if (!ingoodservice.skuInShopOrNot(shopId, aId)) {
                 return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
             }
             CouponSkuPo couponSkuPo = new CouponSkuPo();
@@ -357,12 +356,12 @@ public class CouponActivityDao implements InitializingBean {
         AddCouponActivityRetVo vo = new AddCouponActivityRetVo(po);
         UserVo userVo = new UserVo();
         userVo.setId(po.getCreatedBy());
-        userVo.setName(iUserService.getUserName(po.getCreatedBy()));
+        //userVo.setName(iUserService.getUserName(po.getCreatedBy()));
         vo.setCreatedBy(userVo);
         if (po.getModiBy() != null) {
             UserVo userVo1 = new UserVo();
             userVo1.setId(po.getModiBy());
-            userVo1.setName(iUserService.getUserName(po.getModiBy()));
+            //userVo1.setName(iUserService.getUserName(po.getModiBy()));
             vo.setModiBy(userVo1);
         }
         vo.setShop(inShopService.presaleFindShop(shopId));

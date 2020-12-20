@@ -7,8 +7,12 @@ import cn.edu.xmu.external.model.MyReturn;
 import cn.edu.xmu.ooad.util.ReturnObject;
 
 
-/** 测试用的，别骂了别骂了 **/
+/**
+ * 测试用的，别骂了别骂了
+ **/
 public interface IGoodsService {
+
     ReturnObject<GoodSkuBo> getGoodSkuById(Long skuId);
+
     MyReturn<Boolean> resetFlashTimeSeg(Long segId);
 }

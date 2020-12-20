@@ -7,6 +7,7 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import java.time.LocalDateTime;
 
 public interface ITimeService {
+
     Long getCurrentSegId(LocalDateTime localDateTime);
 
     boolean isSegExist(Long segId);
