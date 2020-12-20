@@ -1,5 +1,9 @@
 package cn.edu.xmu.flashsale.dao;
 
+import cn.edu.xmu.ooad.model.VoObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import cn.edu.xmu.flashsale.mapper.*;
@@ -12,9 +16,11 @@ import cn.edu.xmu.ooad.util.ReturnObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.xmu.ininterface.service.model.vo.*;
@@ -39,8 +45,42 @@ public class FlashSaleDao {
     private Ingoodservice goodservice;
 
     @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private Ingoodservice ITimeService;
+
+    @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
 
+
+    public  ReturnObject<PageInfo<VoObject>> findFlashSale(Long id,Integer page,Integer PageSize){
+        FlashSalePoExample example=new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria=example.createCriteria();
+        criteria.andTimeSegIdEqualTo(id);
+        List<FlashSalePo>flashSalePos=flashSalePoMapper.selectByExample(example);
+        List<VoObject>flashSaleItems =new ArrayList<>();
+        List<FlashSaleItemPo> pos=new ArrayList<>();
+        for(FlashSalePo po:flashSalePos){
+            FlashSaleItemPoExample example1=new FlashSaleItemPoExample();
+            FlashSaleItemPoExample.Criteria criteria1=example1.createCriteria();
+            criteria1.andSaleIdEqualTo(po.getId());
+            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example1);
+            pos=flashSaleItemPos;
+            for(FlashSaleItemPo po1:flashSaleItemPos){
+                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po1.getGoodsSkuId());
+                FlashSaleItem flashSaleItem=new FlashSaleItem(po1,skuToFlashSaleVo);
+                flashSaleItems.add(flashSaleItem);
+            }
+
+        }
+        PageHelper.startPage(page,PageSize);
+        PageInfo<VoObject> flashPage=PageInfo.of(flashSaleItems);
+        flashPage.setPages((PageInfo.of(pos).getPages()));
+        flashPage.setPages(page);
+        flashPage.setPageSize(PageSize);
+        flashPage.setTotal((PageInfo.of(pos).getTotal()));
+        return new ReturnObject<>(flashPage) ;
+
+    }
     /**
      * 修改秒杀活动
      *
@@ -134,7 +174,7 @@ public class FlashSaleDao {
             return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         } else if (po.getState() == 2) {
             logger.info("秒杀活动已删除");
-            return new ReturnObject(ResponseCode.DELETE_CHANGAE_NOTALLOW);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         po.setState(Byte.valueOf("1"));
         int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
@@ -167,9 +207,9 @@ public class FlashSaleDao {
             return new ReturnObject(ResponseCode.AUTH_NOT_ALLOW);
         } else if (po.getState() == 2) {
             logger.info("秒杀活动已删除");
-            return new ReturnObject(ResponseCode.DELETE_CHANGAE_NOTALLOW);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        po.setState(Byte.valueOf("1"));
+        po.setState(Byte.valueOf("0"));
         int ret = flashSalePoMapper.updateByPrimaryKeySelective(po);
         ReturnObject<Object> returnObject;
         if (ret == 0) {
@@ -177,7 +217,7 @@ public class FlashSaleDao {
             returnObject = new ReturnObject(ResponseCode.ACTIVITYALTER_INVALID);
         } else {
             logger.info("秒杀活动下线成功：FlashSaleItemId = " + id);
-            returnObject = new ReturnObject();
+            returnObject = new ReturnObject(ResponseCode.OK);
         }
         return returnObject;
     }
@@ -274,17 +314,21 @@ public class FlashSaleDao {
      * @return
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
+
+        if(id<0){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         FlashSalePoExample example=new FlashSalePoExample();
         FlashSalePoExample.Criteria criteria=example.createCriteria();
-        if(flashSaleInputVo.getFlashDate()==null){
+        if(flashSaleInputVo.getFlashDate()==null||flashSaleInputVo.getFlashDate().isBefore(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0))){
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         criteria.andTimeSegIdEqualTo(id);
+        criteria.andFlashDateEqualTo(flashSaleInputVo.getFlashDate());
         List<FlashSalePo> po=flashSalePoMapper.selectByExample(example);
-        if(po!=null){
+        if(po.size()!=0){
             return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
         }
-
         FlashSalePo flashSalePo = new FlashSalePo();
         flashSalePo.setFlashDate(flashSaleInputVo.getFlashDate());
         flashSalePo.setGmtCreate(LocalDateTime.now());
@@ -307,6 +351,11 @@ public class FlashSaleDao {
         }
     }
 
+
+
+
+
+
     public boolean disableActivity(Long skuId) {
         FlashSaleItemPoExample example = new FlashSaleItemPoExample();
         FlashSaleItemPoExample.Criteria criteria = example.createCriteria();
@@ -327,5 +376,7 @@ public class FlashSaleDao {
         }
 
     }
+
+
 
 }
