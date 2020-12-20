@@ -291,7 +291,7 @@ public class CouponController {
         }
         ReturnObject returnObject = couponService.addCouponActivity(shopId, userId, vo);
         response.setStatus(getStatue(returnObject));
-        if(returnObject.getCode()==ResponseCode.OK){
+        if (returnObject.getCode() == ResponseCode.OK) {
             response.setStatus(201);
         }
         return Common.decorateReturnObject(returnObject);
@@ -465,7 +465,6 @@ public class CouponController {
     /**
      * 买家领取优惠券
      *
-     * @param id
      * @param userId
      * @return
      * @author 宇

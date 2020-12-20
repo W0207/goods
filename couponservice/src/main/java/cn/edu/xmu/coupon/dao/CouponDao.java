@@ -252,6 +252,7 @@ public class CouponDao {
                                     couponPo.setCustomerId(userId);
                                     couponPo.setName(po.getName());
                                     //缺少了sn的放置
+
                                     couponPoMapper.insert(couponPo);
                                 }
                                 //总数控制，总共有quantity张优惠券

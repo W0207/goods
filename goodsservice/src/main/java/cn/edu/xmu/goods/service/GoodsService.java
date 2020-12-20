@@ -738,7 +738,7 @@ public class GoodsService implements Ingoodservice {
         return goodsDao.creatSku(id, shopId, skuCreatVo);
     }
 
-    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
-        return goodsDao.getShare(sid, id, userId, departId);
-    }
+//    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
+//        return goodsDao.getShare(sid, id, userId, departId);
+//    }
 }

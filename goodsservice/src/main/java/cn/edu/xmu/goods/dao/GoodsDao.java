@@ -65,13 +65,13 @@ public class GoodsDao {
      */
     public static final byte DELETED = 6;
 
-    @Autowired
-    @DubboReference(version = "0.0.1", check = false)
-    private IFreightService iFreightService;
-
-    @Autowired
-    @DubboReference(version = "0.0.1", check = false)
-    private IShareService iShareService;
+//    @Autowired
+//    @DubboReference(version = "0.0.1", check = false)
+//    private IFreightService iFreightService;
+//
+//    @Autowired
+//    @DubboReference(version = "0.0.1", check = false)
+//    private IShareService iShareService;
 
     /**
      * 查找sku
@@ -1090,9 +1090,9 @@ public class GoodsDao {
             }
         }
         Long feightId = goodsSpuPo.getFreightId();
-        MyReturn<Freight> freight = iFreightService.getFreightById(feightId);
-        Freight freight1 = freight.getData();
-        spuRetVo.setFreight(freight1);
+//        MyReturn<Freight> freight = iFreightService.getFreightById(feightId);
+//        Freight freight1 = freight.getData();
+//        spuRetVo.setFreight(freight1);
         //记录分类信息
         Long categoryId = goodsSpuPo.getCategoryId();
         if (categoryId != null) {
@@ -1165,7 +1165,7 @@ public class GoodsDao {
     public ReturnObject creatSku(Long spuId, Long shopId, SkuCreatVo skuCreatVo) {
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(spuId);
         if (goodsSpuPo == null || goodsSpuPo.getDisabled() != 0) {
-            return new ReturnObject(ResponseCode.FIELD_NOTVALID);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         if (!goodsSpuPo.getShopId().equals(shopId)) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
@@ -1213,70 +1213,70 @@ public class GoodsDao {
         }
     }
 
-    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
-        cn.edu.xmu.external.model.MyReturn<Boolean> booleanMyReturn = iShareService.verifyShare(sid);
-        Boolean bool = booleanMyReturn.getData();
-        if (!bool) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
-        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
-        //只能看到上架的商品
-        if (departId == null || departId < 0) {
-            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0 || goodsSkuPo.getState() != 4) {
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            SkuReturnVo skuReturnVo = new SkuReturnVo();
-            skuReturnVo.setId(id);
-            skuReturnVo.setName(goodsSkuPo.getName());
-            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
-            skuReturnVo.setDetail(goodsSkuPo.getDetail());
-            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
-            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
-            //获得现价
-            Long price = getPrice(id);
-            if (price == null) {
-                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
-            } else {
-                skuReturnVo.setPrice(price);
-            }
-            skuReturnVo.setInventory(goodsSkuPo.getInventory());
-            skuReturnVo.setState(goodsSkuPo.getState());
-            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
-            skuReturnVo.setWeight(goodsSkuPo.getWeight());
-            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
-            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
-            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
-            SpuRetVo spuRetVo = getSpuRetVo(id);
-            skuReturnVo.setSpu(spuRetVo);
-            return new ReturnObject(skuReturnVo);
-        } else {
-            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
-                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
-            }
-            SkuReturnVo skuReturnVo = new SkuReturnVo();
-            skuReturnVo.setId(id);
-            skuReturnVo.setName(goodsSkuPo.getName());
-            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
-            skuReturnVo.setDetail(goodsSkuPo.getDetail());
-            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
-            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
-            //获得现价
-            Long price = getPrice(id);
-            if (price == null) {
-                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
-            } else {
-                skuReturnVo.setPrice(price);
-            }
-            skuReturnVo.setInventory(goodsSkuPo.getInventory());
-            skuReturnVo.setState(goodsSkuPo.getState());
-            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
-            skuReturnVo.setWeight(goodsSkuPo.getWeight());
-            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
-            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
-            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
-            SpuRetVo spuRetVo = getSpuRetVo(id);
-            skuReturnVo.setSpu(spuRetVo);
-            return new ReturnObject(skuReturnVo);
-        }
-    }
+//    public ReturnObject getShare(Long sid, Long id, Long userId, Long departId) {
+//        cn.edu.xmu.external.model.MyReturn<Boolean> booleanMyReturn = iShareService.verifyShare(sid);
+//        Boolean bool = booleanMyReturn.getData();
+//        if (!bool) {
+//            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+//        }
+//        GoodsSkuPo goodsSkuPo = goodsSkuPoMapper.selectByPrimaryKey(id);
+//        //只能看到上架的商品
+//        if (departId == null || departId < 0) {
+//            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0 || goodsSkuPo.getState() != 4) {
+//                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+//            }
+//            SkuReturnVo skuReturnVo = new SkuReturnVo();
+//            skuReturnVo.setId(id);
+//            skuReturnVo.setName(goodsSkuPo.getName());
+//            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
+//            skuReturnVo.setDetail(goodsSkuPo.getDetail());
+//            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
+//            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
+//            //获得现价
+//            Long price = getPrice(id);
+//            if (price == null) {
+//                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+//            } else {
+//                skuReturnVo.setPrice(price);
+//            }
+//            skuReturnVo.setInventory(goodsSkuPo.getInventory());
+//            skuReturnVo.setState(goodsSkuPo.getState());
+//            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
+//            skuReturnVo.setWeight(goodsSkuPo.getWeight());
+//            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
+//            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
+//            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
+//            SpuRetVo spuRetVo = getSpuRetVo(id);
+//            skuReturnVo.setSpu(spuRetVo);
+//            return new ReturnObject(skuReturnVo);
+//        } else {
+//            if (goodsSkuPo == null || goodsSkuPo.getDisabled() != 0) {
+//                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+//            }
+//            SkuReturnVo skuReturnVo = new SkuReturnVo();
+//            skuReturnVo.setId(id);
+//            skuReturnVo.setName(goodsSkuPo.getName());
+//            skuReturnVo.setSkuSn(goodsSkuPo.getSkuSn());
+//            skuReturnVo.setDetail(goodsSkuPo.getDetail());
+//            skuReturnVo.setImageUrl(goodsSkuPo.getImageUrl());
+//            skuReturnVo.setOriginalPrice(goodsSkuPo.getOriginalPrice());
+//            //获得现价
+//            Long price = getPrice(id);
+//            if (price == null) {
+//                skuReturnVo.setPrice(goodsSkuPo.getOriginalPrice());
+//            } else {
+//                skuReturnVo.setPrice(price);
+//            }
+//            skuReturnVo.setInventory(goodsSkuPo.getInventory());
+//            skuReturnVo.setState(goodsSkuPo.getState());
+//            skuReturnVo.setConfiguration(goodsSkuPo.getConfiguration());
+//            skuReturnVo.setWeight(goodsSkuPo.getWeight());
+//            skuReturnVo.setGmtCreate(goodsSkuPo.getGmtCreate());
+//            skuReturnVo.setGmtModified(goodsSkuPo.getGmtModified());
+//            skuReturnVo.setDisable(goodsSkuPo.getDisabled() != 0);
+//            SpuRetVo spuRetVo = getSpuRetVo(id);
+//            skuReturnVo.setSpu(spuRetVo);
+//            return new ReturnObject(skuReturnVo);
+//        }
+//    }
 }

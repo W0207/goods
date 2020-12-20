@@ -23,7 +23,7 @@ public class SpuRetVo implements VoObject {
 
     private SimpleShopVo shop;
 
-    private Freight freight;
+//    private Freight freight;
 
     private String goodsSn;
 
