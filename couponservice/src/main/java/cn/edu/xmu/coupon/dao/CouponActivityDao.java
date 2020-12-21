@@ -64,7 +64,10 @@ public class CouponActivityDao implements InitializingBean {
             logger.info("优惠活动id= " + id + " 不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        if(!couponActivityPo.getShopId().equals(shopId)&&ShopId!=0) {
+        if(couponActivityPo.getState()==2){
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(!couponActivityPo.getShopId().equals(shopId)) {
             logger.debug("商店不对");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
@@ -89,7 +92,11 @@ public class CouponActivityDao implements InitializingBean {
                 //shopId不一致
                 returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE, "上线活动的时候，路径shopId和活动的id不一致");
             } else {
-                if (po.getState().equals((byte) 2) || po.getState().equals((byte) 1)) {
+                if(po.getState().equals((byte) 2) ){
+                    return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                }
+
+                if ( po.getState().equals((byte) 1)) {
                     //优惠活动被删除了或者已在上线
                     returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
                 } else {
@@ -140,6 +147,9 @@ public class CouponActivityDao implements InitializingBean {
                         returnObject = new ReturnObject();
                     }
                 } else {
+                    if(po.getState().equals((byte)2)){
+                        return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+                    }
                     returnObject = new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
 
                 }
@@ -204,17 +214,22 @@ public class CouponActivityDao implements InitializingBean {
     public ReturnObject rangeForCouponActivityById(Long id, Long shopId, Long[] skuIds) {
         CouponActivityPo couponActivityPo = couponActivityPoMapper.selectByPrimaryKey(id);
         if (couponActivityPo == null) {
+            System.out.println("************"+1+"   "+id);
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
+        if(couponActivityPo.getState().equals((byte)2)){
+            System.out.println("************"+2);
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         if (!couponActivityPo.getShopId().equals(shopId)) {
+            System.out.println("asdasd");
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUTSCOPE);
-        }
-        if (couponActivityPo.getState().equals((byte) 2)) {
-            return new ReturnObject(ResponseCode.COUPONACT_STATENOTALLOW);
         }
         List<CouponSkuPo> skuPos = new ArrayList<>();
         for (Long aId : skuIds) {
+            System.out.println(aId);
             if (!ingoodservice.skuExitOrNot(aId)) {
+                System.out.println(1234);
                 return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
             }
             if (!ingoodservice.skuInShopOrNot(shopId, aId)) {
