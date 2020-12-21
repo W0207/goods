@@ -238,7 +238,7 @@ public class CouponController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/couponactivities/{id}/skus")
-    public Object rangeForCouponActivity(@PathVariable Long shopId,@PathVariable Long id, @Depart Long departId, @Validated @RequestBody Long[] skuIds, HttpServletResponse response, BindingResult bindingResult) {
+    public Object rangeForCouponActivity(@PathVariable Long shopId, @PathVariable Long id, @Depart Long departId, @Validated @RequestBody Long[] skuIds, HttpServletResponse response, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("rangeForCouponActivity: activityId = " + id);
         }

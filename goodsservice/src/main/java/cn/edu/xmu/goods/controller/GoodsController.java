@@ -930,9 +930,12 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo, @LoginUser Long userId) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
+        }
+        if (userId == null) {
+            return new ReturnObject<>(ResponseCode.AUTH_NEED_LOGIN);
         }
         ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
         if (returnObj.getCode() == ResponseCode.OK) {
