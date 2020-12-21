@@ -74,9 +74,6 @@ public class CouponController {
         if (returnObject.getCode() == ResponseCode.FIELD_NOTVALID || returnObject.getCode() == ResponseCode.Log_Bigger || returnObject.getCode() == ResponseCode.Log_BEGIN_NULL || returnObject.getCode() == ResponseCode.Log_END_NULL) {
             return HttpStatus.BAD_REQUEST.value();
         }
-        if (returnObject.getCode() == ResponseCode.COUPONACT_STATENOTALLOW) {
-            return HttpStatus.FORBIDDEN.value();
-        }
         if (returnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
             return HttpStatus.NOT_FOUND.value();
         }
@@ -241,7 +238,7 @@ public class CouponController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/couponactivities/{id}/skus")
-    public Object rangeForCouponActivity(@PathVariable Long id, @Depart Long shopId, @Validated @RequestBody Long[] skuIds, HttpServletResponse response, BindingResult bindingResult) {
+    public Object rangeForCouponActivity(@PathVariable Long shopId,@PathVariable Long id, @Depart Long departId, @Validated @RequestBody Long[] skuIds, HttpServletResponse response, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("rangeForCouponActivity: activityId = " + id);
         }
@@ -321,6 +318,7 @@ public class CouponController {
             logger.debug("deleteCoupon : shopId = " + shopId + " skuId = " + id);
         }
         ReturnObject returnObj = couponActivityService.deleteCouponSkuById(id, shopId);
+        response.setStatus(getStatue(returnObj));
         return Common.decorateReturnObject(returnObj);
     }
 
@@ -452,11 +450,12 @@ public class CouponController {
     @Audit
     @DeleteMapping("/shops/{shopId}/couponactivities/{id}")
     public Object deleteCouponActivity(@PathVariable Long shopId, @PathVariable Long id, HttpServletResponse response, @Depart Long ShopId) {
-        if (!ShopId.equals(shopId) && ShopId != 0) {
-            ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
-            response.setStatus(getStatue(returnObj));
-            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
-        }
+
+//        if (!ShopId.equals(shopId)&&ShopId!=0) {
+//            ReturnObject returnObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
+//            response.setStatus(getStatue(returnObj));
+//            return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE));
+//        }
         ReturnObject returnObject = couponActivityService.deleteCouponActivity(shopId, id);
         response.setStatus(getStatue(returnObject));
         return Common.decorateReturnObject(returnObject);
