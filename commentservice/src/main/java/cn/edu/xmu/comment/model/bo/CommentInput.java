@@ -2,12 +2,14 @@ package cn.edu.xmu.comment.model.bo;
 
 import cn.edu.xmu.comment.model.po.CommentPo;
 import cn.edu.xmu.otherinterface.bo.UserInfo;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
  * @author BiuBiuBiu
  */
+@Data
 public class CommentInput {
 
     private Long id;
@@ -37,6 +39,23 @@ public class CommentInput {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public CommentInput(CommentPo commentPo) {
         this.gmtCreate=LocalDateTime.now();
