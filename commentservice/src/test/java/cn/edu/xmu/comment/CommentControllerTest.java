@@ -75,7 +75,7 @@ public class CommentControllerTest {
     @Test
     public void show1() throws Exception {
 
-        String responseString = this.mvc.perform(get("/comment/skus/273/comments?pageSize=1"))
+        String responseString = this.mvc.perform(get("/comment/skus/1000000000000000000/comments?page=1&pageSize=10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
@@ -288,6 +288,20 @@ public class CommentControllerTest {
         String requireJson = "{\"type\":7,\"content\":\"新增Sku评论\"}";
         String token = creatTestToken(1L, 0L, 100);
         String responseString = this.mvc.perform(post("/comment/orderitems/1/comments")
+                .header("authorization", token)
+                .contentType("application/json;charset=UTF-8")
+                .content(requireJson))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
+        // JSONAssert.assertEquals(expectedResponse, responseString, true);
+    }
+
+    //重复插入
+    @Test
+    public void addComment3() throws Exception {
+        String requireJson = "{\"type\":1,\"content\":\"新增Sku评论\"}";
+        String token = creatTestToken(1L, 0L, 100);
+        String responseString = this.mvc.perform(post("/comment/orderitems/8888/comments")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8")
                 .content(requireJson))

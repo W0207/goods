@@ -159,7 +159,6 @@ public class CommentDao implements InitializingBean {
 
         CommentPoExample example = new CommentPoExample();
         CommentPoExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerIdEqualTo(userId);
         criteria.andOrderitemIdEqualTo(id);
         ReturnObject<Comment> returnObject = null;
         if(commentInputVo.getType()!=0&&commentInputVo.getType()!=1&&commentInputVo.getType()!=2) {
