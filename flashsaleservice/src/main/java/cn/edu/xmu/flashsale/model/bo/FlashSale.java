@@ -62,12 +62,15 @@ public class FlashSale implements VoObject {
 
     LocalDateTime gmtModified;
 
+    Byte state;
+
     public FlashSale(FlashSalePo po) {
         this.id = po.getId() == null ? null : po.getId();
         this.flashData = po.getFlashDate() == null ? null : po.getFlashDate();
         this.timeSegId = po.getTimeSegId() == null ? null : po.getTimeSegId();
         this.gmtCreate = po.getGmtCreate() == null ? null : po.getGmtCreate();
         this.gmtModified = po.getGmtModified() == null ? null : po.getGmtModified();
+        this.state=po.getState();
     }
 
     public FlashSalePo createUpdatePo(FlashSaleInputVo flashSaleInputVo) {

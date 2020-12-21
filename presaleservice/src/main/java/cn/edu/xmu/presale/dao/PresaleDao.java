@@ -207,13 +207,17 @@ public class PresaleDao {
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         //判断开始时间是不是在结束时间之前
+        System.out.println(vo.getEndTime());
+        System.out.println(vo.getBeginTime());
         if (vo.getEndTime().isBefore(vo.getBeginTime())) {
+            System.out.println(7);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         if (vo.getPayTime().isBefore(vo.getBeginTime())) {
             return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         if (vo.getEndTime().isBefore(LocalDateTime.now())) {
+            System.out.println(8);
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
         PresaleActivityPo presaleActivityPo = presaleActivityPoMapper.selectByPrimaryKey(id);
@@ -221,7 +225,8 @@ public class PresaleDao {
             //预售活动的id不存在
             returnObject = new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         } else {
-            if(!presaleActivityPo.getBeginTime().equals(vo.getBeginTime())){
+            if(!presaleActivityPo.getBeginTime().equals(vo.getBeginTime())&&vo.getBeginTime().isBefore(LocalDateTime.now())){
+                System.out.println(9);
                 return new ReturnObject(ResponseCode.FIELD_NOTVALID);
             }
 

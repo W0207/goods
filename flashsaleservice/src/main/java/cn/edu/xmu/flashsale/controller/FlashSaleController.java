@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import reactor.core.publisher.Flux;
-
+import cn.edu.xmu.external.service.ITimeService;
 /**
  * 权限控制器
  *
@@ -51,6 +51,9 @@ public class FlashSaleController {
     @DubboReference(version = "0.0.1", check = false)
     private Ingoodservice goodservice;
 
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private  ITimeService timeService;
     private int getStatue(ReturnObject returnObject)
     {
         if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
@@ -120,6 +123,7 @@ public class FlashSaleController {
             return Common.decorateReturnObject( new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("店铺不存在")));
 
         }
+        //return flashSaleService.findCurrentFlashSale(id,page, pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = flashSaleService.findFlashSale(id, page, pageSize);
         return Common.getPageRetObject(returnObject);
     }
@@ -147,8 +151,13 @@ public class FlashSaleController {
                                     @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        //Long id=Long.valueOf(4);
-        return flashSaleService.findCurrentFlashSale(page, pageSize);
+        //Long id=Long.valueOf(9);
+        Long id=timeService.getCurrentSegId(LocalDateTime.now());
+        if(id==null){
+            logger.debug("当前时间不存在时间段");
+            return new ArrayList();
+        }
+        return flashSaleService.findCurrentFlashSale(id,page, pageSize);
 
     }
 

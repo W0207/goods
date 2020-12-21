@@ -1,5 +1,5 @@
 package cn.edu.xmu.external.service;
-
+import java.time.LocalTime;
 import cn.edu.xmu.external.bo.TimeSegInfo;
 import cn.edu.xmu.external.model.MyReturn;
 import cn.edu.xmu.ooad.util.ReturnObject;
@@ -15,4 +15,6 @@ public interface ITimeService {
     Byte getSegType(Long segId);
 
     MyReturn<TimeSegInfo> getTimeSeg(Long segId);
+
+    MyReturn<Long> getCurrentSegIdPlusFs(LocalTime now);
 }

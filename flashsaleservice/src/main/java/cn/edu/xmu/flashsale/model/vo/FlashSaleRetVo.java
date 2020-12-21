@@ -1,7 +1,7 @@
 package cn.edu.xmu.flashsale.model.vo;
-
+import cn.edu.xmu.flashsale.model.vo.TimeSegVo;
 import lombok.Data;
-
+import cn.edu.xmu.external.bo.TimeSegInfo;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +13,7 @@ public class FlashSaleRetVo {
 
     private LocalDateTime flashData;
 
-    //private TimeSeq timeSeq;(找其他模块要)
+    private TimeSegVo timeSeq;
 
     private LocalDateTime gmtCreate;
 
