@@ -277,11 +277,6 @@ public class GoodsService implements Ingoodservice {
      */
     public ReturnObject invalidFloatPriceById(Long shopId, Long id, Long loginUserId) {
         ReturnObject returnObject = goodsDao.invalidFloatPriceById(shopId, id, loginUserId);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return new ReturnObject();
-        } else if (returnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
-        }
         return returnObject;
     }
 
@@ -686,9 +681,6 @@ public class GoodsService implements Ingoodservice {
      */
     public ReturnObject<Object> addFloatPrice(Long shopId, Long id, FloatPriceInputVo floatPriceInputVo, Long userId) {
         ReturnObject returnObject = goodsDao.addFloatPrice(shopId, id, floatPriceInputVo, userId);
-        if (returnObject.getCode() == ResponseCode.OK) {
-            return new ReturnObject<>();
-        }
         return returnObject;
     }
 
