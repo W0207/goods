@@ -381,7 +381,7 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
-    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
+    public Object createFlash(@PathVariable Long did, @PathVariable Long id,  @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
         response.setContentType("application/json;charset=UTF-8");
         //httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
@@ -390,7 +390,6 @@ public class FlashSaleController {
         if (did == 0) {
             ReturnObject returnObject = flashSaleService.createFlash(id, flashSaleInputVo);
             response.setStatus(getStatue(returnObject));
-            response.setContentType("application/json;charset=UTF-8");
             return Common.decorateReturnObject(returnObject);
         } else {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);

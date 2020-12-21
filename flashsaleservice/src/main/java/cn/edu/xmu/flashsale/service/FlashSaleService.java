@@ -113,11 +113,7 @@ public class FlashSaleService implements DisableFlashActivityService {
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
         ReturnObject returnObject= flashSaleDao.createFlash(id, flashSaleInputVo);
-        if(returnObject.getCode()==ResponseCode.OK){
-            return new ReturnObject(returnObject);
-        }else{
-            return  returnObject;
-        }
+        return returnObject;
     }
 
     public Flux<FlashSaleItem> getFlashSale(Long id) {

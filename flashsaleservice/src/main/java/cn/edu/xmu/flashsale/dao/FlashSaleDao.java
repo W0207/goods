@@ -363,49 +363,39 @@ public class FlashSaleDao {
      */
     public ReturnObject createFlash(Long id, FlashSaleInputVo flashSaleInputVo) {
 
-        if(!timeService.isSegExist(id)){
-            logger.debug("时间段不存在");
-            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST,"时间段不存在");
-
+        if(id<0){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
-        MyReturn<TimeSegInfo> timeSegInfo=timeService.getTimeSeg(id);
-//        if(id<0){
-//            return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
-//        }
-        FlashSalePoExample example=new FlashSalePoExample();
-        FlashSalePoExample.Criteria criteria=example.createCriteria();
         if(flashSaleInputVo.getFlashDate()==null||flashSaleInputVo.getFlashDate().isBefore(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth() + 1, 0, 0, 0))){
             return new ReturnObject(ResponseCode.FIELD_NOTVALID);
         }
+
+        FlashSalePoExample example=new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria=example.createCriteria();
         criteria.andTimeSegIdEqualTo(id);
         criteria.andFlashDateEqualTo(flashSaleInputVo.getFlashDate());
         criteria.andStateNotEqualTo(Byte.valueOf((byte) 2));
+
         List<FlashSalePo> po=flashSalePoMapper.selectByExample(example);
-        if(po.size()!=0){
-                return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
+        if(!po.isEmpty()){
+            return new ReturnObject(ResponseCode.TIMESEG_CONFLICT);
         }
         FlashSalePo flashSalePo = new FlashSalePo();
         flashSalePo.setFlashDate(flashSaleInputVo.getFlashDate());
         flashSalePo.setGmtCreate(LocalDateTime.now());
         flashSalePo.setTimeSegId(id);
         flashSalePo.setState((byte) 0);
-        try {
             int ret = flashSalePoMapper.insertSelective(flashSalePo);
             if (ret == 0) {
                 return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
             } else {
+
                 FlashSaleRetVo flashSaleRetVo = new FlashSaleRetVo();
                 flashSaleRetVo.setId(flashSalePo.getId());
                 flashSaleRetVo.setGmtCreate(flashSalePo.getGmtCreate());
                 flashSaleRetVo.setFlashData(flashSalePo.getFlashDate());
-                TimeSegVo timeSegVo=new TimeSegVo(timeSegInfo.getData());
-                flashSaleRetVo.setTimeSeq(timeSegVo);
                 return new ReturnObject(flashSaleRetVo);
             }
-        } catch (Exception e) {
-            logger.error("发生了严重的数据库错误 : " + e.getMessage());
-            return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR, e.getMessage());
-        }
     }
 
 
