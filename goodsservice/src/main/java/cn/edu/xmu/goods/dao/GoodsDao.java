@@ -368,8 +368,12 @@ public class GoodsDao {
         }
         Long goodsSpuId = goodsSkuPo.getGoodsSpuId();
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(goodsSpuId);
+        if (goodsSpuPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         Long shopid = goodsSpuPo.getShopId();
         if (shopid.equals(shopId)) {
+            floatPricePo.setId(id);
             floatPricePo.setValid((byte) 0);
             floatPricePo.setGmtModified(LocalDateTime.now());
             floatPricePo.setInvalidBy(loginUserId);
@@ -488,7 +492,7 @@ public class GoodsDao {
                 Long categoryId = goodsCategoryPo.getId();
                 deleteCategoryById(categoryId);
             }
-            returnObject = new ReturnObject<>();
+            returnObject = new ReturnObject<>(ResponseCode.OK);
         }
         return returnObject;
     }
