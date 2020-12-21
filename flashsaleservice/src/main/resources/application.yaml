@@ -44,7 +44,7 @@ spring:
       username: nacos
       password: nacos
       discovery:
-        server-addr: localhost:8848
+        server-addr: 47.113.100.78:8848
 
   redis:
     # Redis数据库索引（默认为0）
@@ -103,7 +103,7 @@ dubbo:
   scan:
     base-packages: cn.edu.xmu.flashsale
   registry:
-    address: nacos://localhost:8848
+    address: nacos://47.113.100.78:8848
   cloud:
     subscribed-services: goods-service
   protocols:

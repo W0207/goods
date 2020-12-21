@@ -68,8 +68,8 @@ public class Comment implements VoObject {
         this.customer = customer;
     }
 
-    public Comment() {
 
+    public Comment() {
     }
 
     public void setUserInfo(UserInfo userInfo) {
