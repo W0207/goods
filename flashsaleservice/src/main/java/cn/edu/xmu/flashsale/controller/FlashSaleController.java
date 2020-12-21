@@ -151,12 +151,12 @@ public class FlashSaleController {
                                     @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        //Long id=Long.valueOf(9);
-        Long id=timeService.getCurrentSegId(LocalDateTime.now());
-        if(id==null){
-            logger.debug("当前时间不存在时间段");
-            return new ArrayList();
-        }
+        Long id=Long.valueOf(9);
+//        Long id=timeService.getCurrentSegId(LocalDateTime.now());
+//        if(id==null){
+//            logger.debug("当前时间不存在时间段");
+//            return new ArrayList();
+//        }
         return flashSaleService.findCurrentFlashSale(id,page, pageSize);
 
     }
@@ -293,7 +293,6 @@ public class FlashSaleController {
     @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
     public Object offShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        System.out.println("111");
         if (logger.isDebugEnabled()) {
             logger.debug("offShelvesFlashSale: id = " + id);
         }

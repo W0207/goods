@@ -187,7 +187,7 @@ public class FlashSaleControllerTest {
     @Test
     public void queryCurrentTime() throws Exception {
         String token = creatTestToken(1L, 0L, 100);
-        String responseString = this.mvc.perform(get("/flashsale/flashsales/current?page=-1&pageSize=-5")
+        String responseString = this.mvc.perform(get("/flashsale/flashsales/current")
                 .header("authorization", token)
                 .contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
