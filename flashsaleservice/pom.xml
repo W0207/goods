@@ -29,6 +29,11 @@
             <artifactId>ininterface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.xmu.goods</groupId>
+            <artifactId>Other-External-Interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--Client-->
         <dependency>
             <groupId>io.projectreactor</groupId>
