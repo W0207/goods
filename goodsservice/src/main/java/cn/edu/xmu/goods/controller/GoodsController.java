@@ -289,13 +289,12 @@ public class GoodsController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/floatPrices/{id}")
-    public Object invalidFloatPrice(@PathVariable Long id, @PathVariable Long shopId, @LoginUser Long loginUserId) {
+    public Object invalidFloatPrice(@PathVariable Long shopId, @PathVariable Long id, @LoginUser Long loginUserId) {
         if (logger.isDebugEnabled()) {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
-        ReturnObject returnObj = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
-        return Common.decorateReturnObject(returnObj);
+        ReturnObject returnObject = goodsService.invalidFloatPriceById(shopId, id, loginUserId);
+        return Common.decorateReturnObject(returnObject);
     }
 
     /**
@@ -473,11 +472,11 @@ public class GoodsController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/categories/{id}")
-    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId, @Depart Long shopid) {
+    public Object delCategory(@PathVariable Long id, @PathVariable Long shopId) {
         if (logger.isDebugEnabled()) {
             logger.debug("deleteCategory: CategoryId = " + id);
         }
-        if (shopid == 0 && shopId == 0) {
+        if (shopId == 0) {
             ReturnObject returnObject = goodsService.deleteCategoryById(id);
             return Common.decorateReturnObject(returnObject);
         } else {
@@ -795,7 +794,7 @@ public class GoodsController {
         } else if (floatPrice.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             response.setStatus(403);
         } else if (floatPrice.getCode() == ResponseCode.Log_Bigger) {
-            response.setStatus(400);
+            response.setStatus(200);
         } else if (floatPrice.getCode() == ResponseCode.SKU_NOTENOUGH) {
             response.setStatus(200);
         } else if (floatPrice.getCode() == ResponseCode.FIELD_NOTVALID) {
@@ -883,6 +882,7 @@ public class GoodsController {
     @Audit
     @GetMapping("/skus/{id}")
     public Object getSku(@PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+        logger.debug(String.valueOf(userId));
         if (logger.isDebugEnabled()) {
             logger.debug("getSku : skuId = " + id);
         }
@@ -930,22 +930,17 @@ public class GoodsController {
     })
     @Audit
     @PostMapping("/shops/{shopId}/spus/{id}/skus")
-    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo, @LoginUser Long userId) {
+    public Object createSku(@PathVariable Long shopId, @PathVariable Long id, @RequestBody SkuCreatVo skuCreatVo) {
         if (logger.isDebugEnabled()) {
             logger.debug("createSKU : shopId = " + shopId + " skuId = " + id + " vo = " + skuCreatVo);
         }
-        if (userId == null) {
-            ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
-            if (returnObj.getCode() == ResponseCode.OK) {
-                httpServletResponse.setStatus(201);
-            } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
-                httpServletResponse.setStatus(403);
-            }
-            return Common.decorateReturnObject(returnObj);
-        } else {
-            return new ReturnObject<>(ResponseCode.AUTH_NEED_LOGIN);
+        ReturnObject returnObj = goodsService.creatSku(id, shopId, skuCreatVo);
+        if (returnObj.getCode() == ResponseCode.OK) {
+            httpServletResponse.setStatus(201);
+        } else if (returnObj.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
+            httpServletResponse.setStatus(403);
         }
-
+        return Common.decorateReturnObject(returnObj);
     }
 
     /**
@@ -963,7 +958,8 @@ public class GoodsController {
     })
     @Audit
     @GetMapping("/share/{sid}/skus/{id}")
-    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+    public Object getShare(@PathVariable Long sid, @PathVariable Long id, @LoginUser Long userId, @Depart Long
+            departId) {
         ReturnObject returnObject = goodsService.getShare(sid, id, userId, departId);
         return Common.decorateReturnObject(returnObject);
     }
