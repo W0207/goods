@@ -3,6 +3,8 @@ package cn.edu.xmu.goods.model.vo;
 import cn.edu.xmu.goods.model.po.FloatPricePo;
 import cn.edu.xmu.privilegeservice.client.IUserService;
 import lombok.Data;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +24,8 @@ public class FloatPriceRetVo {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
-    IUserService iUserService;
+//    @DubboReference(version = "0.0.1", check = false)
+//    IUserService iUserService;
 
     public FloatPriceRetVo(FloatPricePo floatPricePo) {
         this.id = floatPricePo.getId();
@@ -30,10 +33,15 @@ public class FloatPriceRetVo {
         this.quantity = floatPricePo.getQuantity();
         this.beginTime = floatPricePo.getBeginTime();
         this.endTime = floatPricePo.getEndTime();
-        SimpleAdminUser simpleAdminUser = new SimpleAdminUser();
-        simpleAdminUser.setId(floatPricePo.getCreatedBy());
-        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
-        this.createdBy = simpleAdminUser;
+        SimpleAdminUser simpleAdminUser1 = new SimpleAdminUser();
+        simpleAdminUser1.setId(floatPricePo.getCreatedBy());
+//        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        this.createdBy = simpleAdminUser1;
+        SimpleAdminUser simpleAdminUser2 = new SimpleAdminUser();
+        simpleAdminUser2.setId(floatPricePo.getCreatedBy());
+//        simpleAdminUser.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        this.modifiedBy = simpleAdminUser2;
+
         this.valid = floatPricePo.getValid() == 1;
         this.gmtCreate = floatPricePo.getGmtCreate();
     }

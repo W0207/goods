@@ -358,29 +358,32 @@ public class GoodsDao {
      */
     public ReturnObject<Object> invalidFloatPriceById(Long shopId, Long id, Long loginUserId) {
         FloatPricePo floatPricePo = floatPricePoMapper.selectByPrimaryKey(id);
-        if (floatPricePo == null || floatPricePo.getValid() == 0) {
+        if (floatPricePo == null || floatPricePo.getValid() == (byte) 0) {
             logger.info("商品价格浮动不存在");
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         GoodsSkuPo goodsSkuPo = findGoodsSkuById(floatPricePo.getGoodsSkuId());
         if (goodsSkuPo == null) {
-            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "商品价格浮动不存在");
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         Long goodsSpuId = goodsSkuPo.getGoodsSpuId();
         GoodsSpuPo goodsSpuPo = goodsSpuPoMapper.selectByPrimaryKey(goodsSpuId);
+        if (goodsSpuPo == null) {
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST);
+        }
         Long shopid = goodsSpuPo.getShopId();
-        if (shopid.equals(shopId)) {
-            floatPricePo.setValid((byte) 0);
-            floatPricePo.setGmtModified(LocalDateTime.now());
-            floatPricePo.setInvalidBy(loginUserId);
-            floatPricePoMapper.updateByPrimaryKeySelective(floatPricePo);
-            logger.debug("invalidFloatPriceById : shopId = " + shopId + " floatPriceId = " + id + " invalidBy " + loginUserId);
-            return new ReturnObject<>(ResponseCode.OK);
-        } else {
-            logger.debug("error");
+        if (!shopid.equals(shopId)) {
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_OUTSCOPE);
         }
+        floatPricePo.setId(id);
+        floatPricePo.setValid((byte) 0);
+        floatPricePo.setGmtModified(LocalDateTime.now());
+        floatPricePo.setInvalidBy(loginUserId);
+        floatPricePoMapper.updateByPrimaryKeySelective(floatPricePo);
+        logger.debug("invalidFloatPriceById : shopId = " + shopId + " floatPriceId = " + id + " invalidBy " + loginUserId);
+        return new ReturnObject<>(ResponseCode.OK);
     }
+
 
     /**
      * 管理员新增商品类目
@@ -488,7 +491,7 @@ public class GoodsDao {
                 Long categoryId = goodsCategoryPo.getId();
                 deleteCategoryById(categoryId);
             }
-            returnObject = new ReturnObject<>();
+            returnObject = new ReturnObject<>(ResponseCode.OK);
         }
         return returnObject;
     }
