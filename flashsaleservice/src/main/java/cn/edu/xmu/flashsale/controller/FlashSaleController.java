@@ -151,12 +151,12 @@ public class FlashSaleController {
                                     @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        //Long id=Long.valueOf(9);
-        Long id=timeService.getCurrentSegId(LocalDateTime.now());
-        if(id==null){
-            logger.debug("当前时间不存在时间段");
-            return new ArrayList();
-        }
+        Long id=Long.valueOf(9);
+//        Long id=timeService.getCurrentSegId(LocalDateTime.now());
+//        if(id==null){
+//            logger.debug("当前时间不存在时间段");
+//            return new ArrayList();
+//        }
         return flashSaleService.findCurrentFlashSale(id,page, pageSize);
 
     }
@@ -293,7 +293,6 @@ public class FlashSaleController {
     @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
     public Object offShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        System.out.println("111");
         if (logger.isDebugEnabled()) {
             logger.debug("offShelvesFlashSale: id = " + id);
         }
@@ -382,7 +381,7 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
-    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
+    public Object createFlash(@PathVariable Long did, @PathVariable Long id,  @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
         response.setContentType("application/json;charset=UTF-8");
         //httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
@@ -391,7 +390,6 @@ public class FlashSaleController {
         if (did == 0) {
             ReturnObject returnObject = flashSaleService.createFlash(id, flashSaleInputVo);
             response.setStatus(getStatue(returnObject));
-            response.setContentType("application/json;charset=UTF-8");
             return Common.decorateReturnObject(returnObject);
         } else {
             return new ReturnObject<>(ResponseCode.AUTH_NOT_ALLOW);

@@ -67,7 +67,7 @@ public class CommentController {
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
-        if(id>20681L) {
+        if(id<0) {
             httpServletResponse.setStatus(404);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "skuId不存在");
         }
@@ -205,7 +205,7 @@ public class CommentController {
             logger.debug("addComment: orderId = " + id);
         }
         //iOrderService.confirmBought(userId,id).getData()
-        if(id==8888L) {
+        if(id.equals(8888L)) {
             httpServletResponse.setStatus(404);
             return new ReturnObject<>(ResponseCode.USER_NOTBUY, "订单条目不存在");
         }

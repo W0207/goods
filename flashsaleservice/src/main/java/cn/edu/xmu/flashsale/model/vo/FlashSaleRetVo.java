@@ -13,7 +13,7 @@ public class FlashSaleRetVo {
 
     private LocalDateTime flashData;
 
-    private TimeSegVo timeSeq;
+//    private TimeSegVo timeSeq;
 
     private LocalDateTime gmtCreate;
 
