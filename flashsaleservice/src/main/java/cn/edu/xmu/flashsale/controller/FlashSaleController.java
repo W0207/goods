@@ -151,12 +151,11 @@ public class FlashSaleController {
                                     @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        //Long id=Long.valueOf(4);
+        //Long id=Long.valueOf(9);
         Long id=timeService.getCurrentSegId(LocalDateTime.now());
         if(id==null){
             logger.debug("当前时间不存在时间段");
             return new ArrayList();
-            //return new ReturnObject(ResponseCode.RESOURCE_ID_NOTEXIST);
         }
         return flashSaleService.findCurrentFlashSale(id,page, pageSize);
 

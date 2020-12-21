@@ -90,42 +90,42 @@ public class FlashSaleDao {
     public  List findCurrentFlashSale(Long id,Integer page,Integer PageSize){
 
 
-//        FlashSalePoExample example1=new FlashSalePoExample();
-//        FlashSalePoExample.Criteria criteria1=example1.createCriteria();
-//        criteria1.andTimeSegIdEqualTo(id);
-//        List<FlashSalePo> flashSalePos=flashSalePoMapper.selectByExample(example1);
-//        List<VoObject> flash=new ArrayList<>();
-//        for(FlashSalePo po:flashSalePos){
-//            FlashSaleItemPoExample example2=new FlashSaleItemPoExample();
-//            FlashSaleItemPoExample.Criteria criteria2=example2.createCriteria();
-//            criteria2.andSaleIdEqualTo(po.getId());
-//            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example2);
-//            flash=new ArrayList<>(flashSaleItemPos.size());
-//            for(FlashSaleItemPo po1:flashSaleItemPos){
-//                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po1.getGoodsSkuId());
-//                FlashSaleItem flashSaleItem=new FlashSaleItem(po1,skuToFlashSaleVo);
-//                flash.add(flashSaleItem);
-//            }
-//
-//        }
-//        return flash;
-        FlashSaleItemPoExample example=new FlashSaleItemPoExample();
-        FlashSaleItemPoExample.Criteria criteria=example.createCriteria();
-        criteria.andSaleIdEqualTo(Long.valueOf(4));
-        List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example);
-        List<VoObject> flashSaleItems=new ArrayList<>(flashSaleItemPos.size());
-        for(FlashSaleItemPo po:flashSaleItemPos){
-            SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po.getGoodsSkuId());
-            FlashSaleItem flashSaleItem=new FlashSaleItem(po,skuToFlashSaleVo);
-            flashSaleItems.add(flashSaleItem);
+        FlashSalePoExample example1=new FlashSalePoExample();
+        FlashSalePoExample.Criteria criteria1=example1.createCriteria();
+        criteria1.andTimeSegIdEqualTo(id);
+        List<FlashSalePo> flashSalePos=flashSalePoMapper.selectByExample(example1);
+        List<VoObject> flash=new ArrayList<>();
+        for(FlashSalePo po:flashSalePos){
+            FlashSaleItemPoExample example2=new FlashSaleItemPoExample();
+            FlashSaleItemPoExample.Criteria criteria2=example2.createCriteria();
+            criteria2.andSaleIdEqualTo(po.getId());
+            List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example2);
+            flash=new ArrayList<>(flashSaleItemPos.size());
+            for(FlashSaleItemPo po1:flashSaleItemPos){
+                SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po1.getGoodsSkuId());
+                FlashSaleItem flashSaleItem=new FlashSaleItem(po1,skuToFlashSaleVo);
+                flash.add(flashSaleItem);
             }
+
+        }
+        return flash;
+//        FlashSaleItemPoExample example=new FlashSaleItemPoExample();
+//        FlashSaleItemPoExample.Criteria criteria=example.createCriteria();
+//        criteria.andSaleIdEqualTo(Long.valueOf(4));
+//        List<FlashSaleItemPo> flashSaleItemPos=flashSaleItemPoMapper.selectByExample(example);
+//        List<VoObject> flashSaleItems=new ArrayList<>(flashSaleItemPos.size());
+//        for(FlashSaleItemPo po:flashSaleItemPos){
+//            SkuToFlashSaleVo skuToFlashSaleVo = goodservice.flashFindSku(po.getGoodsSkuId());
+//            FlashSaleItem flashSaleItem=new FlashSaleItem(po,skuToFlashSaleVo);
+//            flashSaleItems.add(flashSaleItem);
+//            }
 //        PageHelper.startPage(page,PageSize);
 //        PageInfo<VoObject> flashPage=PageInfo.of(flashSaleItems);
 //        flashPage.setPages((PageInfo.of(flashSaleItemPos).getPages()));
 //        flashPage.setPages(page);
 //        flashPage.setPageSize(PageSize);
 //        flashPage.setTotal((PageInfo.of(flashSaleItemPos).getTotal()));
-        return flashSaleItems ;
+//        return flashSaleItems ;
 
     }
     /**
