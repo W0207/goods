@@ -3,7 +3,7 @@
 -- Host: localhost    Database: oomall_goods
 -- ------------------------------------------------------
 -- Server version	8.0.22
-
+SET SQL_SAFE_UPDATES = 0;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
@@ -210,7 +210,7 @@ VALUES (12158, '满500 - 50', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '202
 INSERT INTO `coupon_activity`(`id`, `name`, `begin_time`, `end_time`, `coupon_time`, `state`, `shop_id`, `quantity`,
                               `valid_term`, `image_url`, `strategy`, `created_by`, `modi_by`, `gmt_create`,
                               `gmt_modified`, `quantitiy_type`)
-VALUES (12159, '满500 - 10%', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '2020-01-10 22:47:01', 1, 1, 2, 0, NULL,
+VALUES (12159, '满500 - 10%', '2019-01-20 22:46:38', '2021-01-30 22:46:55', '2020-01-10 22:47:01', 1, 1, 1, 0, NULL,
         '{"value":90,"className":"cn.edu.xmu.ooad.order.discount.impl.PercentageCouponDiscount","couponLimitation":{"value":50000,"className":"cn.edu.xmu.ooad.order.discount.impl.PriceCouponLimitation"}}',
         1, 1, '2020-12-15 22:47:50', NULL, 0);
 
@@ -311,7 +311,7 @@ select '/*ChenPinzhenTest*/';
 
 select '/*ShaoLiangYingTest*/';
 insert into `float_price`
-values (828, 626, 166, '2020-12-27 00:00:00', '2021-1-07 00:00:00', 1000, 1, null, 1, CURDATE(), null);
+values (828, 626, 166, '2020-12-27 00:00:00', '2021-1-07 00:00:00', 1000, 1, null, 0, CURDATE(), null);
 
 select '/*Ming Qiu*/';
 insert into `float_price`(`id`, `goods_sku_id`, `activity_price`, `begin_time`,

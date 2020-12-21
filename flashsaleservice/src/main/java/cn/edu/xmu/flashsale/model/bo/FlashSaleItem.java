@@ -44,6 +44,7 @@ public class FlashSaleItem implements VoObject, Serializable {
         this.gmtModified = LocalDateTime.now();
     }
 
+
     public FlashSaleItem(FlashSaleItemPo itemPo, SkuToFlashSaleVo skuPo) {
         this.id = itemPo.getId();
         this.goodsSkuId = itemPo.getGoodsSkuId();
