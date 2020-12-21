@@ -289,7 +289,7 @@ public class GoodsController {
     })
     @Audit
     @DeleteMapping("/shops/{shopId}/floatPrices/{id}")
-    public Object invalidFloatPrice(@PathVariable Long id, @PathVariable Long shopId, @LoginUser Long loginUserId) {
+    public Object invalidFloatPrice(@PathVariable Long shopId, @PathVariable Long id, @LoginUser Long loginUserId) {
         if (logger.isDebugEnabled()) {
             logger.debug("invalidFloatPrice : shopId = " + shopId + " floatPriceId = " + id);
         }
@@ -882,6 +882,7 @@ public class GoodsController {
     @Audit
     @GetMapping("/skus/{id}")
     public Object getSku(@PathVariable Long id, @LoginUser Long userId, @Depart Long departId) {
+        logger.debug(String.valueOf(userId));
         if (logger.isDebugEnabled()) {
             logger.debug("getSku : skuId = " + id);
         }
