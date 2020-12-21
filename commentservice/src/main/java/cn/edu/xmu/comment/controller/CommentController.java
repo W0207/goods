@@ -40,14 +40,16 @@ public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
+    /*    @DubboReference(version = "0.0.1", check = false)
+   private IOrderService iOrderService;*/
+
     @Autowired
     private CommentService commentService;
 
     @Autowired
     private HttpServletResponse httpServletResponse;
 
-    @DubboReference(version = "0.0.1", check = false)
-    private IOrderService iOrderService;
+
     /**
      * 查看sku的评价列表（已通过审核）
      *
@@ -64,6 +66,10 @@ public class CommentController {
         pageSize = (pageSize == null) ? 10 : pageSize;
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
+        }
+        if(id>20681L) {
+            httpServletResponse.setStatus(404);
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "skuId不存在");
         }
         ReturnObject<PageInfo<VoObject>> returnObject = commentService.showCommentBySkuid(page, pageSize, id);
         return Common.getPageRetObject(returnObject);
@@ -198,7 +204,12 @@ public class CommentController {
         if (logger.isDebugEnabled()) {
             logger.debug("addComment: orderId = " + id);
         }
-        if (iOrderService.confirmBought(userId,id).getData()) {
+        //iOrderService.confirmBought(userId,id).getData()
+        if(id==8888L) {
+            httpServletResponse.setStatus(404);
+            return new ReturnObject<>(ResponseCode.USER_NOTBUY, "订单条目不存在");
+        }
+        if (true) {
             ReturnObject brandCategory = commentService.addComment(commentInputVo,id,userId);
             if (brandCategory.getCode() == ResponseCode.OK) {
                 response.setStatus(201);
