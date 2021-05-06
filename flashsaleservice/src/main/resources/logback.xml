@@ -69,7 +69,7 @@
     <logger name="cn.edu.xmu.flashsale.controller" level="DEBUG"/>
     <logger name="cn.edu.xmu.flashsale.service" level="INFO"/>
     <logger name="cn.edu.xmu.flashsale.annotation" level="DEBUG"/>
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>

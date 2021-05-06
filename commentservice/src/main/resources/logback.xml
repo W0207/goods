@@ -69,7 +69,7 @@
     <logger name="cn.edu.xmu.comment.controller" level="DEBUG"/>
     <logger name="cn.edu.xmu.comment.service" level="DEBUG"/>
     <logger name="cn.edu.xmu.comment.annotation" level="DEBUG"/>
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>

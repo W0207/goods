@@ -4,11 +4,13 @@ import cn.edu.xmu.goods.model.po.BrandPo;
 import cn.edu.xmu.goods.model.vo.BrandInputVo;
 import cn.edu.xmu.goods.model.vo.BrandRetVo;
 import cn.edu.xmu.ooad.model.VoObject;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
 public class Brand implements VoObject {
 
     private Long id;
@@ -49,34 +51,6 @@ public class Brand implements VoObject {
     @Override
     public Object createSimpleVo() {
         return null;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDateTime getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public LocalDateTime getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public BrandPo createUpdatePo(BrandInputVo brandInputVo) {

@@ -6,9 +6,11 @@ import lombok.Data;
 
 /**
  * 商铺状态
+ * @author Abin
  */
 @Data
 public class ShopStateVo {
+
     private Long code;
 
     private String name;

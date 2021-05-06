@@ -43,7 +43,6 @@ spring:
       username: nacos
       password: nacos
       discovery:
-        #        server-addr: localhost:8848
         server-addr: 47.113.100.78:8848
 
   redis:
@@ -82,7 +81,7 @@ goodsservice:
   dav:
     username: oomall
     password: 123456
-    baseUrl: http://192.168.1.108/webdav/
+    baseUrl: http://172.16.4.114/webdav/
   user:
     # user的权限字在Redis中失效秒数
     expiretime: 600
@@ -101,22 +100,16 @@ pagehelper:
   helper-dialect: mysql
 
 
-
 dubbo:
-
   scan:
     base-packages: cn.edu.xmu.goods
   registry:
     address: nacos://47.113.100.78:8848
-  #    address: nacos://localhost:8848
   cloud:
     subscribed-services: presale-service，goods-flashsale,coupon-service,comment-service,groupon-service
   protocols:
     dubbo:
       port: -1
-
-
-
 
 # 配置rocketmq
 rocketmq:
@@ -131,7 +124,6 @@ rocketmq:
     send-message-timeout: 3000
     #发送消息失败重试次数，默认2
     retry-times-when-send-async-failed: 2
-
 
 rocketmqdemo:
   order-pay-topic:

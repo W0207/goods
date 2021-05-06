@@ -10,7 +10,6 @@ import cn.edu.xmu.goods.model.vo.ShopAuditVo;
 import cn.edu.xmu.goods.model.vo.ShopRetVo;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +33,6 @@ public class ShopDao {
 
     @Autowired
     GoodsSpuPoMapper spuPoMapper;
-
-//    @DubboReference(version = "0.0.1", check = false)
-//    DisableCouponActivityService disableCouponActivity;
-//
-//    @DubboReference(version = "0.0.1", check = false)
-//    DisableFlashActivityService disableFlashActivityService;
-//
-//    @DubboReference(version = "0.0.1", check = false)
-//    DisablePresaleActivityService disablePresaleActivityService;
-//
-//    @DubboReference(version = "0.0.1", check = false)
-//    DisableGrouponActivityService disableGrouponActivityService;
-
 
     private static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
 
@@ -121,30 +107,6 @@ public class ShopDao {
     }
 
     /**
-     * 删除所有活动
-     */
-//    public boolean disableAllActivity(Long shopId){
-//
-//        disableCouponActivity.disableActivity(shopId);
-//        GoodsSpuPoExample example = new GoodsSpuPoExample();
-//        GoodsSpuPoExample.Criteria criteria = example.createCriteria();
-//        criteria.andShopIdEqualTo(shopId);
-//        List<GoodsSpuPo> pos = spuPoMapper.selectByExample(example);
-//        for(GoodsSpuPo po :pos){
-//            GoodsSkuPoExample poExample = new GoodsSkuPoExample();
-//            GoodsSkuPoExample.Criteria criteria1 = poExample.createCriteria();
-//            criteria1.andGoodsSpuIdEqualTo(po.getId());
-//            List<GoodsSkuPo> skuPos = skuPoMapper.selectByExample(poExample);
-//            for(GoodsSkuPo po1 : skuPos){
-//                disableFlashActivityService.disableActivity(po1.getId());
-//            }
-//        }
-//        disablePresaleActivityService.disableActivity(shopId);
-//        disableGrouponActivityService.disableActivity(shopId);
-//        return false;
-//    }
-
-    /**
      * 上下线商店
      * by 宇
      */
@@ -157,21 +119,17 @@ public class ShopDao {
 
             if (shopPoSelect == null) {
                 //店铺id不存在
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "店铺id不存在：" + shopPo.getId());
             } else {
                 Shop shopSelect = new Shop(shopPoSelect);
                 if (shopPoSelect.getState().equals((byte) 3) || shopPoSelect.getState().equals((byte) 4) || shopPoSelect.getState().equals((byte) 0)) {
                     logger.info(shopSelect.getState().getDescription() + "当前状态无法进行变迁");
-                    returnObject = new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW, String.format("店铺不允许转换" + shopPo.getId()));
+                    returnObject = new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW, "店铺不允许转换" + shopPo.getId());
                 } else {
                     //可以修改状态
                     //状态一样不予操作，直接返回
                     if (shopPo.getState().equals(shopPoSelect.getState())) {
                         return new ReturnObject<>(ResponseCode.SHOP_STATENOTALLOW);
-                    }
-                    if (shopPo.getState().equals((byte) 1)) {
-                        //上架状态转为下架需要将活动进行删除
-                        //disableAllActivity(shopPo.getId());
                     }
                     shopPoMapper.updateByPrimaryKeySelective(shopPo);
                     returnObject = new ReturnObject<>();
@@ -198,7 +156,7 @@ public class ShopDao {
             ShopPo shopPoSelect = shopPoMapper.selectByPrimaryKey(shopPo.getId());
             if (shopPoSelect == null) {
                 //店铺id不存在
-                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("店铺id不存在：" + shopPo.getId()));
+                returnObject = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "店铺id不存在：" + shopPo.getId());
             } else {
                 System.out.println(shopPoSelect.toString());
                 Shop shopSelect = new Shop(shopPoSelect);
@@ -231,8 +189,6 @@ public class ShopDao {
                             skuPoMapper.updateByPrimaryKey(skuPo);
                         }
                     }
-                    //如果处在上线状态进行删除就关闭所有的活动
-                    //disableAllActivity(shopPo.getId());
                     returnObject = new ReturnObject<>();
                 }
             }

@@ -1,9 +1,12 @@
 package cn.edu.xmu.goods.model.bo;
 
 
+import lombok.AllArgsConstructor;
+
 /**
  * @author BiuBiuBiu
  */
+@AllArgsConstructor
 public class FindSkuRet {
 
     private Long id;
@@ -65,13 +68,10 @@ public class FindSkuRet {
     }
 
     public void setPrice(Long price) {
-        if(price==null)
-        {
-            this.price=originalPrice;
-        }
-        else
-        {
-            this.price=price;
+        if (price == null) {
+            this.price = originalPrice;
+        } else {
+            this.price = price;
         }
     }
 }

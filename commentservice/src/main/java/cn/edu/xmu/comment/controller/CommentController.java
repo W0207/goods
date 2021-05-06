@@ -40,8 +40,8 @@ public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
-    /*    @DubboReference(version = "0.0.1", check = false)
-   private IOrderService iOrderService;*/
+    @DubboReference(version = "0.0.1", check = false)
+    private IOrderService iOrderService;
 
     @Autowired
     private CommentService commentService;
@@ -67,7 +67,7 @@ public class CommentController {
         if (page <= 0 || pageSize <= 0) {
             return new ReturnObject<>(ResponseCode.FIELD_NOTVALID, "页数或页大小必须大于0");
         }
-        if(id<0) {
+        if (id < 0) {
             httpServletResponse.setStatus(404);
             return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, "skuId不存在");
         }
@@ -111,7 +111,7 @@ public class CommentController {
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
-    @Audit // 需要认证
+    @Audit
     @PutMapping("/shops/{did}/comments/{id}/confirm")
     public Object auditComment(@PathVariable Long id, @Validated @RequestBody CommentAuditVo commentAuditVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
@@ -182,7 +182,7 @@ public class CommentController {
     /**
      * 买家新增sku的评论
      *
-     * @param id:          订单id
+     * @param id: 订单id
      * @return Object
      */
     @ApiOperation(value = "买家新增sku的评论")
@@ -200,17 +200,17 @@ public class CommentController {
     })
     @Audit
     @PostMapping("/orderitems/{id}/comments")
-    public Object addBrand(@PathVariable Long id, @Validated @RequestBody CommentInputVo commentInputVo, HttpServletResponse response,@LoginUser Long userId) {
+    public Object addBrand(@PathVariable Long id, @Validated @RequestBody CommentInputVo commentInputVo, HttpServletResponse response, @LoginUser Long userId) {
         if (logger.isDebugEnabled()) {
             logger.debug("addComment: orderId = " + id);
         }
         //iOrderService.confirmBought(userId,id).getData()
-        if(id.equals(8888L)) {
+        if (id.equals(8888L)) {
             httpServletResponse.setStatus(404);
             return new ReturnObject<>(ResponseCode.USER_NOTBUY, "订单条目不存在");
         }
         if (true) {
-            ReturnObject brandCategory = commentService.addComment(commentInputVo,id,userId);
+            ReturnObject brandCategory = commentService.addComment(commentInputVo, id, userId);
             if (brandCategory.getCode() == ResponseCode.OK) {
                 response.setStatus(201);
             } else if (brandCategory.getCode() == ResponseCode.FIELD_NOTVALID) {
@@ -221,7 +221,5 @@ public class CommentController {
             return Common.decorateReturnObject(new ReturnObject<>(ResponseCode.USER_NOTBUY));
         }
     }
-
-
 
 }

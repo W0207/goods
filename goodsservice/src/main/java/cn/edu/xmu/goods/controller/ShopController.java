@@ -117,7 +117,6 @@ public class ShopController {
     })
     @Audit
     @PutMapping("/shops/{id}")
-//    @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
     public Object modifyShop(@PathVariable("id") Long id, @Depart Long departId, @RequestBody ShopVo shopVo, HttpServletResponse response) {
         System.out.println("sadasd");
         if (!departId.equals(0L)) {
@@ -208,7 +207,7 @@ public class ShopController {
      */
     @ApiOperation(value = "关闭店家")
     @ApiImplicitParams({
-            //@ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "Token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "id", value = "店家id", required = true)
     })
     @ApiResponses({

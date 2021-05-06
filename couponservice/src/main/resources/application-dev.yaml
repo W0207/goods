@@ -1,15 +1,8 @@
 spring:
-  boot:
-    admin:
-      client:
-        url: http://localhost:8081
   datasource:
-    # url: jdbc:mysql://47.113.100.78/oomall_goods?serverTimezone=GMT%2B8
-    # username: root
-    # password: ooad2020
-    url: jdbc:mysql://localhost:3306/oomall_goods?serverTimezone=GMT%2B8
+    url: jdbc:mysql://172.16.4.46:3306/oomall?serverTimezone=GMT%2B8
     username: root
-    password: 123456
+    password: dbuser123456
     druid:
       stat-view-servlet:
         login-username: admin
@@ -18,8 +11,8 @@ spring:
         url-pattern: /druid/*
   redis:
     # Redis服务器地址
-    host: localhost
+    host: 172.16.3.194
     # Redis服务器连接端口
-    # port: 6379
+    port: 6379
     # Redis服务器连接密码
-    # password: 123456
+    password: 123456

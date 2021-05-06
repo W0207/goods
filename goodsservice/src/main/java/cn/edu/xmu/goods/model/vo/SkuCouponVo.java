@@ -1,11 +1,13 @@
 package cn.edu.xmu.goods.model.vo;
 
 import cn.edu.xmu.goods.model.po.GoodsSkuPo;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
 public class SkuCouponVo implements Serializable {
 
     private Long id;
@@ -30,33 +32,5 @@ public class SkuCouponVo implements Serializable {
         this.inventory=goodsSkuPo.getInventory();
         this.name=goodsSkuPo.getName();
         this.originalPrice=goodsSkuPo.getOriginalPrice();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Long getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Byte getDisable() {
-        return disable;
-    }
-
-    public String getGoodsSn() {
-        return goodsSn;
     }
 }

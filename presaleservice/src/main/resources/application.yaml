@@ -97,7 +97,6 @@ pagehelper:
 
 
 dubbo:
-
   scan:
     base-packages: cn.edu.xmu.presale
   registry:

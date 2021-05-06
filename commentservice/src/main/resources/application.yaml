@@ -91,7 +91,6 @@ goodsservice:
     jwtExpire: 3600
 
 dubbo:
-
   scan:
     base-packages: cn.edu.xmu.comment
   registry:

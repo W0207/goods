@@ -7,6 +7,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @author Abin
+ */
 @Data
 @ApiModel(description = "商铺视图对象")
 public class ShopVo {
@@ -14,23 +17,9 @@ public class ShopVo {
     @ApiModelProperty(value = "角色名称")
     private String name;
 
-    /*@NotBlank(message = "id不能为空")
-    @ApiModelProperty(value = "店家id")
-    private Long id;*/
-
-    public Shop createShop()
-    {
+    public Shop createShop() {
         Shop shop = new Shop();
         shop.setName(this.name);
         return shop;
     }
-
-    /*
-    public Shop createShopById()
-    {
-        Shop shop = new Shop();
-        shop.setId(this.id);
-        return shop;
-    }
-     */
 }

@@ -8,8 +8,6 @@ import cn.edu.xmu.goods.model.vo.*;
 import cn.edu.xmu.ooad.model.VoObject;
 import cn.edu.xmu.ooad.util.ResponseCode;
 import cn.edu.xmu.ooad.util.ReturnObject;
-import cn.edu.xmu.outer.model.bo.Freight;
-import cn.edu.xmu.outer.model.bo.MyReturn;
 import cn.edu.xmu.outer.service.IFreightService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -262,7 +260,7 @@ public class GoodsDao {
         if (spuSn != null || shopId != null) {
             goodsSpuPos = goodsSpuPoMapper.selectByExample(spuPoExample);
             if (goodsSpuPos.size() == 0) {
-                List<VoObject> empty = new ArrayList<>(goodsSpuPos.size());
+                List<VoObject> empty = new ArrayList<>(0);
                 PageInfo<VoObject> rolePage1 = PageInfo.of(empty);
                 rolePage1.setPages((PageInfo.of(goodsSpuPos).getPages()));
                 rolePage1.setTotal((PageInfo.of(goodsSpuPos).getTotal()));

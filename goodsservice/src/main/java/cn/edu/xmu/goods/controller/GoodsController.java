@@ -322,6 +322,7 @@ public class GoodsController {
     })
     @Audit
     @PutMapping("/shops/{shopId}/brands/{id}")
+
     public Object modifyBrand(@PathVariable Long shopId, @PathVariable Long id, @Validated @RequestBody BrandInputVo brandInputVo, BindingResult bindingResult) {
         if (logger.isDebugEnabled()) {
             logger.debug("modifyBrand : shopId = " + shopId + " brandId = " + id + " vo = " + brandInputVo);

@@ -4,6 +4,9 @@ import cn.edu.xmu.goods.model.bo.Shop;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Abin
+ */
 public class ShopRetVo {
     private Long id;
 

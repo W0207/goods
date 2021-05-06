@@ -21,14 +21,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.apache.dubbo.config.annotation.DubboReference;
+
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import cn.edu.xmu.ininterface.service.model.vo.*;
 import cn.edu.xmu.ininterface.service.*;
 import reactor.core.publisher.Flux;
 import cn.edu.xmu.external.service.ITimeService;
+
 /**
  * 权限控制器
  *
@@ -53,46 +56,27 @@ public class FlashSaleController {
 
     @Autowired
     @DubboReference(version = "0.0.1", check = false)
-    private  ITimeService timeService;
-    private int getStatue(ReturnObject returnObject)
-    {
-        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_OUTSCOPE)
-        {
+    private ITimeService timeService;
+
+    private int getStatue(ReturnObject returnObject) {
+        if (returnObject.getCode() == ResponseCode.RESOURCE_ID_OUTSCOPE) {
             return HttpStatus.FORBIDDEN.value();
         }
-        if(returnObject.getCode()==ResponseCode.FIELD_NOTVALID||returnObject.getCode()==ResponseCode.Log_Bigger||returnObject.getCode()==ResponseCode.Log_BEGIN_NULL||returnObject.getCode()==ResponseCode.Log_END_NULL){
+        if (returnObject.getCode() == ResponseCode.FIELD_NOTVALID || returnObject.getCode() == ResponseCode.Log_Bigger || returnObject.getCode() == ResponseCode.Log_BEGIN_NULL || returnObject.getCode() == ResponseCode.Log_END_NULL) {
             return HttpStatus.BAD_REQUEST.value();
         }
-        if(returnObject.getCode()==ResponseCode.ACTIVITYALTER_INVALID){
+        if (returnObject.getCode() == ResponseCode.ACTIVITYALTER_INVALID) {
             return HttpStatus.BAD_REQUEST.value();
         }
-        if(returnObject.getCode()==ResponseCode.RESOURCE_ID_NOTEXIST){
+        if (returnObject.getCode() == ResponseCode.RESOURCE_ID_NOTEXIST) {
             return HttpStatus.NOT_FOUND.value();
         }
         return HttpStatus.OK.value();
     }
-    /**
-     * 查询某一时段秒杀活动详情
-     *
-     * @param id
-     * @author Abin
-     */
-//    @ApiOperation(value = "查询某一时段秒杀活动详情")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "id", required = true, dataType = "Long", paramType = "path", value = "时间段id"),
-//    })
-//    @ApiResponses({
-//            @ApiResponse(code = 0, message = "成功"),
-//            @ApiResponse(code = 504, message = "操作的资源id不存在"),
-//
-//    })
-//    @GetMapping("/timesegments/{id}/flashsales")
-//    public Flux<FlashSaleItemRetVo> queryTopicsByTime(@PathVariable Long id, HttpServletResponse response) {
-//        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
-//    }
 
     /**
      * 查询某一时段秒杀活动详情
+     *
      * @param id
      * @param response
      * @param page
@@ -113,23 +97,23 @@ public class FlashSaleController {
     @Audit
     @GetMapping("/timesegments/{id}/flashsales")
     public Object queryTopicsByTime(@PathVariable Long id, HttpServletResponse response,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer pageSize) {
+                                    @RequestParam(required = false) Integer page,
+                                    @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        if(page<0||pageSize<0){
-            ReturnObject returnObject=new ReturnObject(ResponseCode.FIELD_NOTVALID);
+        if (page < 0 || pageSize < 0) {
+            ReturnObject returnObject = new ReturnObject(ResponseCode.FIELD_NOTVALID);
             response.setStatus(getStatue(returnObject));
-            return Common.decorateReturnObject( new ReturnObject(ResponseCode.FIELD_NOTVALID,String.format("店铺不存在")));
+            return Common.decorateReturnObject(new ReturnObject(ResponseCode.FIELD_NOTVALID, String.format("店铺不存在")));
 
         }
-        //return flashSaleService.findCurrentFlashSale(id,page, pageSize);
         ReturnObject<PageInfo<VoObject>> returnObject = flashSaleService.findFlashSale(id, page, pageSize);
         return Common.getPageRetObject(returnObject);
     }
 
     /**
      * 查询当前时段秒杀活动详情
+     *
      * @param page
      * @param pageSize
      * @return
@@ -147,37 +131,14 @@ public class FlashSaleController {
     })
     @GetMapping("/flashsales/current")
     public List queryCurrentTopics(
-                                    @RequestParam(required = false) Integer page,
-                                    @RequestParam(required = false) Integer pageSize) {
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer pageSize) {
         page = (page == null) ? 1 : page;
         pageSize = (pageSize == null) ? 10 : pageSize;
-        Long id=Long.valueOf(9);
-//        Long id=timeService.getCurrentSegId(LocalDateTime.now());
-//        if(id==null){
-//            logger.debug("当前时间不存在时间段");
-//            return new ArrayList();
-//        }
-        return flashSaleService.findCurrentFlashSale(id,page, pageSize);
+        Long id = Long.valueOf(9);
+        return flashSaleService.findCurrentFlashSale(id, page, pageSize);
 
     }
-
-//    /**
-//     * 获取当前时段秒杀列表
-//     *
-//     * @param id
-//     * @return
-//     * @author Abin
-//     */
-//    @ApiOperation(value = "获取当前时段秒杀列表")
-//    @ApiResponses({
-//            @ApiResponse(code = 0, message = "成功"),
-//    })
-//    @GetMapping("/flashsales/current")
-//    public Object getCurrentFlash(Long id ,HttpServletResponse response) {
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        //id调用其他模块获取
-//        return flashSaleService.getFlashSale(id).map(x -> (FlashSaleItemRetVo) x.createVo());
-//    }
 
     /**
      * 管理员修改秒杀活动
@@ -204,7 +165,7 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}")
-    public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult,HttpServletResponse response) {
+    public Object updateflashsale(@PathVariable Long id, @Validated @RequestBody FlashSaleInputVo flashSaleInputVo, BindingResult bindingResult, HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("updateflashsale: id = " + id);
@@ -239,7 +200,7 @@ public class FlashSaleController {
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{id}")
-    public Object deleteflashsale(@PathVariable Long id,HttpServletResponse response) {
+    public Object deleteflashsale(@PathVariable Long id, HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("deleteFlashSale: id = " + id);
@@ -252,6 +213,7 @@ public class FlashSaleController {
 
     /**
      * 管理员上线秒活动
+     *
      * @param id
      * @return
      */
@@ -266,7 +228,7 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}/onshelves")
-    public Object onShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
+    public Object onShelvesflashsale(@PathVariable Long id, HttpServletResponse response) {
         if (logger.isDebugEnabled()) {
             logger.debug("onShelvesFlashSale: id = " + id);
         }
@@ -277,6 +239,7 @@ public class FlashSaleController {
 
     /**
      * 管理员下线秒杀活动
+     *
      * @param id
      * @return
      */
@@ -291,7 +254,7 @@ public class FlashSaleController {
     })
     @Audit
     @PutMapping("/shops/{did}/flashsales/{id}/offshelves")
-    public Object offShelvesflashsale(@PathVariable Long id,HttpServletResponse response) {
+    public Object offShelvesflashsale(@PathVariable Long id, HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("offShelvesFlashSale: id = " + id);
@@ -321,7 +284,7 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/flashsales/{id}/flashitems")
-    public Object addSkuOfTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult,HttpServletResponse response) {
+    public Object addSkuOfTopic(@PathVariable Long id, @Validated @RequestBody SkuInputVo skuInputVo, BindingResult bindingResult, HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("addSKUofTopic id = " + id);
@@ -357,7 +320,7 @@ public class FlashSaleController {
     })
     @Audit
     @DeleteMapping("/shops/{did}/flashsales/{fid}/flashitems/{id}")
-    public Object deleteFlashSaleSku(@PathVariable Long id, @PathVariable Long fid,HttpServletResponse response) {
+    public Object deleteFlashSaleSku(@PathVariable Long id, @PathVariable Long fid, HttpServletResponse response) {
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         ReturnObject returnObj = flashSaleService.deleteFlashSaleSku(fid, id);
         response.setStatus(getStatue(returnObj));
@@ -381,9 +344,8 @@ public class FlashSaleController {
     })
     @Audit
     @PostMapping("/shops/{did}/timesegments/{id}/flashsales")
-    public Object createFlash(@PathVariable Long did, @PathVariable Long id,  @RequestBody FlashSaleInputVo flashSaleInputVo,HttpServletResponse response) {
+    public Object createFlash(@PathVariable Long did, @PathVariable Long id, @RequestBody FlashSaleInputVo flashSaleInputVo, HttpServletResponse response) {
         response.setContentType("application/json;charset=UTF-8");
-        //httpServletResponse.setContentType("application/json;charset=UTF-8");
         if (logger.isDebugEnabled()) {
             logger.debug("createFlashSale : id = " + id);
         }

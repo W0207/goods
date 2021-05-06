@@ -69,7 +69,7 @@
     <logger name="cn.edu.xmu.goods.controller" level="DEBUG"/>
     <logger name="cn.edu.xmu.goods.service" level="DEBUG"/>
     <logger name="cn.edu.xmu.ooad.annotation" level="DEBUG"/>
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>

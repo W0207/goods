@@ -24,9 +24,9 @@ public class FloatPriceRetVo {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
-//    @Autowired
-//    @DubboReference(version = "0.0.1", check = false)
-//    private IUserService iUserService;
+    @Autowired
+    @DubboReference(version = "0.0.1", check = false)
+    private IUserService iUserService;
 
     public FloatPriceRetVo(FloatPricePo floatPricePo) {
         this.id = floatPricePo.getId();
@@ -36,11 +36,11 @@ public class FloatPriceRetVo {
         this.endTime = floatPricePo.getEndTime();
         SimpleAdminUser simpleAdminUser1 = new SimpleAdminUser();
         simpleAdminUser1.setId(floatPricePo.getCreatedBy());
-//        simpleAdminUser1.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        simpleAdminUser1.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
         this.createdBy = simpleAdminUser1;
         SimpleAdminUser simpleAdminUser2 = new SimpleAdminUser();
         simpleAdminUser2.setId(floatPricePo.getCreatedBy());
-//        simpleAdminUser2.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
+        simpleAdminUser2.setUserName(iUserService.getUserName(floatPricePo.getCreatedBy()));
         this.modifiedBy = simpleAdminUser2;
 
         this.valid = floatPricePo.getValid() == 1;
